@@ -74,7 +74,7 @@ class auth extends conexion{
       $query="DELETE FROM usuario_token
                 WHERE TIMESTAMPDIFF(DAY, fecha, NOW()) > 1;
                 ";
-      //echo $query; die;
+      echo $query; die;
       $datos1 = parent::ObtenerDatos($query);
       return 1;
 

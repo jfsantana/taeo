@@ -23,6 +23,12 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="#" onclick="enviarParametros('admin/proyectoList.php')" class="nav-link">
+            <i class="nav-icon fas fa-cog text-danger"></i>
+            <p>Objetivos</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
             <i class="nav-icon fas fa-cog text-danger"></i>
             <p>Facilitadores</p>

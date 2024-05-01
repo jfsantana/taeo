@@ -190,16 +190,42 @@ class empleados extends conexion
   {
 
     $query = "SELECT
-    usuario.*,
-    rol.descripcionRol
+    dg_empleados.*,
+    dm_rol.des_rol,
+    (
+    SELECT
+      #GROUP_CONCAT(dg_empresa_consultora.idEmpresaConsultora ',') as idEmpresaConsultora#dg_empresa_consultora.nombreEmpresaConsultora
+      GROUP_CONCAT(dg_empresa_consultora.idEmpresaConsultora SEPARATOR ',') as idEmpresaConsultora
     FROM
-    usuario_token
-    INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-    INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-
+      dg_empleado_token
+      INNER JOIN dg_empleados ON dg_empleado_token.log_usu = dg_empleados.log_usu
+      INNER JOIN dm_rol ON dg_empleados.rol_usu = dm_rol.id_rol
+      LEFT JOIN dg_empresa_consultora ON FIND_IN_SET( dg_empleados.id_usu, dg_empresa_consultora.idAprobador ) > 0
     WHERE
-    usuario_token.token = '$token'";
+      dg_empleado_token.token = '$token'
+    ) AS idEmpresaConsultora,
+    (
+    SELECT
+      #GROUP_CONCAT(dg_empresa_consultora.idEmpresaConsultora ',') as idEmpresaConsultora#dg_empresa_consultora.nombreEmpresaConsultora
+      GROUP_CONCAT(dg_empresa_consultora.nombreEmpresaConsultora SEPARATOR ',') as idEmpresaConsultora
+    FROM
+      dg_empleado_token
+      INNER JOIN dg_empleados ON dg_empleado_token.log_usu = dg_empleados.log_usu
+      INNER JOIN dm_rol ON dg_empleados.rol_usu = dm_rol.id_rol
+      LEFT JOIN dg_empresa_consultora ON FIND_IN_SET( dg_empleados.id_usu, dg_empresa_consultora.idAprobador ) > 0
+    WHERE
+      dg_empleado_token.token = '$token'
+    ) AS nombreEmpresaConsultora
+  FROM
+    dg_empleado_token
+    INNER JOIN dg_empleados ON dg_empleado_token.log_usu = dg_empleados.log_usu
+    INNER JOIN dm_rol ON dg_empleados.rol_usu = dm_rol.id_rol
+    LEFT JOIN dg_empresa_consultora ON FIND_IN_SET( dg_empleados.id_usu, dg_empresa_consultora.idAprobador ) > 0
+  WHERE
+    dg_empleado_token.token = '$token'
 
+  group by 	dg_empleados.id_usu";
+    echo $query; die;
     return parent::ObtenerDatos($query);
   }
 

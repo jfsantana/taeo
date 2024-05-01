@@ -13,7 +13,7 @@
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
             <i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Aprendices</p>
+            <p>Niños</p>
           </a>
         </li>
         <li class="nav-item">
@@ -23,9 +23,15 @@
           </a>
         </li>
         <li class="nav-item">
+          <a href="#" onclick="enviarParametros('admin/proyectoList.php')" class="nav-link">
+            <i class="nav-icon fas fa-cog text-danger"></i>
+            <p>Objetivos</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
             <i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Facilitadores</p>
+            <p>PsicoEducadores</p>
           </a>
         </li>
         <li class="nav-item">
@@ -42,47 +48,7 @@
       <a href="#" class="nav-link ">
         <i class="nav-icon fas fa-book"></i>
         <p>
-          Objetivos
-          <i class="right fas fa-angle-left"></i>
-        </p>
-      </a>
-      <ul class="nav nav-treeview">
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
-            <i class="nav-icon fas fa-id-card  text-programas"></i>
-            <p>Creacion de Planificacion</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
-            <i class="nav-icon fas fa-edit  text-programas"></i>
-            <p>Evaluacion</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('time/cargaTimeResumenAprobList.php')" class="nav-link">
-            <i class="nav-icon fas fa-edit text-warning"></i>
-            <p>
-              Aprobacion (Prog)
-            </p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
-            <i class="nav-icon fas fa-calendar  text-programas"></i>
-            <p>Horarios de Trabajo</p>
-          </a>
-        </li>
-
-
-      </ul>
-    </li>
-    <!-- ****************************** -->
-    <li class="nav-item menu-close">
-      <a href="#" class="nav-link ">
-        <i class="nav-icon fas fa-book"></i>
-        <p>
-          Planificacion
+          Programas
           <i class="right fas fa-angle-left"></i>
         </p>
       </a>
