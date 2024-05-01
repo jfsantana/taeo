@@ -22,7 +22,7 @@ session_destroy();
 <body class=" login-page">
 
   <div class="login-box">
-    <!-- /.login-logo   -->
+    <!-- /.login-logo  -->
     <div class="card card-outline card-primary">
       <div class="text-center">
         <img src='./dist/img/logo_taeho.png' width="50%" alt='El Mejor Instituto'>

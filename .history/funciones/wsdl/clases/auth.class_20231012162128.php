@@ -19,7 +19,7 @@ class auth extends conexion{
 
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
-                $verificar = $this->insertarToken($datos[0]["loginUsuario"]);
+                $verificar = $this->insertarToken($datos[0]["log_usu"]);
 
                 if($verificar){
                     // Si se genero el Token
@@ -39,13 +39,12 @@ class auth extends conexion{
         }
     }
 
-    //actualizada
     private function obtenerDatosUsuarios($usuario,$password){
-        $query="select * from usuario where loginUsuario='".$usuario."' and passUsuario = '".$password."' and activoUsuario = 1";
+        $query="select * from dg_empleados where log_usu='".$usuario."' and pass_usu = '".$password."' and act_usu = 1";
         //echo $query; die;
         $datos1 = parent::ObtenerDatos($query);
 
-        if(isset($datos1[0]["loginUsuario"])){
+        if(isset($datos1[0]["log_usu"])){
             return($datos1);
         }else{
             return 0;
@@ -58,7 +57,7 @@ class auth extends conexion{
         $datetoken = date("Y-m-d H:i");
         $estadoToken=1;
 
-        $query = "insert into usuaio_token (loginUsuario, token, estado, fecha) value('$usuario','$token','$estadoToken','$datetoken')";
+        $query = "insert into dg_empleado_token (log_usu, token, estado, fecha) value('$usuario','$token','$estadoToken','$datetoken')";
         $verificar = parent::nonQuery($query);
         if($verificar){
             // si incerto
@@ -70,15 +69,19 @@ class auth extends conexion{
         }
     }
 
-    public function updateToken(){
-      $query="DELETE FROM usuaio_token
+    private function updateToken(){
+      $query="DELETE FROM dg_empleado_token
                 WHERE TIMESTAMPDIFF(DAY, fecha, NOW()) > 1;
                 ";
-      //echo $query; die;
+      echo $query; die;
       $datos1 = parent::ObtenerDatos($query);
-      return 1;
 
-    }
+      if(isset($datos1[0]["log_usu"])){
+          return 1;
+           }else{
+          return 0;
+      }
+  }
 
 }
 

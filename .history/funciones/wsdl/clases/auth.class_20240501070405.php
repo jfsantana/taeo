@@ -19,7 +19,7 @@ class auth extends conexion{
 
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
-                $verificar = $this->insertarToken($datos[0]["loginUsuario"]);
+                $verificar = $this->insertarToken($datos[0]["log_usu"]);
 
                 if($verificar){
                     // Si se genero el Token
@@ -70,14 +70,18 @@ class auth extends conexion{
         }
     }
 
-    public function updateToken(){
+    private function updateToken(){
       $query="DELETE FROM usuaio_token
                 WHERE TIMESTAMPDIFF(DAY, fecha, NOW()) > 1;
                 ";
       //echo $query; die;
       $datos1 = parent::ObtenerDatos($query);
-      return 1;
 
+      if(isset($datos1[0]["log_usu"])){
+          return 1;
+           }else{
+          return 0;
+      }
     }
 
 }

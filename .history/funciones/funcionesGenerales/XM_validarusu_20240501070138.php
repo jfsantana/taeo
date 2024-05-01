@@ -15,7 +15,7 @@ $token = '';
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/auth?updateToken";
 $rs         = API::GET($URL, $token);
 $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
-//echo $URL ; die;
+echo $URL ; die;
 
 
 $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/auth';
@@ -24,7 +24,7 @@ $parametros = [
   'password' => $_POST['password'],
   'locacion' => $_POST['locacion'],
 ];
-//print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
+
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 

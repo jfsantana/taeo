@@ -224,7 +224,7 @@ class empleados extends conexion
     dg_empleado_token.token = '$token'
 
   group by 	dg_empleados.id_usu";
-    echo $query; die;
+    //echo $query; die;
     return parent::ObtenerDatos($query);
   }
 

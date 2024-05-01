@@ -24,7 +24,7 @@ $parametros = [
   'password' => $_POST['password'],
   'locacion' => $_POST['locacion'],
 ];
-//print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
+
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
@@ -40,14 +40,14 @@ if (@$rs['result']['token']) {
   $datosEmpleado = $array;
 
 
-  $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
-  $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];
-  $_SESSION['id_rol'] = @$datosEmpleado[0]['rolUsuario'];
+  $_SESSION['usuario'] = $datosEmpleado[0]['log_usu'];
+  $_SESSION['id_user'] = @$datosEmpleado[0]['id_usu'];
+  $_SESSION['id_rol'] = @$datosEmpleado[0]['rol_usu'];
   $_SESSION['perfil'] = @$datosEmpleado[0]['des_rol'];
   $_SESSION['token'] = $token;
-  $_SESSION['nombre'] = @$datosEmpleado[0]['nombreUsuario'] . ', ' . @$datosEmpleado[0]['apellidoUsuario'];
-  $_SESSION['cargo'] = @$datosEmpleado[0]['cargoUsuario'];
-  $_SESSION['activo'] = @$datosEmpleado[0]['activoUsuario'];
+  $_SESSION['nombre'] = @$datosEmpleado[0]['nom_usu'] . ', ' . @$datosEmpleado[0]['ape_usu'];
+  $_SESSION['cargo'] = @$datosEmpleado[0]['"car_usu'];
+  $_SESSION['activo'] = @$datosEmpleado[0]['"act_usu'];
   $_SESSION['HOY'] = @date('Y-m-d');
 
   $_SESSION['des_rol'] = @$datosEmpleado[0]['des_rol'];

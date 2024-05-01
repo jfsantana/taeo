@@ -24,7 +24,7 @@ $parametros = [
   'password' => $_POST['password'],
   'locacion' => $_POST['locacion'],
 ];
-//print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
+print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
