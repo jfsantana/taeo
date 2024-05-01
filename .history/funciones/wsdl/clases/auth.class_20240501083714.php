@@ -17,7 +17,7 @@ class auth extends conexion{
             $usuario = $datos['usuario']; //empleados_nroPersonal
             $password = $datos['password'];
             $sede = $datos['locacion'];
-
+            echo $sede; die;
             $datos = $this->obtenerDatosUsuarios($usuario,$password);
 
             if($datos){
@@ -61,7 +61,7 @@ class auth extends conexion{
         $datetoken = date("Y-m-d H:i");
         $estadoToken=1;
 
-        $query = "insert into usuario_token (loginUsuario, token, estado, fecha, sede) value('$usuario','$token','$estadoToken','$datetoken',' $sede')";
+        $query = "insert into usuario_token (loginUsuario, token, estado, fecha, sede) value('$usuario','$token','$estadoToken','$datetoken')";
         $verificar = parent::nonQuery($query);
         if($verificar){
             // si incerto

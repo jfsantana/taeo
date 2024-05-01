@@ -190,16 +190,16 @@ class empleados extends conexion
   {
 
     $query = "SELECT
-                usuario.*,
-                rol.descripcionRol,
-                usuario_sede.idSede
-                FROM
-                usuario_token
-                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
-                WHERE
-                usuario_token.token =  '$token'";
+    usuario.*,
+    rol.descripcionRol,
+    usuario_sede.idSede
+    FROM
+    usuario_token
+    INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
+    INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+    INNER JOIN usuario_sede ON usuario_token.sede=usuario_sede.idUsuario
+    WHERE
+    usuario_token.token =  '$token'";
 
     return parent::ObtenerDatos($query);
   }

@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosEmpleado);
     http_response_code(200);
-  } elseif (isset($_GET['token'])) { //TAEO LISTO
+  } elseif (isset($_GET['token'])) {
     $token = $_GET['token'];
     $datosEmpleado = $_empleados->obtenerEmpleadoToken($token);
     // prepara salida del ws

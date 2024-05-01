@@ -38,13 +38,9 @@ if (@$rs['result']['token']) {
   $rs = API::GET($URL, $token);
   $array = API::JSON_TO_ARRAY($rs);
   $datosEmpleado = $array;
-  if (!@$datosEmpleado) {
-    header("Location:../../index.php?mensaje= Login No Autorizado");
-    exit;
-  }
+
 //echo $URL; die;
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
-  $_SESSION['sede'] = $datosEmpleado[0]['idSede'];
   $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];
   $_SESSION['id_rol'] = @$datosEmpleado[0]['rolUsuario'];
   $_SESSION['perfil'] = @$datosEmpleado[0]['descripcionRol'];

@@ -24,12 +24,13 @@ $parametros = [
   'password' => $_POST['password'],
   'locacion' => $_POST['locacion'],
 ];
-
+echo $URL;
+print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
-//  echo $url;
-// print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+// echo $URL;
+//print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 if (@$rs['result']['token']) {
 
@@ -38,13 +39,9 @@ if (@$rs['result']['token']) {
   $rs = API::GET($URL, $token);
   $array = API::JSON_TO_ARRAY($rs);
   $datosEmpleado = $array;
-  if (!@$datosEmpleado) {
-    header("Location:../../index.php?mensaje= Login No Autorizado");
-    exit;
-  }
+
 //echo $URL; die;
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
-  $_SESSION['sede'] = $datosEmpleado[0]['idSede'];
   $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];
   $_SESSION['id_rol'] = @$datosEmpleado[0]['rolUsuario'];
   $_SESSION['perfil'] = @$datosEmpleado[0]['descripcionRol'];

@@ -8,7 +8,6 @@ class auth extends conexion{
 
         $_respuestas = new respuestas;
         $datos = json_decode($json,true);
-
         if(!isset($datos['usuario']) || !isset($datos['password'])){
             // error con los campos
             return $_respuestas->error_400();
@@ -17,9 +16,8 @@ class auth extends conexion{
             $usuario = $datos['usuario']; //empleados_nroPersonal
             $password = $datos['password'];
             $sede = $datos['locacion'];
-
             $datos = $this->obtenerDatosUsuarios($usuario,$password);
-
+print_r($datos); die;
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
                 $verificar = $this->insertarToken($datos[0]["loginUsuario"], $sede);
@@ -61,7 +59,7 @@ class auth extends conexion{
         $datetoken = date("Y-m-d H:i");
         $estadoToken=1;
 
-        $query = "insert into usuario_token (loginUsuario, token, estado, fecha, sede) value('$usuario','$token','$estadoToken','$datetoken',' $sede')";
+        $query = "insert into usuario_token (loginUsuario, token, estado, fecha, sede) value('$usuario','$token','$estadoToken','$datetoken')";
         $verificar = parent::nonQuery($query);
         if($verificar){
             // si incerto
