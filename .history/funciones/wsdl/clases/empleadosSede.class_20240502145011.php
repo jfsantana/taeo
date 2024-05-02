@@ -12,57 +12,25 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class empleados extends conexion
+class empleadosSede extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'usuario';
+  private $tabla = 'usuario_sede';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
+  private $idusuario_sede = '';
   private $idUsuario = '';
-  private $loginUsuario = '';
-  private $passUsuario = '';
-  private $rolUsuario = '';
-  private $nombreUsuario = '';
-  private $apellidoUsuario = '';
-  private $cargoUsuario = '';
-  private $cedulaUsuario = '';
-  private $emailUsuario = '';
-  private $telefonoUsuario = '';
-  private $TelefonoEmergencia = '';
-  private $activoUsuario = '';
-  private $creadoPor = '';
-  private $fechaCreacion = '1900-01-01';
+  private $idSede = '';
+  private $token = '';
 
 
-  // Activaciond e token
-  private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
-
-
-  public function getEmpleado($idUsuario) //(revisado)
+  public function getSedesEmpleados($idUsuario) //(revisado)
   {
     $where = " WHERE idUsuario <> '' ";
     if ($idUsuario != '') {
       $where =  $where . " and idUsuario = " . $idUsuario;
     }
     $query = 'select * from ' . $this->tabla . " $where ";
-
-    return parent::ObtenerDatos($query);
-  }
-
-  public function obtenerEmpleadoToken($token)  //(revisado)
-  {
-
-    $query = "SELECT
-                usuario.*,
-                rol.descripcionRol,
-                usuario_sede.idSede
-                FROM
-                usuario_token
-                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
-                WHERE
-                usuario_token.token =  '$token'";
 
     return parent::ObtenerDatos($query);
   }
@@ -80,36 +48,15 @@ class empleados extends conexion
       $arrayToken = $this->buscarToken();
 
       if ($arrayToken) {
-        // valida los campos obligatorios
         if (
-          (!isset($datos['loginUsuario'])) ||
-          (!isset($datos['passUsuario'])) ||
-          (!isset($datos['rolUsuario'])) ||
-          (!isset($datos['nombreUsuario'])) ||
-          (!isset($datos['apellidoUsuario'])) ||
-          (!isset($datos['cargoUsuario'])) ||
-          (!isset($datos['cedulaUsuario'])) ||
-          (!isset($datos['emailUsuario'])) ||
-          (!isset($datos['telefonoUsuario']))
+          (!isset($datos['idUsuario'])) ||
+          (!isset($datos['idSede']))
         ) {
-          // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
-          // Asignacion de datos validados su existencia en el If anterior
-          $this->loginUsuario = @$datos['loginUsuario'];
-          $this->passUsuario = @$datos['passUsuario'];
-          $this->rolUsuario = @$datos['rolUsuario'];
-          $this->nombreUsuario = @$datos['nombreUsuario'];
-          $this->apellidoUsuario = @$datos['apellidoUsuario'];
-          $this->cargoUsuario = @$datos['cargoUsuario'];
-          $this->cedulaUsuario = @$datos['cedulaUsuario'];
-          $this->emailUsuario = @$datos['emailUsuario'];
-          $this->telefonoUsuario = @$datos['telefonoUsuario'];
-          $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
-          $this->activoUsuario = @$datos['activoUsuario'];
-          $this->fechaCreacion = date('Y-m-d');
-          $this->creadoPor = @$_SESSION['usuario'];
+          $this->idUsuario = @$datos['idUsuario'];
+          $this->idSede = @$datos['idSede'];
 
           $resp = $this->Insertar();
 
@@ -140,35 +87,13 @@ class empleados extends conexion
   {
     $query = 'insert Into ' . $this->tabla . "
               (
-                loginUsuario,
-                passUsuario,
-                rolUsuario,
-                nombreUsuario,
-                apellidoUsuario,
-                cargoUsuario,
-                cedulaUsuario,
-                emailUsuario,
-                telefonoUsuario,
-                TelefonoEmergencia,
-                activoUsuario,
-                fechaCreacion,
-                creadoPor
+                idUsuario,
+                idSede,
                   )
           value
           (
-              '$this->loginUsuario',
-              '$this->passUsuario',
-              '$this->rolUsuario',
-              '$this->nombreUsuario',
-              '$this->apellidoUsuario',
-              '$this->cargoUsuario',
-              '$this->cedulaUsuario',
-              '$this->emailUsuario',
-              '$this->telefonoUsuario',
-              '$this->TelefonoEmergencia',
-              '$this->activoUsuario',
-              '$this->fechaCreacion',
-              '$this->creadoPor'
+              '$this->idUsuario',
+              '$this->idSede'
               )";
 
     //echo $query; die;
@@ -182,7 +107,7 @@ class empleados extends conexion
     }
   }
 
-  public function put($json)  //(revisado)
+  public function put($json)  //(-----)
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -253,7 +178,7 @@ class empleados extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()//(-----)
   {
     $query = 'update ' . $this->tabla . "
                           set
@@ -281,7 +206,7 @@ class empleados extends conexion
     }
   }
 
-  public function del($json)//(revisado)
+  public function del($json)//(-----)
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -320,7 +245,7 @@ class empleados extends conexion
     }
   }
 
-  private function EliminarEmpleados()//(revisado)
+  private function EliminarEmpleados()//(-----)
   {
     $query = "delete from $this->tabla
         WHERE idUsuario = $this->idUsuario";
