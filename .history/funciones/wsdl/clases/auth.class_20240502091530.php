@@ -19,7 +19,7 @@ class auth extends conexion{
             $sede = $datos['locacion'];
 
             $datos = $this->obtenerDatosUsuarios($usuario,$password);
-           // return ($datos); die;
+
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
                 $verificar = $this->insertarToken($datos[0]["loginUsuario"], $sede);
@@ -45,9 +45,9 @@ class auth extends conexion{
     //actualizada
     private function obtenerDatosUsuarios($usuario,$password){
         $query="select * from usuario where loginUsuario='".$usuario."' and passUsuario = '".$password."' and activoUsuario = 1";
-
+        //echo $query; die;
         $datos1 = parent::ObtenerDatos($query);
-        //echo json_encode($datos1); die;
+
         if(isset($datos1[0]["loginUsuario"])){
             return($datos1);
         }else{
@@ -77,7 +77,7 @@ class auth extends conexion{
       $query="DELETE FROM usuario_token
                 WHERE TIMESTAMPDIFF(DAY, fecha, NOW()) > 1;
                 ";
-      //echo $query; die;
+      echo $query; die;
       $datos1 = parent::ObtenerDatos($query);
       return 1;
 

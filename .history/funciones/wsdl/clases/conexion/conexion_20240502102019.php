@@ -60,7 +60,7 @@ class conexion
           if($item){
             if (!mb_detect_encoding($item, 'utf-8', true)) {
               $item = mb_convert_encoding($item, 'UTF-8');
-            }
+          }
           }
 
         });

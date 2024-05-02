@@ -19,7 +19,7 @@ class auth extends conexion{
             $sede = $datos['locacion'];
 
             $datos = $this->obtenerDatosUsuarios($usuario,$password);
-           // return ($datos); die;
+            return ($datos); die;
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
                 $verificar = $this->insertarToken($datos[0]["loginUsuario"], $sede);

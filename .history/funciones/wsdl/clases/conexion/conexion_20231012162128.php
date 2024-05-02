@@ -57,12 +57,9 @@ class conexion
     private function convertirUTF8($array)
     {
         array_walk_recursive($array, function (&$item, $key) {
-          if($item){
             if (!mb_detect_encoding($item, 'utf-8', true)) {
-              $item = mb_convert_encoding($item, 'UTF-8');
+                $item = utf8_encode($item);
             }
-          }
-
         });
 
         return $array;
@@ -76,7 +73,6 @@ class conexion
     public function ObtenerDatos($consulta)
     {
         $result = $this->conexion->query($consulta);
-        //print_r($consulta); die;
         // Array de resultados
         $resultArray = [];
         if ($result) {
@@ -95,7 +91,7 @@ class conexion
      *************************************************************/
     public function nonQuery($consulta)
     {
-        $result = $this->conexion->query($consulta);
+        $result = $this->conexion->query($consulta); 
         return $this->conexion->affected_rows;
     }
 

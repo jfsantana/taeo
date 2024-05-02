@@ -28,9 +28,8 @@ $parametros = [
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
-//   echo $URL;
-//   print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
-//  print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+  echo $url;
+ print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 if (@$rs['result']['token']) {
 
@@ -72,10 +71,16 @@ if (@$rs['result']['token']) {
   // Actualizar la marca de tiempo de la última actividad
   $_SESSION['last_activity'] = time();
 
+
+
   //print_r($_SESSION); die;
+
 
   $dia_actual = date('j'); // Obtener el día actual
   $dia_semana_actual = date('N'); // Obtener el día de la semana actual (1 para lunes, 7 para domingo)
+
+
+
   $_SESSION['corte'] = @date('mY');
 
   header('Location:../../vistas/home.php');
