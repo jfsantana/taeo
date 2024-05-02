@@ -10,53 +10,46 @@
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
-class sede extends conexion
+class rol extends conexion
 {
   // Tabla Principal de sede
-  private $tabla = 'sede';
+  private $tabla = 'rol';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idSede ='';
-  private $nombreSede ='';
-  private $paisSede ='';
-  private $ciudadSede ='';
-  private $direccionSede ='';
-  private $rifSede ='';
-  private $telefonoSede ='';
-  private $emailSede ='';
-  private $activo = '';
+  private $idRol ='';
+  private $descripcionRol ='';
+  private $creadoPor = '';
   private $fechaCreacion = '1900-01-01'; //date('Y-m-d');
-  private $creador = '';
+  private $orderRol ='';
   private $token = '';
 
   /**
-   * Listado de Sedes
+   * Listado de Roles
    * http://taeo/funciones/wsdl/sede?idSede
    */
-  public function getSede($idSede)//(revisado)
+  public function getRol($idRol)//(revisado)
   {
-    $where = " WHERE idSede <> '' ";
-    if ($idSede != '') {
-      $where =  $where . " and idSede = " . $idSede;
+    $where = " WHERE idRol <> '' ";
+    if ($idRol != '') {
+      $where =  $where . " and idRol = " . $idRol;
     }
-    $query = "select *, CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+    $query = "select * from $this->tabla $where";
     //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
 
   }
 
-  public function getEmpleadoPorSede($idSede)//(revisado)
+  public function getEmpleadoPorRol($idRol)//(revisado)
   {
-    $where = " WHERE sede.idSede <> '' ";
-    if ($idSede != '') {
-      $where =  $where . " and usuario_sede.idSede = " . $idSede;
+    $where = " WHERE rol.idRol <> '' ";
+    if ($idRol != '') {
+      $where =  $where . " and rol.idRol = " . $idRol;
     }
 
-    $query = "SELECT sede.nombreSede,usuario.*
-              FROM usuario_sede
-                inner join  usuario on usuario_sede.idUsuario=usuario.idUsuario
-                inner join sede on usuario_sede.idSede=sede.idSede
+    $query = "SELECT *
+              FROM usuario
+              INNER JOIN rol on usuario.rolUsuario=rol.idRol
               $where";
 
               //echo $query; die;
@@ -77,30 +70,21 @@ class sede extends conexion
       $this->token = $datos['token'];
       $arrayToken = $this->buscarToken();
 
+
       if ($arrayToken) {
         if (  // valida los campos obligatorios
-          (!isset($datos['nombreSede'])) ||
-          (!isset($datos['paisSede'])) ||
-          (!isset($datos['ciudadSede'])) ||
-          (!isset($datos['direccionSede'])) ||
-          (!isset($datos['rifSede'])) ||
-          (!isset($datos['emailSede']))
+          (!isset($datos['descripcionRol'])) ||
+          (!isset($datos['orderRol']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
 
-          $this->nombreSede =@$datos['nombreSede'];
-          $this->paisSede =@$datos['paisSede'];
-          $this->ciudadSede =@$datos['ciudadSede'];
-          $this->direccionSede =@$datos['direccionSede'];
-          $this->rifSede =@$datos['rifSede'];
-          $this->telefonoSede =@$datos['telefonoSede'];
-          $this->emailSede =@$datos['emailSede'];
-          $this->activo =1;
+          $this->descripcionRol =@$datos['descripcionRol'];
           $this->fechaCreacion = date('Y-m-d');
-          $this->creador = @$_SESSION['usuario'];
+          $this->creadoPor = @$_SESSION['usuario'];
+          $this->orderRol =@$datos['orderRol'];
 
           $resp = $this->Insertar();
 
@@ -131,29 +115,17 @@ class sede extends conexion
 
     $query = 'insert Into ' . $this->tabla . "
             (
-              nombreSede ,
-              paisSede ,
-              ciudadSede ,
-              direccionSede ,
-              rifSede ,
-              telefonoSede ,
-              emailSede ,
+              descripcionRol ,
+              creadoPor ,
               fechaCreacion ,
-              activo ,
-              creadoPor
+              orderRol
                 )
         value
         (
-            '$this->nombreSede',
-            '$this->paisSede',
-            '$this->ciudadSede',
-            '$this->direccionSede',
-            '$this->rifSede',
-            '$this->telefonoSede',
-            '$this->emailSede',
+            '$this->descripcionRol',
+            '$this->creadoPor',
             '$this->fechaCreacion',
-            '$this->activo',
-            '$this->creador'
+            '$this->orderRol'
             )";
 
     $Insertar = parent::nonQueryId($query);
@@ -182,30 +154,20 @@ class sede extends conexion
 
       if ($arrayToken) {
         if (  // valida los campos obligatorios
-          (!isset($datos['idSede'])) ||
-          (!isset($datos['nombreSede'])) ||
-          (!isset($datos['paisSede'])) ||
-          (!isset($datos['ciudadSede'])) ||
-          (!isset($datos['direccionSede'])) ||
-          (!isset($datos['rifSede'])) ||
-          (!isset($datos['emailSede']))
+          (!isset($datos['idRol'])) ||
+          (!isset($datos['descripcionRol'])) ||
+          (!isset($datos['orderRol']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
 
-          $this->idSede =@$datos['idSede'];
-          $this->nombreSede =@$datos['nombreSede'];
-          $this->paisSede =@$datos['paisSede'];
-          $this->ciudadSede =@$datos['ciudadSede'];
-          $this->direccionSede =@$datos['direccionSede'];
-          $this->rifSede =@$datos['rifSede'];
-          $this->telefonoSede =@$datos['telefonoSede'];
-          $this->emailSede =@$datos['emailSede'];
-          $this->activo =@$datos['activo'];
+          $this->idRol =@$datos['idRol'];
+          $this->descripcionRol =@$datos['descripcionRol'];
+          $this->orderRol =@$datos['orderRol'];
           $this->fechaCreacion = date('Y-m-d');
-          $this->creador = @$_SESSION['usuario'];
+          $this->creadoPor = @$_SESSION['usuario'];
 
           $resp = $this->Update();
 
@@ -235,19 +197,12 @@ class sede extends conexion
   {
     $query = 'update ' . $this->tabla . "
                         set
-                        nombreSede  ='$this->nombreSede',
-                        paisSede  ='$this->paisSede',
-                        ciudadSede  ='$this->ciudadSede',
-                        direccionSede  ='$this->direccionSede',
-                        rifSede  ='$this->rifSede',
-                        telefonoSede  ='$this->telefonoSede',
-                        emailSede  ='$this->emailSede',
+                        descripcionRol  ='$this->descripcionRol',
+                        creadoPor  ='$this->creadoPor',
                         fechaCreacion  ='$this->fechaCreacion',
-                        activo  ='$this->activo',
-                        creadoPor  ='$this->creador'
+                        orderRol  ='$this->orderRol'
 
-                    WHERE idSede = $this->idSede";
-
+                    WHERE idRol = $this->idRol";
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
@@ -258,7 +213,7 @@ class sede extends conexion
   }
 
   //Desactivar una Sede
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
 
     $_respuestas = new respuestas();
@@ -305,7 +260,7 @@ class sede extends conexion
       }
     }
   }
-  public function delete()//(revisado)
+  public function delete()
   {
     $query = 'update ' . $this->tabla . "
                         set

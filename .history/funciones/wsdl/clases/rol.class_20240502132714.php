@@ -10,53 +10,46 @@
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
-class sede extends conexion
+class rol extends conexion
 {
   // Tabla Principal de sede
-  private $tabla = 'sede';
+  private $tabla = 'rol';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idSede ='';
-  private $nombreSede ='';
-  private $paisSede ='';
-  private $ciudadSede ='';
-  private $direccionSede ='';
-  private $rifSede ='';
-  private $telefonoSede ='';
-  private $emailSede ='';
-  private $activo = '';
+  private $idRol ='';
+  private $descripcionRol ='';
+  private $creadorPor = '';
   private $fechaCreacion = '1900-01-01'; //date('Y-m-d');
-  private $creador = '';
+  private $orderRol ='';
   private $token = '';
 
   /**
-   * Listado de Sedes
+   * Listado de Roles
    * http://taeo/funciones/wsdl/sede?idSede
    */
-  public function getSede($idSede)//(revisado)
+  public function getRol($idRol)//(revisado)
   {
-    $where = " WHERE idSede <> '' ";
-    if ($idSede != '') {
-      $where =  $where . " and idSede = " . $idSede;
+    $where = " WHERE idRol <> '' ";
+    if ($idRol != '') {
+      $where =  $where . " and idRol = " . $idRol;
     }
-    $query = "select *, CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+    $query = "select * from $this->tabla $where";
     //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;
 
   }
 
-  public function getEmpleadoPorSede($idSede)//(revisado)
+  public function getEmpleadoPorRol($idRol)//()
   {
-    $where = " WHERE sede.idSede <> '' ";
-    if ($idSede != '') {
-      $where =  $where . " and usuario_sede.idSede = " . $idSede;
+    $where = " WHERE rol.idRol <> '' ";
+    if ($idRol != '') {
+      $where =  $where . " and rol.idRol = " . $idRol;
     }
 
-    $query = "SELECT sede.nombreSede,usuario.*
-              FROM usuario_sede
-                inner join  usuario on usuario_sede.idUsuario=usuario.idUsuario
-                inner join sede on usuario_sede.idSede=sede.idSede
+    $query = "SELECT *
+              FROM usuario
+              INNER JOIN rol on usuario.rolUsuario=rol.idRol
               $where";
 
               //echo $query; die;
@@ -64,7 +57,7 @@ class sede extends conexion
   }
 
   //Crear una Sede
-  public function post($json)//(revisado)
+  public function post($json)//()
   {
 
     $_respuestas = new respuestas();
@@ -126,7 +119,7 @@ class sede extends conexion
       }
     }
   }
-  private function Insertar()//(revisado)
+  private function Insertar()//()
   {
 
     $query = 'insert Into ' . $this->tabla . "
@@ -167,7 +160,7 @@ class sede extends conexion
   }
 
   //Actualizar una Sede
-  public function put($json)//(revisado)
+  public function put($json)//()
   {
 
     $_respuestas = new respuestas();
@@ -231,7 +224,7 @@ class sede extends conexion
       }
     }
   }
-  private function Update()//(revisado)
+  private function Update()//()
   {
     $query = 'update ' . $this->tabla . "
                         set
@@ -258,7 +251,7 @@ class sede extends conexion
   }
 
   //Desactivar una Sede
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
 
     $_respuestas = new respuestas();
@@ -305,7 +298,7 @@ class sede extends conexion
       }
     }
   }
-  public function delete()//(revisado)
+  public function delete()
   {
     $query = 'update ' . $this->tabla . "
                         set

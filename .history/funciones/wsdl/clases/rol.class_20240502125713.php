@@ -258,7 +258,7 @@ class sede extends conexion
   }
 
   //Desactivar una Sede
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
 
     $_respuestas = new respuestas();
@@ -305,7 +305,7 @@ class sede extends conexion
       }
     }
   }
-  public function delete()//(revisado)
+  public function delete()
   {
     $query = 'update ' . $this->tabla . "
                         set
