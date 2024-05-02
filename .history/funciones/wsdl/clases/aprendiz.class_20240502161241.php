@@ -12,26 +12,25 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class representante extends conexion
+class aprendiz extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'representantes';
+  private $tabla = 'aprendiz';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idRepresentante = '';
-  private $nombreRepresentante = '';
-  private $apellidoRepresentante = '';
-  private $cedulaRepresentante = '';
-  private $profesionRepresentante = '';
-  private $lugarTrabajoRepresentante = '';
-  private $correoRepresentante = '';
-  private $telefonoRepresentante = '';
-  private $parentescoRepresentante = '';
-  private $retirarAprendiz = '';
-  private $razonSocialRepresentante = '';
-  private $rifRepresentante = '';
-  private $direccionFiscalRepresentante = '';
-  private $activoRepresentante = '';
+  private $idAprendiz = '';
+  private $nombreAprendiz = '';
+  private $apellidoAprendiz = '';
+  private $fechaNacimientoAprendiz = '';
+  private $colegioAprendiz = '';
+  private $gradoAprendiz = '';
+  private $escolaridadAprendiz = '';
+  private $direccionAprendiz = '';
+  private $paisAprendiz = '';
+  private $ciudadAprendiz = '';
+  private $coordinadoraAprendiz = '';
+  private $facilitadoraAprendiz = '';
+  private $activoAprendiz = '';
   private $creadoPor = '';
   private $fechaCreacion = '1900-01-01';
 
@@ -40,29 +39,29 @@ class representante extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
-  public function getRepresentante($idRepresentante) //(revisado)
+  public function getAprendiz($idAprendiz) //(revisado)
   {
-    $where = " WHERE idRepresentante <> '' ";
-    if ($idRepresentante != '') {
-      $where =  $where . " and idRepresentante = " . $idRepresentante;
+    $where = " WHERE idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and idAprendiz = " . $idAprendiz;
     }
     $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
 
-  public function getAprendizByRepresentante($idRepresentante) //(revisado)
+  public function getRepresentanteByAprendiz($idAprendiz) //()
   {
-    $where = " WHERE aprendiz_representante.activoAprendiz = 1 ";
-    if ($idRepresentante != '') {
-      $where =  $where . " and aprendiz_representante.idRepresentante = " . $idRepresentante;
+    $where = " WHERE aprendiz_representante.idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and aprendiz_representante.idAprendiz = " . $idAprendiz;
     }
-    $query = "SELECT  aprendiz.*  FROM aprendiz_representante INNER JOIN aprendiz on aprendiz.idAprendiz=aprendiz_representante.idAprendiz $where ";
+    $query = 'SELECT * FROM aprendiz_representante INNER JOIN aprendiz on aprendiz.idAprendiz=aprendiz_representante.idAprendiz $where ";
 
     return parent::ObtenerDatos($query);
   }
 
-  public function post($json)  //(revisado)
+  public function post($json)  //()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -131,7 +130,7 @@ class representante extends conexion
     }
   }
 
-  private function Insertar()//(revisado)
+  private function Insertar()//()
   {
     $query = 'insert Into ' . $this->tabla . "
               (
@@ -183,7 +182,7 @@ class representante extends conexion
     }
   }
 
-  public function put($json)  //(revisado)
+  public function put($json)  //()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -255,7 +254,7 @@ class representante extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()//()
   {
     $query = 'update ' . $this->tabla . "
                           set
@@ -286,7 +285,7 @@ class representante extends conexion
     }
   }
 
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -325,7 +324,7 @@ class representante extends conexion
     }
   }
 
-  private function EliminarEmpleados()//(revisado)
+  private function EliminarEmpleados()//()
   {
     $query = "delete from $this->tabla
         WHERE idRepresentante = $this->idRepresentante";

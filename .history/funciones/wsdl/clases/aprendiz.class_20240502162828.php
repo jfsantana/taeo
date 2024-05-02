@@ -12,26 +12,25 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class representante extends conexion
+class aprendiz extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'representantes';
+  private $tabla = 'aprendiz';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idRepresentante = '';
-  private $nombreRepresentante = '';
-  private $apellidoRepresentante = '';
-  private $cedulaRepresentante = '';
-  private $profesionRepresentante = '';
-  private $lugarTrabajoRepresentante = '';
-  private $correoRepresentante = '';
-  private $telefonoRepresentante = '';
-  private $parentescoRepresentante = '';
-  private $retirarAprendiz = '';
-  private $razonSocialRepresentante = '';
-  private $rifRepresentante = '';
-  private $direccionFiscalRepresentante = '';
-  private $activoRepresentante = '';
+  private $idAprendiz = '';
+  private $nombreAprendiz = '';
+  private $apellidoAprendiz = '';
+  private $fechaNacimientoAprendiz = '';
+  private $colegioAprendiz = '';
+  private $gradoAprendiz = '';
+  private $escolaridadAprendiz = '';
+  private $direccionAprendiz = '';
+  private $paisAprendiz = '';
+  private $ciudadAprendiz = '';
+  private $coordinadoraAprendiz = '';
+  private $facilitadoraAprendiz = '';
+  private $activoAprendiz = '';
   private $creadoPor = '';
   private $fechaCreacion = '1900-01-01';
 
@@ -40,24 +39,26 @@ class representante extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
-  public function getRepresentante($idRepresentante) //(revisado)
+  public function getAprendiz($idAprendiz) //(revisado)
   {
-    $where = " WHERE idRepresentante <> '' ";
-    if ($idRepresentante != '') {
-      $where =  $where . " and idRepresentante = " . $idRepresentante;
+    $where = " WHERE idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and idAprendiz = " . $idAprendiz;
     }
     $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
 
-  public function getAprendizByRepresentante($idRepresentante) //(revisado)
+  public function getRepresentanteByAprendiz($idAprendiz) //(revisado)
   {
-    $where = " WHERE aprendiz_representante.activoAprendiz = 1 ";
-    if ($idRepresentante != '') {
-      $where =  $where . " and aprendiz_representante.idRepresentante = " . $idRepresentante;
+    $where = " WHERE aprendiz_representante.idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and aprendiz_representante.idAprendiz = " . $idAprendiz;
     }
-    $query = "SELECT  aprendiz.*  FROM aprendiz_representante INNER JOIN aprendiz on aprendiz.idAprendiz=aprendiz_representante.idAprendiz $where ";
+    $query = "SELECT representantes.*
+              FROM aprendiz_representante
+              INNER JOIN representantes on representantes.idRepresentante=aprendiz_representante.idRepresentante $where ";
 
     return parent::ObtenerDatos($query);
   }
@@ -77,32 +78,35 @@ class representante extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (!isset($datos['nombreRepresentante'])) ||
-          (!isset($datos['apellidoRepresentante'])) ||
-          (!isset($datos['cedulaRepresentante'])) ||
-          (!isset($datos['profesionRepresentante'])) ||
-          (!isset($datos['lugarTrabajoRepresentante'])) ||
-          (!isset($datos['correoRepresentante'])) ||
-          (!isset($datos['telefonoRepresentante'])) ||
-          (!isset($datos['parentescoRepresentante']))
+          (!isset($datos['nombreAprendiz'])) ||
+          (!isset($datos['apellidoAprendiz'])) ||
+          (!isset($datos['fechaNacimientoAprendiz'])) ||
+          (!isset($datos['colegioAprendiz'])) ||
+          (!isset($datos['gradoAprendiz'])) ||
+          (!isset($datos['escolaridadAprendiz'])) ||
+          (!isset($datos['direccionAprendiz'])) ||
+          (!isset($datos['paisAprendiz'])) ||
+          (!isset($datos['ciudadAprendiz'])) ||
+          (!isset($datos['coordinadoraAprendiz'])) ||
+          (!isset($datos['facilitadoraAprendiz']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
           // Asignacion de datos validados su existencia en el If anterior
-          $this->nombreRepresentante = @$datos['nombreRepresentante'];
-          $this->apellidoRepresentante = @$datos['apellidoRepresentante'];
-          $this->cedulaRepresentante = @$datos['cedulaRepresentante'];
-          $this->profesionRepresentante = @$datos['profesionRepresentante'];
-          $this->lugarTrabajoRepresentante = @$datos['lugarTrabajoRepresentante'];
-          $this->correoRepresentante = @$datos['correoRepresentante'];
-          $this->telefonoRepresentante = @$datos['telefonoRepresentante'];
-          $this->parentescoRepresentante = @$datos['parentescoRepresentante'];
-          $this->retirarAprendiz = @$datos['retirarAprendiz'];
-          $this->rifRepresentante = @$datos['rifRepresentante'];
-          $this->direccionFiscalRepresentante = @$datos['direccionFiscalRepresentante'];
-          $this->activoRepresentante ="1";
+          $this->nombreAprendiz = @$datos['nombreAprendiz'];
+          $this->apellidoAprendiz = @$datos['apellidoAprendiz'];
+          $this->fechaNacimientoAprendiz = @$datos['fechaNacimientoAprendiz'];
+          $this->colegioAprendiz = @$datos['colegioAprendiz'];
+          $this->gradoAprendiz = @$datos['gradoAprendiz'];
+          $this->escolaridadAprendiz = @$datos['escolaridadAprendiz'];
+          $this->direccionAprendiz = @$datos['direccionAprendiz'];
+          $this->paisAprendiz = @$datos['paisAprendiz'];
+          $this->ciudadAprendiz = @$datos['ciudadAprendiz'];
+          $this->coordinadoraAprendiz = @$datos['coordinadoraAprendiz'];
+          $this->facilitadoraAprendiz = @$datos['facilitadoraAprendiz'];
+          $this->activoAprendiz ="1";
           $this->fechaCreacion = date('Y-m-d');
           $this->creadoPor = @$_SESSION['usuario'];
 
@@ -135,41 +139,37 @@ class representante extends conexion
   {
     $query = 'insert Into ' . $this->tabla . "
               (
-                nombreRepresentante,
-                apellidoRepresentante,
-                cedulaRepresentante,
-                profesionRepresentante,
-                lugarTrabajoRepresentante,
-                correoRepresentante,
-                telefonoRepresentante,
-                parentescoRepresentante,
-                retirarAprendiz,
-                razonSocialRepresentante,
-                rifRepresentante,
-                direccionFiscalRepresentante,
-                activoRepresentante,
-                creadoPor,
-                fechaCreacion
+                nombreAprendiz,
+                apellidoAprendiz,
+                fechaNacimientoAprendiz,
+                colegioAprendiz,
+                gradoAprendiz,
+                escolaridadAprendiz,
+                direccionAprendiz,
+                paisAprendiz,
+                ciudadAprendiz,
+                coordinadoraAprendiz,
+                facilitadoraAprendiz,
+                activoAprendiz,
+                fechaCreacion,
+                creadoPor
                   )
           value
           (
-              '$this->nombreRepresentante',
-              '$this->apellidoRepresentante',
-              '$this->cedulaRepresentante',
-              '$this->profesionRepresentante',
-              '$this->lugarTrabajoRepresentante',
-              '$this->correoRepresentante',
-              '$this->telefonoRepresentante',
-              '$this->parentescoRepresentante',
-              '$this->retirarAprendiz',
-              '$this->razonSocialRepresentante',
-              '$this->rifRepresentante',
-              '$this->direccionFiscalRepresentante',
-              '$this->activoRepresentante',
-              '$this->rifRepresentante',
-              '$this->creadoPor',
-              '$this->fechaCreacion'
-
+              '$this->nombreAprendiz',
+              '$this->apellidoAprendiz',
+              '$this->fechaNacimientoAprendiz',
+              '$this->colegioAprendiz',
+              '$this->gradoAprendiz',
+              '$this->escolaridadAprendiz',
+              '$this->direccionAprendiz',
+              '$this->paisAprendiz',
+              '$this->ciudadAprendiz',
+              '$this->coordinadoraAprendiz',
+              '$this->facilitadoraAprendiz',
+              '$this->activoAprendiz',
+              '$this->fechaCreacion',
+              '$this->creadoPor'
               )";
 
     //echo $query; die;
@@ -198,36 +198,39 @@ class representante extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (!isset($datos['idRepresentante'])) ||
-          (!isset($datos['nombreRepresentante'])) ||
-          (!isset($datos['apellidoRepresentante'])) ||
-          (!isset($datos['cedulaRepresentante'])) ||
-          (!isset($datos['profesionRepresentante'])) ||
-          (!isset($datos['lugarTrabajoRepresentante'])) ||
-          (!isset($datos['correoRepresentante'])) ||
-          (!isset($datos['telefonoRepresentante'])) ||
-          (!isset($datos['parentescoRepresentante']))
+          (!isset($datos['idAprendiz'])) ||
+          (!isset($datos['nombreAprendiz'])) ||
+          (!isset($datos['apellidoAprendiz'])) ||
+          (!isset($datos['fechaNacimientoAprendiz'])) ||
+          (!isset($datos['colegioAprendiz'])) ||
+          (!isset($datos['gradoAprendiz'])) ||
+          (!isset($datos['escolaridadAprendiz'])) ||
+          (!isset($datos['direccionAprendiz'])) ||
+          (!isset($datos['paisAprendiz'])) ||
+          (!isset($datos['ciudadAprendiz'])) ||
+          (!isset($datos['coordinadoraAprendiz'])) ||
+          (!isset($datos['facilitadoraAprendiz']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
           // Asignacion de datos validados su existencia en el If anterior
-          $this->idRepresentante = @$datos['idRepresentante'];
-          $this->nombreRepresentante = @$datos['nombreRepresentante'];
-          $this->apellidoRepresentante = @$datos['apellidoRepresentante'];
-          $this->cedulaRepresentante = @$datos['cedulaRepresentante'];
-          $this->profesionRepresentante = @$datos['profesionRepresentante'];
-          $this->lugarTrabajoRepresentante = @$datos['lugarTrabajoRepresentante'];
-          $this->correoRepresentante = @$datos['correoRepresentante'];
-          $this->telefonoRepresentante = @$datos['telefonoRepresentante'];
-          $this->parentescoRepresentante = @$datos['parentescoRepresentante'];
-          $this->retirarAprendiz = @$datos['retirarAprendiz'];
-          $this->rifRepresentante = @$datos['rifRepresentante'];
-          $this->direccionFiscalRepresentante = @$datos['direccionFiscalRepresentante'];
-          $this->activoRepresentante ="1";
-          $this->creadoPor = @$_SESSION['usuario'];
+          $this->idAprendiz = @$datos['idAprendiz'];
+          $this->nombreAprendiz = @$datos['nombreAprendiz'];
+          $this->apellidoAprendiz = @$datos['apellidoAprendiz'];
+          $this->fechaNacimientoAprendiz = @$datos['fechaNacimientoAprendiz'];
+          $this->colegioAprendiz = @$datos['colegioAprendiz'];
+          $this->gradoAprendiz = @$datos['gradoAprendiz'];
+          $this->escolaridadAprendiz = @$datos['escolaridadAprendiz'];
+          $this->direccionAprendiz = @$datos['direccionAprendiz'];
+          $this->paisAprendiz = @$datos['paisAprendiz'];
+          $this->ciudadAprendiz = @$datos['ciudadAprendiz'];
+          $this->coordinadoraAprendiz = @$datos['coordinadoraAprendiz'];
+          $this->facilitadoraAprendiz = @$datos['facilitadoraAprendiz'];
+          $this->activoAprendiz ="1";
           $this->fechaCreacion = date('Y-m-d');
+          $this->creadoPor = @$_SESSION['usuario'];
 
 
           $resp = $this->Update();
@@ -255,7 +258,7 @@ class representante extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()//()
   {
     $query = 'update ' . $this->tabla . "
                           set
@@ -286,7 +289,7 @@ class representante extends conexion
     }
   }
 
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -325,7 +328,7 @@ class representante extends conexion
     }
   }
 
-  private function EliminarEmpleados()//(revisado)
+  private function EliminarEmpleados()//()
   {
     $query = "delete from $this->tabla
         WHERE idRepresentante = $this->idRepresentante";

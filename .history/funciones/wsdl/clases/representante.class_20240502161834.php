@@ -42,7 +42,7 @@ class representante extends conexion
 
   public function getRepresentante($idRepresentante) //(revisado)
   {
-    $where = " WHERE idRepresentante <> '' ";
+    $where = " WHERE activoRepresentante = 1 ";
     if ($idRepresentante != '') {
       $where =  $where . " and idRepresentante = " . $idRepresentante;
     }

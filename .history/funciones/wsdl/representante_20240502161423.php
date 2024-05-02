@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /*****!SECTION
    * type:
    * 1 listar todos los representantes, recibe el idRepresentate (opcional) para busacr un usuario
-   * 2 Lista los aprendices de un representante (recibe idAprendiz de manera Obligatoria)
+   * 2 Lista los representates por aprendiz (recibe idAprendiz de manera Obligatoria)
    */
   if ($_GET['type']==1){
     $datosArray = $_representante->getRepresentante(@$_GET['idRepresentante']);
@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     echo json_encode($datosArray);
     http_response_code(200);
   }elseif(($_GET['type']==2)||(isset($_GET['idAprendiz']))){
-    $datosArray = $_representante->getAprendizByRepresentante(@$_GET['idRepresentante']);
+    $datosArray = $_representante->getAprendizByRepresentante(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);

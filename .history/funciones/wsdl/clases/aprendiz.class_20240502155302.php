@@ -51,13 +51,13 @@ class representante extends conexion
     return parent::ObtenerDatos($query);
   }
 
-  public function getAprendizByRepresentante($idRepresentante) //(revisado)
+  public function getRepresentanteByAprendiz($idAprendiz) //(revisado)
   {
-    $where = " WHERE aprendiz_representante.activoAprendiz = 1 ";
-    if ($idRepresentante != '') {
-      $where =  $where . " and aprendiz_representante.idRepresentante = " . $idRepresentante;
+    $where = " WHERE aprendiz_representante.idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and aprendiz_representante.idAprendiz = " . $idAprendiz;
     }
-    $query = "SELECT  aprendiz.*  FROM aprendiz_representante INNER JOIN aprendiz on aprendiz.idAprendiz=aprendiz_representante.idAprendiz $where ";
+    $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }

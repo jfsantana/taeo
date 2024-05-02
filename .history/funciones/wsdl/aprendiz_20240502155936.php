@@ -2,24 +2,24 @@
 
 // ARCHIVO BASE PARA LOS SERVICIOS
 require_once 'clases/respuestas.class.php';
-require_once 'clases/representante.class.php';
+require_once 'clases/aprendiz.class.php';
 
 $_respuestas = new respuestas();
-$_representante = new representante();
+$_aprendiz = new aprendiz();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /*****!SECTION
    * type:
    * 1 listar todos los representantes, recibe el idRepresentate (opcional) para busacr un usuario
-   * 2 Lista los aprendices de un representante (recibe idAprendiz de manera Obligatoria)
+   * 2 Lista los representates por aprendiz (recibe idAprendiz de manera Obligatoria)
    */
   if ($_GET['type']==1){
-    $datosArray = $_representante->getRepresentante(@$_GET['idRepresentante']);
+    $datosArray = $_aprendiz->getRepresentante(@$_GET['idRepresentante']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
   }elseif(($_GET['type']==2)||(isset($_GET['idAprendiz']))){
-    $datosArray = $_representante->getAprendizByRepresentante(@$_GET['idRepresentante']);
+    $datosArray = $_aprendiz->getRepresentanteByAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_POST);
   }
 
-  $datosArray = $_representante->post($postBody);
+  $datosArray = $_aprendiz->post($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -51,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_PUT);
   }
 
-  $datosArray = $_representante->put($postBody);
+  $datosArray = $_aprendiz->put($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_DELETE);
   }
 
-  $datosArray = $_representante->del($postBody);
+  $datosArray = $_aprendiz->del($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
