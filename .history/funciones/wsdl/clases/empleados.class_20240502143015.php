@@ -323,8 +323,10 @@ class empleados extends conexion
   private function EliminarEmpleados()
   {
     $query = "delete from $this->tabla
-        WHERE idUsuario = $this->idUsuario";
+        WHERE id = $this->idUsuario";
+
     $update = parent::nonQuery($query);
+
     if ($update >= 1) {
       return $update;
     } else {

@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
-
+    //$postBody = file_get_contents('php://input');
+  //$postBody = json_encode($_POST);
+  //13336768 ajuste para no cambiar las pruebas desde
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
     $postBody = file_get_contents('php://input');
   } else {
@@ -45,7 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   }
   echo json_encode($datosArray);
 } elseif ($_SERVER['REQUEST_METHOD'] == 'PUT') { // PUT  UPDATER
-
+  //$postBody = file_get_contents('php://input');
+  //$postBody = json_encode($_POST);
+  //13336768 ajuste para no cambiar las pruebas desde
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
     $postBody = file_get_contents('php://input');
   } else {
@@ -64,22 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   echo json_encode($datosArray);
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') { // DELETE
-  if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
-    $postBody = file_get_contents('php://input');
-  } else {
-      $postBody = json_encode($_DELETE);
-  }
-
-  $datosArray = $_empleados->del($postBody);
-
-    header('Content-Type: application/json;charset=utf-8');
-  if (isset($datosArray['result']['error_id'])) {
-    $responseCode = $datosArray['result']['error_id'];
-    http_response_code($responseCode);
-  } else {
-    http_response_code(200);
-  }
-  echo json_encode($datosArray);
 
 } else {
   header('Content-Type: application/json;charset=utf-8');

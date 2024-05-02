@@ -235,14 +235,14 @@ class empleados extends conexion
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
               'idHeaderNew' => $resp,
-              'mensaje' => 'Se ActualiO Correctamente el Facilitador'
+              'mensaje' => 'Se creo Correctamente el Facilitador'
             ];
           } else {
             $respuesta = $_respuestas->response;
-            $respuesta['status'] = 'OK';
+            $respuesta['status'] = 'ERROR';
             $respuesta['result'] = [
               'idHeaderNew' => $resp,
-              'mensaje' => 'No se ejecuto ningun cambio en el Facilitador'
+              'mensaje' => 'ERROR - Creacion del Facilitador'
             ];
           }
           return $respuesta;
@@ -253,7 +253,7 @@ class empleados extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()
   {
     $query = 'update ' . $this->tabla . "
                           set
@@ -281,7 +281,7 @@ class empleados extends conexion
     }
   }
 
-  public function del($json)
+  public function delete($json)
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -293,16 +293,21 @@ class empleados extends conexion
       $arrayToken = $this->buscarToken();
 
       if ($arrayToken) {
+        // solo validamos que tenga la clave primaria para poder eliminar correctamente el resgitro
         if (
-          !isset($datos['idUsuario'])
+          !isset($datos['id'])
         ) {
+          // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
-          $this->idUsuario = $datos['idUsuario'];
+          // Asignacion de datos validados su existencia en el If anterior
+          // $this->id = $datos['id'];
 
+          // llama a la funcion de insertar
           $resp = $this->EliminarEmpleados();
 
+          // valida que paso d/rante el inser
           if ($resp) {
             $respuesta = $_respuestas->response;
             $respuesta['result'] = [
@@ -323,8 +328,10 @@ class empleados extends conexion
   private function EliminarEmpleados()
   {
     $query = "delete from $this->tabla
-        WHERE idUsuario = $this->idUsuario";
+        WHERE id = $ this->id";
+
     $update = parent::nonQuery($query);
+
     if ($update >= 1) {
       return $update;
     } else {

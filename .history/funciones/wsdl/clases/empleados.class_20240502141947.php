@@ -235,14 +235,14 @@ class empleados extends conexion
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
               'idHeaderNew' => $resp,
-              'mensaje' => 'Se ActualiO Correctamente el Facilitador'
+              'mensaje' => 'Se creo Correctamente el Facilitador'
             ];
           } else {
             $respuesta = $_respuestas->response;
-            $respuesta['status'] = 'OK';
+            $respuesta['status'] = 'ERROR';
             $respuesta['result'] = [
               'idHeaderNew' => $resp,
-              'mensaje' => 'No se ejecuto ningun cambio en el Facilitador'
+              'mensaje' => 'ERROR - Creacion del Facilitador'
             ];
           }
           return $respuesta;
@@ -253,25 +253,45 @@ class empleados extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()
   {
     $query = 'update ' . $this->tabla . "
                           set
-                          passUsuario='$this->passUsuario',
-                          rolUsuario=$this->rolUsuario,
-                          nombreUsuario='$this->nombreUsuario',
-                          apellidoUsuario='$this->apellidoUsuario',
-                          cargoUsuario='$this->cargoUsuario',
-                          emailUsuario='$this->emailUsuario',
-                          telefonoUsuario='$this->telefonoUsuario',
-                          TelefonoEmergencia='$this->TelefonoEmergencia',
-                          activoUsuario='$this->activoUsuario',
-                          fechaCreacion='$this->fechaCreacion',
-                          creadoPor='$this->creadoPor'
+                          nom_usu='$this->nom_usu',
+                          ape_usu='$this->ape_usu',
+                          log_usu='$this->log_usu',
+                          pass_usu='$this->pass_usu',
+                          act_usu='$this->act_usu',
+                          tel_usu='$this->tel_usu',
+                          ced_usu='$this->ced_usu',
+                          car_usu='$this->car_usu',
+                          cor_usu='$this->cor_usu',
+                          rol_usu='$this->rol_usu',
 
-                      WHERE idUsuario = $this->idUsuario";
+                          ubicacionResidencia='$this->ubicacionResidencia',
+                          ident='$this->ident',
+                          frenteAsignado='$this->frenteAsignado',
+                          carnetizacion='$this->carnetizacion',
+                          pcModelo='$this->pcModelo',
+                          pcSerial='$this->pcSerial',
+                          pcMacLan='$this->pcMacLan',
+                          pcMacWam='$this->pcMacWam',
 
-                      //echo  $query; die;
+
+                          foraneo='$this->foraneo',
+                          equipoAsignado='$this->equipoAsignado',
+                          idConsultoraContratante='$this->idConsultoraContratante',
+
+                          vehiculoTipo='$this->vehiculoTipo',
+                          vehiculoModelo='$this->vehiculoModelo',
+                          vehiculoMarca='$this->vehiculoMarca',
+                          vehiculoColor='$this->vehiculoColor',
+                          vehiculoPlaca='$this->vehiculoPlaca',
+                          vehiculoAnio='$this->vehiculoAnio',
+                          vehiculoAseguradora='$this->vehiculoAseguradora',
+                          vehiculoContrato='$this->vehiculoContrato'
+                      WHERE id_usu = $this->idEmpleado";
+    //echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
@@ -281,7 +301,7 @@ class empleados extends conexion
     }
   }
 
-  public function del($json)
+  public function delete($json)
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -293,16 +313,21 @@ class empleados extends conexion
       $arrayToken = $this->buscarToken();
 
       if ($arrayToken) {
+        // solo validamos que tenga la clave primaria para poder eliminar correctamente el resgitro
         if (
-          !isset($datos['idUsuario'])
+          !isset($datos['id'])
         ) {
+          // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
-          $this->idUsuario = $datos['idUsuario'];
+          // Asignacion de datos validados su existencia en el If anterior
+          // $this->id = $datos['id'];
 
+          // llama a la funcion de insertar
           $resp = $this->EliminarEmpleados();
 
+          // valida que paso d/rante el inser
           if ($resp) {
             $respuesta = $_respuestas->response;
             $respuesta['result'] = [
@@ -323,8 +348,10 @@ class empleados extends conexion
   private function EliminarEmpleados()
   {
     $query = "delete from $this->tabla
-        WHERE idUsuario = $this->idUsuario";
+        WHERE id = $ this->id";
+
     $update = parent::nonQuery($query);
+
     if ($update >= 1) {
       return $update;
     } else {
