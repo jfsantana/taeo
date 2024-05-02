@@ -2,9 +2,10 @@
 
 /************************************************************
  * Diseñado por Jesus Santana
- * CLASE SEDE
+ * CLASE EMPLEADOS
  * Metodo servidor: $_GET, $_POST, $_PUT, $_DELETE
- * 'clases/SEDE.class.php';
+ *
+ * 'clases/empleados.class.php';
  *************************************************************/
 
 require_once 'conexion/conexion.php';
@@ -28,6 +29,15 @@ class sede extends conexion
   private $fechaCreacion = '1900-01-01'; //date('Y-m-d');
   private $creador = '';
   private $token = '';
+
+
+
+
+  private $nombreEmpresaConsultora = '';
+  private $idEmpresaConsultora = '';
+  private $idAprobador ='';
+
+
 
   /**
    * Listado de Sedes

@@ -4,6 +4,7 @@
  * Diseñado por Jesus Santana
  * CLASE SEDE
  * Metodo servidor: $_GET, $_POST, $_PUT, $_DELETE
+ *
  * 'clases/SEDE.class.php';
  *************************************************************/
 
