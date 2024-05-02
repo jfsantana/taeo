@@ -69,7 +69,7 @@ if (@$rs['result']['token']) {
   $_SESSION['idEmpresaConsultora'] = trim($_SESSION['idEmpresaConsultora']);
   $_SESSION['nombreEmpresaConsultora'] = trim($_SESSION['nombreEmpresaConsultora']);
 
-  // Actualizar la marca de tiempo de la última activid ad estoe s una prueba
+  // Actualizar la marca de tiempo de la última activid ad
   $_SESSION['last_activity'] = time();
 
   //print_r($_SESSION); die;

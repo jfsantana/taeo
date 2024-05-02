@@ -72,6 +72,8 @@ if (@$rs['result']['token']) {
   // Actualizar la marca de tiempo de la última activid ad estoe s una prueba
   $_SESSION['last_activity'] = time();
 
+  echo '';
+
   //print_r($_SESSION); die;
 
   $dia_actual = date('j'); // Obtener el día actual
