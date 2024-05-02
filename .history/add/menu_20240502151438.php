@@ -11,6 +11,12 @@
       </a>
       <ul class="nav nav-treeview">
         <li class="nav-item">
+          <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
+            <i class="nav-icon fas fa-cog text-danger"></i>
+            <p>Aprendices</p>
+          </a>
+        </li>
+        <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
             <i class="nav-icon fas fa-cog text-danger"></i>
             <p>Roles</p>
@@ -26,12 +32,6 @@
           <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
             <i class="nav-icon fas fa-cog text-danger"></i>
             <p>Facilitadores</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
-            <i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Aprendices</p>
           </a>
         </li>
         <li class="nav-item">

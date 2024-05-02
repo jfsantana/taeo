@@ -12,7 +12,7 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class empleados extends conexion
+class representante extends conexion
 {
   // Tabla Principal de Empleados
   private $tabla = 'usuario';
@@ -107,7 +107,7 @@ class empleados extends conexion
           $this->emailUsuario = @$datos['emailUsuario'];
           $this->telefonoUsuario = @$datos['telefonoUsuario'];
           $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
-          $this->activoUsuario = "1";
+          $this->activoUsuario = @$datos['activoUsuario'];
           $this->fechaCreacion = date('Y-m-d');
           $this->creadoPor = @$_SESSION['usuario'];
 

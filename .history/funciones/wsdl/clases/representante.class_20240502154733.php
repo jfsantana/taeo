@@ -12,24 +12,26 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class empleados extends conexion
+class representante extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'usuario';
+  private $tabla = 'representantes';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idUsuario = '';
-  private $loginUsuario = '';
-  private $passUsuario = '';
-  private $rolUsuario = '';
-  private $nombreUsuario = '';
-  private $apellidoUsuario = '';
-  private $cargoUsuario = '';
-  private $cedulaUsuario = '';
-  private $emailUsuario = '';
-  private $telefonoUsuario = '';
-  private $TelefonoEmergencia = '';
-  private $activoUsuario = '';
+  private $idRepresentante = '';
+  private $nombreRepresentante = '';
+  private $apellidoRepresentante = '';
+  private $cedulaRepresentante = '';
+  private $profesionRepresentante = '';
+  private $lugarTrabajoRepresentante = '';
+  private $correoRepresentante = '';
+  private $telefonoRepresentante = '';
+  private $parentescoRepresentante = '';
+  private $retirarAprendiz = '';
+  private $razonSocialRepresentante = '';
+  private $rifRepresentante = '';
+  private $direccionFiscalRepresentante = '';
+  private $activoRepresentante = '';
   private $creadoPor = '';
   private $fechaCreacion = '1900-01-01';
 
@@ -38,31 +40,24 @@ class empleados extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
-  public function getEmpleado($idUsuario) //(revisado)
+  public function getRepresentante($idRepresentante) //(revisado)
   {
-    $where = " WHERE idUsuario <> '' ";
-    if ($idUsuario != '') {
-      $where =  $where . " and idUsuario = " . $idUsuario;
+    $where = " WHERE idRepresentante <> '' ";
+    if ($idRepresentante != '') {
+      $where =  $where . " and idRepresentante = " . $idRepresentante;
     }
     $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
 
-  public function obtenerEmpleadoToken($token)  //(revisado)
+  public function getRepresentanteByAprendiz($idAprendiz) //(revisado)
   {
-
-    $query = "SELECT
-                usuario.*,
-                rol.descripcionRol,
-                usuario_sede.idSede
-                FROM
-                usuario_token
-                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
-                WHERE
-                usuario_token.token =  '$token'";
+    $where = " WHERE aprendiz_representante.idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and aprendiz_representante.idAprendiz = " . $idAprendiz;
+    }
+    $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
@@ -82,32 +77,32 @@ class empleados extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (!isset($datos['loginUsuario'])) ||
-          (!isset($datos['passUsuario'])) ||
-          (!isset($datos['rolUsuario'])) ||
-          (!isset($datos['nombreUsuario'])) ||
-          (!isset($datos['apellidoUsuario'])) ||
-          (!isset($datos['cargoUsuario'])) ||
-          (!isset($datos['cedulaUsuario'])) ||
-          (!isset($datos['emailUsuario'])) ||
-          (!isset($datos['telefonoUsuario']))
+          (!isset($datos['nombreRepresentante'])) ||
+          (!isset($datos['apellidoRepresentante'])) ||
+          (!isset($datos['cedulaRepresentante'])) ||
+          (!isset($datos['profesionRepresentante'])) ||
+          (!isset($datos['lugarTrabajoRepresentante'])) ||
+          (!isset($datos['correoRepresentante'])) ||
+          (!isset($datos['telefonoRepresentante'])) ||
+          (!isset($datos['parentescoRepresentante']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
           // Asignacion de datos validados su existencia en el If anterior
-          $this->loginUsuario = @$datos['loginUsuario'];
-          $this->passUsuario = @$datos['passUsuario'];
-          $this->rolUsuario = @$datos['rolUsuario'];
-          $this->nombreUsuario = @$datos['nombreUsuario'];
-          $this->apellidoUsuario = @$datos['apellidoUsuario'];
-          $this->cargoUsuario = @$datos['cargoUsuario'];
-          $this->cedulaUsuario = @$datos['cedulaUsuario'];
-          $this->emailUsuario = @$datos['emailUsuario'];
-          $this->telefonoUsuario = @$datos['telefonoUsuario'];
-          $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
-          $this->activoUsuario = "1";
+          $this->nombreRepresentante = @$datos['nombreRepresentante'];
+          $this->apellidoRepresentante = @$datos['apellidoRepresentante'];
+          $this->cedulaRepresentante = @$datos['cedulaRepresentante'];
+          $this->profesionRepresentante = @$datos['profesionRepresentante'];
+          $this->lugarTrabajoRepresentante = @$datos['lugarTrabajoRepresentante'];
+          $this->correoRepresentante = @$datos['correoRepresentante'];
+          $this->telefonoRepresentante = @$datos['telefonoRepresentante'];
+          $this->parentescoRepresentante = @$datos['parentescoRepresentante'];
+          $this->retirarAprendiz = @$datos['retirarAprendiz'];
+          $this->rifRepresentante = @$datos['rifRepresentante'];
+          $this->direccionFiscalRepresentante = @$datos['direccionFiscalRepresentante'];
+          $this->activoRepresentante ="1";
           $this->fechaCreacion = date('Y-m-d');
           $this->creadoPor = @$_SESSION['usuario'];
 
@@ -118,14 +113,14 @@ class empleados extends conexion
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
               'idHeaderNew' => $resp,
-              'mensaje' => 'Se creo Correctamente el Facilitador'
+              'mensaje' => 'Se creo Correctamente el Representante'
             ];
           } else {
             $respuesta = $_respuestas->response;
             $respuesta['status'] = 'ERROR';
             $respuesta['result'] = [
               'idHeaderNew' => $resp,
-              'mensaje' => 'ERROR - Creacion del Facilitador'
+              'mensaje' => 'ERROR - Creacion del Representante'
             ];
           }
           return $respuesta;
@@ -136,39 +131,45 @@ class empleados extends conexion
     }
   }
 
-  private function Insertar()//(revisado)
+  private function Insertar()//()
   {
     $query = 'insert Into ' . $this->tabla . "
               (
-                loginUsuario,
-                passUsuario,
-                rolUsuario,
-                nombreUsuario,
-                apellidoUsuario,
-                cargoUsuario,
-                cedulaUsuario,
-                emailUsuario,
-                telefonoUsuario,
-                TelefonoEmergencia,
-                activoUsuario,
-                fechaCreacion,
-                creadoPor
+                nombreRepresentante,
+                apellidoRepresentante,
+                cedulaRepresentante,
+                profesionRepresentante,
+                lugarTrabajoRepresentante,
+                correoRepresentante,
+                telefonoRepresentante,
+                parentescoRepresentante,
+                retirarAprendiz,
+                razonSocialRepresentante,
+                rifRepresentante,
+                direccionFiscalRepresentante,
+                activoRepresentante,
+                creadoPor,
+                fechaCreacion
                   )
           value
           (
-              '$this->loginUsuario',
-              '$this->passUsuario',
-              '$this->rolUsuario',
-              '$this->nombreUsuario',
-              '$this->apellidoUsuario',
-              '$this->cargoUsuario',
-              '$this->cedulaUsuario',
-              '$this->emailUsuario',
-              '$this->telefonoUsuario',
-              '$this->TelefonoEmergencia',
-              '$this->activoUsuario',
-              '$this->fechaCreacion',
-              '$this->creadoPor'
+              '$this->nombreRepresentante',
+              '$this->apellidoRepresentante',
+              '$this->cedulaRepresentante',
+              '$this->profesionRepresentante',
+              '$this->lugarTrabajoRepresentante',
+              '$this->correoRepresentante',
+              '$this->telefonoRepresentante',
+              '$this->parentescoRepresentante',
+              '$this->retirarAprendiz',
+              '$this->razonSocialRepresentante',
+              '$this->rifRepresentante',
+              '$this->direccionFiscalRepresentante',
+              '$this->activoRepresentante',
+              '$this->rifRepresentante',
+              '$this->creadoPor',
+              '$this->fechaCreacion'
+
               )";
 
     //echo $query; die;
@@ -182,7 +183,7 @@ class empleados extends conexion
     }
   }
 
-  public function put($json)  //(revisado)
+  public function put($json)  //()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -253,7 +254,7 @@ class empleados extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()//()
   {
     $query = 'update ' . $this->tabla . "
                           set
@@ -281,7 +282,7 @@ class empleados extends conexion
     }
   }
 
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -320,7 +321,7 @@ class empleados extends conexion
     }
   }
 
-  private function EliminarEmpleados()//(revisado)
+  private function EliminarEmpleados()//()
   {
     $query = "delete from $this->tabla
         WHERE idUsuario = $this->idUsuario";

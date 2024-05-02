@@ -12,24 +12,26 @@ require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
 // hereda de la clase conexion
-class empleados extends conexion
+class representante extends conexion
 {
   // Tabla Principal de Empleados
-  private $tabla = 'usuario';
+  private $tabla = 'representantes';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
-  private $idUsuario = '';
-  private $loginUsuario = '';
-  private $passUsuario = '';
-  private $rolUsuario = '';
-  private $nombreUsuario = '';
-  private $apellidoUsuario = '';
-  private $cargoUsuario = '';
-  private $cedulaUsuario = '';
-  private $emailUsuario = '';
-  private $telefonoUsuario = '';
-  private $TelefonoEmergencia = '';
-  private $activoUsuario = '';
+  private $idRepresentante = '';
+  private $nombreRepresentante = '';
+  private $apellidoRepresentante = '';
+  private $cedulaRepresentante = '';
+  private $profesionRepresentante = '';
+  private $lugarTrabajoRepresentante = '';
+  private $correoRepresentante = '';
+  private $telefonoRepresentante = '';
+  private $parentescoRepresentante = '';
+  private $retirarAprendiz = '';
+  private $razonSocialRepresentante = '';
+  private $rifRepresentante = '';
+  private $direccionFiscalRepresentante = '';
+  private $activoRepresentante = '';
   private $creadoPor = '';
   private $fechaCreacion = '1900-01-01';
 
@@ -38,36 +40,29 @@ class empleados extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
-  public function getEmpleado($idUsuario) //(revisado)
+  public function getRepresentante($idRepresentante) //(revisado)
   {
-    $where = " WHERE idUsuario <> '' ";
-    if ($idUsuario != '') {
-      $where =  $where . " and idUsuario = " . $idUsuario;
+    $where = " WHERE idRepresentante <> '' ";
+    if ($idRepresentante != '') {
+      $where =  $where . " and idRepresentante = " . $idRepresentante;
     }
     $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
 
-  public function obtenerEmpleadoToken($token)  //(revisado)
+  public function getRepresentanteByAprendiz($idAprendiz) //(revisado)
   {
-
-    $query = "SELECT
-                usuario.*,
-                rol.descripcionRol,
-                usuario_sede.idSede
-                FROM
-                usuario_token
-                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
-                WHERE
-                usuario_token.token =  '$token'";
+    $where = " WHERE aprendiz_representante.idAprendiz <> '' ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and aprendiz_representante.idAprendiz = " . $idAprendiz;
+    }
+    $query = 'select * from ' . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
 
-  public function post($json)  //(revisado)
+  public function post($json)  //()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -107,7 +102,7 @@ class empleados extends conexion
           $this->emailUsuario = @$datos['emailUsuario'];
           $this->telefonoUsuario = @$datos['telefonoUsuario'];
           $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
-          $this->activoUsuario = "1";
+          $this->activoUsuario = @$datos['activoUsuario'];
           $this->fechaCreacion = date('Y-m-d');
           $this->creadoPor = @$_SESSION['usuario'];
 
@@ -136,7 +131,7 @@ class empleados extends conexion
     }
   }
 
-  private function Insertar()//(revisado)
+  private function Insertar()//()
   {
     $query = 'insert Into ' . $this->tabla . "
               (
@@ -182,7 +177,7 @@ class empleados extends conexion
     }
   }
 
-  public function put($json)  //(revisado)
+  public function put($json)  //()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -253,7 +248,7 @@ class empleados extends conexion
     }
   }
 
-  private function Update()//(revisado)
+  private function Update()//()
   {
     $query = 'update ' . $this->tabla . "
                           set
@@ -281,7 +276,7 @@ class empleados extends conexion
     }
   }
 
-  public function del($json)//(revisado)
+  public function del($json)//()
   {
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
@@ -320,7 +315,7 @@ class empleados extends conexion
     }
   }
 
-  private function EliminarEmpleados()//(revisado)
+  private function EliminarEmpleados()//()
   {
     $query = "delete from $this->tabla
         WHERE idUsuario = $this->idUsuario";

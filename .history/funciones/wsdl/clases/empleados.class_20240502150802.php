@@ -11,6 +11,11 @@
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
 
+require_once 'clases/empleadosSede.class.php';
+
+
+
+
 // hereda de la clase conexion
 class empleados extends conexion
 {
@@ -38,8 +43,11 @@ class empleados extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
+
   public function getEmpleado($idUsuario) //(revisado)
   {
+     $_empleadosSede = new empleadosSede(); preguntar en yoo como se usa optra clase aqui si tengo que extender o que
+
     $where = " WHERE idUsuario <> '' ";
     if ($idUsuario != '') {
       $where =  $where . " and idUsuario = " . $idUsuario;
@@ -107,7 +115,7 @@ class empleados extends conexion
           $this->emailUsuario = @$datos['emailUsuario'];
           $this->telefonoUsuario = @$datos['telefonoUsuario'];
           $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
-          $this->activoUsuario = "1";
+          $this->activoUsuario = @$datos['activoUsuario'];
           $this->fechaCreacion = date('Y-m-d');
           $this->creadoPor = @$_SESSION['usuario'];
 
