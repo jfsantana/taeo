@@ -44,13 +44,10 @@ class empleados extends conexion
     if ($idUsuario != '') {
       $where =  $where . " and usuario.idUsuario = " . $idUsuario;
     }
-      $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqeuado' end estado,
-      usuario_sede.idSede, sede.nombreSede, cargo.descripcionCargo
-      FROM usuario
-      INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-      LEFT JOIN usuario_sede on usuario_sede.idUsuario=usuario.idUsuario
-      LEFT JOIN sede on sede.idSede=usuario_sede.idSede
-      INNER join cargo on cargo.idcargos=usuario.cargoUsuario $where  group by usuario.idUsuario";
+      $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqeuado' end estado, usuario_sede.idSede, sede.nombreSede FROM usuario
+                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+                  INNER JOIN usuario_sede on usuario_sede.idUsuario=usuario.idUsuario
+                  INNER JOIN sede on sede.idSede=usuario_sede.idSede $where  group by usuario.idUsuario";
 
     return parent::ObtenerDatos($query);
   }
@@ -295,7 +292,7 @@ class empleados extends conexion
 
                       WHERE idUsuario = $this->idUsuario";
 
-                      //echo  $query; die;echo  $query; die;
+                      echo  $query; die;echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {

@@ -108,7 +108,7 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                     <td><?php echo $usuario['telefonoUsuario'];?></td>
                     <td><?php echo $usuario['cedulaUsuario'];?></td>
                     <td><?php echo $usuario['emailUsuario'];?></td>
-                    <td><?php echo $usuario['descripcionCargo'];?></td>
+                    <td><?php echo $usuario['cargoUsuario'];?></td>
                   </tr>
                 <?php } ?>
 

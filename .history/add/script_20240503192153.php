@@ -88,9 +88,6 @@
 
   $(function() {
 
-     // Summernote
-     $('#summernote').summernote()
-
 
 
     $("#example1").DataTable({

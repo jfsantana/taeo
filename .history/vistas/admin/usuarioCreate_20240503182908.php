@@ -11,12 +11,6 @@ $token = $_SESSION['token'];
 
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 
-
-//Lista de Cargos
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=2";
-$rs         = API::GET($URL, $token);
-$arrayCargos  = API::JSON_TO_ARRAY($rs);
-
 //Lista de Roles
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/rol?type=1";
 $rs         = API::GET($URL, $token);
@@ -36,12 +30,12 @@ if ($_POST['mod'] == 1) {
   $accion = "Editar";
 
   //datos facilitador o empleado
-  $idUsuario = @$_POST["id"];
+  $idUsuario = @$_POST["idUsuario"];
   $token = $_SESSION['token'];
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=1&idUsuario=$idUsuario";
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
-
+  //var_dump($arrayUsuario);
 
   $loginUsuario = $arrayUsuario[0]['loginUsuario'];
   $passUsuario = $arrayUsuario[0]['passUsuario'];
@@ -67,7 +61,7 @@ if ($_POST['mod'] == 1) {
   //var_dump($act_usu);
 
 
-  if ($arrayUsuario[0]['activoUsuario'] == 1)
+  if ($arrayUsuario[0]['act_usu'] == 1)
     $estado = 1;
   else
     $estado = 0;
@@ -93,7 +87,7 @@ if ($_POST['mod'] == 1) {
 <!-- Main content -->
 <form action="../funciones/funcionesGenerales/XM_usuario.model.php" method="post" name="Usuario" id="Usuario">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
-  <input type="hidden" name="idUsuario" value="<?php echo @$idUsuario ?>">
+  <input type="hidden" name="idUsuario" value="<?php echo @$_POST['idUsuario'] ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -134,20 +128,25 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="nombreCliente">Telefono Emergencia</label>
-                  <input type="text" class="form-control" name="TelefonoEmergencia" id="TelefonoEmergencia" placeholder="Cargo del Personal" value="<?php echo @$TelefonoEmergencia; ?>">
+                  <input type="mail" class="form-control" name="TelefonoEmergencia" id="TelefonoEmergencia" placeholder="Cargo del Personal" value="<?php echo @$TelefonoEmergencia; ?>">
                 </div>
 
-                <div class="col-sm-4">
-                  <label>Cargo</label>
-                  <select class="form-control select2" name="cargoUsuario" style="width: 100%;">
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Cargo</label>
+                  <input type="mail" class="form-control" name="cargoUsuario" id="cargoUsuario" placeholder="Cargo del Personal" value="<?php echo @$cargoUsuario; ?>">
+                </div>
+
+                <div class="col-sm-6">
+                  <label>Consultora</label>
+                  <select class="form-control select2" name="idConsultoraContratante" style="width: 100%;">
                     <option>Seleccione</option>
                     <?php
-                    foreach ($arrayCargos  as $cargo) {
+                    foreach ($arraySede  as $consultora) {
                     ?>
-                      <option value='<?php echo $cargo['idcargos']; ?>' <?php if (@$cargoUsuario == @$cargo['idcargos']) {
+                      <option value='<?php echo $consultora['idEmpresaConsultora']; ?>' <?php if (@$idConsultoraContratante == @$consultora['idEmpresaConsultora']) {
                                                                                           echo 'selected';
                                                                                         } ?>>
-                        <?php echo $cargo['descripcionCargo']; ?>
+                        <?php echo $consultora['nombreEmpresaConsultora']; ?>
                       </option>
                     <?php } ?>
                     <!-- <option selected="selected">Alabama</option>  -->
@@ -155,29 +154,47 @@ if ($_POST['mod'] == 1) {
                   </select>
                 </div>
 
+
+
                 <div class="col-sm-3">
+                  <label for="nombreCliente">Ubicacion Residencia</label>
+                  <input type="text" class="form-control" name="ubicacionResidencia" id="ubicacionResidencia" placeholder="Direccion de Residencia" value="<?php echo @$ubicacionResidencia; ?>">
+                </div>
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Ident.</label>
+                  <input type="text" class="form-control" name="ident" id="ident" placeholder="Identificador" value="<?php echo @$ident; ?>">
+                </div>
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Frente Asignado</label>
+                  <input type="text" class="form-control" name="frenteAsignado" id="frenteAsignado" placeholder="Frente Asignado" value="<?php echo @$frenteAsignado; ?>">
+                </div>
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Carnetizacion</label>
+                  <input type="text" class="form-control" name="carnetizacion" id="carnetizacion" placeholder="Carnetizacion" value="<?php echo @$carnetizacion; ?>">
+                </div>
+
+                <div class="col-sm-4">
                   <label for="nombreCliente">Usuario para la aplicacion</label>
-                  <input type="text" class="form-control" name="loginUsuario" id="loginUsuario" placeholder="Usuario APP" value="<?php echo @$loginUsuario; ?>">
+                  <input type="text" class="form-control" name="log_usu" id="log_usu" placeholder="Usuario APP" value="<?php echo @$log_usu; ?>">
                 </div>
-
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                   <label for="nombreCliente">Contraseña</label>
-                  <input type="text" class="form-control" name="passUsuario" id="passUsuario" placeholder="Clave inicial para  APP" value="<?php echo @$passUsuario; ?>">
+                  <input type="text" class="form-control" name="pass_usu" id="pass_usu" placeholder="Clave inicial para  APP" value="<?php echo @$pass_usu; ?>">
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-5">
                   <label>Rol</label>
-                  <select class="form-control " name="rolUsuario" style="width: 100%;">
+                  <select class="form-control " name="rol_usu" style="width: 100%;">
                     <option>Seleccione</option>
                     <?php
 
                     foreach ($arrayRoles as $rol) {
 
                     ?>
-                      <option value='<?php echo $rol['idRol']; ?>' <?php if (@$rolUsuario == $rol['idRol']) {
+                      <option value='<?php echo $rol['id_rol']; ?>' <?php if (@$rol_usu == $rol['id_rol']) {
                                                                       echo 'selected';
                                                                     } ?>>
-                        <?php echo $rol['descripcionRol']; ?>
+                        <?php echo $rol['des_rol']; ?> <?php $rol['id_rol']; ?>
                       </option>
                     <?php } ?>
                     <!-- <option selected="selected">Alabama</option> -->
@@ -185,9 +202,14 @@ if ($_POST['mod'] == 1) {
                   </select>
                 </div>
 
+                <div class="col-sm-5">
+                  <label for="nombreCliente">Cargo</label>
+                  <input type="text" class="form-control" name="car_usu" id="car_usu" placeholder="Cargo del Personal" value="<?php echo @$car_usu; ?>">
+                </div>
+
                 <div class="col-sm-2">
-                  <label>Activo</label>
-                  <select class="form-control" name="activoUsuario" id="activoUsuario">
+                  <label>Estado del Consultor </label>
+                  <select class="form-control" name="act_usu" id="act_usu">
                     <option <?php if (@$estado == 1) {
                               echo 'selected';
                             } ?> value=1>Activo</option>
@@ -196,6 +218,9 @@ if ($_POST['mod'] == 1) {
                             } ?> value=0>Desactivado</option>
                   </select>
                 </div>
+
+
+
               </div>
 
             </div>

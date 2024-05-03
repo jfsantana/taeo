@@ -137,7 +137,7 @@ if ($_POST['mod'] == 1) {
                   <input type="text" class="form-control" name="TelefonoEmergencia" id="TelefonoEmergencia" placeholder="Cargo del Personal" value="<?php echo @$TelefonoEmergencia; ?>">
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                   <label>Cargo</label>
                   <select class="form-control select2" name="cargoUsuario" style="width: 100%;">
                     <option>Seleccione</option>

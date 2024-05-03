@@ -41,7 +41,7 @@ if ($_POST['mod'] == 1) {
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=1&idUsuario=$idUsuario";
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
-
+  var_dump($_POST);
 
   $loginUsuario = $arrayUsuario[0]['loginUsuario'];
   $passUsuario = $arrayUsuario[0]['passUsuario'];
@@ -137,14 +137,14 @@ if ($_POST['mod'] == 1) {
                   <input type="text" class="form-control" name="TelefonoEmergencia" id="TelefonoEmergencia" placeholder="Cargo del Personal" value="<?php echo @$TelefonoEmergencia; ?>">
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                   <label>Cargo</label>
                   <select class="form-control select2" name="cargoUsuario" style="width: 100%;">
                     <option>Seleccione</option>
                     <?php
                     foreach ($arrayCargos  as $cargo) {
                     ?>
-                      <option value='<?php echo $cargo['idcargos']; ?>' <?php if (@$cargoUsuario == @$cargo['idcargos']) {
+                      <option value='<?php echo $cargo['idcargos']; ?>' <?php if (@$idConsultoraContratante == @$cargo['idcargos']) {
                                                                                           echo 'selected';
                                                                                         } ?>>
                         <?php echo $cargo['descripcionCargo']; ?>
@@ -174,7 +174,7 @@ if ($_POST['mod'] == 1) {
                     foreach ($arrayRoles as $rol) {
 
                     ?>
-                      <option value='<?php echo $rol['idRol']; ?>' <?php if (@$rolUsuario == $rol['idRol']) {
+                      <option value='<?php echo $rol['idRol']; ?>' <?php if (@$rol_usu == $rol['idRol']) {
                                                                       echo 'selected';
                                                                     } ?>>
                         <?php echo $rol['descripcionRol']; ?>

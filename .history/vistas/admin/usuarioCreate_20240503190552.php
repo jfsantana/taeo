@@ -36,12 +36,12 @@ if ($_POST['mod'] == 1) {
   $accion = "Editar";
 
   //datos facilitador o empleado
-  $idUsuario = @$_POST["id"];
+  $idUsuario = @$_POST["idUsuario"];
   $token = $_SESSION['token'];
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=1&idUsuario=$idUsuario";
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
-
+  //var_dump($arrayUsuario);
 
   $loginUsuario = $arrayUsuario[0]['loginUsuario'];
   $passUsuario = $arrayUsuario[0]['passUsuario'];
@@ -93,7 +93,7 @@ if ($_POST['mod'] == 1) {
 <!-- Main content -->
 <form action="../funciones/funcionesGenerales/XM_usuario.model.php" method="post" name="Usuario" id="Usuario">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
-  <input type="hidden" name="idUsuario" value="<?php echo @$idUsuario ?>">
+  <input type="hidden" name="idUsuario" value="<?php echo @$_POST['idUsuario'] ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -137,14 +137,14 @@ if ($_POST['mod'] == 1) {
                   <input type="text" class="form-control" name="TelefonoEmergencia" id="TelefonoEmergencia" placeholder="Cargo del Personal" value="<?php echo @$TelefonoEmergencia; ?>">
                 </div>
 
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                   <label>Cargo</label>
                   <select class="form-control select2" name="cargoUsuario" style="width: 100%;">
                     <option>Seleccione</option>
                     <?php
                     foreach ($arrayCargos  as $cargo) {
                     ?>
-                      <option value='<?php echo $cargo['idcargos']; ?>' <?php if (@$cargoUsuario == @$cargo['idcargos']) {
+                      <option value='<?php echo $cargo['idcargos']; ?>' <?php if (@$idConsultoraContratante == @$cargo['idcargos']) {
                                                                                           echo 'selected';
                                                                                         } ?>>
                         <?php echo $cargo['descripcionCargo']; ?>
@@ -174,7 +174,7 @@ if ($_POST['mod'] == 1) {
                     foreach ($arrayRoles as $rol) {
 
                     ?>
-                      <option value='<?php echo $rol['idRol']; ?>' <?php if (@$rolUsuario == $rol['idRol']) {
+                      <option value='<?php echo $rol['idRol']; ?>' <?php if (@$rol_usu == $rol['idRol']) {
                                                                       echo 'selected';
                                                                     } ?>>
                         <?php echo $rol['descripcionRol']; ?>

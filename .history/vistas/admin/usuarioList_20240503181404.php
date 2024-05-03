@@ -98,17 +98,17 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($arrayUsuarios as $usuario) {?>
+                <?php foreach ($arrayUsuarios as $consultores) {?>
                   <tr>
-                    <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioCreate.php',2,'<?php echo $usuario['idUsuario']; ?>')" class="nav-link "><?php echo $usuario['idUsuario'];?></a></td>
-                    <td><?php echo $usuario['descripcionRol'];?></td>
-                    <td><?php echo $usuario['apellidoUsuario'].', '.$usuario['nombreUsuario'];?></td>
-                    <td><?php echo $usuario['loginUsuario'];?></td>
-                    <td><?php echo $usuario['estado'];?></td>
-                    <td><?php echo $usuario['telefonoUsuario'];?></td>
-                    <td><?php echo $usuario['cedulaUsuario'];?></td>
-                    <td><?php echo $usuario['emailUsuario'];?></td>
-                    <td><?php echo $usuario['descripcionCargo'];?></td>
+                    <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioCreate.php',2,'<?php echo $consultores['idUsuario']; ?>')" class="nav-link "><?php echo $consultores['idUsuario'];?></a></td>
+                    <td><?php echo $consultores['descripcionRol'];?></td>
+                    <td><?php echo $consultores['apellidoUsuario'].', '.$consultores['nombreUsuario'];?></td>
+                    <td><?php echo $consultores['loginUsuario'];?></td>
+                    <td><?php echo $consultores['estado'];?></td>
+                    <td><?php echo $consultores['telefonoUsuario'];?></td>
+                    <td><?php echo $consultores['cedulaUsuario'];?></td>
+                    <td><?php echo $consultores['emailUsuario'];?></td>
+                    <td><?php echo $consultores['cargoUsuario'];?></td>
                   </tr>
                 <?php } ?>
 

@@ -44,13 +44,10 @@ class empleados extends conexion
     if ($idUsuario != '') {
       $where =  $where . " and usuario.idUsuario = " . $idUsuario;
     }
-      $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqeuado' end estado,
-      usuario_sede.idSede, sede.nombreSede, cargo.descripcionCargo
-      FROM usuario
-      INNER JOIN rol ON usuario.rolUsuario = rol.idRol
-      LEFT JOIN usuario_sede on usuario_sede.idUsuario=usuario.idUsuario
-      LEFT JOIN sede on sede.idSede=usuario_sede.idSede
-      INNER join cargo on cargo.idcargos=usuario.cargoUsuario $where  group by usuario.idUsuario";
+      $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqeuado' end estado, usuario_sede.idSede, sede.nombreSede FROM usuario
+                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+                  INNER JOIN usuario_sede on usuario_sede.idUsuario=usuario.idUsuario
+                  INNER JOIN sede on sede.idSede=usuario_sede.idSede". " $where ";
 
     return parent::ObtenerDatos($query);
   }
@@ -114,8 +111,7 @@ class empleados extends conexion
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
-
-          $this->idUsuario = @$datos['idUsuario'];
+          // Asignacion de datos validados su existencia en el If anterior
           $this->loginUsuario = @$datos['loginUsuario'];
           $this->passUsuario = @$datos['passUsuario'];
           $this->rolUsuario = @$datos['rolUsuario'];
@@ -128,14 +124,9 @@ class empleados extends conexion
           $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
           $this->activoUsuario = @$datos['activoUsuario'];
           $this->fechaCreacion = date('Y-m-d');
-          $this->creadoPor = @$datos['creadoPor'];
+          $this->creadoPor = @$_SESSION['usuario'];
 
-          if(@$datos['mod']==1){
-            $resp = $this->Insertar();
-          }else{
-            $resp = $this->Update();
-          }
-
+          $resp = $this->Insertar();
 
           if ($resp) {
             $respuesta = $_respuestas->response;
@@ -195,7 +186,7 @@ class empleados extends conexion
               '$this->creadoPor'
               )";
 
-
+    //echo $query; die;
     $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
@@ -282,7 +273,7 @@ class empleados extends conexion
     $query = 'update ' . $this->tabla . "
                           set
                           passUsuario='$this->passUsuario',
-                          rolUsuario='$this->rolUsuario',
+                          rolUsuario=$this->rolUsuario,
                           nombreUsuario='$this->nombreUsuario',
                           apellidoUsuario='$this->apellidoUsuario',
                           cargoUsuario='$this->cargoUsuario',
@@ -295,7 +286,7 @@ class empleados extends conexion
 
                       WHERE idUsuario = $this->idUsuario";
 
-                      //echo  $query; die;echo  $query; die;
+                      //echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {

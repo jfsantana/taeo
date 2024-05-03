@@ -101,14 +101,14 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                 <?php foreach ($arrayUsuarios as $usuario) {?>
                   <tr>
                     <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioCreate.php',2,'<?php echo $usuario['idUsuario']; ?>')" class="nav-link "><?php echo $usuario['idUsuario'];?></a></td>
-                    <td><?php echo $usuario['descripcionRol'];?></td>
+                    <td><?php echo $usuario['idUsuario'];?></td>
                     <td><?php echo $usuario['apellidoUsuario'].', '.$usuario['nombreUsuario'];?></td>
                     <td><?php echo $usuario['loginUsuario'];?></td>
                     <td><?php echo $usuario['estado'];?></td>
                     <td><?php echo $usuario['telefonoUsuario'];?></td>
                     <td><?php echo $usuario['cedulaUsuario'];?></td>
                     <td><?php echo $usuario['emailUsuario'];?></td>
-                    <td><?php echo $usuario['descripcionCargo'];?></td>
+                    <td><?php echo $usuario['cargoUsuario'];?></td>
                   </tr>
                 <?php } ?>
 
