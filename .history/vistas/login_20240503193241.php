@@ -39,7 +39,6 @@ session_destroy();
           <!-- <p class="login-box-msg">Inicie sesión</p> -->
 
         <?php
-        $token='';
           $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
           $rs         = API::GET($URL, $token);
           $arraySede  = API::JSON_TO_ARRAY($rs);

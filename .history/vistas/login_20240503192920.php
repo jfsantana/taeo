@@ -9,9 +9,7 @@ session_destroy();
 
 <head>
 
-  <?php include_once('add/head_Aux_.php');
-  require_once './funciones/wsdl/clases/consumoApi.class.php';
-   ?>
+  <?php include_once('add/head_Aux_.php'); ?>
   <style>
     .login-page {
       background: url('./dist/img/foot_Image.jpg') repeat-x;
@@ -39,10 +37,9 @@ session_destroy();
           <!-- <p class="login-box-msg">Inicie sesión</p> -->
 
         <?php
-        $token='';
           $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
           $rs         = API::GET($URL, $token);
-          $arraySede  = API::JSON_TO_ARRAY($rs);
+          $arrayCargos  = API::JSON_TO_ARRAY($rs);
           ?>
 
           <form name="login" id="login" action="funciones/funcionesGenerales/XM_validarusu.php" method="POST">
@@ -50,9 +47,9 @@ session_destroy();
               <label>Sede</label>
               <select class="form-control select " name="locacion" required id="idEmpresaConsultora">
                 <option value="">Seleccione</option>
-                <?php foreach ($arraySede as $sede) {?>
-                <option value='<?php echo $sede['idSede']; ?>' ><?php echo $sede['nombreSede']; ?></option>
-                <?php } ?>
+                <option value="1">Ve - Prebo 1</option>
+                <option value="2">Ve - Concepto</option>
+                <option value="3">Cl - Saniago</option>
 
                 <!-- < ?php foreach ($arrayCconsultora as $consultora) { ?>
                   <option < ?php if (@$idEmpresaConsultora == $consultora['idEmpresaConsultora']) {
