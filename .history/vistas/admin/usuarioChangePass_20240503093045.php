@@ -49,7 +49,7 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
   $idConsultoraContratante='';
   foreach ($arraySede  as $sede) {
-      $idConsultoraContratante=$idConsultoraContratante. ' '.$sede['nombreSede'].'. ';
+      $idConsultoraContratante=$idConsultoraContratante. ' '.$sede['nombreSede'].'.';
   }
 
   //Listado Sedes

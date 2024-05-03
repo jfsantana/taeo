@@ -28,6 +28,15 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
 
+
+  //Listado Clientes
+  //$idEmpresaConsultora =""
+  $token = $_SESSION['token'];
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=";
+  $rs         = API::GET($URL1, $token);
+  $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
+
+
   $nom_usu = $arrayUsuario[0]['nombreUsuario'];
   $ape_usu = $arrayUsuario[0]['apellidoUsuario'];
   $log_usu = $arrayUsuario[0]['loginUsuario'];
@@ -40,27 +49,6 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
   $rol_usu = $arrayUsuario[0]['rolUsuario'];
   $des_rol = $arrayUsuario[0]['descripcionRol'];
   $estado =   $act_usu ;
-
-  //sede del facilitador
-  $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$id";
-  $rs         = API::GET($URL, $token);
-  $arraySede  = API::JSON_TO_ARRAY($rs);
-
-
-  $idConsultoraContratante='';
-  foreach ($arraySede  as $sede) {
-      $idConsultoraContratante=$idConsultoraContratante. ' '.$sede['nombreSede'].'. ';
-  }
-
-  //Listado Sedes
-    $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
-
-
-  $rs         = API::GET($URL1, $token);
-  $arraySede  = API::JSON_TO_ARRAY($rs);
-
-
 
 
 ?>
@@ -121,10 +109,20 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-4">
                   <label>Sede</label>
+                  <select class="form-control select2" disabled name="Cliente" style="width: 100%;">
+                    <option>Seleccione</option>
+                    <?php
+                    foreach ($arrayCconsultora  as $consultora) {
+                       ?>
+                      <option value='<?php echo $consultora['idEmpresaConsultora']; ?>' <?php if (@$idConsultoraContratante == @$consultora['idEmpresaConsultora']) {
+                                                                            echo 'selected';
+                                                                          } ?>>
+                        <?php echo $consultora['nombreEmpresaConsultora'];?>
+                      </option>
+                    <?php } ?>
+                    <!-- <option selected="selected">Alabama</option> -->
 
-
-                  <input type="text" class="form-control" name="Cliente" id="Cliente" readonly placeholder="Sede" value="<?php echo @$idConsultoraContratante; ?>">
-
+                  </select>
                 </div>
 
                 <div class="col-sm-4">

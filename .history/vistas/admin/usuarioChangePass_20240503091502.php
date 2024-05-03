@@ -40,17 +40,8 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
   $rol_usu = $arrayUsuario[0]['rolUsuario'];
   $des_rol = $arrayUsuario[0]['descripcionRol'];
   $estado =   $act_usu ;
+  $idConsultoraContratante=1;
 
-  //sede del facilitador
-  $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$id";
-  $rs         = API::GET($URL, $token);
-  $arraySede  = API::JSON_TO_ARRAY($rs);
-
-
-  $idConsultoraContratante='';
-  foreach ($arraySede  as $sede) {
-      $idConsultoraContratante=$idConsultoraContratante. ' '.$sede['nombreSede'].'. ';
-  }
 
   //Listado Sedes
     $token = $_SESSION['token'];
@@ -121,10 +112,20 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-4">
                   <label>Sede</label>
+                  <select class="form-control select2" disabled name="Cliente" style="width: 100%;">
+                    <option>Seleccione</option>
+                    <?php
+                    foreach ($arraySede  as $consultora) {
+                       ?>
+                      <option value='<?php echo $consultora['idSede']; ?>' <?php if (@$idConsultoraContratante == @$consultora['idSede']) {
+                                                                            echo 'selected';
+                                                                          } ?>>
+                        <?php echo $consultora['nombreSede'];?>
+                      </option>
+                    <?php } ?>
+                    <!-- <option selected="selected">Alabama</option> -->
 
-
-                  <input type="text" class="form-control" name="Cliente" id="Cliente" readonly placeholder="Sede" value="<?php echo @$idConsultoraContratante; ?>">
-
+                  </select>
                 </div>
 
                 <div class="col-sm-4">

@@ -42,14 +42,14 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
   $estado =   $act_usu ;
 
   //sede del facilitador
-  $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$id";
+  $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$2";
   $rs         = API::GET($URL, $token);
   $arraySede  = API::JSON_TO_ARRAY($rs);
 
 
   $idConsultoraContratante='';
   foreach ($arraySede  as $sede) {
-      $idConsultoraContratante=$idConsultoraContratante. ' '.$sede['nombreSede'].'. ';
+      $idConsultoraContratante=$idConsultoraContratante. ' '.$sede['nombreSede'].'.';
   }
 
   //Listado Sedes
