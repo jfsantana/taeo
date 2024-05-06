@@ -204,14 +204,10 @@ if ($_POST['mod'] == 1) {
 
               <?php
                $sedeActiva=0;
-               if(isset($SedeFacilitador)){
-               //echo 'valor:'.@$SedeFacilitador;
-               $sedeActiva = explode(",", @$SedeFacilitador);
-              }
-             // if(!empty(@$arraySedeFacilitador)){
+              if(!empty($arraySedeFacilitador)){
                 //VVALIDAR LAS SEDES DEL FACILITADOR
-
-           //   }
+                $sedeActiva = explode(",", @$SedeFacilitador);
+              }
 
               ?>
 
@@ -224,7 +220,7 @@ if ($_POST['mod'] == 1) {
                     ?>
                         <input type="checkbox" id="tarea<?php echo $sede['idSede']; ?>" name="sede[]" value="<?php echo $sede['idSede']; ?>"
                         <?php
-                            if (($_POST['mod'] == 2)&&(in_array($sede['idSede'], $sedeActiva))) {
+                            if (in_array($sede['idSede'], @$sedeActiva)) {
                               echo "checked";
                             }
                         ?>

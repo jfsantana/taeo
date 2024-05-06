@@ -65,7 +65,7 @@ if (@$rs['result']['token']) {
   $_SESSION['des_rol'] = @$datosEmpleado[0]['descripcionRol'];
   $_SESSION['last_activity'] = time();
 
-  //print_r($_SESSION); die;
+  print_r($_SESSION); die;
 
   foreach ($datosEmpleado as $dato) {
     //    print("<pre>".print_r(($dato),true)."</pre>");die;

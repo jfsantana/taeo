@@ -71,16 +71,17 @@ class empleados extends conexion
   {
 
     $query = "SELECT
-              usuario.*,
-              rol.descripcionRol
-              FROM
-              usuario_token
-              INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-              left JOIN rol ON usuario.rolUsuario = rol.idRol
+                usuario.*,
+                rol.descripcionRol,
+                usuario_sede.idSede
+                FROM
+                usuario_token
+                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
+                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
+                WHERE
+                usuario_token.token =  '$token'";
 
-              WHERE
-              usuario_token.token =  '$token'";
-        //  echo $query ; die;
     return parent::ObtenerDatos($query);
   }
 
@@ -133,10 +134,10 @@ class empleados extends conexion
           if(@$datos['mod']==1){
             //inserta nuevo facilitador
             $resp = $this->Insertar();
-            $this->idUsuario  = @$resp;
             // inserta sedes del facilitador nuevo
-            $resp1 = $this->InsertarSede($datos['sede']);
-
+            if(!empty($datos['sede'])){
+              $resp1 = $this->InsertarSede($datos['sede']);
+            }
 
           }else{
 
@@ -149,25 +150,23 @@ class empleados extends conexion
           }
 
 
-            if ($resp) {
-              $respuesta = $_respuestas->response;
-              $respuesta['status'] = 'OK';
-              $respuesta['result'] = [
-                'idHeaderNew' => $resp,
-                'mensaje' => 'Operacion correcta con  el Facilitador'
-              ];
-            } else {
-              $respuesta = $_respuestas->response;
-              $respuesta['status'] = 'ERROR';
-              $respuesta['result'] = [
-                'idHeaderNew' => $resp,
-                'mensaje' => 'ERROR - Con el Facilitador'
-              ];
-            }
 
 
-
-
+          if ($resp) {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'OK';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'Operacion correcta con  el Facilitador'
+            ];
+          } else {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'ERROR';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'ERROR - Con el Facilitador'
+            ];
+          }
           return $respuesta;
         }
       } else {
@@ -224,16 +223,21 @@ class empleados extends conexion
 
   private function InsertarSede($arraySede)//(revisado)
   {
-    $query=" INSERT INTO usuario_sede (idUsuario, idSede) VALUES ";
-    foreach ($arraySede  as $sede) {
-      $query= $query . '(' .$this->idUsuario.','.$sede.'),';
-    }
 
-    $query = substr($query, 0, strlen($query) - 1);
-    //echo  $query; die;echo  $query; die;
-    $Insertar = parent::nonQuery($query);
 
-    return $Insertar;
+    $query = 'insert Into usuario_sede' . "
+              (
+                idUsuario,
+                idSede
+                  )
+          value
+          (
+              '$this->idUsuario',
+              '$this->idUsuario'
+              )";
+
+
+    $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
     if ($Insertar) {
@@ -285,18 +289,21 @@ class empleados extends conexion
     $update = parent::nonQuery($queryDel);
 
     if(!empty($arraySede)){
-
       $query=" INSERT INTO usuario_sede (idUsuario, idSede) VALUES ";
       foreach ($arraySede  as $sede) {
         $query= $query . '(' .$this->idUsuario.','.$sede.'),';
       }
-
       $query = substr($query, 0, strlen($query) - 1);
       //echo  $query; die;echo  $query; die;
       $update = parent::nonQuery($query);
     }
-      return $update;
 
+
+    if ($update >= 1) {
+      return $update;
+    } else {
+      return 0;
+    }
   }
   public function del($json)//(revisado)
   {

@@ -15,7 +15,7 @@ $token = '';
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/auth?updateToken";
 $rs         = API::GET($URL, $token);
 $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
-
+echo $URL ; die;
 
 
 $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/auth';
@@ -30,7 +30,7 @@ $rs = API::JSON_TO_ARRAY($rs);
 
 //   echo $URL;
 //   print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
-  //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+//  print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 if (@$rs['result']['token']) {
 
@@ -39,20 +39,13 @@ if (@$rs['result']['token']) {
   $rs = API::GET($URL, $token);
   $array = API::JSON_TO_ARRAY($rs);
   $datosEmpleado = $array;
-  //echo $URL; die;
   if (!@$datosEmpleado) {
     header("Location:../../index.php?mensaje= Login No Autorizado");
     exit;
   }
-
-  $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/sede?type=1&idSede='.$_POST['locacion'];
-  $rs = API::GET($URL, $token);
-  $arraySede = API::JSON_TO_ARRAY($rs);
-
-  //echo   $URL; die;
+//echo $URL; die;
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
-  $_SESSION['sedeId'] = $_POST['locacion'];  //sede con la que se logeo
-  $_SESSION['sedeNombre']=$arraySede[0]['nombreSede'];
+  $_SESSION['sede'] = $datosEmpleado[0]['idSede'];
   $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];
   $_SESSION['id_rol'] = @$datosEmpleado[0]['rolUsuario'];
   $_SESSION['perfil'] = @$datosEmpleado[0]['descripcionRol'];
@@ -65,7 +58,7 @@ if (@$rs['result']['token']) {
   $_SESSION['des_rol'] = @$datosEmpleado[0]['descripcionRol'];
   $_SESSION['last_activity'] = time();
 
-  //print_r($_SESSION); die;
+  //echo $URL; die;
 
   foreach ($datosEmpleado as $dato) {
     //    print("<pre>".print_r(($dato),true)."</pre>");die;
@@ -86,7 +79,7 @@ if (@$rs['result']['token']) {
   $_SESSION['corte'] = @date('mY');
 
 
-  //print_r(json_encode($_SESSION)); die;
+  print_r(json_encode($_SESSION)); die;
   header('Location:../../vistas/home.php');
   exit;
 } else {

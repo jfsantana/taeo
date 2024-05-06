@@ -52,7 +52,7 @@ if (@$rs['result']['token']) {
   //echo   $URL; die;
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
   $_SESSION['sedeId'] = $_POST['locacion'];  //sede con la que se logeo
-  $_SESSION['sedeNombre']=$arraySede[0]['nombreSede'];
+  $_SESSION['sedeNombre']=$arraySede['nombreSede'];
   $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];
   $_SESSION['id_rol'] = @$datosEmpleado[0]['rolUsuario'];
   $_SESSION['perfil'] = @$datosEmpleado[0]['descripcionRol'];
@@ -65,7 +65,7 @@ if (@$rs['result']['token']) {
   $_SESSION['des_rol'] = @$datosEmpleado[0]['descripcionRol'];
   $_SESSION['last_activity'] = time();
 
-  //print_r($_SESSION); die;
+  print_r($_SESSION); die;
 
   foreach ($datosEmpleado as $dato) {
     //    print("<pre>".print_r(($dato),true)."</pre>");die;

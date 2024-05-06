@@ -71,16 +71,17 @@ class empleados extends conexion
   {
 
     $query = "SELECT
-              usuario.*,
-              rol.descripcionRol
-              FROM
-              usuario_token
-              INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-              left JOIN rol ON usuario.rolUsuario = rol.idRol
+                usuario.*,
+                rol.descripcionRol,
+                usuario_sede.idSede
+                FROM
+                usuario_token
+                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
+                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
+                WHERE
+                usuario_token.token =  '$token'";
 
-              WHERE
-              usuario_token.token =  '$token'";
-        //  echo $query ; die;
     return parent::ObtenerDatos($query);
   }
 
@@ -133,41 +134,36 @@ class empleados extends conexion
           if(@$datos['mod']==1){
             //inserta nuevo facilitador
             $resp = $this->Insertar();
-            $this->idUsuario  = @$resp;
             // inserta sedes del facilitador nuevo
-            $resp1 = $this->InsertarSede($datos['sede']);
-
+            if(!empty($datos['sede'])){
+              $resp = $this->InsertarSede($datos['sede']);
+            }
 
           }else{
-
-            //$resp=2;
             //actualiza los datos del facilitador
-            $resp1 = $this->Update();
+            $resp = $this->Update();
             // Actualiza las sedes del facilitador
-            $resp1 = $this->UpdateSede($datos['sede']);
-            $resp=2;
+            $resp = $this->UpdateSede($datos['sede']);
           }
 
 
-            if ($resp) {
-              $respuesta = $_respuestas->response;
-              $respuesta['status'] = 'OK';
-              $respuesta['result'] = [
-                'idHeaderNew' => $resp,
-                'mensaje' => 'Operacion correcta con  el Facilitador'
-              ];
-            } else {
-              $respuesta = $_respuestas->response;
-              $respuesta['status'] = 'ERROR';
-              $respuesta['result'] = [
-                'idHeaderNew' => $resp,
-                'mensaje' => 'ERROR - Con el Facilitador'
-              ];
-            }
 
 
-
-
+          if ($resp) {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'OK';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'Se creo Correctamente el Facilitador'
+            ];
+          } else {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'ERROR';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'ERROR - Creacion del Facilitador'
+            ];
+          }
           return $respuesta;
         }
       } else {
@@ -224,16 +220,21 @@ class empleados extends conexion
 
   private function InsertarSede($arraySede)//(revisado)
   {
-    $query=" INSERT INTO usuario_sede (idUsuario, idSede) VALUES ";
-    foreach ($arraySede  as $sede) {
-      $query= $query . '(' .$this->idUsuario.','.$sede.'),';
-    }
 
-    $query = substr($query, 0, strlen($query) - 1);
-    //echo  $query; die;echo  $query; die;
-    $Insertar = parent::nonQuery($query);
 
-    return $Insertar;
+    $query = 'insert Into usuario_sede' . "
+              (
+                idUsuario,
+                idSede
+                  )
+          value
+          (
+              '$this->idUsuario',
+              '$this->idSede'
+              )";
+
+
+    $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
     if ($Insertar) {
@@ -244,12 +245,73 @@ class empleados extends conexion
   }
   public function put($json)  //(revisado)
   {
-            $respuesta = '';
+    $_respuestas = new respuestas();
+    $datos = json_decode($json, true);
+
+    if (!isset($datos['token'])) {
+      return $_respuestas->error_401();
+    } else {
+
+      $this->token = $datos['token'];
+      $arrayToken = $this->buscarToken();
+
+      if ($arrayToken) {
+        // valida los campos obligatorios
+        if (
+          (!isset($datos['idUsuario'])) ||
+          (!isset($datos['loginUsuario'])) ||
+          (!isset($datos['passUsuario'])) ||
+          (!isset($datos['rolUsuario'])) ||
+          (!isset($datos['nombreUsuario'])) ||
+          (!isset($datos['apellidoUsuario'])) ||
+          (!isset($datos['cargoUsuario'])) ||
+          (!isset($datos['cedulaUsuario'])) ||
+          (!isset($datos['emailUsuario'])) ||
+          (!isset($datos['telefonoUsuario']))
+        ) {
+          // en caso de que la validacion no se cumpla se arroja un error
+          $datosArray = $_respuestas->error_400();
+          echo json_encode($datosArray);
+        } else {
+          // Asignacion de datos validados su existencia en el If anterior
+          $this->idUsuario = @$datos['idUsuario'];
+          $this->loginUsuario = @$datos['loginUsuario'];
+          $this->passUsuario = @$datos['passUsuario'];
+          $this->rolUsuario = @$datos['rolUsuario'];
+          $this->nombreUsuario = @$datos['nombreUsuario'];
+          $this->apellidoUsuario = @$datos['apellidoUsuario'];
+          $this->cargoUsuario = @$datos['cargoUsuario'];
+          $this->cedulaUsuario = @$datos['cedulaUsuario'];
+          $this->emailUsuario = @$datos['emailUsuario'];
+          $this->telefonoUsuario = @$datos['telefonoUsuario'];
+          $this->TelefonoEmergencia = @$datos['TelefonoEmergencia'];
+          $this->activoUsuario = @$datos['activoUsuario'];
+          $this->fechaCreacion = date('Y-m-d');
+          $this->creadoPor = @$_SESSION['usuario'];
+
+          $resp = $this->Update();
+
+          if ($resp) {
+            $respuesta = $_respuestas->response;
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
-              'idHeaderNew' => 'n/a',
+              'idHeaderNew' => $resp,
+              'mensaje' => 'Se ActualiO Correctamente el Facilitador'
+            ];
+          } else {
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'OK';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
               'mensaje' => 'No se ejecuto ningun cambio en el Facilitador'
             ];
+          }
+          return $respuesta;
+        }
+      } else {
+        return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
+      }
+    }
   }
 
   private function Update()//(revisado)
@@ -267,6 +329,7 @@ class empleados extends conexion
                           activoUsuario='$this->activoUsuario',
                           fechaCreacion='$this->fechaCreacion',
                           creadoPor='$this->creadoPor'
+
                       WHERE idUsuario = $this->idUsuario";
 
                       //echo  $query; die;echo  $query; die;
@@ -285,18 +348,19 @@ class empleados extends conexion
     $update = parent::nonQuery($queryDel);
 
     if(!empty($arraySede)){
-
       $query=" INSERT INTO usuario_sede (idUsuario, idSede) VALUES ";
       foreach ($arraySede  as $sede) {
         $query= $query . '(' .$this->idUsuario.','.$sede.'),';
       }
-
       $query = substr($query, 0, strlen($query) - 1);
       //echo  $query; die;echo  $query; die;
       $update = parent::nonQuery($query);
     }
+    if ($update >= 1) {
       return $update;
-
+    } else {
+      return 0;
+    }
   }
   public function del($json)//(revisado)
   {

@@ -42,6 +42,7 @@ if ($_POST['mod'] == 1) {
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
 
+
   $loginUsuario = $arrayUsuario[0]['loginUsuario'];
   $passUsuario = $arrayUsuario[0]['passUsuario'];
   $rolUsuario = $arrayUsuario[0]['rolUsuario'];
@@ -70,6 +71,8 @@ if ($_POST['mod'] == 1) {
     $SedeFacilitador=$SedeFacilitador.$SedeFacilitadorDato['idSede'].',';
   }
   $SedeFacilitador = substr($SedeFacilitador, 0, strlen($SedeFacilitador) - 1);
+  var_dump($URL1);
+
 
   if ($arrayUsuario[0]['activoUsuario'] == 1)
     $estado = 1;
@@ -203,16 +206,8 @@ if ($_POST['mod'] == 1) {
               </div>
 
               <?php
-               $sedeActiva=0;
-               if(isset($SedeFacilitador)){
-               //echo 'valor:'.@$SedeFacilitador;
-               $sedeActiva = explode(",", @$SedeFacilitador);
-              }
-             // if(!empty(@$arraySedeFacilitador)){
-                //VVALIDAR LAS SEDES DEL FACILITADOR
-
-           //   }
-
+               //VVALIDAR LAS SEDES DEL FACILITADOR
+               $sedeActiva = explode(",", $SedeFacilitador);
               ?>
 
 
@@ -224,7 +219,7 @@ if ($_POST['mod'] == 1) {
                     ?>
                         <input type="checkbox" id="tarea<?php echo $sede['idSede']; ?>" name="sede[]" value="<?php echo $sede['idSede']; ?>"
                         <?php
-                            if (($_POST['mod'] == 2)&&(in_array($sede['idSede'], $sedeActiva))) {
+                            if (in_array($sede['idSede'], $sedeActiva)) {
                               echo "checked";
                             }
                         ?>
@@ -237,8 +232,13 @@ if ($_POST['mod'] == 1) {
 
             </div>
 
+
+
+
+            <!-- /.card-body -->
+
             <div class="card-footer">
-              <button type="button" class="btn btn-primary" onclick="validarCheckbox()"><?php echo $accion; ?></button>
+              <button type="submit" class="btn btn-primary"><?php echo $accion; ?></button>
             </div>
           </form>
         </div>
@@ -249,24 +249,3 @@ if ($_POST['mod'] == 1) {
   </div><!-- /.container-fluid -->
   </section>
 </form>
-
-<script>
-  function validarCheckbox() {
-    var checkboxes = document.getElementsByName('sede[]');
-    var seleccionado = false;
-
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            seleccionado = true;
-            break;
-        }
-    }
-
-    if (!seleccionado) {
-        alert('Debes seleccionar al menos una sede.');
-        return false;
-    }else{
-      document.Usuario.submit();
-    }
-}
-</script>

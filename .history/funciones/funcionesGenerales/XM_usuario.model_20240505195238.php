@@ -31,7 +31,7 @@ $rs = API::JSON_TO_ARRAY($rs);
 //onclick="enviarParametros('admin/clienteList.php')"
 $idHeaderNew = @$rs['result']['idHeaderNew'];
 
- //print("<pre>".print_r(($rs),true)."</pre>");die;
+ print("<pre>".print_r(($rs),true)."</pre>");die;
 
 if (@$rs['status'] == 'OK') {
     $url = "onclick=\"enviarParametrosCRUD('admin/usuarioList.php')\"";

@@ -23,7 +23,7 @@ $rs         = API::GET($URL, $token);
 $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
 
-//Lista de Sedes de taeo
+//Lista de Sedes
 $token = $_SESSION['token'];
 $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
 $rs         = API::GET($URL1, $token);
@@ -41,6 +41,7 @@ if ($_POST['mod'] == 1) {
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=1&idUsuario=$idUsuario";
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
+
 
   $loginUsuario = $arrayUsuario[0]['loginUsuario'];
   $passUsuario = $arrayUsuario[0]['passUsuario'];
@@ -61,15 +62,10 @@ if ($_POST['mod'] == 1) {
   $nombreSede = $arrayUsuario[0]['nombreSede'];
 
 
-  //Lista de Sede del Facilitador
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$idUsuario";//$idUsuario
-  $rs         = API::GET($URL1, $token);
-  $arraySedeFacilitador  = API::JSON_TO_ARRAY($rs);
-  $SedeFacilitador='';
-  foreach ($arraySedeFacilitador  as $SedeFacilitadorDato) {
-    $SedeFacilitador=$SedeFacilitador.$SedeFacilitadorDato['idSede'].',';
-  }
-  $SedeFacilitador = substr($SedeFacilitador, 0, strlen($SedeFacilitador) - 1);
+
+
+  //var_dump($act_usu);
+
 
   if ($arrayUsuario[0]['activoUsuario'] == 1)
     $estado = 1;
@@ -202,43 +198,28 @@ if ($_POST['mod'] == 1) {
                 </div>
               </div>
 
-              <?php
-               $sedeActiva=0;
-               if(isset($SedeFacilitador)){
-               //echo 'valor:'.@$SedeFacilitador;
-               $sedeActiva = explode(",", @$SedeFacilitador);
-              }
-             // if(!empty(@$arraySedeFacilitador)){
-                //VVALIDAR LAS SEDES DEL FACILITADOR
-
-           //   }
-
-              ?>
-
-
               <div class="row">
-                <div class="col-sm-2">
-                    <label>Sedes</label><br>
-                    <?php
-                      foreach ($arraySede  as $sede) {   //checked
-                    ?>
-                        <input type="checkbox" id="tarea<?php echo $sede['idSede']; ?>" name="sede[]" value="<?php echo $sede['idSede']; ?>"
-                        <?php
-                            if (($_POST['mod'] == 2)&&(in_array($sede['idSede'], $sedeActiva))) {
-                              echo "checked";
-                            }
-                        ?>
-
-                        >
-                        <label for="tarea<?php echo $sede['idSede']; ?>"><?php echo $sede['nombreSede']; ?></label><br>
-                    <?php } ?>
+              <div class="col-sm-2">
+                  <label>Activo</label>
+                  <select class="form-control" name="activoUsuario" id="activoUsuario">
+                    <option <?php if (@$estado == 1) {
+                              echo 'selected';
+                            } ?> value=1>Activo</option>
+                    <option <?php if (@$estado == 0) {
+                              echo 'selected';
+                            } ?> value=0>Desactivado</option>
+                  </select>
                 </div>
               </div>
-
             </div>
 
+
+
+
+            <!-- /.card-body -->
+
             <div class="card-footer">
-              <button type="button" class="btn btn-primary" onclick="validarCheckbox()"><?php echo $accion; ?></button>
+              <button type="submit" class="btn btn-primary"><?php echo $accion; ?></button>
             </div>
           </form>
         </div>
@@ -249,24 +230,3 @@ if ($_POST['mod'] == 1) {
   </div><!-- /.container-fluid -->
   </section>
 </form>
-
-<script>
-  function validarCheckbox() {
-    var checkboxes = document.getElementsByName('sede[]');
-    var seleccionado = false;
-
-    for (var i = 0; i < checkboxes.length; i++) {
-        if (checkboxes[i].checked) {
-            seleccionado = true;
-            break;
-        }
-    }
-
-    if (!seleccionado) {
-        alert('Debes seleccionar al menos una sede.');
-        return false;
-    }else{
-      document.Usuario.submit();
-    }
-}
-</script>

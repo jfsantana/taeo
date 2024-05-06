@@ -71,16 +71,17 @@ class empleados extends conexion
   {
 
     $query = "SELECT
-              usuario.*,
-              rol.descripcionRol
-              FROM
-              usuario_token
-              INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
-              left JOIN rol ON usuario.rolUsuario = rol.idRol
+                usuario.*,
+                rol.descripcionRol,
+                usuario_sede.idSede
+                FROM
+                usuario_token
+                INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
+                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+                INNER JOIN usuario_sede ON usuario_token.sede=usuario.idUsuario
+                WHERE
+                usuario_token.token =  '$token'";
 
-              WHERE
-              usuario_token.token =  '$token'";
-        //  echo $query ; die;
     return parent::ObtenerDatos($query);
   }
 

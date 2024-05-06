@@ -224,7 +224,7 @@ if ($_POST['mod'] == 1) {
                     ?>
                         <input type="checkbox" id="tarea<?php echo $sede['idSede']; ?>" name="sede[]" value="<?php echo $sede['idSede']; ?>"
                         <?php
-                            if (($_POST['mod'] == 2)&&(in_array($sede['idSede'], $sedeActiva))) {
+                            if (($_POST['mod'] == 2)||(in_array($sede['idSede'], $sedeActiva))) {
                               echo "checked";
                             }
                         ?>

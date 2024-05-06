@@ -15,7 +15,7 @@ if (!isset($_SESSION)) {
                   <?php
                     echo $_SESSION['des_rol'] ;
                     if(isset($_SESSION['nombreEmpresaConsultora'] ))
-                    echo ' / '.$_SESSION['sedeNombre'];
+                    echo ' / '.$_SESSION['nombreEmpresaConsultora'];
                     ;
                   ?>)</a>
         </div>
