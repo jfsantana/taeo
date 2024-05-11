@@ -64,19 +64,8 @@ if ($_POST['mod'] == 1) {
   else
     $estado = 0;
 
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/representante?type=2&idRepresentante=$idRepresentante";
-    $rs         = API::GET($URL, $token);
-    $arrayAprendizByRepresentantes  = API::JSON_TO_ARRAY($rs);
 
-    $arrayRepresentantesList='';
-
-    foreach ($arrayAprendizByRepresentantes  as $arrayRepresentantesDato) {
-      $arrayRepresentantesList=$arrayRepresentantesList.$arrayRepresentantesDato['idAprendiz'].',';
-    }
-    //representantes activos
-    $arrayRepresentantesList = substr($arrayRepresentantesList, 0, strlen($arrayRepresentantesList) - 1);
-
-    // var_dump($arrayRepresentantesList);
+  // var_dump($arrayClientes[0]['estado'] );
 
 }
 ?>
@@ -125,28 +114,6 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="telefonoRepresentante">Telefono</label>
-                  <input type="text" class="form-control" name="telefonoRepresentante" id="telefonoRepresentante" placeholder="telefonoRepresentante" value="<?php echo @$telefonoRepresentante; ?>">
-                </div>
-
-                <div class="col-sm-3">
-                  <label for="parentescoRepresentante">Parentesco</label>
-                  <select class="form-control " name="parentescoRepresentante" style="width: 100%;">
-                      <option value='Madre' <?php if (@$parentescoRepresentante == 'Madre') { echo 'selected';} ?>>Madre</option>
-                      <option value='Padre' <?php if (@$parentescoRepresentante == 'Padre') { echo 'selected';} ?>>Padre</option>
-                      <option value='Hermano(a)' <?php if (@$parentescoRepresentante == 'Hermano(a)') { echo 'selected';} ?>>Hermano(a)</option>
-                      <option value='Tio(a)' <?php if (@$parentescoRepresentante == 'Tio(a)') { echo 'selected';} ?>>Tio(a)</option>
-                      <option value='Cuidador(a)' <?php if (@$parentescoRepresentante == 'Cuidador(a)') { echo 'selected';} ?>>Cuidador(a)</option>
-                      <option value='Transporte' <?php if (@$parentescoRepresentante == 'Transporte') { echo 'selected';} ?>>Transporte</option>
-                      <option value='Abuelo(a)' <?php if (@$parentescoRepresentante == 'Abuelo(a)') { echo 'selected';} ?>>Abuelo(a)</option>
-                      <option value='Padrino(a)' <?php if (@$parentescoRepresentante == 'Padrino(a)') { echo 'selected';} ?>>Padrino(a)</option>
-                      <option value='Sobrino(a)' <?php if (@$parentescoRepresentante == 'Sobrino(a)') { echo 'selected';} ?>>Sobrino(a)</option>
-                      <option value='Vecino(a)' <?php if (@$parentescoRepresentante == 'Vecino(a)') { echo 'selected';} ?>>Vecino(a)</option>
-                  </select>
-
-                </div>
-
-                <div class="col-sm-3">
                   <label for="profesionRepresentante">Profesion Representante</label>
                   <input type="text" class="form-control" name="profesionRepresentante" id="profesionRepresentante" placeholder="profesionRepresentante" value="<?php echo @$profesionRepresentante; ?>">
                 </div>
@@ -162,24 +129,59 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="razonSocialRepresentante">Razon Social</label>
-                  <input type="text" class="form-control" name="razonSocialRepresentante" id="razonSocialRepresentante" placeholder="razonSocialRepresentante" value="<?php echo @$razonSocialRepresentante; ?>">
-                </div>
-                <div class="col-sm-3">
-                  <label for="rifRepresentante">Rif</label>
-                  <input type="text" class="form-control" name="rifRepresentante" id="rifRepresentante" placeholder="rifRepresentante" value="<?php echo @$rifRepresentante; ?>">
-                </div>
-                <div class="col-sm-6">
-                  <label for="direccionFiscalRepresentante">Direccion Fiscal</label>
-                  <input type="text" class="form-control" name="direccionFiscalRepresentante" id="direccionFiscalRepresentante" placeholder="direccionFiscalRepresentante" value="<?php echo @$direccionFiscalRepresentante; ?>">
+                  <label for="telefonoRepresentante">Telefono</label>
+                  <input type="text" class="form-control" name="telefonoRepresentante" id="telefonoRepresentante" placeholder="telefonoRepresentante" value="<?php echo @$telefonoRepresentante; ?>">
                 </div>
 
-                <div class="col-sm-2">
-                  <label>Puede Retirar a su Representante</label>
-                  <select class="form-control " name="retirarAprendiz" style="width: 100%;">
+                <div class="col-sm-3">
+                  <label for="parentescoRepresentante">Parentesco</label>
+                  <select class="form-control select2" name="parentescoRepresentante" style="width: 100%;">
+                      <option value='Madre' <?php if (@$parentescoRepresentante == 'Madre') { echo 'selected';} ?>>Madre</option>
+                      <option value='Padre' <?php if (@$parentescoRepresentante == 'Padre') { echo 'selected';} ?>>Padre</option>
+                      <option value='Hermano(a)' <?php if (@$parentescoRepresentante == 'Hermano(a)') { echo 'selected';} ?>>Hermano(a)</option>
+                      <option value='Tio(a)' <?php if (@$parentescoRepresentante == 'Tio(a)') { echo 'selected';} ?>>Tio(a)</option>
+                      <option value='Cuidador(a)' <?php if (@$parentescoRepresentante == 'Cuidador(a)') { echo 'selected';} ?>>Cuidador(a)</option>
+                      <option value='Transporte' <?php if (@$parentescoRepresentante == 'Transporte') { echo 'selected';} ?>>Transporte</option>
+                      <option value='Abuelo(a)' <?php if (@$parentescoRepresentante == 'Abuelo(a)') { echo 'selected';} ?>>Abuelo(a)</option>
+                      <option value='Padrino(a)' <?php if (@$parentescoRepresentante == 'Padrino(a)') { echo 'selected';} ?>>Padrino(a)</option>
+                      <option value='Sobrino(a)' <?php if (@$parentescoRepresentante == 'Sobrino(a)') { echo 'selected';} ?>>Sobrino(a)</option>
+                      <option value='Vecino(a)' <?php if (@$parentescoRepresentante == 'Vecino(a)') { echo 'selected';} ?>>Vecino(a)</option>
+                  </select>
+
+                </div>
+
+
+
+                Cuidadora
+Madre
+Padre
+
+
+                <div class="col-sm-4">
+                  <label>retirarAprendiz</label>
+                  <select class="form-control select2" name="retirarAprendiz" style="width: 100%;">
                       <option value='1' <?php if (@$retirarAprendiz == 1) { echo 'selected';} ?>>Si</option>
                       <option value='0' <?php if (@$retirarAprendiz == 0) { echo 'selected';} ?>>No</option>
                   </select>
+                </div>
+
+                <div class="col-sm-3">
+                  <label for="razonSocialRepresentante">razonSocialRepresentante</label>
+                  <input type="text" class="form-control" name="razonSocialRepresentante" id="razonSocialRepresentante" placeholder="razonSocialRepresentante" value="<?php echo @$razonSocialRepresentante; ?>">
+                </div>
+                <div class="col-sm-3">
+                  <label for="rifRepresentante">rifRepresentante</label>
+                  <input type="text" class="form-control" name="rifRepresentante" id="rifRepresentante" placeholder="rifRepresentante" value="<?php echo @$rifRepresentante; ?>">
+                </div>
+                <div class="col-sm-3">
+                  <label for="direccionFiscalRepresentante">direccionFiscalRepresentante</label>
+                  <input type="text" class="form-control" name="direccionFiscalRepresentante" id="direccionFiscalRepresentante" placeholder="direccionFiscalRepresentante" value="<?php echo @$direccionFiscalRepresentante; ?>">
+                </div>
+
+
+                <div class="col-sm-3">
+                  <label for="nombreCliente">Contraseña</label>
+                  <input type="text" class="form-control" name="passUsuario" id="passUsuario" placeholder="Clave inicial para  APP" value="<?php echo @$passUsuario; ?>">
                 </div>
 
                 <div class="col-sm-2">
@@ -194,59 +196,6 @@ if ($_POST['mod'] == 1) {
                   </select>
                 </div>
               </div>
-
-
-              <div class="col-sm-12">
-                <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                <th with=5%>Estado</th>
-                                <th>Nombre Aprendiz</th>
-                                <th>Fecha Nacimiento</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php
-                                foreach($arrayAprendizByRepresentantes as $facilitador){  ?>
-                                <td><?php if ($facilitador['activoAprendiz']==1){echo 'Activo';}else{echo 'No Activo';} ?></td>
-                                <td><?php echo $facilitador['apellidoAprendiz'].', '.$facilitador['nombreAprendiz']; ?></td>
-
-                                <?php
-                                  $fecha_nacimiento = $facilitador['fechaNacimientoAprendiz'];
-                                  $fecha_actual = date("Y-m-d H:i:s");
-
-                                  $timestamp_nacimiento = strtotime($fecha_nacimiento);
-                                  $timestamp_actual = strtotime($fecha_actual);
-
-                                  $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
-
-                                  $anios = floor($diferencia / (365 * 60 * 60 * 24));
-                                  $meses = floor(($diferencia - $anios * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-
-
-                                  ?>
-                                  <td><?php echo $anios . " años, " . $meses . " meses"; ?></td>
-
-
-
-
-
-
-
-                               <?php } ?>
-                            </tbody>
-                              <tfoot>
-                                <tr>
-                                  <th with=5%>Estado</th>
-                                  <th>Nombre Aprendiz</th>
-                                  <th>Fecha Nacimiento</th>
-
-                                </tr>
-                              </tfoot>
-                            </table>
-              </div>
-
-
 
 
 

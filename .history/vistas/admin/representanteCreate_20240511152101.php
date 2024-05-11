@@ -200,7 +200,7 @@ if ($_POST['mod'] == 1) {
                 <table id="example1" class="table table-bordered table-striped">
                             <thead>
                               <tr>
-                                <th with=5%>Estado</th>
+                                <th with=5%>Activo</th>
                                 <th>Nombre Aprendiz</th>
                                 <th>Fecha Nacimiento</th>
                               </tr>
@@ -208,38 +208,21 @@ if ($_POST['mod'] == 1) {
                             <tbody>
                               <?php
                                 foreach($arrayAprendizByRepresentantes as $facilitador){  ?>
-                                <td><?php if ($facilitador['activoAprendiz']==1){echo 'Activo';}else{echo 'No Activo';} ?></td>
+                                <td><?php echo $facilitador['activoAprendiz']; ?></td>
                                 <td><?php echo $facilitador['apellidoAprendiz'].', '.$facilitador['nombreAprendiz']; ?></td>
-
-                                <?php
-                                  $fecha_nacimiento = $facilitador['fechaNacimientoAprendiz'];
-                                  $fecha_actual = date("Y-m-d H:i:s");
-
-                                  $timestamp_nacimiento = strtotime($fecha_nacimiento);
-                                  $timestamp_actual = strtotime($fecha_actual);
-
-                                  $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
-
-                                  $anios = floor($diferencia / (365 * 60 * 60 * 24));
-                                  $meses = floor(($diferencia - $anios * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-
-
-                                  ?>
-                                  <td><?php echo $anios . " años, " . $meses . " meses"; ?></td>
-
-
-
-
-
+                                <td><?php echo $facilitador['fechaNacimientoAprendiz']; ?></td>
 
 
                                <?php } ?>
                             </tbody>
                               <tfoot>
                                 <tr>
-                                  <th with=5%>Estado</th>
-                                  <th>Nombre Aprendiz</th>
-                                  <th>Fecha Nacimiento</th>
+                                <th>Activo</th>
+                                  <th>Nombre Represenatnte</th>
+                                  <th>Cedula</th>
+                                  <th>Parentesco</th>
+                                  <th>Telefono</th>
+                                  <th>Puede Retirar</th>
 
                                 </tr>
                               </tfoot>

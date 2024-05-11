@@ -66,17 +66,20 @@ if ($_POST['mod'] == 1) {
 
     $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/representante?type=2&idRepresentante=$idRepresentante";
     $rs         = API::GET($URL, $token);
-    $arrayAprendizByRepresentantes  = API::JSON_TO_ARRAY($rs);
+    $arrayRepresentantes  = API::JSON_TO_ARRAY($rs);
 
-    $arrayRepresentantesList='';
+    $arrayRepresentantes='';
 
-    foreach ($arrayAprendizByRepresentantes  as $arrayRepresentantesDato) {
-      $arrayRepresentantesList=$arrayRepresentantesList.$arrayRepresentantesDato['idAprendiz'].',';
+    foreach ($arrayRepresentantes  as $arrayRepresentantesDato) {
+      $arrayRepresentantes=$arrayRepresentantes.$arrayRepresentantesDato['idRepresentante'].',';
     }
     //representantes activos
-    $arrayRepresentantesList = substr($arrayRepresentantesList, 0, strlen($arrayRepresentantesList) - 1);
+    $arrayRepresentantes = substr($arrayRepresentantes, 0, strlen($arrayRepresentantes) - 1);
 
-    // var_dump($arrayRepresentantesList);
+echo  $arrayRepresentantes ;
+
+
+  // var_dump($arrayClientes[0]['estado'] );
 
 }
 ?>
@@ -195,56 +198,6 @@ if ($_POST['mod'] == 1) {
                 </div>
               </div>
 
-
-              <div class="col-sm-12">
-                <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                <th with=5%>Estado</th>
-                                <th>Nombre Aprendiz</th>
-                                <th>Fecha Nacimiento</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php
-                                foreach($arrayAprendizByRepresentantes as $facilitador){  ?>
-                                <td><?php if ($facilitador['activoAprendiz']==1){echo 'Activo';}else{echo 'No Activo';} ?></td>
-                                <td><?php echo $facilitador['apellidoAprendiz'].', '.$facilitador['nombreAprendiz']; ?></td>
-
-                                <?php
-                                  $fecha_nacimiento = $facilitador['fechaNacimientoAprendiz'];
-                                  $fecha_actual = date("Y-m-d H:i:s");
-
-                                  $timestamp_nacimiento = strtotime($fecha_nacimiento);
-                                  $timestamp_actual = strtotime($fecha_actual);
-
-                                  $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
-
-                                  $anios = floor($diferencia / (365 * 60 * 60 * 24));
-                                  $meses = floor(($diferencia - $anios * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-
-
-                                  ?>
-                                  <td><?php echo $anios . " años, " . $meses . " meses"; ?></td>
-
-
-
-
-
-
-
-                               <?php } ?>
-                            </tbody>
-                              <tfoot>
-                                <tr>
-                                  <th with=5%>Estado</th>
-                                  <th>Nombre Aprendiz</th>
-                                  <th>Fecha Nacimiento</th>
-
-                                </tr>
-                              </tfoot>
-                            </table>
-              </div>
 
 
 

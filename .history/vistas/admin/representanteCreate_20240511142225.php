@@ -64,19 +64,8 @@ if ($_POST['mod'] == 1) {
   else
     $estado = 0;
 
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/representante?type=2&idRepresentante=$idRepresentante";
-    $rs         = API::GET($URL, $token);
-    $arrayAprendizByRepresentantes  = API::JSON_TO_ARRAY($rs);
 
-    $arrayRepresentantesList='';
-
-    foreach ($arrayAprendizByRepresentantes  as $arrayRepresentantesDato) {
-      $arrayRepresentantesList=$arrayRepresentantesList.$arrayRepresentantesDato['idAprendiz'].',';
-    }
-    //representantes activos
-    $arrayRepresentantesList = substr($arrayRepresentantesList, 0, strlen($arrayRepresentantesList) - 1);
-
-    // var_dump($arrayRepresentantesList);
+  // var_dump($arrayClientes[0]['estado'] );
 
 }
 ?>
@@ -162,15 +151,15 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="razonSocialRepresentante">Razon Social</label>
+                  <label for="razonSocialRepresentante">razonSocialRepresentante</label>
                   <input type="text" class="form-control" name="razonSocialRepresentante" id="razonSocialRepresentante" placeholder="razonSocialRepresentante" value="<?php echo @$razonSocialRepresentante; ?>">
                 </div>
                 <div class="col-sm-3">
-                  <label for="rifRepresentante">Rif</label>
+                  <label for="rifRepresentante">rifRepresentante</label>
                   <input type="text" class="form-control" name="rifRepresentante" id="rifRepresentante" placeholder="rifRepresentante" value="<?php echo @$rifRepresentante; ?>">
                 </div>
-                <div class="col-sm-6">
-                  <label for="direccionFiscalRepresentante">Direccion Fiscal</label>
+                <div class="col-sm-3">
+                  <label for="direccionFiscalRepresentante">direccionFiscalRepresentante</label>
                   <input type="text" class="form-control" name="direccionFiscalRepresentante" id="direccionFiscalRepresentante" placeholder="direccionFiscalRepresentante" value="<?php echo @$direccionFiscalRepresentante; ?>">
                 </div>
 
@@ -194,59 +183,6 @@ if ($_POST['mod'] == 1) {
                   </select>
                 </div>
               </div>
-
-
-              <div class="col-sm-12">
-                <table id="example1" class="table table-bordered table-striped">
-                            <thead>
-                              <tr>
-                                <th with=5%>Estado</th>
-                                <th>Nombre Aprendiz</th>
-                                <th>Fecha Nacimiento</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <?php
-                                foreach($arrayAprendizByRepresentantes as $facilitador){  ?>
-                                <td><?php if ($facilitador['activoAprendiz']==1){echo 'Activo';}else{echo 'No Activo';} ?></td>
-                                <td><?php echo $facilitador['apellidoAprendiz'].', '.$facilitador['nombreAprendiz']; ?></td>
-
-                                <?php
-                                  $fecha_nacimiento = $facilitador['fechaNacimientoAprendiz'];
-                                  $fecha_actual = date("Y-m-d H:i:s");
-
-                                  $timestamp_nacimiento = strtotime($fecha_nacimiento);
-                                  $timestamp_actual = strtotime($fecha_actual);
-
-                                  $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
-
-                                  $anios = floor($diferencia / (365 * 60 * 60 * 24));
-                                  $meses = floor(($diferencia - $anios * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-
-
-                                  ?>
-                                  <td><?php echo $anios . " años, " . $meses . " meses"; ?></td>
-
-
-
-
-
-
-
-                               <?php } ?>
-                            </tbody>
-                              <tfoot>
-                                <tr>
-                                  <th with=5%>Estado</th>
-                                  <th>Nombre Aprendiz</th>
-                                  <th>Fecha Nacimiento</th>
-
-                                </tr>
-                              </tfoot>
-                            </table>
-              </div>
-
-
 
 
 
