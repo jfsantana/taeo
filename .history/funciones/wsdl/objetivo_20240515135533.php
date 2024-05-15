@@ -4,8 +4,8 @@
 require_once 'clases/respuestas.class.php';
 require_once 'clases/objetivo.class.php';
 
-$_respuestas = new respuestas();
-$_objetivo = new objetivo();
+$_respuestas = new objetivo();
+$_representante = new representante();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /*****!SECTION
@@ -18,17 +18,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * 5 Destalle de un itemHeader
    */
   if ($_GET['type']==1){
-    $datosArray = $_objetivo->getObjetivosHeadere(@$_GET['idObjetivoHeader']);
+    $datosArray = $_representante->getObjetivosHeadere(@$_GET['idObjetivoHeader']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
   }elseif(($_GET['type']==2)||(isset($_GET['idHeader']))){
-    $datosArray = $_objetivo->getidPadreByHeader(@$_GET['idHeader']);
+    $datosArray = $_representante->getidPadreByHeader(@$_GET['idHeader']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
   }elseif(($_GET['type']==3)||(isset($_GET['id_padre']))){
-    $datosArray = $_objetivo->getIemsByHeader(@$_GET['id_padre']);
+    $datosArray = $_representante->getIemsByHeader(@$_GET['id_padre']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_POST);
   }
 
-  $datosArray = $_objetivo->post($postBody);
+  $datosArray = $_representante->post($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_PUT);
   }
 
-  //$datosArray = $_objetivo->put($postBody);
+  //$datosArray = $_representante->put($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_DELETE);
   }
 
-  $datosArray = $_objetivo->del($postBody);
+  $datosArray = $_representante->del($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {

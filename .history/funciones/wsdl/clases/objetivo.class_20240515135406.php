@@ -170,7 +170,7 @@ class objetivo extends conexion
 
   private function Insertar()//()
   {
-    $query = 'insert Into ' . $this->tablaItems . "
+    $query = 'insert Into ' . $this->tabla . "
               (
                 nombreRepresentante,
                 apellidoRepresentante,
@@ -221,7 +221,7 @@ class objetivo extends conexion
 
   private function Update()//()
   {
-    $query = 'update ' . $this->tablaItems . "
+    $query = 'update ' . $this->tabla . "
                           set
                           nombreRepresentante='$this->nombreRepresentante',
                           apellidoRepresentante='$this->apellidoRepresentante',
@@ -291,7 +291,7 @@ class objetivo extends conexion
 
   private function EliminarEmpleados()//()
   {
-    $query = "delete from $this->tablaItems
+    $query = "delete from $this->tabla
         WHERE idRepresentante = $this->idRepresentante";
     $update = parent::nonQuery($query);
     if ($update >= 1) {

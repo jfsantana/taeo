@@ -10,74 +10,6 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
  //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
- function  nivel($nodoPadre,$level,$token){
-
-  $arrayhijosNexLevel  = hijos($nodoPadre['id'], $token);
-  if(count($arrayhijosNexLevel)>0)
-  {?>
-      <tr class="expandable-body">
-      <td>
-          <div class="p-0">
-                  <table class="table table-hover">
-                  <tbody>
-                      <?php
-                      //************************ INICIO DEL RECORRIDO NIVEL 2 ********************/
-                      foreach($arrayhijosNexLevel as $datosArrayhijosNexLevel)
-                      {?>
-                      <tr data-widget="expandable-table" aria-expanded="false">
-                          <td>
-                          <div class="p-0">
-                              <table class="table table-hover">
-                              <tbody>
-                                  <?php
-                                  $arrayhijosN1  = hijos($datosArrayhijosNexLevel['id'], $token);
-
-                                  if(count($arrayhijosN1)<1)
-                                  {
-                                  //No tiene Hijos?>
-                                  <tr data-widget="expandable-table" aria-expanded="false">
-                                      <td>
-                                      <?php echo 'NIVEL '.$level.'- SH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
-                                      </td>
-                                  </tr>
-                                  <?php
-                                  }else
-                                  {
-                                  // si tiene Hijo
-                                  ?>
-                                  <tr data-widget="expandable-table" aria-expanded="false">
-                                      <td>
-                                          <button type="button" class="btn btn-primary p-0">
-                                          <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
-                                          </button>
-                                          <?php echo 'NIVEL '.$level.' - CH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
-                                      </td>
-                                  </tr>
-                                  <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
-                                  <?php
-
-
-                                  ?>
-                                  <!-- /*fin  va el codigo para el siguiente nivel*/ -->
-                                  <?php
-                                  }?>
-                              </tbody>
-                              </table>
-                          </div>
-                          </td>
-                      </tr>
-                      <?php
-                      }?>
-                  </tbody>
-                  </table>
-          </div>
-          </td>
-      </tr>
-
-      <?php
-  }
-}
-
 
 
 if ($_POST['mod'] == 1) {
@@ -259,7 +191,6 @@ function  hijos ($padre, $token){
                                                         </tr>
                                                         <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
                                                         <?php
-                                                         // nivel($datosArrayhijos,3,$token)
                                                           $arrayhijosN2  = hijos($datosArrayhijos['id'], $token);
                                                            if(count($arrayhijosN2)>0)
                                                            {?>
@@ -285,7 +216,7 @@ function  hijos ($padre, $token){
                                                                                            //No tiene Hijos?>
                                                                                            <tr data-widget="expandable-table" aria-expanded="false">
                                                                                              <td>
-                                                                                               <?php echo 'NIVEL 3- SH'.$datosArrayhijosN3['id'].'-'.$datosArrayhijosN3['jerarquia'].'-'.$datosArrayhijosN3['descripcion'];?>
+                                                                                               <?php echo 'NIVEL 2- SH'.$datosArrayhijosN3['id'].'-'.$datosArrayhijosN3['jerarquia'].'-'.$datosArrayhijosN3['descripcion'];?>
                                                                                              </td>
                                                                                            </tr>
                                                                                            <?php
@@ -298,75 +229,12 @@ function  hijos ($padre, $token){
                                                                                                  <button type="button" class="btn btn-primary p-0">
                                                                                                    <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                                                                  </button>
-                                                                                                 <?php echo 'NIVEL 3 - CH'.$datosArrayhijosN3['id'].'-'.$datosArrayhijosN3['jerarquia'].'-'.$datosArrayhijosN3['descripcion'];?>
+                                                                                                 <?php echo 'NIVEL 2 - CH'.$datosArrayhijosN3['id'].'-'.$datosArrayhijosN3['jerarquia'].'-'.$datosArrayhijosN3['descripcion'];?>
                                                                                              </td>
                                                                                            </tr>
                                                                                            <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
                                                                                            <?php
 
-                                                                                            $arrayhijosNexLevel  = hijos($datosArrayhijosN3['id'], $token);
-                                                                                            if(count($arrayhijosNexLevel)>0)
-                                                                                            {?>
-                                                                                                <tr class="expandable-body">
-                                                                                                <td>
-                                                                                                    <div class="p-0">
-                                                                                                            <table class="table table-hover">
-                                                                                                            <tbody>
-                                                                                                                <?php
-                                                                                                                //************************ INICIO DEL RECORRIDO NIVEL 2 ********************/
-                                                                                                                foreach($arrayhijosNexLevel as $datosArrayhijosNexLevel)
-                                                                                                                {?>
-                                                                                                                <tr data-widget="expandable-table" aria-expanded="false">
-                                                                                                                    <td>
-                                                                                                                    <div class="p-0">
-                                                                                                                        <table class="table table-hover">
-                                                                                                                        <tbody>
-                                                                                                                            <?php
-                                                                                                                            $arrayhijosN1  = hijos($datosArrayhijosNexLevel['id'], $token);
-
-                                                                                                                            if(count($arrayhijosN1)<1)
-                                                                                                                            {
-                                                                                                                            //No tiene Hijos?>
-                                                                                                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                                                                                                <td>
-                                                                                                                                <?php echo 'NIVEL 4- SH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <?php
-                                                                                                                            }else
-                                                                                                                            {
-                                                                                                                            // si tiene Hijo
-                                                                                                                            ?>
-                                                                                                                            <tr data-widget="expandable-table" aria-expanded="false">
-                                                                                                                                <td>
-                                                                                                                                    <button type="button" class="btn btn-primary p-0">
-                                                                                                                                    <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
-                                                                                                                                    </button>
-                                                                                                                                    <?php echo 'NIVEL 4 - CH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
-                                                                                                                                </td>
-                                                                                                                            </tr>
-                                                                                                                            <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
-                                                                                                                            <?php
-                                                                                                                            nivel($datosArrayhijosNexLevel,5,$token);
-                                                                                                                            ?>
-                                                                                                                            <!-- /*fin  va el codigo para el siguiente nivel*/ -->
-                                                                                                                            <?php
-                                                                                                                            }?>
-                                                                                                                        </tbody>
-                                                                                                                        </table>
-                                                                                                                    </div>
-                                                                                                                    </td>
-                                                                                                                </tr>
-                                                                                                                <?php
-                                                                                                                }?>
-                                                                                                            </tbody>
-                                                                                                            </table>
-                                                                                                    </div>
-                                                                                                    </td>
-                                                                                                </tr>
-
-                                                                                                <?php
-                                                                                            }
                                                                                            ?>
                                                                                            <!-- /*fin  va el codigo para el siguiente nivel*/ -->
                                                                                            <?php
