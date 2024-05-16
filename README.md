@@ -10,7 +10,15 @@
 **TAEO INFO** Sistema para la getsion de Planifiicacion y Control de Evaluaiones de aprendices
 
 Te mermite :
+config
+{
+  "conexion":{
+    "server":"localhost",
+    "user":"root",
+    "password":"",
+    "port":"3306"
+  }
+}
 
-Falta completar
 
 
