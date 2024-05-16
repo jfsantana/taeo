@@ -16,9 +16,11 @@ config
     "server":"localhost",
     "user":"root",
     "password":"",
+    "database":"taeho_v2",
     "port":"3306"
   }
 }
+
 
 
 
