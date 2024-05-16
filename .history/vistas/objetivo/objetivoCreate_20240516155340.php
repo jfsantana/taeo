@@ -37,7 +37,7 @@ $token = $_SESSION['token'];
                                   //No tiene Hijos?>
                                   <tr data-widget="expandable-table" aria-expanded="false">
                                       <td>
-                                      <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
+                                      <?php echo 'NIVEL '.$level.'- SH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
                                       </td>
                                   </tr>
                                   <?php
@@ -50,7 +50,7 @@ $token = $_SESSION['token'];
                                           <button type="button" class="btn btn-primary p-0">
                                           <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                           </button>
-                                          <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
+                                          <?php echo 'NIVEL '.$level.' - CH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
                                       </td>
                                   </tr>
                                   <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -147,21 +147,21 @@ if ($_POST['mod'] == 1) {
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-6">
-                  <label for="nombreRepresentante">Nombre del Objetivo</label>
+                  <label for="nombreRepresentante">Nombre</label>
                   <input type="text" class="form-control" name="nombreObjetivo" id="nombreObjetivo" placeholder="Nombre(s)" value="<?php echo @$nombreObjetivo; ?>">
                 </div>
                 <div class="col-sm-3">
-                  <label for="apellidoRepresentante">Version Objetivo</label>
+                  <label for="apellidoRepresentante">versionObjetivo</label>
                   <input type="text" class="form-control" name="versionObjetivo" id="versionObjetivo" placeholder="version(s)" value="<?php echo @$versionObjetivo; ?>">
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="cedulaRepresentante">Fecha Creacion</label>
+                  <label for="cedulaRepresentante">fechaCreacion</label>
                   <input type="text" class="form-control" readonly name="fechaCreacion" id="fechaCreacion" placeholder="fechaCreacion" value="<?php echo @$fechaCreacion; ?>">
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="telefonoRepresentante">Creado Por</label>
+                  <label for="telefonoRepresentante">creadoPor</label>
                   <input type="text" class="form-control" name="creadoPor" id="creadoPor" placeholder="creadoPor" value="<?php echo @$creadoPor; ?>">
                 </div>
 
@@ -177,21 +177,10 @@ if ($_POST['mod'] == 1) {
                             } ?> value=0>Desactivado</option>
                   </select>
                 </div>
-
+                <div class="card-header">
+<h3 class="card-title">Quick Example</h3>
+</div>
                 <div class="col-sm-12">
-
-                <div class="card card-primary">
-                </br>
-                  <div class="card-header">
-
-                    <h3 class="card-title">Contenido del Objetivo</h3>
-                  </div>
-
-
-
-
-
-
                 <table class="table table-hover">
                   <tbody>
 
@@ -222,11 +211,11 @@ function  hijos ($padre, $token){
                         $arrayhijos  = hijos($datosNodoPadre['id'], $token);
 
                         //imprime el Primer NODO padre
-                        echo'<tr data-widget="expandable-table" aria-expanded="false"><td>';
+                        echo'<tr data-widget="expandable-table" aria-expanded="false"><td>NIVEL 1 - ';
 
                         if(count($arrayhijos)>0){//imprime el botonpara desplegar los hijos
                               echo '<button type="button" class="btn btn-primary p-0"><i class="expandable-table-caret fas fa-caret-right fa-fw"></i></button>';}
-                        echo ' '.$datosNodoPadre['jerarquia'].' - '.$datosNodoPadre['descripcion'].'</td></tr>';
+                        echo $datosNodoPadre['jerarquia'].'-'.$datosNodoPadre['descripcion'].'</td></tr>';
 
 
 
@@ -255,7 +244,7 @@ function  hijos ($padre, $token){
                                                         //No tiene Hijos?>
                                                         <tr data-widget="expandable-table" aria-expanded="false">
                                                           <td>
-                                                            <?php echo ' '.$datosArrayhijos['jerarquia'].' - '.$datosArrayhijos['descripcion'];?>
+                                                            <?php echo 'NIVEL 2- SH'.$datosArrayhijos['id'].'-'.$datosArrayhijos['jerarquia'].'-'.$datosArrayhijos['descripcion'];?>
                                                           </td>
                                                         </tr>
                                                         <?php
@@ -268,7 +257,7 @@ function  hijos ($padre, $token){
                                                               <button type="button" class="btn btn-primary p-0">
                                                                 <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                               </button>
-                                                              <?php echo ' '.$datosArrayhijos['jerarquia'].' - '.$datosArrayhijos['descripcion'];?>
+                                                              <?php echo 'NIVEL 2 - CH'.$datosArrayhijos['id'].'-'.$datosArrayhijos['jerarquia'].'-'.$datosArrayhijos['descripcion'];?>
                                                           </td>
                                                         </tr>
                                                         <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -283,7 +272,7 @@ function  hijos ($padre, $token){
                                                                          <table class="table table-hover">
                                                                            <tbody>
                                                                              <?php
-                                                                             //************************ INICIO DEL RECORRIDO NIVEL 3 ********************/
+                                                                             //************************ INICIO DEL RECORRIDO NIVEL 2 ********************/
                                                                              foreach($arrayhijosN2 as $datosArrayhijosN3)
                                                                              {?>
                                                                                <tr data-widget="expandable-table" aria-expanded="false">
@@ -299,7 +288,7 @@ function  hijos ($padre, $token){
                                                                                            //No tiene Hijos?>
                                                                                            <tr data-widget="expandable-table" aria-expanded="false">
                                                                                              <td>
-                                                                                               <?php echo ' '.$datosArrayhijosN3['jerarquia'].' - '.$datosArrayhijosN3['descripcion'];?>
+                                                                                               <?php echo 'NIVEL 3- SH'.$datosArrayhijosN3['id'].'-'.$datosArrayhijosN3['jerarquia'].'-'.$datosArrayhijosN3['descripcion'];?>
                                                                                              </td>
                                                                                            </tr>
                                                                                            <?php
@@ -312,7 +301,7 @@ function  hijos ($padre, $token){
                                                                                                  <button type="button" class="btn btn-primary p-0">
                                                                                                    <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                                                                  </button>
-                                                                                                 <?php echo ' '.$datosArrayhijosN3['jerarquia'].' - '.$datosArrayhijosN3['descripcion'];?>
+                                                                                                 <?php echo 'NIVEL 3 - CH'.$datosArrayhijosN3['id'].'-'.$datosArrayhijosN3['jerarquia'].'-'.$datosArrayhijosN3['descripcion'];?>
                                                                                              </td>
                                                                                            </tr>
                                                                                            <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -327,7 +316,7 @@ function  hijos ($padre, $token){
                                                                                                             <table class="table table-hover">
                                                                                                             <tbody>
                                                                                                                 <?php
-                                                                                                                //************************ INICIO DEL RECORRIDO NIVEL 4 ********************/
+                                                                                                                //************************ INICIO DEL RECORRIDO NIVEL 2 ********************/
                                                                                                                 foreach($arrayhijosNexLevel as $datosArrayhijosNexLevel)
                                                                                                                 {?>
                                                                                                                 <tr data-widget="expandable-table" aria-expanded="false">
@@ -343,7 +332,7 @@ function  hijos ($padre, $token){
                                                                                                                             //No tiene Hijos?>
                                                                                                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                                                                                                 <td>
-                                                                                                                                <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
+                                                                                                                                <?php echo 'NIVEL 4- SH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
                                                                                                                                 </td>
                                                                                                                             </tr>
                                                                                                                             <?php
@@ -356,7 +345,7 @@ function  hijos ($padre, $token){
                                                                                                                                     <button type="button" class="btn btn-primary p-0">
                                                                                                                                     <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                                                                                                     </button>
-                                                                                                                                    <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
+                                                                                                                                    <?php echo 'NIVEL 4 - CH'.$datosArrayhijosNexLevel['id'].'-'.$datosArrayhijosNexLevel['jerarquia'].'-'.$datosArrayhijosNexLevel['descripcion'];?>
                                                                                                                                 </td>
                                                                                                                             </tr>
                                                                                                                             <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -445,8 +434,7 @@ function  hijos ($padre, $token){
       <!-- ./col -->
     </div>
     <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-  </div>
+  </div><!-- /.container-fluid -->
   </section>
 </form>
 

@@ -445,8 +445,7 @@ function  hijos ($padre, $token){
       <!-- ./col -->
     </div>
     <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-  </div>
+  </div><!-- /.container-fluid -->
   </section>
 </form>
 

@@ -37,7 +37,7 @@ $token = $_SESSION['token'];
                                   //No tiene Hijos?>
                                   <tr data-widget="expandable-table" aria-expanded="false">
                                       <td>
-                                      <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
+                                      <?php echo ' '.$datosArrayhijosNexLevel['id'].' - '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
                                       </td>
                                   </tr>
                                   <?php
@@ -50,7 +50,7 @@ $token = $_SESSION['token'];
                                           <button type="button" class="btn btn-primary p-0">
                                           <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                           </button>
-                                          <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
+                                          <?php echo ' '.$datosArrayhijosNexLevel['id'].' - '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
                                       </td>
                                   </tr>
                                   <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -445,8 +445,7 @@ function  hijos ($padre, $token){
       <!-- ./col -->
     </div>
     <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-  </div>
+  </div><!-- /.container-fluid -->
   </section>
 </form>
 

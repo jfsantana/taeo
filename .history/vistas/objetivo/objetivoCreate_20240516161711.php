@@ -443,10 +443,7 @@ function  hijos ($padre, $token){
         </div>
       </div>
       <!-- ./col -->
-    </div>
-    <!-- /.row (main row) -->
-    </div><!-- /.container-fluid -->
-  </div>
+
   </section>
 </form>
 
