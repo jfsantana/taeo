@@ -41,7 +41,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#"  class="nav-link ">
+          <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
             <i class="nav-icon fas fa-cog text-danger"></i>
             <p>Configuracion de Correos</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
           </a>

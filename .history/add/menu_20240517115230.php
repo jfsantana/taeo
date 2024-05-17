@@ -41,7 +41,7 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#"  class="nav-link ">
+          <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
             <i class="nav-icon fas fa-cog text-danger"></i>
             <p>Configuracion de Correos</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
           </a>
@@ -225,7 +225,7 @@
       </li> -->
     <?php } ?>
     <li class="nav-item">
-      <a href="#" class="nav-link ">
+      <a href="../manual/Documentacion del Sisterma de Tiempo de MCS.docx" class="nav-link ">
         <i class="nav-icon far fa-circle text-danger"></i>
         <p>Manual de Usuario</p>
       </a>
