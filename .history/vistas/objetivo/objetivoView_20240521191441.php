@@ -30,7 +30,7 @@
               (
                 <a href="#"
                 onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
               )</td></tr>';
 
@@ -66,7 +66,7 @@
                                               (
                                                 <a href="#"
                                                 onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
                                               )
 
@@ -87,7 +87,7 @@
                                               (
                                                 <a href="#"
                                                 onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
                                               )
 
@@ -127,7 +127,7 @@
                                                                                       (
                                                                                         <a href="#"
                                                                                         onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                        ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                        ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
                                                                                       )
 
@@ -148,7 +148,7 @@
                                                                                       (
                                                                                         <a href="#"
                                                                                         onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                        ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                        ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
                                                                                       )
                                                                                       ';?>
@@ -187,7 +187,7 @@
                                                                                                                   (
                                                                                                                     <a href="#"
                                                                                                                     onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
                                                                                                                   )
                                                                                                                   ';?>
@@ -207,7 +207,7 @@
                                                                                                                   (
                                                                                                                     <a href="#"
                                                                                                                     onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></a>,
 
                                                                                                                   )
                                                                                                                   ';?>
