@@ -41,6 +41,45 @@ class objetivoItems extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  public function getIemsByHeader($idRepresentante) //()
+  {
+    $where = " WHERE t1.activo = 1 ";
+    if ($idRepresentante != '') {
+      $where =  $where . " and t1.id_padre = " . $idRepresentante;
+    }
+    $query = "SELECT t1.jerarquia,CONCAT(REPEAT(' ', LENGTH(t1.jerarquia) - LENGTH(REPLACE(t1.jerarquia, '.', ''))), t1.descripcion) as descripcion, t1.id_padre, t1.id
+    FROM objetivo_item AS t1
+
+    $where
+
+    ORDER BY t1.jerarquia, t1.id_padre ";
+   // echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
+  public function getidPadreByHeader($idHeader) //()
+  {
+    $where = " WHERE activo = 1 and objetivo_item.id_padre is null";
+    if ($idHeader != '') {
+      $where =  $where . " and objetivo_item.idHeader  = " . $idHeader;
+    }
+    $query = "SELECT * FROM objetivo_item  $where order by jerarquia  ";
+
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
+  public function getIemsByPadre($id_padre) //()
+  {
+    $where = " WHERE activo = 1 ";
+    if ($id_padre != '') {
+      $where =  $where . " and objetivo_item.id_padre = " . $id_padre;
+    }
+    $query = "SELECT * FROM objetivo_item  $where order by jerarquia  ";
+  //    echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
   public function post($json)  //()
   {
     $_respuestas = new respuestas();
@@ -108,32 +147,32 @@ class objetivoItems extends conexion
 
   private function InsertarHeader()//()
   {
-    // $query = 'insert Into ' . $this->tabla . "
-    //           (
-    //             nombreObjetivo,
-    //             versionObjetivo,
-    //             activo,
-    //             fechaCreacion,
-    //             creadoPor
-    //               )
-    //       value
-    //       (
-    //           '$this->nombreObjetivo',
-    //           '$this->versionObjetivo',
-    //           '$this->activo',
-    //           '$this->fechaCreacion',
-    //           '$this->creadoPor'
-    //           )";
+    $query = 'insert Into ' . $this->tabla . "
+              (
+                nombreObjetivo,
+                versionObjetivo,
+                activo,
+                fechaCreacion,
+                creadoPor
+                  )
+          value
+          (
+              '$this->nombreObjetivo',
+              '$this->versionObjetivo',
+              '$this->activo',
+              '$this->fechaCreacion',
+              '$this->creadoPor'
+              )";
 
-    // //echo $query; die;
-    // $Insertar = parent::nonQueryId($query);
+    //echo $query; die;
+    $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
-    // if ($Insertar) {
-    //   return $Insertar;
-    // } else {
-    //   return 0;
-    // }
+    if ($Insertar) {
+      return $Insertar;
+    } else {
+      return 0;
+    }
   }
 
   private function UpdateItems()//()
@@ -162,10 +201,7 @@ class objetivoItems extends conexion
   }
 
   public function del($idHeader){
-    $where =   " WHERE activo = 1 and idHeader = " . $idHeader;
-    $query = "delete FROM taeho_v2.objetivo_item ". $where ;
-    //echo   $query; die;
-    return parent::nonQuery($query);
+    echo 'borrado de contenido item'; die;
 
   }
 

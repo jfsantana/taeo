@@ -162,10 +162,7 @@ class objetivoItems extends conexion
   }
 
   public function del($idHeader){
-    $where =   " WHERE activo = 1 and idHeader = " . $idHeader;
-    $query = "delete FROM taeho_v2.objetivo_item ". $where ;
-    //echo   $query; die;
-    return parent::nonQuery($query);
+    echo 'borrado de contenido item'; die;
 
   }
 

@@ -113,7 +113,6 @@ if ($_POST['mod'] == 1) {
     $idObjetivoHeader = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
   }
 } elseif($_POST['mod'] == 2) {
-  $flag=true;
   $accion = "Editar";
 
   //datos Representante
@@ -141,7 +140,6 @@ if ($_POST['mod'] == 1) {
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
 }elseif($_POST['mod'] == 3){
-  $flag=false;
   $token = $_SESSION['token'];
   $accion = "Carga de Contenido";
 
@@ -163,8 +161,6 @@ if ($_POST['mod'] == 1) {
   $fechaCreacion = $arrayHeader[0]['fechaCreacion'];
   $creadoPor = $arrayHeader[0]['creadoPor'];
   $activo = $arrayHeader[0]['activo'];
-
-
 
 
 }
@@ -240,10 +236,6 @@ if ($_POST['mod'] == 1) {
                   <div class="card-header">
 
                     <h3 class="card-title">Contenido del Objetivo</h3>
-                    <div class="card-tools">
-                      <a href="./plantilla/FormatoCargaObjetivos.xlsx" title='Descargue el Formato para la carga por Lote' download>
-                        <ion-icon name="download-outline"></ion-icon>
-                      </a></div>
                   </div>
                     <?php
                     if ($_POST['mod'] == 2){
@@ -260,7 +252,7 @@ if ($_POST['mod'] == 1) {
 
             <div class="card-footer">
                     <?php
-                      if(($_POST['mod']<>1)&&($flag)){ ?>
+                      if($_POST['mod']<>1){ ?>
                       <button type="button" class="btn btn-warning" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',3,'<?php echo $idObjetivoHeader ; ?>')">Volver a cargar Contenido</button>
 
                     <?php  }?>

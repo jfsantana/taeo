@@ -10,7 +10,6 @@
 
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
-require_once '../wsdl/clases/consumoApi.class.php';
 //carga xlxs
 require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -119,6 +118,8 @@ class objetivo extends conexion
             $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
             $this->activo = @$datos['activo'];
 
+
+
           if($datos['mod']==1){//creacion del header y los items
             $resp = $this->InsertarHeader();
             $idHeader = $resp ;
@@ -128,14 +129,10 @@ class objetivo extends conexion
           }elseif($datos['mod']==2){//uldate solo del header
             $resp = $this->UpdateHeader();
           }elseif($datos['mod']==3){ //actualizacion del borrado de los itms
-            $token='';
-            $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivoItem?idHeader=$this->idObjetivoHeader";
-            $rs         = API::DELETE($URL, $token);
-            $delItemByHeader  = API::JSON_TO_ARRAY($rs);
-
             $resp = $this->UpdateHeader();
-            $resp = $this->uploadXls( $this->idObjetivoHeader, $datos['file']);
-
+            if($resp){
+              $respItem = $this->uploadXls( $this->idObjetivoHeader, $datos['file']);
+            }
           }
 
 

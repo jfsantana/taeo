@@ -130,7 +130,9 @@ class objetivo extends conexion
           }elseif($datos['mod']==3){ //actualizacion del borrado de los itms
             $token='';
             $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivoItem?idHeader=$this->idObjetivoHeader";
+echo $URL;
             $rs         = API::DELETE($URL, $token);
+            PRINT_R($rs); die;
             $delItemByHeader  = API::JSON_TO_ARRAY($rs);
 
             $resp = $this->UpdateHeader();

@@ -128,6 +128,7 @@ class objetivo extends conexion
           }elseif($datos['mod']==2){//uldate solo del header
             $resp = $this->UpdateHeader();
           }elseif($datos['mod']==3){ //actualizacion del borrado de los itms
+
             $token='';
             $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivoItem?idHeader=$this->idObjetivoHeader";
             $rs         = API::DELETE($URL, $token);

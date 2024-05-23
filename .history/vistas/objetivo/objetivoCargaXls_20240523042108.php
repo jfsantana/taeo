@@ -11,8 +11,6 @@
         Con este proceso se ELIMINARÁ todo el contenido de Objetivo existente y será REEMPLAZADO por el contenido del Nuevo archivo
       </div>
     <?php }?>
-
-
   </div>
 
 

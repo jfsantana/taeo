@@ -113,7 +113,6 @@ if ($_POST['mod'] == 1) {
     $idObjetivoHeader = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
   }
 } elseif($_POST['mod'] == 2) {
-  $flag=true;
   $accion = "Editar";
 
   //datos Representante
@@ -141,30 +140,14 @@ if ($_POST['mod'] == 1) {
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
 }elseif($_POST['mod'] == 3){
-  $flag=false;
   $token = $_SESSION['token'];
   $accion = "Carga de Contenido";
 
   $idObjetivoHeader = @$_POST["id"];
 
-  //Borra el contenido  FILTRAR PARA EL ROL ADMIN
-  // $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivoItem?idHeader=$idObjetivoHeader";
-  // $rs         = API::DELETE($URL, $token);
-  // $delItemByHeader  = API::JSON_TO_ARRAY($rs);
-
-  //consulta el header del objetivo
-  $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
-  $rs         = API::GET($URL, $token);
-  $arrayHeader  = API::JSON_TO_ARRAY($rs);
-
-  $nombreObjetivo = $arrayHeader[0]['nombreObjetivo'];
-  $versionObjetivo = $arrayHeader[0]['versionObjetivo'];
-  $fechaCreacion = $arrayHeader[0]['fechaCreacion'];
-  $creadoPor = $arrayHeader[0]['creadoPor'];
-  $activo = $arrayHeader[0]['activo'];
-
-
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?idObjetivoHeader=$idObjetivoHeader";
+  $rs         = API::DELETE($URL, $token);
+  $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
 
 }
@@ -240,10 +223,6 @@ if ($_POST['mod'] == 1) {
                   <div class="card-header">
 
                     <h3 class="card-title">Contenido del Objetivo</h3>
-                    <div class="card-tools">
-                      <a href="./plantilla/FormatoCargaObjetivos.xlsx" title='Descargue el Formato para la carga por Lote' download>
-                        <ion-icon name="download-outline"></ion-icon>
-                      </a></div>
                   </div>
                     <?php
                     if ($_POST['mod'] == 2){
@@ -259,12 +238,7 @@ if ($_POST['mod'] == 1) {
             </div>
 
             <div class="card-footer">
-                    <?php
-                      if(($_POST['mod']<>1)&&($flag)){ ?>
-                      <button type="button" class="btn btn-warning" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',3,'<?php echo $idObjetivoHeader ; ?>')">Volver a cargar Contenido</button>
-
-                    <?php  }?>
-
+              <button type="button" class="btn btn-warning" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',3,'<?php echo $objetivo['idObjetivoHeader']; ?>')">Volver a cargar Contenido</button>
               <button type="submit" class="btn btn-success" ><?php echo $accion; ?></button>
 
               <button type="button" class="btn btn-primary" onclick="enviarParametros('objetivo/objetivoListar.php')">Volver</button>

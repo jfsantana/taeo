@@ -65,32 +65,32 @@ class API
      *
      * @return JSON
      */
-    // public static function POSTSAP($URL, $TOKEN, $ARRAY)
-    // {
-    //     $datapost = '';
-    //     $datapost = $ARRAY; // http_build_query($ARRAY, 'banderas_');
+    public static function POSTSAP($URL, $TOKEN, $ARRAY)
+    {
+        $datapost = '';
+        $datapost = $ARRAY; // http_build_query($ARRAY, 'banderas_');
 
-    //     $username = 'PIUSERWS01';
-    //     $password = 'Pequiven21*';
+        $username = 'PIUSERWS01';
+        $password = 'Pequiven21*';
 
-    //     $headers = [
-    //         'Content-Type: application/json',
-    //         'Authorization: Basic '.base64_encode("$username:$password"),
-    //     ];
+        $headers = [
+            'Content-Type: application/json',
+            'Authorization: Basic '.base64_encode("$username:$password"),
+        ];
 
-    //     $ch = curl_init();
-    //     curl_setopt($ch, CURLOPT_URL, $URL);
-    //     curl_setopt($ch, CURLOPT_POST, 1);
-    //     curl_setopt($ch, CURLOPT_POSTFIELDS, $datapost);
-    //     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    //     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
-    //     curl_setopt($ch, CURLOPT_TIMEOUT, 20);
-    //     curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    //     $response = curl_exec($ch);
-    //     curl_close($ch);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $URL);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $datapost);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 3);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 20);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        $response = curl_exec($ch);
+        curl_close($ch);
 
-    //     return $response;
-    // }
+        return $response;
+    }
 
     /**
      * Consultar a un servidor a través del protocolo HTTP (GET).

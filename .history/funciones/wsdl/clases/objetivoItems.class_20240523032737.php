@@ -108,32 +108,32 @@ class objetivoItems extends conexion
 
   private function InsertarHeader()//()
   {
-    // $query = 'insert Into ' . $this->tabla . "
-    //           (
-    //             nombreObjetivo,
-    //             versionObjetivo,
-    //             activo,
-    //             fechaCreacion,
-    //             creadoPor
-    //               )
-    //       value
-    //       (
-    //           '$this->nombreObjetivo',
-    //           '$this->versionObjetivo',
-    //           '$this->activo',
-    //           '$this->fechaCreacion',
-    //           '$this->creadoPor'
-    //           )";
+    $query = 'insert Into ' . $this->tabla . "
+              (
+                nombreObjetivo,
+                versionObjetivo,
+                activo,
+                fechaCreacion,
+                creadoPor
+                  )
+          value
+          (
+              '$this->nombreObjetivo',
+              '$this->versionObjetivo',
+              '$this->activo',
+              '$this->fechaCreacion',
+              '$this->creadoPor'
+              )";
 
-    // //echo $query; die;
-    // $Insertar = parent::nonQueryId($query);
+    //echo $query; die;
+    $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
-    // if ($Insertar) {
-    //   return $Insertar;
-    // } else {
-    //   return 0;
-    // }
+    if ($Insertar) {
+      return $Insertar;
+    } else {
+      return 0;
+    }
   }
 
   private function UpdateItems()//()
@@ -162,10 +162,7 @@ class objetivoItems extends conexion
   }
 
   public function del($idHeader){
-    $where =   " WHERE activo = 1 and idHeader = " . $idHeader;
-    $query = "delete FROM taeho_v2.objetivo_item ". $where ;
-    //echo   $query; die;
-    return parent::nonQuery($query);
+    echo 'borrado de contenido item'; die;
 
   }
 

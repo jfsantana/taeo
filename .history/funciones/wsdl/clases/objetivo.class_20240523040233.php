@@ -10,7 +10,6 @@
 
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
-require_once '../wsdl/clases/consumoApi.class.php';
 //carga xlxs
 require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -130,6 +129,9 @@ class objetivo extends conexion
           }elseif($datos['mod']==3){ //actualizacion del borrado de los itms
             $token='';
             $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivoItem?idHeader=$this->idObjetivoHeader";
+
+            echo $URL; die;
+
             $rs         = API::DELETE($URL, $token);
             $delItemByHeader  = API::JSON_TO_ARRAY($rs);
 

@@ -62,8 +62,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   echo json_encode($datosArray);
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') { // DELETE
-
-  $datosArray = $_objetivoItems->del($_GET['idHeader']);
+  if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
+    $postBody = file_get_contents('php://input');
+  } else {
+      $postBody = json_encode($_DELETE);
+  }
+print_r($_GET['idHeader']); die;
+  $datosArray = $_objetivoItems->del($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {

@@ -240,10 +240,8 @@ if ($_POST['mod'] == 1) {
                   <div class="card-header">
 
                     <h3 class="card-title">Contenido del Objetivo</h3>
-                    <div class="card-tools">
-                      <a href="./plantilla/FormatoCargaObjetivos.xlsx" title='Descargue el Formato para la carga por Lote' download>
-                        <ion-icon name="download-outline"></ion-icon>
-                      </a></div>
+                    <div class="card-tools"><a href="./plantilla/FormatoCargaObjetivos.xlsx" download>
+                      <ion-icon name="download-outline"></ion-icon></a></div>
                   </div>
                     <?php
                     if ($_POST['mod'] == 2){

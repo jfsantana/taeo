@@ -8,11 +8,9 @@
     <?php if ($_POST['mod']==3){?>
       <div class="col-sm-12 text-danger">
         </br>
-        Con este proceso se ELIMINARÁ todo el contenido de Objetivo existente y será REEMPLAZADO por el contenido del Nuevo archivo
+        Con este proceso se Eliminará todo el contenido de Objetivo ya creado y será reemplazado por el contenido del archivo que se está cargando
       </div>
     <?php }?>
-
-
   </div>
 
 

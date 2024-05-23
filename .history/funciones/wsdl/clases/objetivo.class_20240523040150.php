@@ -10,7 +10,6 @@
 
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
-require_once '../wsdl/clases/consumoApi.class.php';
 //carga xlxs
 require '../../vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -90,7 +89,7 @@ class objetivo extends conexion
 
   public function post($json)  //()
   {
-
+echo $json; die;
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
     if (!isset($datos['token'])) {
@@ -118,6 +117,8 @@ class objetivo extends conexion
             $this->fechaCreacion = date('Y-m-d');
             $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
             $this->activo = @$datos['activo'];
+
+
 
           if($datos['mod']==1){//creacion del header y los items
             $resp = $this->InsertarHeader();
