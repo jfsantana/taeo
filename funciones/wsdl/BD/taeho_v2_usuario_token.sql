@@ -39,7 +39,7 @@ CREATE TABLE `usuario_token` (
 
 LOCK TABLES `usuario_token` WRITE;
 /*!40000 ALTER TABLE `usuario_token` DISABLE KEYS */;
-INSERT INTO `usuario_token` VALUES (95,'jsantana','8b785cb4835af263f8627c56692194bd','1','2024-05-21 18:54:00',1),(96,'jsantana','7a9a08bf32d454be433b89b246d4e93e','1','2024-05-21 23:08:00',1),(97,'jsantana','2ec32f39b0fa1b34c2f43ddfedb036ec','1','2024-05-21 23:15:00',1),(98,'jsantana','dc965a83ab62fbcdfc71a5cf5efd74cf','1','2024-05-22 13:51:00',1),(99,'jsantana','bbe38c10c0b82d187c5ffb72a39d71a8','1','2024-05-23 14:34:00',1),(100,'jsantana','6b47f49cb6c59895befc97a42ec59fa4','1','2024-05-23 18:43:00',1);
+INSERT INTO `usuario_token` VALUES (95,'jsantana','8b785cb4835af263f8627c56692194bd','1','2024-05-21 18:54:00',1),(96,'jsantana','7a9a08bf32d454be433b89b246d4e93e','1','2024-05-21 23:08:00',1),(97,'jsantana','2ec32f39b0fa1b34c2f43ddfedb036ec','1','2024-05-21 23:15:00',1),(98,'jsantana','dc965a83ab62fbcdfc71a5cf5efd74cf','1','2024-05-22 13:51:00',1),(99,'jsantana','bbe38c10c0b82d187c5ffb72a39d71a8','1','2024-05-23 14:34:00',1),(100,'jsantana','6b47f49cb6c59895befc97a42ec59fa4','1','2024-05-23 19:16:00',1);
 /*!40000 ALTER TABLE `usuario_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-23 14:45:38
+-- Dump completed on 2024-05-24  8:59:13
