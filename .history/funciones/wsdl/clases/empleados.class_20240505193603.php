@@ -44,7 +44,7 @@ class empleados extends conexion
     if ($idUsuario != '') {
       $where =  $where . " and usuario.idUsuario = " . $idUsuario;
     }
-      $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqeuado' end estado,
+      $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqueado' end estado,
       usuario_sede.idSede, sede.nombreSede, cargo.descripcionCargo
       FROM usuario
       INNER JOIN rol ON usuario.rolUsuario = rol.idRol

@@ -44,7 +44,7 @@ class empleados extends conexion
     if ($idUsuario != '') {
       $where =  $where . " and idUsuario = " . $idUsuario;
     }
-    $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqeuado' end estado
+    $query = "SELECT usuario.*, rol.descripcionRol, case when usuario.activoUsuario = 1 Then 'Activo' else 'Bloqueado' end estado
     FROM usuario INNER JOIN rol ON usuario.rolUsuario = rol.idRol". " $where ";
 
     return parent::ObtenerDatos($query);
