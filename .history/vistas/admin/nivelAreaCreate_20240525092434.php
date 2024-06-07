@@ -47,7 +47,7 @@ if ($_POST['mod'] == 1) {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Nivel del Area de Desarrollo - <span class="text-colo:#88888;" <?php echo $nombreArea ;?></h1>
+        <h1 class="m-0">Nivel del &Aacute;rea de Desarrollo - <span class="text-colo:#88888;" <?php echo $nombreArea ;?></h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container -fluid -->
@@ -66,7 +66,7 @@ if ($_POST['mod'] == 1) {
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title"><?php echo $accion; ?> Nivel del Area de Desarrollo</h3>
+            <h3 class="card-title"><?php echo $accion; ?> Nivel del &Aacute;rea de Desarrollo</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->

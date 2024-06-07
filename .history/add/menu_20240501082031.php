@@ -50,7 +50,7 @@
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
             <i class="nav-icon fas fa-id-card  text-programas"></i>
-            <p>Creacion de Planificacion</p>
+            <p>Creacion de Planificaci&oacute;n</p>
           </a>
         </li>
         <li class="nav-item">
@@ -82,7 +82,7 @@
       <a href="#" class="nav-link ">
         <i class="nav-icon fas fa-book"></i>
         <p>
-          Planificacion
+          Planificaci&oacute;n
           <i class="right fas fa-angle-left"></i>
         </p>
       </a>
@@ -90,7 +90,7 @@
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
             <i class="nav-icon fas fa-id-card  text-programas"></i>
-            <p>Creacion de Planificacion</p>
+            <p>Creacion de Planificaci&oacute;n</p>
           </a>
         </li>
         <li class="nav-item">

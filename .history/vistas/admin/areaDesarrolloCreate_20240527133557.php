@@ -28,7 +28,7 @@ if ($_POST['mod'] == 1) {
   $nombreArea = $arrayArea[0]['nombreArea'];
   $descripcionArea = $arrayArea[0]['descripcionArea'];
 
-  //Lista de Niveles del Area Seleccioanda
+  //Lista de Niveles del &Aacute;rea Seleccioanda
   $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=2&idArea=$idArea";//$idArea
   $rs         = API::GET($URL1, $token);
   $arrayNivelesArea  = API::JSON_TO_ARRAY($rs);
@@ -43,7 +43,7 @@ if ($_POST['mod'] == 1) {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Area de Desarrollo</h1>
+        <h1 class="m-0">&Aacute;rea de Desarrollo</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container -fluid -->
@@ -62,7 +62,7 @@ if ($_POST['mod'] == 1) {
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title"><?php echo $accion; ?> Area de Desarrollo</h3>
+            <h3 class="card-title"><?php echo $accion; ?> &Aacute;rea de Desarrollo</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->

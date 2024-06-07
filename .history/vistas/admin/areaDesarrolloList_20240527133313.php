@@ -46,7 +46,7 @@ $arrayAreas  = API::JSON_TO_ARRAY($rs);
           </div>
 
 
-          <a href="#" onclick="enviarParametrosGetsionCreate('admin/areaDesarrolloCreate.php','1')" class="small-box-footer">Crear Area de Desarrollo <i class="fas fa-arrow-circle-right"></i></a>
+          <a href="#" onclick="enviarParametrosGetsionCreate('admin/areaDesarrolloCreate.php','1')" class="small-box-footer">Crear &Aacute;rea de Desarrollo <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
 

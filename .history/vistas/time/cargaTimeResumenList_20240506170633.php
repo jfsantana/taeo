@@ -104,7 +104,7 @@ $meses = array(
     <div class="row mb-2">
       <div class="col-sm-6">
 
-        <h1 class="m-0">Planificacion por Sede:
+        <h1 class="m-0">Planificaci&oacute;n por Sede:
 
           <select class="form-control" name="sede" id="miSelect" onchange="enviarRegistoTiempo('time/cargaTimeResumenList.php','<?php echo $corteAux; ?>',this.value)" required>
           <option> Seleccione</option>
@@ -133,7 +133,7 @@ $meses = array(
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3>Evaluar Planificacion</h3>
+            <h3>Evaluar Planificaci&oacute;n</h3>
 
             <p>Muestra el listado de Planificaicones para ser evaluadas<br></p>
           </div>
@@ -149,9 +149,9 @@ $meses = array(
         <!-- small box -->
         <div class="small-box bg-success">
           <div class="inner">
-            <h3>Consultar Planificacion</h3>
+            <h3>Consultar Planificaci&oacute;n</h3>
 
-            <p>Seccion para visualizar las evaluaciones de una Planificacion</p>
+            <p>Seccion para visualizar las evaluaciones de una Planificaci&oacute;n</p>
           </div>
           <div class="icon">
             <i class="ion ion-edit "></i>

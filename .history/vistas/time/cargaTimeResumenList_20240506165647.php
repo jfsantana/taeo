@@ -127,7 +127,7 @@ $meses = array(
         <!-- small box -->
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3>Evaluar Planificacion</h3>
+            <h3>Evaluar Planificaci&oacute;n</h3>
 
             <p>Muestra el listado de Planificaicones para ser evaluadas<br></p>
           </div>

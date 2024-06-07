@@ -25,7 +25,7 @@ print("<pre>".print_r(($URL) ,true)."</pre>"); //die;
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Nivel del Area de Desarrollo</h1>
+        <h1 class="m-0">Nivel del &Aacute;rea de Desarrollo</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->

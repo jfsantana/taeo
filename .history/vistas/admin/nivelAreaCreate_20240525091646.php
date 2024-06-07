@@ -46,7 +46,7 @@ if ($_POST['mod'] == 1) {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Nivel de Area Cognitiva </h1>
+        <h1 class="m-0">Nivel de &Aacute;rea Cognitiva </h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container -fluid -->
