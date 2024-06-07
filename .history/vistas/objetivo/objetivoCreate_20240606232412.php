@@ -131,8 +131,6 @@ if ($_POST['mod'] == 1) {
   $creadoPor = $arrayHeader[0]['creadoPor'];
   $activo = $arrayHeader[0]['activo'];
   $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $idAreaObjetivo = $arrayHeader[0]['idAreaObjetivo'];
 
 
   if ($arrayHeader[0]['activo'] == 1)
@@ -162,8 +160,6 @@ if ($_POST['mod'] == 1) {
   $creadoPor = $arrayHeader[0]['creadoPor'];
   $activo = $arrayHeader[0]['activo'];
   $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $idAreaObjetivo = $arrayHeader[0]['idAreaObjetivo'];
 
 }
 
@@ -189,19 +185,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   if($_POST['mod'] ==4){
     $maxVersion=$maxVersion+1;
   }
-
-
-  $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1";
-  $rs         = API::GET($URL1, $token);
-  $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
-
-  $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=$idAreaObjetivo";
-  $rs         = API::GET($URL1, $token);
-  $arrayNivelAreaObjetivo  = API::JSON_TO_ARRAY($rs);
-  //echo $URL1;
-  //print("<pre>".print_r(($arrayNivelAreaObjetivo) ,true)."</pre>");
 ?>
 <!-- Content Header (Page header) -->
 <div class="content-header">
@@ -238,34 +221,25 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
           <form>
             <div class="card-body">
               <div class="row">
-              <div class="col-sm-6">
-                  <label for="nivelObjetivo">Area</label>
-                  <select class="form-control" name="idAreaObjetivo" id="idAreaObjetivo">
-                    <option>Seleccine</option>
-                    <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
-                      <option <?php if ($areaObjetivo['idArea'] == @$idAreaObjetivo) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
-                    <?php }?>
-                  </select>
-                </div>
-
                 <div class="col-sm-6">
-                  <label for="nivelObjetivo">Nivel </label>
-                  <select class="form-control" name="nivelObjetivo" id="nivelObjetivo">
-                    <option>Seleccine</option>
-                    <?php foreach($arrayNivelAreaObjetivo as $NivelAreaObjetivo ){?>
-                      <option <?php if ($NivelAreaObjetivo['idNivelAreaObjetivo'] == @$nivelObjetivo) {echo 'selected';} ?> value=<?php echo $NivelAreaObjetivo['idNivelAreaObjetivo']; ?>><?php echo $NivelAreaObjetivo['nombreNivelAreaObjetivo']; ?></option>
-                    <?php }?>
-                  </select>
-                </div>
-
-
-                <div class="col-sm-9">
                   <label for="nombreRepresentante">Nombre del Objetivo</label>
                   <input type="text" class="form-control" name="nombreObjetivo" id="nombreObjetivo" placeholder="Nombre del Objetivo" required  value="<?php echo @$nombreObjetivo; ?>">
                 </div>
+                <div class="col-sm-4">
+                  <label for="nivelObjetivo">Nivel </label>
+                  <select class="form-control" name="nivelObjetivo" id="nivelObjetivo">
+                    <option <?php if (@$nivelObjetivo == 1) {
+                              echo 'selected';
+                            } ?> value=1>Activo</option>
+                    <option <?php if (@$nivelObjetivo == 0) {
+                              echo 'selected';
+                            } ?> value=0>Desactivado</option>
+                  </select>
 
 
-                <div class="col-sm-3">
+                </div>
+
+                <div class="col-sm-2">
                   <label>Activo</label>
                   <select class="form-control" name="activo" id="activo">
                     <option <?php if (@$activo == 1) {

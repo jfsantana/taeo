@@ -10,7 +10,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 $token = $_SESSION['token'];
 
- //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+ print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
  function  nivel($nodoPadre,$level,$token,$idObjetivoHeader){
 
   $arrayhijosNexLevel  = hijos($nodoPadre['id'], $token);
@@ -194,13 +194,13 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   $token = $_SESSION['token'];
   $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1";
   $rs         = API::GET($URL1, $token);
-  $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
+  $arrayArea  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=$idAreaObjetivo";
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=1";
   $rs         = API::GET($URL1, $token);
   $arrayNivelAreaObjetivo  = API::JSON_TO_ARRAY($rs);
-  //echo $URL1;
+
   //print("<pre>".print_r(($arrayNivelAreaObjetivo) ,true)."</pre>");
 ?>
 <!-- Content Header (Page header) -->
@@ -240,10 +240,10 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
               <div class="row">
               <div class="col-sm-6">
                   <label for="nivelObjetivo">Area</label>
-                  <select class="form-control" name="idAreaObjetivo" id="idAreaObjetivo">
+                  <select class="form-control" name="nivelObjetivo" id="nivelObjetivo">
                     <option>Seleccine</option>
-                    <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
-                      <option <?php if ($areaObjetivo['idArea'] == @$idAreaObjetivo) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
+                    <?php foreach($arrayNivelAreaObjetivo as $NivelAreaObjetivo ){?>
+                      <option <?php if ($NivelAreaObjetivo['idNivelAreaObjetivo'] == @$nivelObjetivo) {echo 'selected';} ?> value=<?php echo $NivelAreaObjetivo['idNivelAreaObjetivo']; ?>><?php echo $NivelAreaObjetivo['nombreNivelAreaObjetivo']; ?></option>
                     <?php }?>
                   </select>
                 </div>

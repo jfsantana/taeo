@@ -10,7 +10,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 $token = $_SESSION['token'];
 
- //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+ print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
  function  nivel($nodoPadre,$level,$token,$idObjetivoHeader){
 
   $arrayhijosNexLevel  = hijos($nodoPadre['id'], $token);
@@ -197,10 +197,10 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=$idAreaObjetivo";
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=1";
   $rs         = API::GET($URL1, $token);
   $arrayNivelAreaObjetivo  = API::JSON_TO_ARRAY($rs);
-  //echo $URL1;
+
   //print("<pre>".print_r(($arrayNivelAreaObjetivo) ,true)."</pre>");
 ?>
 <!-- Content Header (Page header) -->
@@ -243,7 +243,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   <select class="form-control" name="idAreaObjetivo" id="idAreaObjetivo">
                     <option>Seleccine</option>
                     <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
-                      <option <?php if ($areaObjetivo['idArea'] == @$idAreaObjetivo) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
+                      <option <?php if ($NivelAreaObjetivo['idArea'] == @$idAreaObjetivo) {echo 'selected';} ?> value=<?php echo $NivelAreaObjetivo['idArea']; ?>><?php echo $NivelAreaObjetivo['nombreArea']; ?></option>
                     <?php }?>
                   </select>
                 </div>

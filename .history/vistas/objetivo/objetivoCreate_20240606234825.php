@@ -197,10 +197,10 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=$idAreaObjetivo";
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/http://taeo/funciones/wsdl/area?type=2&idArea=$idAreaObjetivo";
   $rs         = API::GET($URL1, $token);
   $arrayNivelAreaObjetivo  = API::JSON_TO_ARRAY($rs);
-  //echo $URL1;
+echo $URL1;
   //print("<pre>".print_r(($arrayNivelAreaObjetivo) ,true)."</pre>");
 ?>
 <!-- Content Header (Page header) -->
