@@ -17,18 +17,17 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area";
-     //echo $URL;
-     //print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
+    // echo $URL;
+    // print("<pre>".print_r(json_encode($_POST['mod']),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
 $idArea = @$rs['result']['idHeaderNew'];
-// print("<pre>".print_r(json_encode($_POST),true)."</pre>");
-// print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+
 if ((@$rs['status'] == 'OK') or ($_POST['mod']=="2")) {
 
   if($_POST['accion']=="Crear"){
-    $url = " onclick= \"enviarParametrosGetsionUpdate('admin/nivelAreaCreate.php,2,".@$rs['result'] ['idHeaderNew'].")" ;
+    $url = " onclick= \"enviarParametrosGetsionUpdate('admin/areaDesarrolloCreate.php',2,'".@$rs['result'] ['idHeaderNew']."')" ;
   }else{
     $url = "onclick=\"enviarParametrosCRUD('admin/areaDesarrolloList.php')\"";
   }
@@ -36,7 +35,7 @@ if ((@$rs['status'] == 'OK') or ($_POST['mod']=="2")) {
 } else {
     $url = "onclick=\"enviarParametrosCRUD('admin/areaDesarrolloList.php')\"";
 }
-echo $url; die;
+
 ?>
 
 <div class="modal fade" id="modal-success">

@@ -58,7 +58,7 @@ class nivelArea extends conexion
 
   public function post($json)  //()
   {
-
+    echo $json; die;
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
@@ -80,10 +80,9 @@ class nivelArea extends conexion
           echo json_encode($datosArray);
         } else {
           // Asignacion de datos validados su existencia en el If anterior
-          echo $json; die;
+
           $this->idNivelAreaObjetivo = @$datos['idNivelAreaObjetivo'];
           $this->idAreaObjetivo = @$datos['idAreaObjetivo'];
-          $this->nombreNivelAreaObjetivo = @$datos['nombreNivelAreaObjetivo'];
           $this->descripcionNivelAreaObjetivo = @$datos['descripcionNivelAreaObjetivo'];
           $this->activo = @$datos['activo'];;
           $this->nombreNivelAreaObjetivo = @$_SESSION['usuario'];

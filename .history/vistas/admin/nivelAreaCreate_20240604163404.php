@@ -15,8 +15,8 @@ $token = $_SESSION['token'];
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
   if(isset($_POST['id'])){
-    $idArea = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1&idArea=$idArea";
+    $idNivelAreaObjetivo = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
+    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1&idArea=13";
     echo   $URL ;
     $rs         = API::GET($URL, $token);
     $arrayNivelArea  = API::JSON_TO_ARRAY($rs);
@@ -89,11 +89,11 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-2">
                   <label>Activo</label>
-                  <select class="form-control" name="activo" id="activo">
-                    <option <?php if (@$activo == 1) {
+                  <select class="form-control" name="activoRepresentante" id="activoRepresentante">
+                    <option <?php if (@$activoRepresentante == 1) {
                               echo 'selected';
                             } ?> value=1>Activo</option>
-                    <option <?php if (@$activo == 0) {
+                    <option <?php if (@$activoRepresentante == 0) {
                               echo 'selected';
                             } ?> value=0>Desactivado</option>
                   </select>

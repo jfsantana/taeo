@@ -15,17 +15,15 @@ $token = $_SESSION['token'];
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
   if(isset($_POST['id'])){
-    $idArea = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1&idArea=$idArea";
-    echo   $URL ;
+    $idNivelAreaObjetivo = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
+    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=1&idNivelAreaObjetivo=$idNivelAreaObjetivo";
     $rs         = API::GET($URL, $token);
     $arrayNivelArea  = API::JSON_TO_ARRAY($rs);
+    $nombreNivelAreaObjetivo = $arrayNivelArea[0]['nombreNivelAreaObjetivo'];
+    $descripcionNivelAreaObjetivo = $arrayNivelArea[0]['descripcionNivelAreaObjetivo'];
+    $idAreaObjetivo = $arrayNivelArea[0]['idAreaObjetivo'];
     $activo = $arrayNivelArea[0]['activo'];
     $nombreArea = $arrayNivelArea[0]['nombreArea'];
-    $idArea = $arrayNivelArea[0]['idArea'];
-
-
-
 
   }
 } else {
@@ -43,6 +41,8 @@ if ($_POST['mod'] == 1) {
   $idAreaObjetivo = $arrayNivelArea[0]['idAreaObjetivo'];
   $activo = $arrayNivelArea[0]['activo'];
   $nombreArea = $arrayNivelArea[0]['nombreArea'];
+
+
 
   if ($arrayNivelArea[0]['activo'] == 1)
     $estado = 1;
@@ -64,10 +64,10 @@ if ($_POST['mod'] == 1) {
 <!-- /.content-header -->
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_nivelAreaDesarrollo.php" method="post" name="representante" id="representante">
+<form action="../funciones/funcionesGenerales/XM_representante.model.php" method="post" name="representante" id="representante">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idNivelAreaObjetivo" value="<?php echo @$idNivelAreaObjetivo; ?>">
-  <input type="hidden" name="idAreaObjetivo" value="<?php echo @$idArea ;?>">
+  <input type="hidden" name="idAreaObjetivo" value="<?php echo @$idAreaObjetivo; ?>">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -83,24 +83,24 @@ if ($_POST['mod'] == 1) {
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-3">
-                  <label for="nombreNivelAreaObjetivo">Nombre del Nivel</label>
+                  <label for="nombreNivelAreaObjetivo">Nombre</label>
                   <input type="text" class="form-control" name="nombreNivelAreaObjetivo" id="nombreNivelAreaObjetivo" placeholder="Nombre del Nivel" value="<?php echo @$nombreNivelAreaObjetivo; ?>">
                 </div>
 
                 <div class="col-sm-2">
                   <label>Activo</label>
-                  <select class="form-control" name="activo" id="activo">
-                    <option <?php if (@$activo == 1) {
+                  <select class="form-control" name="activoRepresentante" id="activoRepresentante">
+                    <option <?php if (@$activoRepresentante == 1) {
                               echo 'selected';
                             } ?> value=1>Activo</option>
-                    <option <?php if (@$activo == 0) {
+                    <option <?php if (@$activoRepresentante == 0) {
                               echo 'selected';
                             } ?> value=0>Desactivado</option>
                   </select>
                 </div>
 
                 <div class="col-sm-12">
-                    <label for="descripcionNivelAreaObjetivo">Descripción del Nivel</label>
+                    <label for="descripcionNivelAreaObjetivo">Descripción</label>
                     <textarea  id="summernote" name="descripcionNivelAreaObjetivo"><?php echo @$descripcionNivelAreaObjetivo; ?></textarea>
                 </div>
 

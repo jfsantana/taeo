@@ -57,7 +57,7 @@ class area extends conexion
 
   public function post($json)  //(revisado)
   {
-
+    echo $json; die;
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
@@ -128,6 +128,7 @@ class area extends conexion
               '$this->descripcionArea',
               '$this->activo'
               )";
+
     //echo $query; die;
     $Insertar = parent::nonQueryId($query);
 
@@ -145,8 +146,11 @@ class area extends conexion
                           set
                           nombreArea='$this->nombreArea',
                           descripcionArea='$this->descripcionArea',
-                          activo='$this->activo'
-                      WHERE idArea = $this->idAreas";
+                          activo='$this->activo',
+                          idNivelAreaObjetivo='$this->idNivelAreaObjetivo',
+                          fechaCreacion='$this->fechaCreacion',
+                          creadoPor='$this->creadoPor'
+                      WHERE idAreas = $this->idAreas";
 
                       //echo  $query; die;
     $update = parent::nonQuery($query);

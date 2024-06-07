@@ -67,7 +67,7 @@ class area extends conexion
 
       $this->token = $datos['token'];
       $arrayToken = $this->buscarToken();
-
+      echo $json; die;
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
@@ -128,6 +128,7 @@ class area extends conexion
               '$this->descripcionArea',
               '$this->activo'
               )";
+
     //echo $query; die;
     $Insertar = parent::nonQueryId($query);
 
@@ -146,7 +147,7 @@ class area extends conexion
                           nombreArea='$this->nombreArea',
                           descripcionArea='$this->descripcionArea',
                           activo='$this->activo'
-                      WHERE idArea = $this->idAreas";
+                      WHERE idAreas = $this->idAreas";
 
                       //echo  $query; die;
     $update = parent::nonQuery($query);

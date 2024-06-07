@@ -17,31 +17,33 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area";
-     //echo $URL;
-     //print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
+    // echo $URL;
+    // print("<pre>".print_r(json_encode($_POST['mod']),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
 $idArea = @$rs['result']['idHeaderNew'];
+
 // print("<pre>".print_r(json_encode($_POST),true)."</pre>");
-// print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
-if ((@$rs['status'] == 'OK') or ($_POST['mod']=="2")) {
+//  print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+if ((@$rs['status'] == 'OK')||($_POST['mod']==2)) {
 
   if($_POST['accion']=="Crear"){
-    $url = " onclick= \"enviarParametrosGetsionUpdate('admin/nivelAreaCreate.php,2,".@$rs['result'] ['idHeaderNew'].")" ;
+    echo 'eeee'; die;
+    $url = " onclick= \"enviarParametrosGetsionUpdate('admin/areaDesarrolloCreate.php',2,'".@$rs['result'] ['idHeaderNew']."')" ;
   }else{
     $url = "onclick=\"enviarParametrosCRUD('admin/areaDesarrolloList.php')\"";
   }
 
 } else {
-    $url = "onclick=\"enviarParametrosCRUD('admin/areaDesarrolloList.php')\"";
+    $url = 'onclick="history.back()"';
 }
-echo $url; die;
+
 ?>
 
 <div class="modal fade" id="modal-success">
     <div class="modal-dialog">
-        <div class="modal-content <?php if ((@$rs['status'] == 'OK')||($_POST['mod']==2)) {
+        <div class="modal-content <?php if (@$rs['status'] == 'OK') {
             echo 'bg-success';
         } else {
             echo 'bg-danger';
@@ -60,7 +62,7 @@ echo $url; die;
                 <p><?php echo @$rs['result']['MSG']; ?></p>
             </div>
             <div class="modal-footer justify-content-between">
-
+                <a href="#" onclick="enviarParametrosGetsionUpdate('admin/nivelAreaCreate.php',2,'<?php echo $idArendiz; ?>')" class="nav-link ">Close</a>
                 <button type="button" class="btn btn-outline-light" <?php echo @$url; ?>>Close</button>
             </div>
         </div>

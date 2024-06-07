@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_user'])) {
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
- print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+// print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
 
 
 
@@ -50,7 +50,7 @@ if ($_POST['mod'] == 1) {
 </div>
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_areaDesarrollo.model.php" method="post" name="Area" id="Area">
+<form action="../funciones/funcionesGenerales/XM_areaDesarrollo.model.php" method="post" name="Usuario" id="Usuario">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idArea" value="<?php echo @$idArea ?>">
   <input type="hidden" name="creadoPor" value="<?php echo @$creadoPor ?>">

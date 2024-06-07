@@ -128,7 +128,8 @@ class area extends conexion
               '$this->descripcionArea',
               '$this->activo'
               )";
-    //echo $query; die;
+
+    echo $query; die;
     $Insertar = parent::nonQueryId($query);
 
     // print_r ($Insertar);die;
@@ -146,7 +147,7 @@ class area extends conexion
                           nombreArea='$this->nombreArea',
                           descripcionArea='$this->descripcionArea',
                           activo='$this->activo'
-                      WHERE idArea = $this->idAreas";
+                      WHERE idAreas = $this->idAreas";
 
                       //echo  $query; die;
     $update = parent::nonQuery($query);

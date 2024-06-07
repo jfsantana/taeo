@@ -128,6 +128,7 @@ class area extends conexion
               '$this->descripcionArea',
               '$this->activo'
               )";
+
     //echo $query; die;
     $Insertar = parent::nonQueryId($query);
 

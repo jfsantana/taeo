@@ -89,11 +89,11 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-2">
                   <label>Activo</label>
-                  <select class="form-control" name="activo" id="activo">
-                    <option <?php if (@$activo == 1) {
+                  <select class="form-control" name="activoRepresentante" id="activoRepresentante">
+                    <option <?php if (@$activoRepresentante == 1) {
                               echo 'selected';
                             } ?> value=1>Activo</option>
-                    <option <?php if (@$activo == 0) {
+                    <option <?php if (@$activoRepresentante == 0) {
                               echo 'selected';
                             } ?> value=0>Desactivado</option>
                   </select>

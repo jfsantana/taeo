@@ -14,40 +14,48 @@ require_once '../wsdl/clases/consumoApi.class.php';
 
 $token = $_SESSION['token'];
 $_POST['token'] = $_SESSION['token'];
-$_POST['creadoPor'] = $_SESSION['usuario'];
+$_POST['creador'] = $_SESSION['usuario'];
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area";
-     //echo $URL;
-     //print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
-$rs = API::POST($URL, $token, $_POST);
-$rs = API::JSON_TO_ARRAY($rs);
 
-$idArea = @$rs['result']['idHeaderNew'];
-// print("<pre>".print_r(json_encode($_POST),true)."</pre>");
-// print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
-if ((@$rs['status'] == 'OK') or ($_POST['mod']=="2")) {
+print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
 
-  if($_POST['accion']=="Crear"){
-    $url = " onclick= \"enviarParametrosGetsionUpdate('admin/nivelAreaCreate.php,2,".@$rs['result'] ['idHeaderNew'].")" ;
-  }else{
-    $url = "onclick=\"enviarParametrosCRUD('admin/areaDesarrolloList.php')\"";
-  }
 
+  if (
+    ($_POST['rifSede']!="")&&
+    ($_POST['nombreSede']!="")&&
+    ($_POST['telefonoSede']!="")&&
+    ($_POST['emailSede']!="")&&
+    ($_POST['direccionSede']!="")
+    ){
+      $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede";
+      $rs = API::POST($URL, $token, $_POST);
+      $rs = API::JSON_TO_ARRAY($rs);
+    }
+
+
+//print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+
+
+//onclick="enviarParametros('admin/clienteList.php')"
+$idHeaderNew = @$rs['result']['idHeaderNew'];
+
+if (@$rs['status'] == 'OK') {
+    $url = "onclick=\"enviarParametrosCRUD('admin/SedeList.php')\"";
 } else {
-    $url = "onclick=\"enviarParametrosCRUD('admin/areaDesarrolloList.php')\"";
+    $url = "onclick=\"enviarParametrosCRUD('admin/SedeCreate.php','1')\"";
 }
-echo $url; die;
+
 ?>
 
 <div class="modal fade" id="modal-success">
     <div class="modal-dialog">
-        <div class="modal-content <?php if ((@$rs['status'] == 'OK')||($_POST['mod']==2)) {
+        <div class="modal-content <?php if (@$rs['status'] == 'OK') {
             echo 'bg-success';
         } else {
             echo 'bg-danger';
         } ?>">
             <div class="modal-header">
-                <h4 class="modal-title"><?php if ((@$rs['status'] == 'OK')||($_POST['mod']==2)) {
+                <h4 class="modal-title"><?php if (@$rs['status'] == 'OK') {
                     echo 'Se Actualizo Correctamente con Exito.';
                 } else {
                     echo 'Error';
@@ -60,7 +68,6 @@ echo $url; die;
                 <p><?php echo @$rs['result']['MSG']; ?></p>
             </div>
             <div class="modal-footer justify-content-between">
-
                 <button type="button" class="btn btn-outline-light" <?php echo @$url; ?>>Close</button>
             </div>
         </div>
