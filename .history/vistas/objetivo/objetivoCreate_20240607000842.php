@@ -242,7 +242,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                 <div class="col-sm-6">
                   <label for="nivelObjetivo">Area</label>
                   <select class="form-control" name="idAreaObjetivo" id="idAreaObjetivo" onchange="fetchNiveles(this.value)">
-                    <option>Seleccione</option>
+                    <option>Seleccine</option>
                     <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
                       <option <?php if ($areaObjetivo['idArea'] == @$idAreaObjetivo) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
                     <?php }?>
@@ -374,18 +374,13 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
 
 <!-- ******************** -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 <script>
 function fetchNiveles(idArea) {
-
-  console.log('VER PARA EL AREA:', idArea); // Agrega esta línea para depuración
   $.ajax({
     type: "POST",
-    url: "objetivo/fetch_niveles.php",
+    url: "fetch_niveles.php",
     data: { idArea: idArea },
     success: function(response) {
-      console.log('Response:', response); // Agrega esta línea para depuración
       var niveles = JSON.parse(response);
       var nivelSelect = $('#nivelObjetivo');
 

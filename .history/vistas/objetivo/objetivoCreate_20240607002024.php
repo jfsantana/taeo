@@ -383,7 +383,6 @@ function fetchNiveles(idArea) {
   $.ajax({
     type: "POST",
     url: "objetivo/fetch_niveles.php",
-    data: { idArea: idArea },
     success: function(response) {
       console.log('Response:', response); // Agrega esta línea para depuración
       var niveles = JSON.parse(response);

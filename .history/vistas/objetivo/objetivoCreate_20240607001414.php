@@ -378,12 +378,10 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
 <script>
 function fetchNiveles(idArea) {
-
-  console.log('VER PARA EL AREA:', idArea); // Agrega esta línea para depuración
+  console.log('Fetching niveles for area:', idArea); // Agrega esta línea para depuración
   $.ajax({
     type: "POST",
     url: "objetivo/fetch_niveles.php",
-    data: { idArea: idArea },
     success: function(response) {
       console.log('Response:', response); // Agrega esta línea para depuración
       var niveles = JSON.parse(response);
