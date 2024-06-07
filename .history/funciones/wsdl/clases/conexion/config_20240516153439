@@ -1,8 +1,0 @@
-{
-  "conexion":{
-    "server":"localhost",
-    "user":"root",
-    "password":"",
-    "port":"3306"
-  }
-}
