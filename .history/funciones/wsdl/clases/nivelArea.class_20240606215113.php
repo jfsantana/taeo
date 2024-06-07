@@ -154,9 +154,12 @@ class nivelArea extends conexion
                           set
                           descripcionNivelAreaObjetivo='$this->descripcionNivelAreaObjetivo',
                           activo='$this->activo',
+                          fechaCreacion='$this->fechaCreacion',
                           nombreNivelAreaObjetivo='$this->nombreNivelAreaObjetivo'
+
                       WHERE idNivelAreaObjetivo = $this->idNivelAreaObjetivo";
-                     // echo  $query; die;
+
+                      echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {

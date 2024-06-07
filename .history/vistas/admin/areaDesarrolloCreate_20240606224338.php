@@ -9,7 +9,7 @@ if (!isset($_SESSION['id_user'])) {
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
- //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+ print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 
 
 

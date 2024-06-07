@@ -11,10 +11,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /*****!SECTION
    * type:
    * 1 listar todos los nivelAreas, recibe el idRepresentate (opcional) para busacr un usuario
-   * 2
+   * 2 Lista los aprendices de un nivelArea (recibe idAprendiz de manera Obligatoria)
    */
   if ($_GET['type']==1){
-    $datosArray = $_nivelArea->getNivelArea(@$_GET['idNivelAreaObjetivo']);
+    $datosArray = $_nivelArea->getNivelArea(@$_GET['idnivelArea']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif($_GET['type']==2){
+    $datosArray = $_nivelArea->getNivelAreaDetail(@$_GET['idNivelAreaObjetivo']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);

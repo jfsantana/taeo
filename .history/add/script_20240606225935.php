@@ -270,7 +270,7 @@
     document.body.appendChild(form);
     form.submit();
   }
-  function enviarParametrosGetsionUpdate2(page, mod, id) {
+  function enviarParametrosGetsionUpdate(page, mod, id) {
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = '../../vistas/home.php';

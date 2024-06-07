@@ -45,6 +45,22 @@ class nivelArea extends conexion
     return parent::ObtenerDatos($query);
   }
 
+
+  public function getNivelAreaDetail($idNivelAreaObjetivo) //()
+  {
+    $where = " WHERE idNivelAreaObjetivo <> '' ";
+    if ($idNivelAreaObjetivo != '') {
+      $where =  $where . " and idNivelAreaObjetivo = " . $idNivelAreaObjetivo;
+    }
+    $query = "select *
+    from nivelareaobjetivo
+     $where ";
+
+
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
   public function getAprendizByRepresentante($idNivelAreaObjetivo) //()
   {
     $where = " WHERE aprendiz.activoAprendiz = 1 ";
@@ -83,9 +99,10 @@ class nivelArea extends conexion
           //echo $json; die;
           $this->idNivelAreaObjetivo = @$datos['idNivelAreaObjetivo'];
           $this->idAreaObjetivo = @$datos['idAreaObjetivo'];
+          $this->nombreNivelAreaObjetivo = @$datos['nombreNivelAreaObjetivo'];
           $this->descripcionNivelAreaObjetivo = @$datos['descripcionNivelAreaObjetivo'];
           $this->activo = @$datos['activo'];;
-          $this->nombreNivelAreaObjetivo =  @$datos['nombreNivelAreaObjetivo'];
+          $this->nombreNivelAreaObjetivo = @$_SESSION['usuario'];
 
           if($datos['mod']==1){
             $resp = $this->Insertar();
@@ -154,9 +171,12 @@ class nivelArea extends conexion
                           set
                           descripcionNivelAreaObjetivo='$this->descripcionNivelAreaObjetivo',
                           activo='$this->activo',
+                          fechaCreacion='$this->fechaCreacion',
                           nombreNivelAreaObjetivo='$this->nombreNivelAreaObjetivo'
+
                       WHERE idNivelAreaObjetivo = $this->idNivelAreaObjetivo";
-                     // echo  $query; die;
+
+                      echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {

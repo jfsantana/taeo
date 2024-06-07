@@ -27,17 +27,17 @@ $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea";
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
-  // if (
-  //   ($_POST['rifSede']!="")&&
-  //   ($_POST['nombreSede']!="")&&
-  //   ($_POST['telefonoSede']!="")&&
-  //   ($_POST['emailSede']!="")&&
-  //   ($_POST['direccionSede']!="")
-  //   ){
-  //     $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea";
-  //     $rs = API::POST($URL, $token, $_POST);
-  //     $rs = API::JSON_TO_ARRAY($rs);
-  //   }
+  if (
+    ($_POST['rifSede']!="")&&
+    ($_POST['nombreSede']!="")&&
+    ($_POST['telefonoSede']!="")&&
+    ($_POST['emailSede']!="")&&
+    ($_POST['direccionSede']!="")
+    ){
+      $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea";
+      $rs = API::POST($URL, $token, $_POST);
+      $rs = API::JSON_TO_ARRAY($rs);
+    }
 
 
 //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;

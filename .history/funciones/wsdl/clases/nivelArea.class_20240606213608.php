@@ -83,9 +83,10 @@ class nivelArea extends conexion
           //echo $json; die;
           $this->idNivelAreaObjetivo = @$datos['idNivelAreaObjetivo'];
           $this->idAreaObjetivo = @$datos['idAreaObjetivo'];
+          $this->nombreNivelAreaObjetivo = @$datos['nombreNivelAreaObjetivo'];
           $this->descripcionNivelAreaObjetivo = @$datos['descripcionNivelAreaObjetivo'];
           $this->activo = @$datos['activo'];;
-          $this->nombreNivelAreaObjetivo =  @$datos['nombreNivelAreaObjetivo'];
+          $this->nombreNivelAreaObjetivo = @$_SESSION['usuario'];
 
           if($datos['mod']==1){
             $resp = $this->Insertar();
@@ -152,10 +153,14 @@ class nivelArea extends conexion
   {
     $query = 'update ' . $this->tabla . "
                           set
+                          idAreaObjetivo='$this->idAreaObjetivo',
                           descripcionNivelAreaObjetivo='$this->descripcionNivelAreaObjetivo',
                           activo='$this->activo',
+                          fechaCreacion='$this->fechaCreacion',
                           nombreNivelAreaObjetivo='$this->nombreNivelAreaObjetivo'
+
                       WHERE idNivelAreaObjetivo = $this->idNivelAreaObjetivo";
+
                      // echo  $query; die;
     $update = parent::nonQuery($query);
 

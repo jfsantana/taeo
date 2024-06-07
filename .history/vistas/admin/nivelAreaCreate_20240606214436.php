@@ -9,17 +9,24 @@ if (!isset($_SESSION['id_user'])) {
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
+ print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+
 
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
   if(isset($_POST['id'])){
     $idArea = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
     $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1&idArea=$idArea";
+    echo   $URL ;
     $rs         = API::GET($URL, $token);
     $arrayNivelArea  = API::JSON_TO_ARRAY($rs);
     $activo = $arrayNivelArea[0]['activo'];
     $nombreArea = $arrayNivelArea[0]['nombreArea'];
     $idArea = $arrayNivelArea[0]['idArea'];
+
+
+
+
   }
 } else {
   $accion = "Editar";
@@ -30,7 +37,7 @@ if ($_POST['mod'] == 1) {
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=1&idNivelAreaObjetivo=$idNivelAreaObjetivo";
   $rs         = API::GET($URL, $token);
   $arrayNivelArea  = API::JSON_TO_ARRAY($rs);
-
+echo $URL ;
   $nombreNivelAreaObjetivo = $arrayNivelArea[0]['nombreNivelAreaObjetivo'];
   $descripcionNivelAreaObjetivo = $arrayNivelArea[0]['descripcionNivelAreaObjetivo'];
   $idAreaObjetivo = $arrayNivelArea[0]['idAreaObjetivo'];
