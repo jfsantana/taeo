@@ -31,6 +31,13 @@ class conexion
             $this->port = $value['port'];
         }
         $this->conexion = new mysqli($this->server, $this->user, $this->password, $this->database, $this->port);
+
+               // Establecer la codificación de caracteres a utf8mb4
+        if (!$this->conexion->set_charset("utf8mb4")) {
+          printf("Error al cargar el conjunto de caracteres utf8mb4: %s\n", $this->conexion->error);
+          exit();
+        }
+
         if ($this->conexion->connect_errno) {
             echo 'no se conecto';
             exit;
