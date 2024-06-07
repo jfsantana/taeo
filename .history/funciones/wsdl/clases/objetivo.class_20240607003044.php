@@ -34,7 +34,6 @@ class objetivo extends conexion
   private $fechaCreacion = '1900-01-01';
   private $versionObjetivo='';
   private $nivelObjetivo='';
-  private $idAreaObjetivo='';
 
 
 
@@ -150,9 +149,7 @@ class objetivo extends conexion
             $this->activo = @$datos['activo'];
             $this->nivelObjetivo = @$datos['nivelObjetivo'];
 
-            $this->idAreaObjetivo = @$datos['idAreaObjetivo'];
-
-
+            print_r($datos['mod']); die;
           if($datos['mod']==1){//creacion del header y los items
             $resp = $this->InsertarHeader();
             $idHeader = $resp ;
@@ -348,8 +345,7 @@ class objetivo extends conexion
                 activo,
                 fechaCreacion,
                 creadoPor,
-                nivelObjetivo,
-                idAreaObjetivo
+                nivelObjetivo
                   )
           value
           (
@@ -358,8 +354,7 @@ class objetivo extends conexion
               '$this->activo',
               '$this->fechaCreacion',
               '$this->creadoPor',
-              '$this->nivelObjetivo',
-              '$this->idAreaObjetivo'
+              '$this->nivelObjetivo'
               )";
 
     //echo $query; die;
@@ -382,8 +377,7 @@ class objetivo extends conexion
                           activo='$this->activo',
                           fechaCreacion='$this->fechaCreacion',
                           creadoPor='$this->creadoPor',
-                          nivelObjetivo='$this->nivelObjetivo',
-                          idAreaObjetivo='$this->idAreaObjetivo'
+                          nivelObjetivo='$this->nivelObjetivo'
                       WHERE idObjetivoHeader = $this->idObjetivoHeader";
 
                      // echo  $query; die;

@@ -386,7 +386,7 @@ class objetivo extends conexion
                           idAreaObjetivo='$this->idAreaObjetivo'
                       WHERE idObjetivoHeader = $this->idObjetivoHeader";
 
-                     // echo  $query; die;
+                      echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
