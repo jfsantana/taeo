@@ -68,7 +68,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
             <tbody>
               <?php foreach ($arrayObjetivo as $objetivo) { ?>
                 <tr>
-                  <td><?php echo strtoupper($objetivo['nombreArea']); ?></td>
+                  <td><?php echo $objetivo['nombreArea']; ?></td>
                   <td><a href="#" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',2,'<?php echo $objetivo['idObjetivoHeader']; ?>')" class="nav-link "><?php echo $objetivo['nombreObjetivo']; ?></a></td>
                   <td><?php echo $objetivo['nombreNivelAreaObjetivo']; ?></td>
                   <td><?php echo substr($objetivo['observacionObjetivo'], 0, 1000); ?></td>

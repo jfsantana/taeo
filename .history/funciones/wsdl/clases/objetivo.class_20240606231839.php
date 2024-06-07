@@ -55,7 +55,7 @@ class objetivo extends conexion
             from objetivo_header
             inner join areasobjetivos on areasobjetivos.idArea =objetivo_header.idAreaObjetivo
             inner join nivelareaobjetivo on nivelareaobjetivo.idNivelAreaObjetivo =objetivo_header.nivelObjetivo  $where ";
-    //echo   $query; die;
+    echo   $query; die;
     return parent::ObtenerDatos($query);
   }
 

@@ -43,19 +43,12 @@ class objetivo extends conexion
 
   public function getObjetivosHeadere($idObjetivoHeader) //()
   {
-    $where = " WHERE objetivo_header.idObjetivoHeader <> '' ";
+    $where = " WHERE idObjetivoHeader <> '' ";
     if ($idObjetivoHeader != '') {
-      $where =  $where . " and objetivo_header.idObjetivoHeader = " . $idObjetivoHeader;
+      $where =  $where . " and idObjetivoHeader = " . $idObjetivoHeader;
     }
-    $query = "select
-              objetivo_header.*,
-              case when objetivo_header.activo = 1 Then 'Activo' else 'Bloqueado' end estado,
-              areasobjetivos.nombreArea ,
-              nivelareaobjetivo.nombreNivelAreaObjetivo
-            from objetivo_header
-            inner join areasobjetivos on areasobjetivos.idArea =objetivo_header.idAreaObjetivo
-            inner join nivelareaobjetivo on nivelareaobjetivo.idNivelAreaObjetivo =objetivo_header.nivelObjetivo  $where ";
-    //echo   $query; die;
+    $query = "select *, case when objetivo_header.activo = 1 Then 'Activo' else 'Bloqueado' end estado from " . $this->tablaHeader . " $where ";
+    echo   $query; die;
     return parent::ObtenerDatos($query);
   }
 

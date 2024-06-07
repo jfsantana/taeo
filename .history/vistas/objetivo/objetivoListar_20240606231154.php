@@ -16,6 +16,8 @@ echo $URL ;
 $rs         = API::GET($URL, $token);
 $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
 
+//print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
+
 ?>
 <div class="content-header">
   <div class="container-fluid">
@@ -68,9 +70,9 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
             <tbody>
               <?php foreach ($arrayObjetivo as $objetivo) { ?>
                 <tr>
-                  <td><?php echo strtoupper($objetivo['nombreArea']); ?></td>
+                  <td><?php echo $objetivo['idAreaObjetivo']; ?></td>
                   <td><a href="#" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',2,'<?php echo $objetivo['idObjetivoHeader']; ?>')" class="nav-link "><?php echo $objetivo['nombreObjetivo']; ?></a></td>
-                  <td><?php echo $objetivo['nombreNivelAreaObjetivo']; ?></td>
+                  <td><?php echo $objetivo['nivelObjetivo']; ?></td>
                   <td><?php echo substr($objetivo['observacionObjetivo'], 0, 1000); ?></td>
                   <td><?php echo $objetivo['creadoPor']; ?></td>
                   <td><?php echo $objetivo['estado']; ?></td>
