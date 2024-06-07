@@ -23,8 +23,8 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 $_POST['file']=@$_FILES;
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo";
 
-  //  print("<pre>".print_r(json_encode($_POST),true)."</pre>");
-  //  echo $URL; die;
+   print("<pre>".print_r(json_encode($_POST),true)."</pre>");
+   echo $URL; die;
 
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
