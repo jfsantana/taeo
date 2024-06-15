@@ -180,8 +180,8 @@ $arrayRepresentanteByAprendiz  = API::JSON_TO_ARRAY($rs);
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="facilitadoraAprendiz">Facilitadora Aprendiz</label>
-                  <input type="text" class="form-control" name="facilitadoraAprendiz" id="facilitadoraAprendiz" placeholder="facilitadora Aprendiz" value="<?php echo @$facilitadoraAprendiz; ?>">
+                  <label for="facilitadoraAprendiz">Mediador(a) Aprendiz</label>
+                  <input type="text" class="form-control" name="facilitadoraAprendiz" id="facilitadoraAprendiz" placeholder="Mediador(a) Aprendiz" value="<?php echo @$facilitadoraAprendiz; ?>">
                 </div>
 
                 <div class="col-sm-3">

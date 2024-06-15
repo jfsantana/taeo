@@ -136,13 +136,13 @@ $meses = array(
           <div class="inner">
             <h3>Evaluar Planificaci&oacute;n</h3>
 
-            <p>Muestra el listado de Planificaicones para ser evaluadas<br></p>
+            <p>Muestra el listado de Planificaciones para ser evaluadas<br></p>
           </div>
           <div class="icon">
             <i class="ion ion-archive"></i>
           </div>
           <!-- onclick="enviarParametrosGetsionUpdate('time/facturaCreate.php','<?php echo $idAux; ?>','<?php echo $_SESSION['corte']; ?>')" -->
-          <a href="#"  class="small-box-footer">Ver Planificaicones <i class="fas fa-arrow-circle-right"></i>
+          <a href="#"  class="small-box-footer">Ver Planificaciones <i class="fas fa-arrow-circle-right"></i>
         </a>
         </div>
       </div>

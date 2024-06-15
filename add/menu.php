@@ -5,7 +5,7 @@
       <a href="#" class="nav-link ">
         <i class="nav-icon fas fa-cogs  text-danger"></i>
         <p>
-          Configuracion
+          Configuración
           <i class="right fas fa-angle-left"></i>
         </p>
       </a>
@@ -25,7 +25,7 @@
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Mediador (a)</p>
+            <p>Mediador(a)</p>
           </a>
         </li>
         <li class="nav-item">
@@ -52,7 +52,7 @@
         <li class="nav-item">
           <a href="#"  class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Configuracion</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
+            <p>Configuración</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
           </a>
         </li>
       </ul>
@@ -104,20 +104,20 @@
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card  text-info"></i>
-            <p>Creacion </p>
+            <p>Creación </p>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-edit  text-info"></i>
-            <p>Evaluacion</p>
+            <p>Evaluación</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('time/cargaTimeResumenAprobList.php')" class="nav-link">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-edit  text-info"></i>
             <p>
-              Aprobacion (Prog)
+              Aprobación (Prog)
             </p>
           </a>
         </li>
@@ -172,7 +172,7 @@
           <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
             <i class="nav-icon fas fa-plus"></i>
 
-            <p>Creacion</p>
+            <p>Creación</p>
           </a>
         </li>
         <li class="nav-item">
@@ -207,7 +207,7 @@
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('report/fiRealMensual.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
-              <p>Reporte por Sesion</p>
+              <p>Reporte por Sesión</p>
             </a>
           </li>
           <li class="nav-item">

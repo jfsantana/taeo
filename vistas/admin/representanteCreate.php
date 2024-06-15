@@ -98,12 +98,12 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="cedulaRepresentante">Cédula</label>
-                  <input type="text" class="form-control" name="cedulaRepresentante" id="cedulaRepresentante" placeholder="Cedula" value="<?php echo @$cedulaRepresentante; ?>">
+                  <input type="text" class="form-control" name="cedulaRepresentante" id="cedulaRepresentante" placeholder="Cédula" value="<?php echo @$cedulaRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-3">
                   <label for="telefonoRepresentante">Teléfono</label>
-                  <input type="text" class="form-control" name="telefonoRepresentante" id="telefonoRepresentante" placeholder="telefonoRepresentante" value="<?php echo @$telefonoRepresentante; ?>">
+                  <input type="text" class="form-control" name="telefonoRepresentante" id="telefonoRepresentante" placeholder="teléfono Representante" value="<?php echo @$telefonoRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-3">
@@ -125,30 +125,30 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="profesionRepresentante">Profesión Representante</label>
-                  <input type="text" class="form-control" name="profesionRepresentante" id="profesionRepresentante" placeholder="profesionRepresentante" value="<?php echo @$profesionRepresentante; ?>">
+                  <input type="text" class="form-control" name="profesionRepresentante" id="profesionRepresentante" placeholder="profesion Representante" value="<?php echo @$profesionRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-3">
                   <label for="lugarTrabajoRepresentante">Lugar de Trabajo</label>
-                  <input type="text" class="form-control" name="lugarTrabajoRepresentante" id="lugarTrabajoRepresentante" placeholder="lugarTrabajoRepresentante" value="<?php echo @$lugarTrabajoRepresentante; ?>">
+                  <input type="text" class="form-control" name="lugarTrabajoRepresentante" id="lugarTrabajoRepresentante" placeholder="lugar Trabajo Representante" value="<?php echo @$lugarTrabajoRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-3">
                   <label for="correoRepresentante">Email</label>
-                  <input type="email" class="form-control" name="correoRepresentante" id="correoRepresentante" placeholder="correoRepresentante" value="<?php echo @$correoRepresentante; ?>">
+                  <input type="email" class="form-control" name="correoRepresentante" id="correoRepresentante" placeholder="correo Representante" value="<?php echo @$correoRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-3">
                   <label for="razonSocialRepresentante">Razón Social</label>
-                  <input type="text" class="form-control" name="razonSocialRepresentante" id="razonSocialRepresentante" placeholder="razonSocialRepresentante" value="<?php echo @$razonSocialRepresentante; ?>">
+                  <input type="text" class="form-control" name="razonSocialRepresentante" id="razonSocialRepresentante" placeholder="razón Social Representante" value="<?php echo @$razonSocialRepresentante; ?>">
                 </div>
                 <div class="col-sm-3">
                   <label for="rifRepresentante">Rif</label>
-                  <input type="text" class="form-control" name="rifRepresentante" id="rifRepresentante" placeholder="rifRepresentante" value="<?php echo @$rifRepresentante; ?>">
+                  <input type="text" class="form-control" name="rifRepresentante" id="rifRepresentante" placeholder="RIF Representante" value="<?php echo @$rifRepresentante; ?>">
                 </div>
                 <div class="col-sm-6">
                   <label for="direccionFiscalRepresentante">Dirección Fiscal</label>
-                  <input type="text" class="form-control" name="direccionFiscalRepresentante" id="direccionFiscalRepresentante" placeholder="direccionFiscalRepresentante" value="<?php echo @$direccionFiscalRepresentante; ?>">
+                  <input type="text" class="form-control" name="direccionFiscalRepresentante" id="direccionFiscalRepresentante" placeholder="Dirección Fiscal Representante" value="<?php echo @$direccionFiscalRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-2">

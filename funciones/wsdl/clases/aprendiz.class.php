@@ -217,7 +217,7 @@ class aprendiz extends conexion
                           apellidoAprendiz='$this->apellidoAprendiz',
                           fechaNacimientoAprendiz='$this->fechaNacimientoAprendiz',
                           colegioAprendiz='$this->colegioAprendiz',
-                          gradoAprendiz=$this->gradoAprendiz,
+                          gradoAprendiz='$this->gradoAprendiz',
                           escolaridadAprendiz='$this->escolaridadAprendiz',
                           direccionAprendiz='$this->direccionAprendiz',
                           paisAprendiz='$this->paisAprendiz',
@@ -228,10 +228,9 @@ class aprendiz extends conexion
                           fechaCreacion='$this->fechaCreacion',
                           creadoPor='$this->creadoPor',
                           alergiaAprendiz='$this->alergiaAprendiz'
-
                       WHERE idAprendiz = $this->idAprendiz";
 
-                      //echo  $query; die;
+                    //  echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
