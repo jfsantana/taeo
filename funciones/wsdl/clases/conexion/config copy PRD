@@ -1,0 +1,9 @@
+{
+  "conexion":{
+    "server":"localhost",
+    "user":"bdUserTaeo",
+    "password":"@b{Qf$shwC5?",
+    "database":"taeho_v2",
+    "port":"3306"
+  }
+}
