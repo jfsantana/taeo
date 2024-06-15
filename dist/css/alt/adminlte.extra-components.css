@@ -1118,13 +1118,13 @@
 }
 
 .direct-chat-warning .right > .direct-chat-text {
-  background-color: #ffc107;
-  border-color: #ffc107;
+  background-color: #FDCC45;
+  border-color: #FDCC45;
   color: #1f2d3d;
 }
 
 .direct-chat-warning .right > .direct-chat-text::after, .direct-chat-warning .right > .direct-chat-text::before {
-  border-left-color: #ffc107;
+  border-left-color: #FDCC45;
 }
 
 .direct-chat-danger .right > .direct-chat-text {
@@ -1278,13 +1278,13 @@
 }
 
 .direct-chat-yellow .right > .direct-chat-text {
-  background-color: #ffc107;
-  border-color: #ffc107;
+  background-color: #FDCC45;
+  border-color: #FDCC45;
   color: #1f2d3d;
 }
 
 .direct-chat-yellow .right > .direct-chat-text::after, .direct-chat-yellow .right > .direct-chat-text::before {
-  border-left-color: #ffc107;
+  border-left-color: #FDCC45;
 }
 
 .direct-chat-green .right > .direct-chat-text {
