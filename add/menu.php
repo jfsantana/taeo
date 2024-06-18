@@ -50,7 +50,7 @@
 
 
         <li class="nav-item">
-          <a href="#"  class="nav-link ">
+        <a href="#" onclick="enviarParametros('admin/configList.php')" class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
             <p>Configuración</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
           </a>
