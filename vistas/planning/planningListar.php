@@ -47,7 +47,7 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
             <div class="icon">
               <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
             </div>
-            <a href="#" onclick="enviarParametrosGetsionCreate('objetivo/objetivoCreate.php','1')" class="small-box-footer">Crear Planificaciones </i></a>
+            <a href="#" onclick="enviarParametrosGetsionCreate('planning/planningCreate.php','1')" class="small-box-footer">Crear Planificaciones </i></a>
           </div>
         </div>
       <?php }?>
@@ -65,7 +65,7 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
               <tr>
                 <th>Aprendiz</th>
                 <th>Sede</th>
-                <th>Area</th>
+                <th>Área</th>
                 <th>Observación</th>
                 <th>Creado por</th>
                 <th>Activo</th>
@@ -88,7 +88,7 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
               <tr>
                <th>Aprendiz</th>
                 <th>Sede</th>
-                <th>Area</th>
+                <th>Área</th>
                 <th>Observación</th>
                 <th>Creado por</th>
                 <th>Activo</th>
