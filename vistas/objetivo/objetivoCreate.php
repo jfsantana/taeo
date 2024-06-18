@@ -320,7 +320,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                       <div class="card-tools  align-items-center" >
                           <ul class="nav nav-pills ml-auto  align-items-center" >
                               <li class="nav-item">
-                                  <a href="./plantilla/FormatoCargaObjetivos.xlsx" title='Descargue el Formato para la carga por Lote' download>
+                                  <a href="objetivo/plantilla/FormatoCargaObjetivos.xlsx" title='Descargue el Formato para la carga por Lote' download>
                                       <ion-icon name="download-outline"></ion-icon>
                                   </a>
                               </li>

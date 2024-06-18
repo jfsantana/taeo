@@ -70,7 +70,7 @@
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('objetivo/objetivoListar.php')" class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-warning"></i>
-            <p>Consultar Objetivos</p>
+            <p>Gestión de Objetivos</p>
           </a>
         </li>
         <!-- <li class="nav-item">
@@ -104,7 +104,7 @@
       <li class="nav-item">
           <a href="#" onclick="enviarParametros('planning/planningListar.php')" class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-info"></i>
-            <p>Consultar Planificaciones</p>
+            <p>Gestión Planificación</p>
           </a>
         </li>
 
