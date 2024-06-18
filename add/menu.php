@@ -101,7 +101,14 @@
         </p>
       </a>
       <ul class="nav nav-treeview">
-        <li class="nav-item">
+      <li class="nav-item">
+          <a href="#" onclick="enviarParametros('planning/planningListar.php')" class="nav-link ">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-info"></i>
+            <p>Consultar Planificaciones</p>
+          </a>
+        </li>
+
+        <!-- <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card  text-info"></i>
             <p>Creación </p>
@@ -120,7 +127,7 @@
               Aprobación (Prog)
             </p>
           </a>
-        </li>
+        </li> -->
 
       </ul>
     </li>
