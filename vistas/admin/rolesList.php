@@ -37,7 +37,7 @@ $array  = API::JSON_TO_ARRAY($rs);
     <div class="row">
       <div class="col-lg-12 col-12">
         <!-- small box -->
-        <div class="small-box bg-warning">
+        <div class="small-box bg-danger">
           <div class="inner">
             <h3><?php echo count($array); ?></h3>
             <p>Roles</p>

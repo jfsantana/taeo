@@ -31,7 +31,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12 col-12">
-        <div class="small-box bg-info">
+        <div class="small-box bg-warning">
           <div class="inner">
             <h3><?php echo count($arrayObjetivo); ?></h3>
             <p>Num Objetivos</p>

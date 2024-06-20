@@ -39,7 +39,7 @@ $arrayRepresentante  = API::JSON_TO_ARRAY($rs);
     <div class="row">
       <div class="col-lg-12 col-12">
         <!-- small box -->
-        <div class="small-box bg-info">
+        <div class="small-box bg-danger">
           <div class="inner">
             <h3><?php echo count($arrayRepresentante); ?></h3>
             <p>Num Representantes</p>
