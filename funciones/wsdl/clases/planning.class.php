@@ -22,7 +22,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 class planning extends conexion
 {
   // Tabla Principal de Empleados
-  private $tablaHeader = 'planning_header';
+  private $tablaHeader = 'planificacion_header';
   private $tablaItems = 'planning_items';
 
   // se debe crear atributos para las tablas que se van a validar en la funcion "post"
@@ -132,7 +132,7 @@ class planning extends conexion
     return parent::ObtenerDatos($query);
   }
 
-  public function post($json)  //()
+  public function post($json)  //(iniciando la creacion)
   {
 
     $_respuestas = new respuestas();
@@ -148,8 +148,13 @@ class planning extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (strlen($datos['nombreObjetivo'])<>'')&&
-          (!isset($datos['observacionObjetivo'])) &&
+          (strlen($datos['idArea'])<>'')&&
+          (!isset($datos['idSede'])) &&
+          (!isset($datos['idFacilitador'])) &&
+          (!isset($datos['idAprendiz'])) &&
+          (!isset($datos['periodoEvaluacion'])) &&
+          (!isset($datos['observacion'])) &&
+          (!isset($datos['idSede'])) &&
           (!isset($datos['activo']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
@@ -177,8 +182,14 @@ class planning extends conexion
           }
 
           //echo $resp; die;
-
-          if ($resp) {
+          if ($resp=='errorExisteRegistro'){
+            $respuesta = $_respuestas->response;
+            $respuesta['status'] = 'ERROR';
+            $respuesta['result'] = [
+              'idHeaderNew' => $resp,
+              'mensaje' => 'ERROR - Ya existe una Planificacion para este Aprendiz'
+            ];
+          }elseif ($resp) {
             $respuesta = $_respuestas->response;
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
@@ -327,7 +338,25 @@ class planning extends conexion
 
   private function InsertarHeader()//()
   {
-    $query = 'insert Into ' . $this->tablaHeader . "
+
+    $validarHeader="SELECT * FROM taeho_v2.planificacion_header
+    where
+      idArea=$this->idArea and
+      idSede=$this->idSede and
+      idFacilitador=$this->idFacilitador and
+      idAprendiz= $this->idAprendiz";
+
+
+      $validarExistencia = parent::ObtenerDatos($validarHeader);
+
+
+
+      if($validarExistencia){
+        return 'errorExisteRegistro';
+
+      }else{
+
+        $query = 'insert Into ' . $this->tablaHeader . "
               (
                 idArea,
                 idSede,
@@ -352,18 +381,18 @@ class planning extends conexion
               '$this->activo'
               )";
 
+          $Insertar = parent::nonQueryId($query);
+
+          // print_r ($Insertar);die;
+          if ($Insertar) {
+          return $Insertar;
+          } else {
+          return 0;
+          }
+      }
 
 
 
-    echo $query; die;
-    $Insertar = parent::nonQueryId($query);
-
-    // print_r ($Insertar);die;
-    if ($Insertar) {
-      return $Insertar;
-    } else {
-      return 0;
-    }
   }
 
   private function UpdateHeader()//()

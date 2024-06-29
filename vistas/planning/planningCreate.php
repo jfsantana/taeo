@@ -33,28 +33,30 @@ if ($_POST['mod'] == 1) {
   $idObjetivoHeader = @$_POST["id"];
 
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1&idPlanificacion=$idObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayHeader  = API::JSON_TO_ARRAY($rs);
 
-  $nombreObjetivo = $arrayHeader[0]['nombreObjetivo'];
-  $observacionObjetivo = $arrayHeader[0]['observacionObjetivo'];
+  $idPlanificacion = $arrayHeader[0]['idPlanificacion'];
+  $idArea = $arrayHeader[0]['idArea'];
+  $idSede = $arrayHeader[0]['idSede'];
+  $idFacilitador = $arrayHeader[0]['idFacilitador'];
+  $idAprendiz = $arrayHeader[0]['idAprendiz'];
+  $periodoEvaluacion = $arrayHeader[0]['periodoEvaluacion'];
+  $observacion = $arrayHeader[0]['observacion'];
   $fechaCreacion = $arrayHeader[0]['fechaCreacion'];
   $creadoPor = $arrayHeader[0]['creadoPor'];
   $activo = $arrayHeader[0]['activo'];
-  $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $idAreaObjetivo = $arrayHeader[0]['idAreaObjetivo'];
-
+  $estado = $arrayHeader[0]['estado'];
+  $nombreArea = $arrayHeader[0]['nombreArea'];
+  $nombreSede = $arrayHeader[0]['nombreSede'];
+  $facilitador = $arrayHeader[0]['facilitador'];
+  $aprendiz = $arrayHeader[0]['aprendiz'];
 
   if ($arrayHeader[0]['activo'] == 1)
     $estado = 1;
   else
     $estado = 0;
-
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=2&idObjetivoHeader=$idObjetivoHeader";
-    $rs         = API::GET($URL, $token);
-    $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
 }elseif(($_POST['mod'] == 3)||($_POST['mod'] == 4)){
   $flag=false;
@@ -69,7 +71,7 @@ if ($_POST['mod'] == 1) {
   $rs         = API::GET($URL, $token);
   $arrayHeader  = API::JSON_TO_ARRAY($rs);
   $nombreObjetivo = $arrayHeader[0]['nombreObjetivo'];
-  $observacionObjetivo = $arrayHeader[0]['observacionObjetivo'];
+  $observacion = $arrayHeader[0]['observacion'];
   $fechaCreacion = $arrayHeader[0]['fechaCreacion'];
   $creadoPor = $arrayHeader[0]['creadoPor'];
   $activo = $arrayHeader[0]['activo'];
@@ -141,7 +143,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 <!-- /.content-header -->
 
 <!-- Main content -->
-<form action="../funciones/funcionesGenerales/XM_objetivo.model.php" method="post" name="objetivo" id="objetivo"  enctype="multipart/form-data">
+<form action="../funciones/funcionesGenerales/XM_planning.model.php" method="post" name="objetivo" id="objetivo"  enctype="multipart/form-data">
 
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idObjetivoHeader" value="<?php echo @$idObjetivoHeader; ?>">
@@ -185,7 +187,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                 </div>
                 <div class="col-sm-4">
                   <label for="aprendiz">Mediador(a)</label>
-                  <select class="form-control" name="idFacilitador" id="idFacilitador" disabled>
+                  <select class="form-control" name="idFacilitador" id="idFacilitador" <?php if ($_POST['mod']==1){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayFacilitadores as $facilitador ){?>
                       <option <?php if ($facilitador['idUsuario'] == @$idFacilitador) {echo 'selected';} ?> value=<?php echo $facilitador['idUsuario']; ?>><?php echo $facilitador['apellidoUsuario'].', '.$facilitador['nombreUsuario']; ?></option>
@@ -236,7 +238,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
                 <div class="col-sm-12">
                     <label for="nombreCliente">Descripción</label>
-                    <textarea  id="summernote" name="observacionObjetivo"><?php echo @$observacionObjetivo; ?></textarea>
+                    <textarea  id="summernote" name="observacion"><?php echo @$observacion; ?></textarea>
                 </div>
 
                 <div class="col-sm-3">
@@ -254,32 +256,20 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
                   <div class="card card-primary">
                     </br>
-                    <div class="card-header align-items-center">
-                      <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
-
-                      <div class="card-tools  align-items-center" >
-                          <ul class="nav nav-pills ml-auto  align-items-center" >
-                              <li class="nav-item">
-                                  <a href="objetivo/plantilla/FormatoCargaObjetivos.xlsx" title='Descargue el Formato para la carga por Lote' download>
-                                      <ion-icon name="download-outline"></ion-icon>
-                                  </a>
-                              </li>
-                          </ul>
-                      </div>
-                  </div>
 
 
-                  <?php
+                    <?php
+                      if(($_POST['mod']<>1)&&($flag)){ ?>
+                        <div class="card-header align-items-center">
+                          <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
+                        </div>
+                    <?php  }?>
 
-                  //aqui va el contenido para llamar a la emergente con ajax que hace la locura
 
-                  //  if ($_POST['mod'] == 2){
-                  //      include_once("objetivoView.php");
-                  //  } else
-                  //  {
-                  //    include_once("objetivoCargaXls.php");
 
-                  //  } ?>
+
+
+
                 </div>
               </div>
 
@@ -288,15 +278,16 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
             <div class="card-footer">
                     <?php
                       if(($_POST['mod']<>1)&&($flag)){ ?>
-                      <button type="button" class="btn btn-warning" onclick="enviarParametrosGetsionUpdate('planning/objetivoCreate.php',3,'<?php echo $idObjetivoHeader ; ?>')">Volver a cargar contenido de la ULTIMA versi&oacute;n</button>
-                      <button type="button" class="btn btn-danger"  onclick="enviarParametrosGetsionUpdate('planning/objetivoCreate.php',4,'<?php echo $idObjetivoHeader ; ?>')">Crear NUEVA VERSIÓN al objetivo</button>
-
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">Agregar de  Actividades</button>
+                      <!-- MODAL -->
+                      <?php include ('planningModal.php'); ?>
                     <?php  }?>
 
               <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
 
               <button type="button" class="btn btn-primary" onclick="enviarParametros('planning/planningListar.php')">Volver al Listado de Planes</button>
             </div>
+
 
 
 
