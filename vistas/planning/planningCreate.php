@@ -144,13 +144,9 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
 <!-- Main content -->
 <form action="../funciones/funcionesGenerales/XM_planning.model.php" method="post" name="objetivo" id="objetivo"  enctype="multipart/form-data">
-
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idObjetivoHeader" value="<?php echo @$idObjetivoHeader; ?>">
   <input type="hidden" name="versionActual" value="<?php echo @$maxVersion; ?>">
-
-
-
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -165,7 +161,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
           <form>
             <div class="card-body">
               <div class="row">
-
                 <div class="col-sm-4">
                   <label for="nivelObjetivo">Área</label>
                   <select class="form-control" name="idArea" id="idArea">
@@ -175,7 +170,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                     <?php }?>
                   </select>
                 </div>
-
                 <div class="col-sm-4">
                   <label for="sede">Sede </label>
                   <select class="form-control" name="idSede" id="idSede"  onchange="fetchNiveles(this.value)">
@@ -194,7 +188,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                     <?php }?>
                   </select>
                 </div>
-
                 <div class="col-sm-8">
                   <label for="aprendiz">Aprendiz </label>
                   <select class="form-control select2"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="idAprendiz" id="idAprendiz">
@@ -204,23 +197,16 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                     <?php }?>
                   </select>
                 </div>
-
                 <div class="col-sm-2">
                   <label>Periodo Evaluacion</label>
                   <select class="form-control" name="periodoEvaluacion" id="periodoEvaluacion">
-
                     <?php
                     if  ((is_null($periodoEvaluacion)) ||(empty($periodoEvaluacion))){$periodoEvaluacion=4;}
                     for ($i = 1; $i <= 5; $i++) { ?>
                       <option <?php if (@$periodoEvaluacion == $i) {echo 'selected';} ?> value=<?php echo $i; ?>><?php echo $i; ?> Eva.</option>
                     <?php }?>
-
                   </select>
                 </div>
-
-
-
-
                 <div class="col-sm-2">
                   <label>Activo</label>
                   <?php
@@ -235,46 +221,30 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                             } ?> value=0>Desactivado</option>
                   </select>
                 </div>
-
                 <div class="col-sm-12">
                     <label for="nombreCliente">Descripción</label>
                     <textarea  id="summernote" name="observacion"><?php echo @$observacion; ?></textarea>
                 </div>
-
                 <div class="col-sm-3">
                   <label for="cedulaRepresentante">Fecha Creación</label>
                   <input type="text" class="form-control" readonly name="fechaCreacion" id="fechaCreacion" placeholder="fechaCreacion" value="<?php echo @$fechaCreacion; ?>">
                 </div>
-
                 <div class="col-sm-3">
                   <label for="telefonoRepresentante">Creado Por</label>
                   <input type="text" class="form-control" name="creadoPor" id="creadoPor" placeholder="creadoPor" readonly value="<?php echo @$creadoPor; ?>">
                 </div>
-
-
                 <div class="col-sm-12">
-
                   <div class="card card-primary">
                     </br>
-
-
                     <?php
                       if(($_POST['mod']<>1)&&($flag)){ ?>
                         <div class="card-header align-items-center">
                           <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
                         </div>
                     <?php  }?>
-
-
-
-
-
-
                 </div>
               </div>
-
             </div>
-
             <div class="card-footer">
                     <?php
                       if(($_POST['mod']<>1)&&($flag)){ ?>
@@ -282,15 +252,9 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                       <!-- MODAL -->
                       <?php include ('planningModal.php'); ?>
                     <?php  }?>
-
               <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
-
               <button type="button" class="btn btn-primary" onclick="enviarParametros('planning/planningListar.php')">Volver al Listado de Planes</button>
             </div>
-
-
-
-
           </form>
         </div>
       </div>
@@ -298,7 +262,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
     </div>
     <!-- /.row (main row) -->
   </div><!-- /.container-fluid -->
-
    </div>
   <!--  </section> -->
 </form>
@@ -311,7 +274,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 <script>
 function fetchNiveles(idSede) {
   var nivelSelect = $('#idFacilitador');
-
   if (idSede) {
     console.log('VER PARA EL AREA:', idSede); // Agrega esta línea para depuración
     $.ajax({
@@ -321,16 +283,13 @@ function fetchNiveles(idSede) {
       success: function(response) {
         console.log('Response:', response); // Agrega esta línea para depuración
         var niveles = JSON.parse(response);
-
         // Limpia las opciones actuales
         nivelSelect.empty();
         nivelSelect.append('<option value="">Seleccione</option>');
-
         // Agrega las nuevas opciones
         niveles.forEach(function(nivel) {
           nivelSelect.append('<option value="' + nivel.idUsuario + '">' + nivel.facilitador + '</option>');
         });
-
         // Habilita el campo
         nivelSelect.prop('disabled', false);
       },
