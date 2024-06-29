@@ -30,7 +30,7 @@ CREATE TABLE `usuario_token` (
   `fecha` datetime DEFAULT NULL,
   `sede` int DEFAULT NULL,
   PRIMARY KEY (`idusuaio_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `usuario_token` (
 
 LOCK TABLES `usuario_token` WRITE;
 /*!40000 ALTER TABLE `usuario_token` DISABLE KEYS */;
-INSERT INTO `usuario_token` VALUES (113,'jsantana','d55141a69de8f77b3cd29d970c1696f7','1','2024-06-20 18:51:00',1),(114,'jsantana','195d48f7ee074a953f337b7d77e76e75','1','2024-06-21 18:17:00',1);
+INSERT INTO `usuario_token` VALUES (115,'jsantana','784b3784e703265e097a61ce604f2e05','1','2024-06-29 20:30:00',1);
 /*!40000 ALTER TABLE `usuario_token` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-29 14:28:22
+-- Dump completed on 2024-06-29 18:21:59

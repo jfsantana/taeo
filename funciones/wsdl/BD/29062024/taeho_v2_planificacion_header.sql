@@ -34,7 +34,7 @@ CREATE TABLE `planificacion_header` (
   `creadoPor` varchar(45) DEFAULT NULL,
   `activo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idPlanificacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb3;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `planificacion_header` (
 
 LOCK TABLES `planificacion_header` WRITE;
 /*!40000 ALTER TABLE `planificacion_header` DISABLE KEYS */;
-INSERT INTO `planificacion_header` VALUES (1,1,1,20,1,'4','Este registro fue una carga manual directamente en la BD','2024-06-18','admin','1');
+INSERT INTO `planificacion_header` VALUES (1,1,1,20,1,'4','Este registro fue una carga manual directamente en la BD','2024-06-18','admin','1'),(5,1,1,20,14,'4','Esta se creo dsde la pagina','2024-06-29','jsantana','1'),(7,2,3,20,1,'4','<p>prueba desde la web</p>','2024-06-29','jsantana','1');
 /*!40000 ALTER TABLE `planificacion_header` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-06-29 14:28:22
+-- Dump completed on 2024-06-29 18:22:00
