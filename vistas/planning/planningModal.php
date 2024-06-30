@@ -56,13 +56,24 @@
 
           <div class="col-sm-3">
             <label for="nivelObjetivo">Nivel hijo1</label>
-            <select class="form-control" disabled name="nivel1" id="nivel1" onchange="fetchSelectPadre('<?php echo $idArea; ?>',this.value,3,'#nivel2')">
+            <select class="form-control" disabled name="nivel1" id="nivel1" onchange="fetchSelectPadre('<?php echo $idArea; ?>',document.getElementById('nivelObjetivo').value,3,this.value,'#nivel2')">
               <option>Seleccione</option>
               <?php foreach($arrayNiveles as $nivel ){?>
                 <option <?php if ($nivel['idNivelAreaObjetivo'] == @$idNivelAreaObjetivo) {echo 'selected';} ?> value=<?php echo $nivel['idNivelAreaObjetivo']; ?>><?php echo strtoupper($nivel['nombreNivelAreaObjetivo']); ?></option>
               <?php }?>
             </select>
           </div>
+
+          <div class="col-sm-3">
+            <label for="nivelObjetivo">Nivel hijo2</label>
+            <select class="form-control" disabled name="nivel2" id="nivel2" onchange="fetchSelectPadre('<?php echo $idArea; ?>',document.getElementById('nivelObjetivo').value,4,this.value,'#nivel3')">
+              <option>Seleccione</option>
+              <?php foreach($arrayNiveles as $nivel ){?>
+                <option <?php if ($nivel['idNivelAreaObjetivo'] == @$idNivelAreaObjetivo) {echo 'selected';} ?> value=<?php echo $nivel['idNivelAreaObjetivo']; ?>><?php echo strtoupper($nivel['nombreNivelAreaObjetivo']); ?></option>
+              <?php }?>
+            </select>
+          </div>
+
         </div>
       </div>
       <div class="modal-footer justify-content-between">
