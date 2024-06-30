@@ -269,40 +269,4 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
 
 <!-- ******************** -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<script>
-function fetchNiveles(idSede) {
-  var nivelSelect = $('#idFacilitador');
-  if (idSede) {
-    console.log('VER PARA EL AREA:', idSede); // Agrega esta línea para depuración
-    $.ajax({
-      type: "POST",
-      url: "planning/fetch_facilitadores.php",
-      data: { idSede: idSede },
-      success: function(response) {
-        console.log('Response:', response); // Agrega esta línea para depuración
-        var niveles = JSON.parse(response);
-        // Limpia las opciones actuales
-        nivelSelect.empty();
-        nivelSelect.append('<option value="">Seleccione</option>');
-        // Agrega las nuevas opciones
-        niveles.forEach(function(nivel) {
-          nivelSelect.append('<option value="' + nivel.idUsuario + '">' + nivel.facilitador + '</option>');
-        });
-        // Habilita el campo
-        nivelSelect.prop('disabled', false);
-      },
-      error: function(xhr, status, error) {
-        console.error('Error al obtener niveles:', error);
-      }
-    });
-  } else {
-    // Si no hay idSede, deshabilita el campo y restaura la opción predeterminada
-    nivelSelect.prop('disabled', true);
-    nivelSelect.empty();
-    nivelSelect.append('<option value="">Seleccione</option>');
-  }
-}
-</script>
-
+<?php include("script.php");?>

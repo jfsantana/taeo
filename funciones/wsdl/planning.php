@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * type:
    * 1 listar todos los header de los Planificaciones o el detalle de uno si se envia idObjetivoHeader
    * 2 listar el numero de Planificaicones por sedes
-   * 3
+   * 3 TRAE TODOS LOS HIJOS DE UN NODO (idArea, nivelObjetivo, nivel_nodo, valor_padre)
    * 4
 
    */
@@ -27,8 +27,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
-
+  }elseif (
+            $_GET['type']==3
+            && isset($_GET['idArea'])
+            && isset($_GET['nivelObjetivo'])
+            && isset($_GET['nivel_nodo'])
+            && isset($_GET['valor_padre'])
+            ){
+    $datosArray = $_planning->getNodosHijos(@$_GET['idArea'],@$_GET['nivelObjetivo'],@$_GET['nivel_nodo'],@$_GET['valor_padre']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
   }
+
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
 

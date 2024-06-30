@@ -75,6 +75,38 @@ class planning extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  public function getNodosHijos($idArea, $nivelObjetivo, $nivel_nodo, $valor_padre) //()
+  {
+
+    // $query ="SELECT oi.*
+    //           FROM objetivo_header as oh
+    //             Inner join objetivo_item as oi  on oh.idObjetivoHeader=oi.idHeader
+    //           WHERE
+    //             oh.idAreaObjetivo=$idArea  and oh.nivelObjetivo=$nivelObjetivo and oh.activo=1
+    //             AND CHAR_LENGTH(REPLACE(jerarquia, '.', '')) = (LENGTH(REPLACE('01.01.01.01.01', '.', '')) - (5 - $nivel_nodo) * 2)
+    //             AND (jerarquia LIKE CONCAT($valor_padre, '.%') OR ($valor_padre = '0' AND jerarquia NOT LIKE '%.%'))
+    //             AND (CHAR_LENGTH(REPLACE(SUBSTRING_INDEX(jerarquia, '.', $nivel_nodo), '.', '')) = $nivel_nodo * 2)
+
+    //             order by oi.jerarquia";
+
+    $query="SELECT oi.*
+            FROM objetivo_header as oh
+              Inner join objetivo_item as oi on oh.idObjetivoHeader=oi.idHeader
+            WHERE
+            oh.idAreaObjetivo=$idArea   and oh.nivelObjetivo=$nivelObjetivo and oh.activo=1
+            and
+                -- Condición para el nivel del nodo
+                CHAR_LENGTH(REPLACE(jerarquia, '.', '')) = (LENGTH(REPLACE('01.01.01.01.01', '.', '')) - (5 - $nivel_nodo) * 2)
+                -- Condición para el nodo padre
+                AND (jerarquia LIKE CONCAT('$valor_padre', '.%') OR ('$valor_padre' = '0' AND jerarquia NOT LIKE '%.%'))
+                -- Condición para obtener los nodos hijos directos
+                AND (CHAR_LENGTH(REPLACE(SUBSTRING_INDEX(jerarquia, '.', $nivel_nodo), '.', '')) = $nivel_nodo * 2)
+
+                order by jerarquia";
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
   public function getIemsByHeader($idRepresentante) //()
   {
     $where = " WHERE t1.activo = 1 ";

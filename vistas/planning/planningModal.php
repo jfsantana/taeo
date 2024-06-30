@@ -34,9 +34,29 @@
       <div class="modal-body">
         <div class="row">
 
-          <div class="col-sm-4">
+          <div class="col-sm-12">
             <label for="nivelObjetivo">Niveles</label>
-            <select class="form-control" name="idArea" id="idArea">
+            <select class="form-control" name="nivelObjetivo" id="nivelObjetivo" onchange="fetchSelectPadre('<?php echo $idArea; ?>',this.value,1,0,'#nivelPadre')">
+              <option>Seleccione</option>
+              <?php foreach($arrayNiveles as $nivel ){?>
+                <option <?php if ($nivel['idNivelAreaObjetivo'] == @$idNivelAreaObjetivo) {echo 'selected';} ?> value=<?php echo $nivel['idNivelAreaObjetivo']; ?>><?php echo strtoupper($nivel['nombreNivelAreaObjetivo']); ?></option>
+              <?php }?>
+            </select>
+          </div>
+
+          <div class="col-sm-3">
+            <label for="nivelObjetivo">Nivel Padre</label>
+            <select class="form-control" disabled name="nivelPadre" id="nivelPadre" onchange="fetchSelectPadre('<?php echo $idArea; ?>',document.getElementById('nivelObjetivo').value,2,this.value,'#nivel1')">
+              <option>Seleccione</option>
+              <?php foreach($arrayNiveles as $nivel ){?>
+                <option <?php if ($nivel['idNivelAreaObjetivo'] == @$idNivelAreaObjetivo) {echo 'selected';} ?> value=<?php echo $nivel['idNivelAreaObjetivo']; ?>><?php echo strtoupper($nivel['nombreNivelAreaObjetivo']); ?></option>
+              <?php }?>
+            </select>
+          </div>
+
+          <div class="col-sm-3">
+            <label for="nivelObjetivo">Nivel hijo1</label>
+            <select class="form-control" disabled name="nivel1" id="nivel1" onchange="fetchSelectPadre('<?php echo $idArea; ?>',this.value,3,'#nivel2')">
               <option>Seleccione</option>
               <?php foreach($arrayNiveles as $nivel ){?>
                 <option <?php if ($nivel['idNivelAreaObjetivo'] == @$idNivelAreaObjetivo) {echo 'selected';} ?> value=<?php echo $nivel['idNivelAreaObjetivo']; ?>><?php echo strtoupper($nivel['nombreNivelAreaObjetivo']); ?></option>
