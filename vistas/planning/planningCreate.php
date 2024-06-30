@@ -52,6 +52,7 @@ if ($_POST['mod'] == 1) {
   $nombreSede = $arrayHeader[0]['nombreSede'];
   $facilitador = $arrayHeader[0]['facilitador'];
   $aprendiz = $arrayHeader[0]['aprendiz'];
+  $aprendizFullName = $arrayHeader[0]['aprendiz'];
 
   if ($arrayHeader[0]['activo'] == 1)
     $estado = 1;
