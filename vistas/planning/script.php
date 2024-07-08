@@ -38,8 +38,19 @@ function fetchNiveles(idSede) {
 
   //SelectPadre
   function fetchSelectPadre(idArea, nivelObjetivo, nivelNodo, valorPadre, objeto) {
-
+    var table = $('#tableActividad');
     var nivelSelect = $(objeto);  // aqui se coloca el #ID DEL SELECT QUE QUEREMOS DESBLOQUEAR
+    var selectIds = ['#nivelPadre', '#nivel1', '#nivel2', '#nivel3', '#nivel4']; // IDs de los select anidados
+
+    var currentIndex = selectIds.indexOf(objeto);
+    for (var i = currentIndex + 1; i < selectIds.length; i++) {
+        $(selectIds[i]).prop('disabled', true);
+        $(selectIds[i]).empty().append('<option value="">Seleccione</option>');
+    }
+
+    // Limpiar la tabla tableActividad al iniciar la búsqueda
+    table.find('tbody').empty();
+
     if (nivelObjetivo) {
       console.log('VER PARA EL idArea:', idArea); // Agrega esta línea para depuración
       console.log('VER PARA EL nivelObjetivo:', nivelObjetivo); // Agrega esta línea para depuración
@@ -54,18 +65,34 @@ function fetchNiveles(idSede) {
                 nivelNodo: nivelNodo,
                 valorPadre: valorPadre
                },
+
         success: function(response) {
-          console.log('Response:', response); // Agrega esta línea para depuración
-          var niveles = JSON.parse(response);
-          // Limpia las opciones actuales
-          nivelSelect.empty();
-          nivelSelect.append('<option value="">Seleccione</option>');
+            console.log('Response:', response);
+          // Agrega esta línea para depuración
+            var niveles = JSON.parse(response);
+            // Limpia las opciones actuales
+            nivelSelect.empty();
+            nivelSelect.append('<option value="">Seleccione</option>');
           // Agrega las nuevas opciones
-          niveles.forEach(function(nivel) {
-            nivelSelect.append('<option value="' + nivel.jerarquia + '">' + nivel.jerarquia +  '-' + nivel.descripcion + '</option>');
-          });
+            niveles['valores'].forEach(function(nivel) {
+              nivelSelect.append('<option value="' + nivel.jerarquia + '">' + nivel.jerarquia +  '-' + nivel.descripcion + '</option>');
+            });
           // Habilita el campo
-          nivelSelect.prop('disabled', false);
+          if(niveles['abuelo']==1)
+            nivelSelect.prop('disabled', false);
+          else{
+            nivelSelect.prop('disabled', true);
+            // Llena la tabla tableActividad con los resultados
+            table.find('tbody').empty(); // Limpia las filas actuales de la tabla
+                    niveles['valores'].forEach(function(nivel) {
+                        var row = '<tr>' +
+                                    '<td><input type="checkbox" name="Representante[]" value="' + nivel.jerarquia + '"></td>' +
+                                    '<td>' + nivel.descripcion + '</td>' +
+                                  '</tr>';
+                        table.find('tbody').append(row);
+                    });
+          }
+
         },
         error: function(xhr, status, error) {
           console.error('Error al obtener niveles:', error);
@@ -78,7 +105,4 @@ function fetchNiveles(idSede) {
       nivelSelect.append('<option value="">Seleccione</option>');
     }
   }
-
-
-
   </script>

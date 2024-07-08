@@ -75,6 +75,24 @@ class planning extends conexion
     return parent::ObtenerDatos($query);
   }
 
+    public function getUltimoPadre($jerarquia,$nivelObjetivo,$idAreaObjetivo) //()
+  {
+    if($jerarquia==0){
+      $response = [[
+        'result' => '1'
+      ]];
+      return $response;
+    }else{
+      $spName = 'CheckHierarchyLevel2';
+      $query = "CALL $spName('$jerarquia',$nivelObjetivo,$idAreaObjetivo)";
+      return parent::ObtenerDatos($query);
+    }
+
+  }
+
+
+
+
   public function getNodosHijos($idArea, $nivelObjetivo, $nivel_nodo, $valor_padre) //()
   {
 

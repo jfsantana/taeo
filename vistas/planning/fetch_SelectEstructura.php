@@ -32,7 +32,12 @@ if (!isset($_POST['valorPadre'])) {
   exit();
 }
 
+/*!SECTION
+valorPadre
+01 nivel padre
 
+nivel hijo 1 01.02
+*/
 
 
 $idArea = $_POST['idArea'];
@@ -44,13 +49,25 @@ $valorPadre = $_POST['valorPadre'];
 $token = $_SESSION['token'];
 
 // Realiza la solicitud a la API para obtener los VALORES DEL PROXIMO SELECT
-
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=3&idArea=$idArea&nivelObjetivo=$nivelObjetivo&nivel_nodo=$nivelNodo&valor_padre=$valorPadre";
-
-//echo $URL; die;
 $rs = API::GET($URL, $token);
 $arrayNivelAreaObjetivo = API::JSON_TO_ARRAY($rs);
 
+// Indica si un Nodo es abuelo
+$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=4&jerarquia=$valorPadre&nivelObjetivo=$nivelObjetivo&idAreaObjetivo=$idArea";
+$rs = API::GET($URL, $token);
+$arrayAbuelo = API::JSON_TO_ARRAY($rs);
+
+
+
+
+
+$response = [
+  'abuelo' => $arrayAbuelo[0]['result'],
+  'valores' => $arrayNivelAreaObjetivo
+];
+
 // Devuelve los niveles en formato JSON
-echo json_encode($arrayNivelAreaObjetivo);
+//echo json_encode($arrayNivelAreaObjetivo);
+echo json_encode($response);
 ?>

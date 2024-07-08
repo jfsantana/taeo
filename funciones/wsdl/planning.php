@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * 1 listar todos los header de los Planificaciones o el detalle de uno si se envia idObjetivoHeader
    * 2 listar el numero de Planificaicones por sedes
    * 3 TRAE TODOS LOS HIJOS DE UN NODO (idArea, nivelObjetivo, nivel_nodo, valor_padre)
-   * 4
+   * 4 indica el true si NO es el ultimo padre de la cadena
 
    */
   if ($_GET['type']==1){
@@ -38,7 +38,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
-  }
+  }elseif (
+    $_GET['type']==4
+    && isset($_GET['jerarquia'])
+    && isset($_GET['nivelObjetivo'])
+    && isset($_GET['idAreaObjetivo'])
+    ){
+$datosArray = $_planning->getUltimoPadre(@$_GET['jerarquia'],$_GET['nivelObjetivo'],$_GET['idAreaObjetivo']);
+header('Content-Type: application/json;charset=utf-8');
+echo json_encode($datosArray);
+http_response_code(200);
+}
 
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
