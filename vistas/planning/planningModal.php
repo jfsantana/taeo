@@ -81,16 +81,16 @@
                         <table id="tableActividad" class="table table-bordered table-striped">
                           <thead>
                             <tr>
-                              <th with=5%>Activo</th>
+                              <th width="15%"> <input type="checkbox" id="selectAll" disabled></th>
                               <th>Nombre Actividad</th>
                             </tr>
                           </thead>
                           <tbody>
 
-                        </tbody>
+                          </tbody>
                           <tfoot>
                             <tr>
-                             <th with=5%>Activo</th>
+                              <th width="15%"> </th>
                               <th>Nombre Actividad</th>
                             </tr>
                           </tfoot>

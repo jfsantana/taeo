@@ -36,6 +36,24 @@ function fetchNiveles(idSede) {
   }
 
 
+  document.addEventListener('DOMContentLoaded', function() {
+      var selectAllCheckbox = document.getElementById('selectAll');
+
+
+      function toggleAllCheckboxes(selectAll) {
+        var checkboxes = document.querySelectorAll('#tableActividad tbody input[type="checkbox"]');
+        checkboxes.forEach(function(checkbox) {
+          checkbox.checked = selectAll.checked;
+        });
+      }
+
+      selectAllCheckbox.addEventListener('change', function() {
+        toggleAllCheckboxes(this);
+      });
+
+
+    });
+
   //SelectPadre
   function fetchSelectPadre(idArea, nivelObjetivo, nivelNodo, valorPadre, objeto) {
     var table = $('#tableActividad');
@@ -50,6 +68,7 @@ function fetchNiveles(idSede) {
 
     // Limpiar la tabla tableActividad al iniciar la búsqueda
     table.find('tbody').empty();
+    $('#selectAll').prop('disabled', true);
 
     if (nivelObjetivo) {
       console.log('VER PARA EL idArea:', idArea); // Agrega esta línea para depuración
@@ -91,6 +110,8 @@ function fetchNiveles(idSede) {
                                   '</tr>';
                         table.find('tbody').append(row);
                     });
+                    // Habilitar los checkboxes de "seleccionar todo" después de cargar los datos
+            $('#selectAll').prop('disabled', false);
           }
 
         },
