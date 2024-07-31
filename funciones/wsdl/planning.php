@@ -27,8 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
-  }elseif (
-            $_GET['type']==3
+  }elseif ( $_GET['type']==3
             && isset($_GET['idArea'])
             && isset($_GET['nivelObjetivo'])
             && isset($_GET['nivel_nodo'])
@@ -38,19 +37,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
-  }elseif (
-    $_GET['type']==4
-    && isset($_GET['jerarquia'])
-    && isset($_GET['nivelObjetivo'])
-    && isset($_GET['idAreaObjetivo'])
-    ){
-$datosArray = $_planning->getUltimoPadre(@$_GET['jerarquia'],$_GET['nivelObjetivo'],$_GET['idAreaObjetivo']);
-header('Content-Type: application/json;charset=utf-8');
-echo json_encode($datosArray);
-http_response_code(200);
-}
+  }elseif ( $_GET['type']==4
+            && isset($_GET['jerarquia'])
+            && isset($_GET['nivelObjetivo'])
+            && isset($_GET['idAreaObjetivo'])
+            ){
+    $datosArray = $_planning->getUltimoPadre(@$_GET['jerarquia'],$_GET['nivelObjetivo'],$_GET['idAreaObjetivo']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif ( $_GET['type']==5
+            && isset($_GET['idPlanificacionHeader'])
+            ){
+      $datosArray = $_planning->getNumPadres(@$_GET['idPlanificacionHeader']);
+      header('Content-Type: application/json;charset=utf-8');
+      echo json_encode($datosArray);
+      http_response_code(200);
+  }elseif ( $_GET['type']==6){
+      $datosArray = $_planning->getIemsByHeader(@$_GET['idPlanificacionHeader'],@$_GET['jerarquia']);
 
-
+      header('Content-Type: application/json;charset=utf-8');
+      echo json_encode($datosArray);
+      http_response_code(200);
+      }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
 
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {

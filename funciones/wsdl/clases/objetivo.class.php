@@ -60,6 +60,19 @@ class objetivo extends conexion
     return parent::ObtenerDatos($query);
   }
 
+
+
+  public function getIdObjetivo($idArea, $idNivel) //()
+  {
+    $where = " WHERE activo = 1 ";
+
+      $where =  $where . " and idAreaObjetivo = " . $idArea . " and nivelObjetivo =".$idNivel;
+
+    $query = "SELECT idObjetivoHeader FROM objetivo_header $where";
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
   public function getIemsByHeader($idRepresentante) //()
   {
     $where = " WHERE t1.activo = 1 ";

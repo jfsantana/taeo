@@ -16,7 +16,7 @@ $token = $_SESSION['token'];
 /*Tipos de MOD
 *!MOD =1 CREATE
 *!MOR = 2 UPDATE
-*!MOD = 3 DELETE ITEMS Y CARGA*/
+*/
 
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
@@ -159,12 +159,12 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
           </div>
           <!-- /.card-header -->
           <!-- form start -->
-          <form>
+
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-4">
                   <label for="nivelObjetivo">Área</label>
-                  <select class="form-control" name="idArea" id="idArea">
+                  <select class="form-control" name="idArea" id="idArea" <?php if($_POST['mod']==2){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
                       <option <?php if ($areaObjetivo['idArea'] == @$idArea) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
@@ -191,7 +191,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                 </div>
                 <div class="col-sm-8">
                   <label for="aprendiz">Aprendiz </label>
-                  <select class="form-control select2"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="idAprendiz" id="idAprendiz">
+                  <select class="form-control select2"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="idAprendiz" id="idAprendiz" <?php if($_POST['mod']==2){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayAprendices as $aprendiz ){?>
                       <option <?php if ($aprendiz['idAprendiz'] == @$idAprendiz) {echo 'selected';} ?> value=<?php echo $aprendiz['idAprendiz']; ?>><?php echo $aprendiz['nombreAprendiz']; ?></option>
@@ -234,6 +234,14 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   <label for="telefonoRepresentante">Creado Por</label>
                   <input type="text" class="form-control" name="creadoPor" id="creadoPor" placeholder="creadoPor" readonly value="<?php echo @$creadoPor; ?>">
                 </div>
+                <?php if($_POST['mod']==2){?>
+                  <div class="col-sm-12">
+                            </br>
+                    <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
+                  </div>
+                <?php }?>
+
+
                 <div class="col-sm-12">
                   <div class="card card-primary">
                     </br>
@@ -242,21 +250,34 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                         <div class="card-header align-items-center">
                           <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
                         </div>
+
+
+
                     <?php  }?>
                 </div>
+                <?php
+                     if($_POST['mod']==2){include_once("planningView.php");}?>
               </div>
             </div>
             <div class="card-footer">
+                  <!-- <button type="submit" class="btn btn-success" >< ?php echo $accion; ?> Encabezado del Plan </button> -->
+                  <?php if($_POST['mod']!=2){?>
+                  <div class="col-sm-12">
+                            </br>
+                    <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
+                  </div>
+                <?php }?>
+            </form>
                     <?php
                       if(($_POST['mod']<>1)&&($flag)){ ?>
                       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">Agregar de  Actividades</button>
                       <!-- MODAL -->
                       <?php include ('planningModal.php'); ?>
                     <?php  }?>
-              <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
+
               <button type="button" class="btn btn-primary" onclick="enviarParametros('planning/planningListar.php')">Volver al Listado de Planes</button>
             </div>
-          </form>
+
         </div>
       </div>
       <!-- ./col -->
@@ -265,7 +286,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   </div><!-- /.container-fluid -->
    </div>
   <!--  </section> -->
-</form>
 
 
 

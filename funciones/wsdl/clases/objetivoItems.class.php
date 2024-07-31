@@ -31,6 +31,17 @@ class objetivoItems extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
+
+  public function getDetailItemsByidHeaderByjerarquia($idHeader,$jerarquia){
+    $where = " WHERE activo = 1 ";
+
+      $where =  $where . " and idHeader = " . $idHeader. " and jerarquia = '" . $jerarquia."'";
+
+    $query = "select * from " . $this->tabla . " $where ";
+    //echo   $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
   public function getDetailItemsObjetyivo($id) //()
   {
     $where = " WHERE id <> '' ";

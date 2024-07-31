@@ -103,14 +103,14 @@ function fetchNiveles(idSede) {
             nivelSelect.prop('disabled', true);
             // Llena la tabla tableActividad con los resultados
             table.find('tbody').empty(); // Limpia las filas actuales de la tabla
-                    niveles['valores'].forEach(function(nivel) {
-                        var row = '<tr>' +
-                                    '<td><input type="checkbox" name="Representante[]" value="' + nivel.jerarquia + '"></td>' +
-                                    '<td>' + nivel.descripcion + '</td>' +
-                                  '</tr>';
-                        table.find('tbody').append(row);
-                    });
-                    // Habilitar los checkboxes de "seleccionar todo" después de cargar los datos
+            niveles['valores'].forEach(function(nivel) {
+                var row = '<tr>' +
+                            '<td><input type="checkbox" name="actividad[]" value="' + nivel.jerarquia + '"></td>' +
+                            '<td>' + nivel.descripcion + '</td>' +
+                          '</tr>';
+                table.find('tbody').append(row);
+            });
+            // Habilitar los checkboxes de "seleccionar todo" después de cargar los datos
             $('#selectAll').prop('disabled', false);
           }
 
@@ -126,4 +126,7 @@ function fetchNiveles(idSede) {
       nivelSelect.append('<option value="">Seleccione</option>');
     }
   }
+
+
+
   </script>

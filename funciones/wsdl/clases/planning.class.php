@@ -75,8 +75,17 @@ class planning extends conexion
     return parent::ObtenerDatos($query);
   }
 
-    public function getUltimoPadre($jerarquia,$nivelObjetivo,$idAreaObjetivo) //()
-  {
+
+
+  public function getNumPadres($idPlanificacionHeader)  {
+
+    $where = " WHERE  idPlanificacionHeader=$idPlanificacionHeader and LENGTH(jerarquia) = 2";
+    $query = "SELECT * FROM planificacion_items  $where order by idNivel, jerarquia  ";
+
+    return parent::ObtenerDatos($query);
+
+  }
+    public function getUltimoPadre($jerarquia,$nivelObjetivo,$idAreaObjetivo)  {
     if($jerarquia==0){
       $response = [[
         'result' => '1'
@@ -125,19 +134,21 @@ class planning extends conexion
     return parent::ObtenerDatos($query);
   }
 
-  public function getIemsByHeader($idRepresentante) //()
+  public function getIemsByHeader($idPlanificacionHeader, $jerarquia) //()
   {
-    $where = " WHERE t1.activo = 1 ";
-    if ($idRepresentante != '') {
-      $where =  $where . " and t1.id_padre = " . $idRepresentante;
-    }
-    $query = "SELECT t1.jerarquia,CONCAT(REPEAT(' ', LENGTH(t1.jerarquia) - LENGTH(REPLACE(t1.jerarquia, '.', ''))), t1.descripcion) as descripcion, t1.id_padre, t1.id
-    FROM objetivo_item AS t1
+    // $where = " WHERE t1.jerarquia <>'' ";
+    // $where =  $where . " and t1.jerarquia = " . $jerarquia. " and t1.idPlanificacionHeader = " . $idPlanificacionHeader;
+    // $query = "SELECT t1.jerarquia,CONCAT(REPEAT(' ', LENGTH(t1.jerarquia) - LENGTH(REPLACE(t1.jerarquia, '.', ''))), t1.descripcion) as descripcion, t1.idItems
+    // FROM planificacion_items AS t1   $where     ORDER BY t1.jerarquia ";
 
-    $where
+    $query = "SELECT *
+    FROM planificacion_items
+    WHERE jerarquia LIKE CONCAT('$jerarquia', '.%')
+      AND LENGTH(jerarquia) = LENGTH('$jerarquia') + 3
+     and idPlanificacionHeader = $idPlanificacionHeader";
 
-    ORDER BY t1.jerarquia, t1.id_padre ";
-   // echo $query; die;
+
+
     return parent::ObtenerDatos($query);
   }
 

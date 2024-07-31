@@ -2,48 +2,24 @@
 
 // ARCHIVO BASE PARA LOS SERVICIOS
 require_once 'clases/respuestas.class.php';
-require_once 'clases/objetivo.class.php';
-require '../../vendor/autoload.php';
+require_once 'clases/planningItems.class.php';
 
 $_respuestas = new respuestas();
-$_objetivo = new objetivo();
+$_objetivoItems = new planningItems();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /*****!SECTION
    * type:
-   * 1 listar todos los header de los objetivos o el detalle de uno si se envia idObjetivoHeader
-   * 2 listar nodos padres de un header
-   * 3 Lista de los Items de un padre
-   * 4 Lista las versiones de los Hijos de un Objetivo recibe idHeader= (id del objetivo)
-
+   * 1 listar detalle de un  idPlanificacionHeader
+   *  2 indica si ya exite el padre para una planificacion especifica
    */
   if ($_GET['type']==1){
-    $datosArray = $_objetivo->getObjetivosHeadere(@$_GET['idObjetivoHeader']);
+    $datosArray = $_objetivoItems->getDetailItemsObjetyivo(@$_GET['idPlanificacionHeader']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
-  }elseif(($_GET['type']==2)&&(isset($_GET['idHeader']))){
-    $datosArray = $_objetivo->getidPadreByHeader(@$_GET['idHeader'],@$_GET['maxVersion']);
-    header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
-    http_response_code(200);
-  }elseif(($_GET['type']==3)&&(isset($_GET['id_padre']))){
-    $datosArray = $_objetivo->getIemsByHeader(@$_GET['id_padre']);
-    header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
-    http_response_code(200);
-  }elseif(($_GET['type']==4)&&(isset($_GET['idHeader']))){
-    $datosArray = $_objetivo->getVersionByHeader(@$_GET['idHeader']);
-    header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
-    http_response_code(200);
-  }elseif(($_GET['type']==5)&&(isset($_GET['idHeader']))){
-    $datosArray = $_objetivo->getLastVersionByHeader(@$_GET['idHeader']);
-    header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
-    http_response_code(200);
-  }elseif(($_GET['type']==6)&&(isset($_GET['idArea']))&&(isset($_GET['idNivel']))){
-    $datosArray = $_objetivo->getIdObjetivo(@$_GET['idArea'],@$_GET['idNivel'] );
+  }elseif($_GET['type']==2){
+    $datosArray = $_objetivoItems->getExistePadre(@$_GET['idPlanificacion'], @$_GET['nivelPadre'] , @$_GET['idNivel']   );
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
@@ -57,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_POST);
   }
 
-  $datosArray = $_objetivo->post($postBody);
+  $datosArray = $_objetivoItems->post($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -74,8 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } else {
       $postBody = json_encode($_PUT);
   }
-  print_r($_PUT); die;
-    $datosArray = $_objetivo->put($postBody);
+
+  //$datosArray = $_objetivoItems->put($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -87,13 +63,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   echo json_encode($datosArray);
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') { // DELETE
-  if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
-    $postBody = file_get_contents('php://input');
-  } else {
-      $postBody = json_encode($_DELETE);
-  }
 
-  //$datosArray = $_objetivo->del($postBody);
+  //$datosArray = $_objetivoItems->del($_GET['idHeader'],$_GET['versionObjetivo']);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
