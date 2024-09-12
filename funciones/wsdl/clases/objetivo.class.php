@@ -325,7 +325,9 @@ class objetivo extends conexion
     return $result[0]['id'];
   }
 
-  private function updateId_padre($idHeader, $versionObjetivo){
+  public function updateId_padre($idHeader, $versionObjetivo){
+
+
       $jerarquiaPadre='';
       //query del objetivo
       $queryObjetivo = "SELECT * FROM objetivo_item WHERE activo = 1 and idHeader = $idHeader AND versionObjetivo= $versionObjetivo order by id";
@@ -339,11 +341,17 @@ class objetivo extends conexion
         if(strlen($datoObjetivo['jerarquia'])==2){
 
         }else{
+          //print("<pre> Objetivo:".print_r(($datoObjetivo),true)."</pre>");die;
+
+          //valida la jerarquia
           $jerarquiaPadre = $this->jerarquiaValidate($datoObjetivo['jerarquia']);
+          //print("<pre> jerarquiaPadre:".print_r(($jerarquiaPadre),true)."</pre>");
           //funcion que busca el padre de la jerarquia
           $idPadreJerarquia=$this->padreJerarquia($idHeader, $jerarquiaPadre, $versionObjetivo);
-
+          //print("<pre> idPadreJerarquia:".print_r(($idPadreJerarquia),true)."</pre>");
           $queryUpdate = "update objetivo_item set id_padre=$idPadreJerarquia WHERE id =".$datoObjetivo['id'];
+
+          //echo $queryUpdate ; die;
           $update = parent::nonQuery($queryUpdate);
 
 

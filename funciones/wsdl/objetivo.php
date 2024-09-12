@@ -47,6 +47,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
+  }elseif(($_GET['type']==7)){
+    $_objetivo->updateId_padre(@$_GET['idHeader'],@$_GET['versionObjetivo'] );
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode("success update padres");
+    http_response_code(200);
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE

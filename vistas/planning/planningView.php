@@ -41,13 +41,7 @@
                                           //No tiene Hijos?>
                                           <tr data-widget="expandable-table" aria-expanded="false">
                                               <td>
-                                              <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'].'
-                                                  (
-                                                    <a href="#"
-                                                    onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></a>
-                                                  )
-                                                  ';?>
+                                              <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
                                               </td>
                                           </tr>
                                           <?php
@@ -60,13 +54,7 @@
                                                   <button type="button" class="btn btn-primary p-0">
                                                   <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                   </button>
-                                                  <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'].'
-                                                  (
-                                                    <a href="#"
-                                                    onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></a>
-                                                  )
-                                                  ';?>
+                                                  <?php echo ' '.$datosArrayhijosNexLevel['jerarquia'].' - '.$datosArrayhijosNexLevel['descripcion'];?>
                                               </td>
                                           </tr>
                                           <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -120,13 +108,7 @@
 
           if(count($arrayhijos)>0){//imprime el botonpara desplegar los hijos
                 echo '<button type="button" class="btn btn-primary p-0"><i class="expandable-table-caret fas fa-caret-right fa-fw"></i></button>';}
-          echo ' '.$datosNodoPadre['jerarquia'].' - '.$datosNodoPadre['descripcion'].'
-              (
-                <a href="#"
-                onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-
-              )</td></tr>';
+          echo ' '.$datosNodoPadre['jerarquia'].' - '.$datosNodoPadre['descripcion'].'</td></tr>';
 
 
 
@@ -156,15 +138,7 @@
                                           //No tiene Hijos?>
                                           <tr data-widget="expandable-table" aria-expanded="false">
                                             <td>
-                                              <?php echo ' '.$datosArrayhijos['jerarquia'].' - '.$datosArrayhijos['descripcion'].'
-                                              (
-                                                <a href="#"
-                                                onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-
-                                              )
-
-                                              ';?>
+                                              <?php echo ' '.$datosArrayhijos['jerarquia'].' - '.$datosArrayhijos['descripcion'];?>
                                             </td>
                                           </tr>
                                           <?php
@@ -177,15 +151,7 @@
                                                 <button type="button" class="btn btn-primary p-0">
                                                   <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                 </button>
-                                                <?php echo ' '.$datosArrayhijos['jerarquia'].' - '.$datosArrayhijos['descripcion'].'
-                                              (
-                                                <a href="#"
-                                                onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-
-                                              )
-
-                                              ';?>
+                                                <?php echo ' '.$datosArrayhijos['jerarquia'].' - '.$datosArrayhijos['descripcion'];?>
                                             </td>
                                           </tr>
                                           <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -220,15 +186,7 @@
                                                                             //No tiene Hijos?>
                                                                             <tr data-widget="expandable-table" aria-expanded="false">
                                                                               <td>
-                                                                                <?php echo ' '.$datosArrayhijosN3['jerarquia'].' - '.$datosArrayhijosN3['descripcion'].'
-                                                                                      (
-                                                                                        <a href="#"
-                                                                                        onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                        ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-
-                                                                                      )
-
-                                                                                      ';?>
+                                                                                <?php echo ' '.$datosArrayhijosN3['jerarquia'].' - '.$datosArrayhijosN3['descripcion'];?>
                                                                               </td>
                                                                             </tr>
                                                                             <?php
@@ -241,14 +199,7 @@
                                                                                   <button type="button" class="btn btn-primary p-0">
                                                                                     <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
                                                                                   </button>
-                                                                                  <?php echo ' '.$datosArrayhijosN3['jerarquia'].' - '.$datosArrayhijosN3['descripcion'].'
-                                                                                      (
-                                                                                        <a href="#"
-                                                                                        onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                        ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-
-                                                                                      )
-                                                                                      ';?>
+                                                                                  <?php echo ' '.$datosArrayhijosN3['jerarquia'].' - '.$datosArrayhijosN3['descripcion'];?>
                                                                               </td>
                                                                             </tr>
                                                                             <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
