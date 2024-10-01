@@ -176,19 +176,30 @@
       </a>
       <ul class="nav nav-treeview">
         <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
+          <a href="#" onclick="enviarParametrosGetsionCreate('event/crearEvent.php','1')" class="nav-link ">
             <i class="nav-icon fas fa-plus"></i>
-
             <p>Creación</p>
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="#" onclick="enviarParametros('event/eventList.php')" class="nav-link ">
+            <i class="nav-icon far fa-circle text-danger"></i>
+
+            <p>Lista de Eventos</p>
           </a>
         </li>
         <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
             <i class="nav-icon far fa-circle text-danger"></i>
-            <p>Consulta</p>
+            <p>Calendario de Eventos</p>
           </a>
         </li>
-
+        <li class="nav-item">
+          <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
+            <i class="nav-icon far fa-circle text-danger"></i>
+            <p>Envio de Eventos por Emial</p>
+          </a>
+        </li>
 
       </ul>
     </li>

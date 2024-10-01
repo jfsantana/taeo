@@ -9,7 +9,7 @@
 
 
 
-<!-- /************************** */ -->
+<!-- /************************** */ --> 
 <!-- Bootstrap 4-->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS-->
@@ -93,7 +93,26 @@
       height: 200
      })
 
+     $('#direcion').summernote({
+      height: 100
+     })
+     $('#eventDesciption').summernote({
+      height: 200
+     })
 
+     $('#ponentes').summernote({
+      height: 200
+     })
+
+     $("#event").DataTable({
+      "responsive": true,
+      "order": [
+        [3, "desc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      "buttons": ["csv", "excel", "pdf", "print", "colvis"],
+    }).buttons().container().appendTo('#event_wrapper .col-md-6:eq(0)');
 
     $("#example1").DataTable({
       "responsive": true,
@@ -231,6 +250,9 @@
     $('.select2').select2();
 
   });
+
+    //Date and time picker
+    $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
 
   //Date picker
   $('#reservationdate').datetimepicker({
