@@ -4,20 +4,26 @@ use PHPMailer\PHPMailer\Exception;
 
 require __DIR__ . '/../../vendor/autoload.php';  // Asegúrate de que la ruta sea correcta
 
-// Step 1: Recibir el idEvento desde la solicitud
 $idEvento = $_GET['idEvento'];
 
-// Step 2: Obtener los datos del evento usando el idEvento desde la API REST
+if (!isset($idEvento)) {
+    echo 'No se ha proporcionado un ID de evento.';
+    exit;
+}
+
 $apiUrl = "http://taeo/funciones/wsdl/event?type=2&idEvento=" . $idEvento;
 $response = file_get_contents($apiUrl);
-
-// Step 3: Decodificar la respuesta JSON de la API
 $eventData = json_decode($response, true);
 
-// Step 4: Preparar los datos del evento para el envío del correo
 $mail = new PHPMailer(true);
 
 try {
+/**************HASTA AQUI PARA EL REQUIRE_ONCE ****************************************
+    /******************
+ * hay que hacer un endpoint que retorne los datos del envio de los correos esos ta estan en la BD
+ * esta seccion se puede mejorar colocadolo en un archivo y haciendo un require_once
+ */
+
     // Configuración del servidor SMTP
     $mail->isSMTP();
     $mail->Host = 'mail.organizaciontaeo.com'; // Reemplaza con tu servidor SMTP
@@ -27,24 +33,16 @@ try {
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
     $mail->Helo = 'organizaciontaeo.com'; // Configura el nombre HELO
-
- 
-    // Habilitar el modo de depuración
-    $mail->SMTPDebug = 2; // Puedes usar 2 para obtener información detallada
+    $mail->SMTPDebug = 1; // Puedes usar 2 para obtener información detallada
     $mail->Debugoutput = 'html'; // Mostrar la salida de depuración en formato HTML
-
-    // Configurar la codificación de caracteres
     $mail->CharSet = 'UTF-8';
 
+/**************HASTA AQUI PARA EL REQUIRE_ONCE *****************************************/
 
     // Destinatarios
     $mail->setFrom('info@organizaciontaeo.com', 'Organización TAEo'); // Usa una dirección permitida por el servidor SMTP
     $mail->addAddress('jfsantana77@gmail.com');
-    $mail->addAddress('anagabrielagutierrez1@gmail.com');
-
-    //    // Incrustar la imagen en el correo
-    //    $imagePath = $eventData[0]['flayerImg'];
-    //    $mail->addEmbeddedImage($imagePath, 'flayerImg');
+    //$mail->addAddress('anagabrielagutierrez1@gmail.com');
 
     // Contenido del correo
     $mail->isHTML(true);
