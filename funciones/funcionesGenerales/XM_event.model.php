@@ -67,7 +67,7 @@ if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0) {
 
 
 
-echo "<pre>" . json_encode($request, JSON_PRETTY_PRINT) . "</pre>";die;
+//echo "<pre>" . json_encode($request, JSON_PRETTY_PRINT) . "</pre>";die;
 
   if (
     (@$_POST['nombreEvento']!="")&&
