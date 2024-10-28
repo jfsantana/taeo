@@ -56,7 +56,6 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
-
   public function getCargos($idUsuario) //(revisado)
   {
     $where = " WHERE cargo.idcargos <> '' ";
@@ -68,7 +67,6 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
-
   public function getFacilitadorByCargos($rolUsuario) //(revisado)
   {
     $where = " WHERE usuario.idUsuario <> '' ";
@@ -79,7 +77,6 @@ class empleados extends conexion
 
     return parent::ObtenerDatos($query);
   }
-
 
   public function getFacilitadorBySede($idSede) //(revisado)
   {
@@ -93,7 +90,6 @@ class empleados extends conexion
 
     return parent::ObtenerDatos($query);
   }
-
 
   public function obtenerEmpleadoToken($token)  //(revisado)
   {
@@ -332,6 +328,7 @@ class empleados extends conexion
       return $update;
 
   }
+  
   public function del($json)//(revisado)
   {
     $_respuestas = new respuestas();

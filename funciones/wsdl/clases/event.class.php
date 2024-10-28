@@ -9,15 +9,15 @@
 
 require_once 'conexion/conexion.php';
 require_once 'respuestas.class.php';
+require __DIR__ . '../../../../vendor/autoload.php';  
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require __DIR__ . '/../../../vendor/autoload.php';  // Asegúrate de que la ruta sea correcta
 class event extends conexion
 {
   // Tabla Principal de sede
   private $tabla = 'evento';
-
   private $idEvento =0;
   private $nombreEvento ='';
   private $idSede = 0;
@@ -186,7 +186,7 @@ class event extends conexion
   
   public function getEventCalendar()//(fino)
   {
-//trate todos los eventos un mes por dealnte u yno por detas solo los activios
+    //trate todos los eventos un mes por dealnte u yno por detas solo los activios
     $query = "SELECT 
               LEFT(nombreEvento, 15) AS title,
               fechaEvento AS start,

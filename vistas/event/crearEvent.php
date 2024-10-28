@@ -202,7 +202,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
             <div class="card-footer">
               <button type="submit" class="btn btn-primary" ><?php echo $accion; ?></button>
-              <button type="button" class="btn btn-primary" onclick="enviarParametros('admin/aprendizList.php')">Volver</button>
+              <button type="button" class="btn btn-primary" onclick="enviarParametros('event/eventList.php')">Volver</button>
               <?php if ($_POST['mod'] == 2) { ?>
                   <button type="button" class="btn btn-warning" id="sendEmailButton" >Envio de Email para evento</button>
                   <?php  } ?>

@@ -109,7 +109,7 @@
     // Function to fetch events from the service
     function fetchEvents() {
       return $.ajax({
-        url: 'http://taeo/funciones/wsdl/event?type=4',
+        url: "http://<?php echo $_SERVER['HTTP_HOST']; ?>/funciones/wsdl/event?type=4",
         method: 'GET',
         dataType: 'json'
       });

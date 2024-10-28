@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } else {
     http_response_code(200);
   }
-  echo json_encode($datosArray);
+  //echo json_encode($datosArray);
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') { // DELETE
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
