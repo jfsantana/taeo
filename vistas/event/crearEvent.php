@@ -203,9 +203,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
             <div class="card-footer">
               <button type="submit" class="btn btn-primary" ><?php echo $accion; ?></button>
               <button type="button" class="btn btn-primary" onclick="enviarParametros('event/eventList.php')">Volver</button>
-              <?php if ($_POST['mod'] == 2) { ?>
-                  <button type="button" class="btn btn-warning" id="sendEmailButton" >Envio de Email para evento</button>
-                  <?php  } ?>
+
             </div>
 
           </form>
@@ -222,7 +220,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 document.getElementById('sendEmailButton').addEventListener('click', function() {
     var idEvento = <?php echo  $idEvento ; ?>; // Reemplaza con el ID del evento correspondiente
     var apiUrl = 'http://<?php echo $_SERVER['HTTP_HOST'];?>/funciones/wsdl/event?type=3&idEvento=' + idEvento;
-  alert('Enviando correo...');
+  alert(apiUrl);
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
