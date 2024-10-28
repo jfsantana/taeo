@@ -170,7 +170,7 @@ class event extends conexion
         <p>Lugar: " . $eventData[0]['lugarEvento'] . "</p>
         <p>Fecha: " . $eventData[0]['fechaEvento'] . "</p>
         <p>Organizado por: " . $eventData[0]['organizadoPor'] . "</p>
-        
+        <img src='" . $eventData[0]['flayerImg'] . "'  />
         </body>
         </html>
         ";
