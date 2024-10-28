@@ -45,7 +45,7 @@ if ($_POST['mod'] == 1) {
 /*******************************
  * SEDES API
  */
-$UrlSede='http://taeo/funciones/wsdl/sede?type=1';
+$UrlSede= "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
 $rs         = API::GET($UrlSede, $token);
 $arraySede  = API::JSON_TO_ARRAY($rs);
 //print("<pre>".print_r(($arraySede) ,true)."</pre>"); / /die;
@@ -221,7 +221,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 <script>
 document.getElementById('sendEmailButton').addEventListener('click', function() {
     var idEvento = <?php echo  $idEvento ; ?>; // Reemplaza con el ID del evento correspondiente
-    var apiUrl = 'http://taeo/funciones/wsdl/event?type=3&idEvento=' + idEvento;
+    var apiUrl = 'http://<?php echo $_SERVER['HTTP_HOST'];?>/funciones/wsdl/event?type=3&idEvento=' + idEvento;
   alert('Enviando correo...');
     fetch(apiUrl)
         .then(response => response.json())
