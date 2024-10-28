@@ -11,7 +11,7 @@ if (!isset($idEvento)) {
     exit;
 }
 
-$apiUrl = "http://taeo/funciones/wsdl/event?type=2&idEvento=" . $idEvento;
+$apiUrl = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=2&idEvento=" . $idEvento;
 $response = file_get_contents($apiUrl);
 $eventData = json_decode($response, true);
 
@@ -20,7 +20,7 @@ if (empty($eventData)) {
     exit;
 }
 
-$apiUrl = "http://taeo/funciones/wsdl/config?type=2&tipo=email";
+$apiUrl = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/config?type=2&tipo=email";
 $response = file_get_contents($apiUrl);
 $mailData = json_decode($response, true);
 
@@ -50,7 +50,40 @@ try {
 
     // Destinatarios
     $mail->setFrom('info@organizaciontaeo.com', 'Organización TAEo'); // Usa una dirección permitida por el servidor SMTP
-    $mail->addAddress('jfsantana77@gmail.com');
+
+    // Dependiendo del tipo de evento se envía a diferentes correos
+    if ($eventData[0]['tipoEvento'] == 'Sede') {
+        // Tipo SEDE: se envía a todos los representantes de la sede
+        $query = "SELECT usuario.email FROM taeho_v2.usuario 
+                INNER JOIN sede ON usuario.idSede = sede.idSede
+                WHERE sede.idSede = " . $eventData[0]['idSede'] . " AND usuario.email IS NOT NULL";
+        $datos = parent::ObtenerDatos($query);
+        foreach ($datos as $key => $value) {
+            $mail->addAddress($value['email']);
+        }
+    } elseif ($eventData[0]['tipoEvento'] == 'Facilitadores') {
+        // Tipo facilitador: se envía a todos los facilitadores
+        $query = "SELECT emailUsuario FROM taeho_v2.usuario
+                INNER JOIN rol ON usuario.rolUsuario = rol.idRol
+                WHERE rol.idRol = 3 AND usuario.emailUsuario IS NOT NULL";
+         echo $query        ; die;
+        $datos = parent::ObtenerDatos($query);
+        foreach ($datos as $key => $value) {
+            $mail->addAddress($value['emailUsuario']);
+        }
+    } elseif ($eventData[0]['tipoEvento'] == 'Administrativo') {
+        // Tipo administrativo: se envía a todos los administrativos
+        $query = "SELECT usuario.email FROM taeho_v2.usuario 
+                INNER JOIN rol ON usuario.idRol = rol.idRol
+                WHERE rol.idRol = 1 AND usuario.email IS NOT NULL";
+        $datos = parent::ObtenerDatos($query);
+        foreach ($datos as $key => $value) {
+            $mail->addAddress($value['email']);
+        }
+    }
+
+
+    //$mail->addAddress('jfsantana77@gmail.com');
     //$mail->addAddress('anagabrielagutierrez1@gmail.com');
 
     // Contenido del correo

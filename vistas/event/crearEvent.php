@@ -36,6 +36,9 @@ if ($_POST['mod'] == 1) {
   $tipoEvento = @$arrayEvent[0]['tipoEvento'];
 
   $urlImagen = @$arrayEvent[0]['flayerImg'];
+    // Convertir la fecha al formato deseado
+    $fechaEventoObj = new DateTime($fechaEvento);
+    $fechaEventoFormateada = $fechaEventoObj->format('m/d/Y g:i A');
   
   if ($arrayEvent[0]['activo'] == 1)
     $estado = 1;
@@ -89,13 +92,13 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
               <div class="row">
                 <div class="col-sm-6">
                   <label for="nombreAprendiz">Nombre del Evento</label>
-                  <input type="text" class="form-control" name="nombreEvento" id="nombreEvento" placeholder="Nombre del Evento" value="<?php echo @$nombreEvento; ?>">
+                  <input type="text" class="form-control" name="nombreEvento" id="nombreEvento" placeholder="Nombre del Evento" value="<?php echo @$nombreEvento; ?>" required>
                 </div>
 
                 <div class="col-sm-3">
                     <label>Fecha de Evento:</label>
                     <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="fechaEvento" id="fechaEvento"  value="<?php echo @$fechaEvento; ?>" />
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="fechaEvento" id="fechaEvento"  value="<?php echo @$fechaEventoFormateada; ?>" required/>
                         <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -105,24 +108,24 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-3">
                   <label for="organizadoPor">Organizadora del Evento</label>
-                  <input type="text" class="form-control" name="organizadoPor" id="organizadoPor" placeholder="Nombre de la Organizadora" value="<?php echo @$organizadoPor; ?>">
+                  <input type="text" class="form-control" name="organizadoPor" id="organizadoPor" placeholder="Nombre de la Organizadora" value="<?php echo @$organizadoPor; ?>" required>
                 </div>
 
 
 
                 <div class="col-sm-6">
                     <label for="descripcionEvento">Descripción  del Evento</label>
-                    <textarea  id="eventDesciption" name="descripcionEvento"><?php echo @$descripcionEvento; ?></textarea>
+                    <textarea  id="eventDesciption" name="descripcionEvento" required><?php echo @$descripcionEvento; ?></textarea>
                 </div>
                 
                 <div class="col-sm-6">
                     <label for="ponentes">Ponentes  del Evento</label>
-                    <textarea  id="ponentes" name="ponentes"><?php echo @$ponentes; ?></textarea>
+                    <textarea  id="ponentes" name="ponentes" required><?php echo @$ponentes; ?></textarea>
                 </div>
 
                 <div class="col-sm-2">
                   <label>Sede</label>
-                  <select class="form-control" name="idSede" id="idSede">
+                  <select class="form-control" name="idSede" id="idSede" required>
                   <option >Seleccione</option>
                     <?php foreach ($arraySede as $sede) { ?>
                       <option <?php if (@$idSede == $sede['idSede']) {
@@ -147,7 +150,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-3">
                 <label for="flayer">Flayer del Evento</label>
-                    <input type="file" name="afiche" id="afiche" accept=".jpg, .jpeg, .png"  />
+                    <input type="file" name="afiche" id="afiche" accept=".jpg, .jpeg, .png"  required/>
                 </div>
 
                 <div class="col-sm-2">

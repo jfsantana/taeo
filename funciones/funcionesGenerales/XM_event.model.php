@@ -17,7 +17,7 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creador'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r(($_POST),true)."</pre>"); 
+//print("<pre>".print_r(($_POST),true)."</pre>");  die;
 
 $request=array();
 
@@ -67,7 +67,7 @@ if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0) {
 
 
 
-//echo "<pre>" . json_encode($_SERVER, JSON_PRETTY_PRINT) . "</pre>";die;
+echo "<pre>" . json_encode($request, JSON_PRETTY_PRINT) . "</pre>";die;
 
   if (
     (@$_POST['nombreEvento']!="")&&

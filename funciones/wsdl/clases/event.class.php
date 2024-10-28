@@ -144,6 +144,18 @@ class event extends conexion
         }
         //$mail->addAddress('anagabrielagutierrez1@gmail.com');
     
+
+        // Descargar la imagen desde la URL
+        $imageUrl = $eventData[0]['flayerImg'];
+        $imageContent = file_get_contents($imageUrl);
+        $imageName = basename($imageUrl);
+
+        // Guardar la imagen temporalmente
+        $tempImagePath = sys_get_temp_dir() . '/' . $imageName;
+        file_put_contents($tempImagePath, $imageContent);
+
+        // Adjuntar la imagen al correo
+        $mail->addAttachment($tempImagePath, $imageName);
         // Contenido del correo
         $mail->isHTML(true);
         $mail->Subject = "Detalles del Evento: " . $eventData[0]['nombreEvento'];
@@ -158,7 +170,7 @@ class event extends conexion
         <p>Lugar: " . $eventData[0]['lugarEvento'] . "</p>
         <p>Fecha: " . $eventData[0]['fechaEvento'] . "</p>
         <p>Organizado por: " . $eventData[0]['organizadoPor'] . "</p>
-        <img src='" . $eventData[0]['flayerImg'] . "' alt='" . $eventData[0]['flayerName'] . "' />
+        
         </body>
         </html>
         ";
