@@ -220,7 +220,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 document.getElementById('sendEmailButton').addEventListener('click', function() {
     var idEvento = <?php echo  $idEvento ; ?>; // Reemplaza con el ID del evento correspondiente
     var apiUrl = 'http://<?php echo $_SERVER['HTTP_HOST'];?>/funciones/wsdl/event?type=3&idEvento=' + idEvento;
-  alert(apiUrl);
+  alert("Enviando correo esto podra tardar unos minutos. Espere el mensaje de confirmaación antes de salir de esta pagina.");
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
