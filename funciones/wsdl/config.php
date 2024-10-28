@@ -10,8 +10,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
 
   /*****!SECTION
    * type:
-   * 1 lista de configuraciones
-
+   * 1 lista de Todas las configuraciones
+   * 2 lista las configuraciones de un tipo 
    */
 
   if ($_GET['type']==1) {
@@ -19,14 +19,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($getSede);
     http_response_code(200);
-
-  }
-
-
-
-  else {
+  } elseif ($_GET['type']==2) {
+    $getSede = $_config->getFieldConfigType(@$_GET['tipo']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($getSede);
     http_response_code(200);
+  } else {
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode(['error' => 'Parámetro type inválido']);
+    http_response_code(400);
   }
+
+
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
     $postBody = file_get_contents('php://input');

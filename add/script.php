@@ -9,6 +9,12 @@
 
 
 
+
+
+
+<script src="../plugins/fullcalendar/main.js"></script>
+
+
 <!-- /************************** */ --> 
 <!-- Bootstrap 4-->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -239,13 +245,6 @@
       "autoWidth": false,
       "responsive": true,
     });
-
-
-
-
-
-
-
 
     $('.select2').select2();
 

@@ -38,6 +38,20 @@ class config extends conexion
 
   }
 
+  //detalles de configuracion pro tipo (util para los email)
+  public function getFieldConfigType($tipo)//(revisado)
+  {
+    $where = " WHERE idConfiguracion <> '' ";
+    if ($tipo != '') {
+      $where =  $where . " and tipo = '" . $tipo."'";
+    }
+    $query = "select * from $this->tabla $where";
+    //echo $query; die;
+    $datos = parent::ObtenerDatos($query);
+    return $datos;
+
+  }
+
   public function getEmpleadoPorSede($idSede)//(revisado)
   {
     $where = " WHERE sede.idSede <> '' ";

@@ -189,17 +189,17 @@
           </a>
         </li>
         <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
+          <a href="#" onclick="enviarParametros('event/calendario.php')" class="nav-link">
             <i class="nav-icon far fa-circle text-danger"></i>
             <p>Calendario de Eventos</p>
           </a>
         </li>
-        <li class="nav-item">
+        <!-- <li class="nav-item">
           <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
             <i class="nav-icon far fa-circle text-danger"></i>
             <p>Envio de Eventos por Emial</p>
           </a>
-        </li>
+        </li> -->
 
       </ul>
     </li>

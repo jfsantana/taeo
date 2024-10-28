@@ -15,8 +15,17 @@ $apiUrl = "http://taeo/funciones/wsdl/event?type=2&idEvento=" . $idEvento;
 $response = file_get_contents($apiUrl);
 $eventData = json_decode($response, true);
 
-$mail = new PHPMailer(true);
+if (empty($eventData)) {
+    echo 'No se encontraron datos para el evento con ID ' . $idEvento;
+    exit;
+}
 
+$apiUrl = "http://taeo/funciones/wsdl/config?type=2&tipo=email";
+$response = file_get_contents($apiUrl);
+$mailData = json_decode($response, true);
+
+$mail = new PHPMailer(true);
+//print("<pre>".print_r(($mailData),true)."</pre>");  die;
 try {
 /**************HASTA AQUI PARA EL REQUIRE_ONCE ****************************************
     /******************
@@ -26,13 +35,13 @@ try {
 
     // Configuración del servidor SMTP
     $mail->isSMTP();
-    $mail->Host = 'mail.organizaciontaeo.com'; // Reemplaza con tu servidor SMTP
-    $mail->SMTPAuth = true;
-    $mail->Username = 'info@organizaciontaeo.com'; // Reemplaza con tu correo
-    $mail->Password = '_9H)GfPp(~w_'; // Reemplaza con tu contraseña
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
-    $mail->Helo = 'organizaciontaeo.com'; // Configura el nombre HELO
+    $mail->Host = $mailData[7]['valor'];//'mail.organizaciontaeo.com'; // Reemplaza con tu servidor SMTP
+    $mail->SMTPAuth = $mailData[6]['valor'];  //true;
+    $mail->Username = $mailData[1]['valor']; // 'info@organizaciontaeo.com'; // Reemplaza con tu correo
+    $mail->Password = $mailData[2]['valor']; // '_9H)GfPp(~w_'; // Reemplaza con tu contraseña
+    $mail->SMTPSecure = $mailData[4]['valor']; // 'tls';
+    $mail->Port = $mailData[3]['valor'];// 587;
+    $mail->Helo = $mailData[5]['valor'];//  'organizaciontaeo.com'; // Configura el nombre HELO
     $mail->SMTPDebug = 1; // Puedes usar 2 para obtener información detallada
     $mail->Debugoutput = 'html'; // Mostrar la salida de depuración en formato HTML
     $mail->CharSet = 'UTF-8';

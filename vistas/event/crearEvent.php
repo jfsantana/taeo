@@ -33,6 +33,7 @@ if ($_POST['mod'] == 1) {
   $flayer = @$arrayEvent[0]['flayer'];
   $organizadoPor = @$arrayEvent[0]['organizadoPor'];
   $ponentes = @$arrayEvent[0]['ponentes'];
+  $tipoEvento = @$arrayEvent[0]['tipoEvento'];
 
   $urlImagen = @$arrayEvent[0]['flayerImg'];
   
@@ -75,9 +76,12 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
       <div class="col-lg-12 col-12">
         <!-- general form elements -->
         <div class="card card-primary">
-          <div class="card-header">
-            <h3 class="card-title"><?php echo $accion; ?> Eventos</h3>
-          </div>
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h3 class="card-title mb-0"><?php echo $accion; ?> Eventos</h3>
+          <?php if ($_POST['mod'] == 2) { ?>
+            <button type="button" class="btn btn-warning ml-auto" id="sendEmailButton">Envio de Email para evento</button>
+          <?php } ?>
+        </div>
           <!-- /.card-header -->
           <!-- form start -->
           <form>
@@ -158,6 +162,27 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
                   </select>
                 </div>
 
+                <div class="col-sm-2">
+
+                  <?php if (!isset($tipoEvento)){
+                    @$tipoEvento = 'Administrativo';
+                  }?>
+                  <label>Tipo de Evento</label>
+                  <select class="form-control" name="tipoEvento" id="tipoEvento">
+                    <option <?php if (@$tipoEvento == 'Administrativo') {
+                              echo 'selected';
+                            } ?> value='Administrativo'>Administrativo</option>
+                    <option <?php if (@$tipoEvento == 'Facilitadores') {
+                              echo 'selected';
+                            } ?> value='Facilitadores'>Facilitadores</option>
+                    <option <?php if (@$tipoEvento == 'Sede') {
+                              echo 'selected';
+                            } ?> value='Sede'>Sede</option>
+                  </select>
+                </div>
+
+                
+
                 <div class="col-sm-12">
                     <label for="nombreCliente">Direccion  del Evento</label>
                     <textarea  id="direcion" name="lugarEvento"><?php echo @$lugarEvento; ?></textarea>
@@ -178,9 +203,10 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
             <div class="card-footer">
               <button type="submit" class="btn btn-primary" ><?php echo $accion; ?></button>
               <button type="button" class="btn btn-primary" onclick="enviarParametros('admin/aprendizList.php')">Volver</button>
+              <?php if ($_POST['mod'] == 2) { ?>
+                  <button type="button" class="btn btn-warning" id="sendEmailButton" >Envio de Email para evento</button>
+                  <?php  } ?>
             </div>
-
-
 
           </form>
         </div>
@@ -191,4 +217,25 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
   </div><!-- /.container-fluid -->
   </section>
 </form>
+
+<script>
+document.getElementById('sendEmailButton').addEventListener('click', function() {
+    var idEvento = <?php echo  $idEvento ; ?>; // Reemplaza con el ID del evento correspondiente
+    var apiUrl = 'http://taeo/funciones/wsdl/event?type=3&idEvento=' + idEvento;
+  alert('Enviando correo...');
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'OK') {
+                alert('Correo enviado exitosamente.');
+            } else {
+                alert('Error al enviar el correo.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error al enviar el correo.');
+        });
+});
+</script>
 

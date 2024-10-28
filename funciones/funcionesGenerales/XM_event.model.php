@@ -28,6 +28,7 @@ $request['descripcionEvento']=@$_POST['descripcionEvento'];
 $request['lugarEvento']=@$_POST['lugarEvento'];
 $request['fechaEvento']=@$_POST['fechaEvento'];
 $request['envioCorreo']=@$_POST['envioCorreo'];
+$request['tipoEvento']=@$_POST['tipoEvento'];
 $request['fechaCreacion']=date('Y-m-d H:i:s');
 $request['activo']=@$_POST['activo'];
 $request['creadoPor']=@$_SESSION['usuario'];
@@ -37,45 +38,24 @@ $request['mod']=@$_POST['mod'];
 $request['token'] = $_SESSION['token'];
 $request['creador'] = $_SESSION['usuario'];
 
-
-
-
 //print("<pre>".print_r($_SERVER,true)."</pre>");
-// Verificar si el archivo se ha subido correctamente
+
 if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0) {
 
     $nombreArchivo = $_FILES['afiche']['name'];
     $carpetaDestino = $_SERVER['DOCUMENT_ROOT'] . '/funciones/wsdl/uploads/';
     $rutaImagen=  $_SERVER['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
     $tamanoArchivo = $_FILES['afiche']['size'];
-    
 
-
-       // Ruta de guardado
+    // Ruta de guardado
     $request['imagen']['nombreFichero'] =  $nombreArchivo;
     $request['imagen']['rutaFichero'] = $carpetaDestino . $nombreArchivo;
     $request['imagen']['rutaImagen'] = $rutaImagen . $nombreArchivo;
     $request['imagen']['tamanoArchivo'] = $tamanoArchivo;
     $request['imagen']['tipoArchivo'] = $_FILES['afiche']['type'];
-        // Mover el archivo a la carpeta de destino
+    // Mover el archivo a la carpeta de destino
     move_uploaded_file($_FILES['afiche']['tmp_name'], $request['imagen']['rutaFichero']);
 
-
-
-    
-    // $archivoObjetivo=fopen($nombreFichero, "r");    //guarsa el archivo en una variable
-    // $contenido = fread($archivoObjetivo, $tamanoArchivo); //lee el archivo
-    // fclose($archivoObjetivo); //cierra el archivo
-
-
-    // Ruta de guardado
-
-    //print_r(json_encode($request)); die;
-
-    // Leer el contenido del archivo
-   // $fileContent = file_get_contents($_FILES['afiche']['tmp_name']);
-    // $request['flayerImg'] = $fileContent;
-    // $request['flayerName'] = $_FILES['afiche']['name'];
 } else {
     $request['imagen']['nombreFichero'] =  null;
     $request['imagen']['rutaFichero'] =   null;
@@ -96,21 +76,13 @@ if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0) {
     (@$_POST['fechaEvento']!="")
     ){
         $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event";
-
-        
             $rs = API::POST($URL, $token, $request);
             $rs = API::JSON_TO_ARRAY($rs);
-        
-
-      
-      
     }
 
-
 //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
-
-
 //onclick="enviarParametros('admin/clienteList.php')"
+
 $idHeaderNew = @$rs['result']['idHeaderNew'];
 
 if (@$rs['status'] == 'OK') {

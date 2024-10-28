@@ -8,14 +8,43 @@ if (!isset($_SESSION['id_user'])) {
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
-//Listado Clientes
-$idEmpresaConsultora = @$_POST["id"];
+//Planificados, Cerrados Todos
+if (@$_POST['mod']==null){
+  $status='Planificados';
+}else{
+  $status=@$_POST['mod'];
+}
+
+
+//Listado Eventos para Pagina segun filtro
+//$idEmpresaConsultora = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1";
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status";
 $rs         = API::GET($URL, $token);
 $array  = API::JSON_TO_ARRAY($rs);
 
-//print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); / /die;
+//print_r($_POST );
+
+//total  Planificados
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Planificados";
+$rs         = API::GET($URL, $token);
+$arrayPlanificados  = API::JSON_TO_ARRAY($rs);
+
+//Total  Cerrados
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Cerrados";
+$rs         = API::GET($URL, $token);
+$arrayCerrados  = API::JSON_TO_ARRAY($rs);
+
+//Todos Eventos 
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Todos";
+$rs         = API::GET($URL, $token);
+$arrayTodos  = API::JSON_TO_ARRAY($rs);
+
+//total  ejecutados
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Ejecutados";
+$rs         = API::GET($URL, $token);
+$arrayEjecutados  = API::JSON_TO_ARRAY($rs);
+//print("<pre>".print_r(($array) ,true)."</pre>"); die;
 ?>
 
 <!-- Content Header (Page header)  -->
@@ -34,17 +63,71 @@ $array  = API::JSON_TO_ARRAY($rs);
 <section class="content">
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
+
+    
     <div class="row">
-      <div class="col-lg-12 col-12">
+
+    <div class="col-lg-3 col-3">
         <!-- small box -->
-        <div class="small-box bg-success">
+        <div class="small-box bg-warning">
           <div class="inner">
-            <h3><?php echo count($array); ?></h3>
-            <p>Eventos</p>
+            <h3><?php echo count($arrayPlanificados); ?></h3>
+            <p>Eventos Planificados</p>
           </div>
           <div class="icon">
           <i class="ion " ><ion-icon name="settings-outline"></ion-icon></i>
           </div>
+          <a href="#" onclick="enviarParametrosGetsionCreate('event/eventList.php','Planificados')" class="small-box-footer">Ver Evento Activos <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-3">
+        <!-- small box -->
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3><?php echo count($arrayEjecutados); ?></h3>
+            <p>Eventos Cerrados</p>
+          </div>
+          <div class="icon">
+          <i class="ion " ><ion-icon name="settings-outline"></ion-icon></i>
+          </div>
+          <a href="#" onclick="enviarParametrosGetsionCreate('event/eventList.php','Ejecutados')" class="small-box-footer">Ver Ejecutados <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-3">
+        <!-- small box -->
+        <div class="small-box bg-danger">
+          <div class="inner">
+            <h3><?php echo count($arrayCerrados); ?></h3>
+            <p>Eventos Cerrados</p>
+          </div>
+          <div class="icon">
+          <i class="ion " ><ion-icon name="settings-outline"></ion-icon></i>
+          </div>
+          <a href="#" onclick="enviarParametrosGetsionCreate('event/eventList.php','Cerrados')" class="small-box-footer">Ver Cancelados <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+
+      <div class="col-lg-3 col-3">
+        <!-- small box -->
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3><?php echo count($arrayTodos); ?></h3>
+            <p>Total Eventos</p>
+          </div>
+          <div class="icon">
+          <i class="ion " ><ion-icon name="settings-outline"></ion-icon></i>
+          </div>
+          <a href="#" onclick="enviarParametrosGetsionCreate('event/eventList.php','Todos')" class="small-box-footer">Ver todos <i class="fas fa-arrow-circle-right"></i></a>
+        </div>
+      </div>
+
+
+      <div class="col-lg-12 col-12">
+        <!-- small box -->
+        <div class="small-box bg-warning">
           <a href="#" onclick="enviarParametrosGetsionCreate('event/crearEvent.php','1')" class="small-box-footer">Crear Evento <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -78,6 +161,7 @@ $array  = API::JSON_TO_ARRAY($rs);
                   <th>Logar</th>
                   <th>Descripcion</th>
                   <th>Envio por Correo</th>
+                  <th>Tipo Evento</th>
                 </tr>
               </thead>
               <tbody>
@@ -91,11 +175,13 @@ $array  = API::JSON_TO_ARRAY($rs);
                             <td><?php echo $event['lugarEvento']; ?></td>
                             <td><?php echo $event['descripcionEvento']; ?></td>
                             <td><?php echo $event['envioCorreo']; ?></td>
+                            <td><?php echo $event['tipoEvento']; ?></td>
                           </tr>
                 <?php } ?>
               </tbody>
               <tfoot>
                 <tr>
+                  <th></th>
                   <th></th>
                   <th></th>
                   <th></th>
