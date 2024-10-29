@@ -113,7 +113,7 @@
      $("#event").DataTable({
       "responsive": true,
       "order": [
-        [3, "desc"]
+        [3, "asc"]
       ],
       "lengthChange": true,
       "autoWidth": false,

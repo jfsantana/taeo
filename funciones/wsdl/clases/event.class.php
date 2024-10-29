@@ -52,6 +52,7 @@ class event extends conexion
 
   }
 
+  
   public function getSendEventById($idEvento)//(fino)
   {
 
@@ -118,63 +119,118 @@ class event extends conexion
                         JOIN taeho_v2.aprendiz a ON ph.idAprendiz = a.idAprendiz
                         JOIN taeho_v2.aprendiz_representante ar ON a.idAprendiz = ar.idAprendiz
                         JOIN taeho_v2.representantes r ON ar.idRepresentante = r.idRepresentante
-                      WHERE  a.activoAprendiz = 1 and r.activoRepresentante=1 AND r.correoRepresentante IS NOT NULL and ph.idSede = ".$eventData[0]['idSede'];
+                      WHERE  a.activoAprendiz = 1 and r.activoRepresentante=1 AND r.correoRepresentante IS NOT NULL and ph.idSede in (".$eventData[0]['idSede'].")";
+            //echo 'sede: '.$query; die;
             $datos = parent::ObtenerDatos($query);
             foreach ($datos as $key => $value) {
                 $mail->addAddress($value['email']);
             }
         }elseif($eventData[0]['tipoEvento']=='Facilitadores'){ //(OK)
-            //tipo facilitador: se envia a todos los facilitadores
             $query = "SELECT emailUsuario FROM taeho_v2.usuario
                         inner join rol on usuario.rolUsuario=rol.idRol
                        where rol.idRol = 3  and usuario.emailUsuario is not null";
+            //echo 'Facilitadores: '.$query; die;
             $datos = parent::ObtenerDatos($query);
             foreach ($datos as $key => $value) {
                 $mail->addAddress($value['emailUsuario']);
             }
         }elseif($eventData[0]['tipoEvento']=='Administrativo'){
-            //tipo administrativo se envia a todos los administrativos
             $query = "SELECT emailUsuario FROM taeho_v2.usuario
             inner join rol on usuario.rolUsuario=rol.idRol
-           where usuario.activoUsuario = 1 and usuario.emailUsuario is not null";
+           where usuario.activoUsuario = 1 and usuario.emailUsuario is not null and usuario.emailUsuario <> '' ";
+           //echo 'Admin: '.$query; die;
             $datos = parent::ObtenerDatos($query);
             foreach ($datos as $key => $value) {
                 $mail->addAddress($value['email']);
             }
         }
-        //$mail->addAddress('anagabrielagutierrez1@gmail.com');
+        
+        // Agregar correo en copia (CC)
+        $mail->addCC('anagabrielagutierrez1@gmail.com');
     
+        $imagenEmail='';
+        if($eventData[0]['flayerImg']!=''){
+          // Descargar la imagen desde la URL
+          $imageUrl = $eventData[0]['flayerImg'];
+          $imageContent = file_get_contents($imageUrl);
+          $imageName = basename($imageUrl);
 
-        // Descargar la imagen desde la URL
-        $imageUrl = $eventData[0]['flayerImg'];
-        $imageContent = file_get_contents($imageUrl);
-        $imageName = basename($imageUrl);
+          // Guardar la imagen temporalmente
+          $tempImagePath = sys_get_temp_dir() . '/' . $imageName;
+          file_put_contents($tempImagePath, $imageContent);
 
-        // Guardar la imagen temporalmente
-        $tempImagePath = sys_get_temp_dir() . '/' . $imageName;
-        file_put_contents($tempImagePath, $imageContent);
+          // Adjuntar la imagen al correo
+          $mail->addAttachment($tempImagePath, $imageName);
 
-        // Adjuntar la imagen al correo
-        $mail->addAttachment($tempImagePath, $imageName);
+          $imagenEmail="<img src='" . $eventData[0]['flayerImg'] . "'  />";
+        }
+
         // Contenido del correo
         $mail->isHTML(true);
-        $mail->Subject = "Detalles del Evento: " . $eventData[0]['nombreEvento'];
-        $mail->Body    = "
+        $mail->Subject = "Detalles del Evento: " . strtoupper($eventData[0]['nombreEvento']);
+        $mail->Body = "
         <html>
         <head>
         <title>Detalles del Evento</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+            padding: 20px;
+          }
+          .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+          }
+          h1 {
+            color: #333;
+            text-align: center;
+          }
+          p {
+            margin: 10px 0;
+          }
+          .event-details {
+            margin: 20px 0;
+          }
+          .event-details p {
+            font-size: 16px;
+          }
+          .event-details b {
+            color: #555;
+          }
+          .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+          }
+        </style>
         </head>
         <body>
-        <p>Nombre del Evento: " . $eventData[0]['nombreEvento'] . "</p>
-        <p>Descripción: " . $eventData[0]['descripcionEvento'] . "</p>
-        <p>Lugar: " . $eventData[0]['lugarEvento'] . "</p>
-        <p>Fecha: " . $eventData[0]['fechaEvento'] . "</p>
-        <p>Organizado por: " . $eventData[0]['organizadoPor'] . "</p>
-        <img src='" . $eventData[0]['flayerImg'] . "'  />
+        <div class='container'>
+          <h1>Detalles del Evento</h1>
+          <div class='event-details'>
+            <p><b>Nombre del Evento:</b> " . strtoupper($eventData[0]['nombreEvento']) . "</p>
+            <p><b>Descripción:</b> " . $eventData[0]['descripcionEvento'] . "</p>
+            <p><b>Lugar:</b> " . $eventData[0]['lugarEvento'] . "</p>
+            <p><b>Fecha:</b> " . $eventData[0]['fechaEvento'] . "</p>
+            <p><b>Organizado por:</b> " . $eventData[0]['organizadoPor'] . "</p>
+
+          </div>
+          <div class='footer'>
+            <p>Este es un correo generado automáticamente, por favor no responda a este mensaje.</p>
+          </div>
+        </div>
         </body>
         </html>
         ";
-    
+        //echo  $mail->Body; die;
         $mail->send();
 
         $respuesta['status'] = 'OK';
@@ -232,21 +288,43 @@ class event extends conexion
   public function getAllEvent($estatus)//(fino)
   {  //Planificados, Cerrados Todos
     if ($estatus=='Planificados') {
-      $where =' WHERE evento.activo = 1 AND evento.fechaEvento >= CURDATE() order by fechaEvento LIMIT 30';
+      $where =' WHERE evento.activo = 1 AND evento.fechaEvento >= CURDATE() ';
     }elseif($estatus=='Cerrados'){
-      $where = ' WHERE evento.activo <> 1 order by fechaEvento desc LIMIT 30';
+      $where = ' WHERE evento.activo <> 1 ';
     }elseif($estatus=='Todos'){
-      $where = '  order by fechaEvento desc Limit 50';
+      $where = '  ';
     }elseif($estatus=='Ejecutados'){
-      $where = ' WHERE evento.activo = 1 AND evento.fechaEvento < CURDATE() order by fechaEvento LIMIT 30';
+      $where = ' WHERE evento.activo = 1 AND evento.fechaEvento < CURDATE() ';
     }else{
-      $where = ' WHERE evento.activo = 1 AND evento.fechaEvento >= CURDATE() order by fechaEvento LIMIT 30';
+      $where = ' WHERE evento.activo = 1 AND evento.fechaEvento >= CURDATE() ';
     }
 
     $query = "SELECT evento.*, sede.nombreSede FROM taeho_v2.evento 
                 inner join sede on evento.idSede=sede.idSede $where";
-    //echo $query; die;
+
+                
+    $query = "SELECT 
+                  evento.*,
+                  GROUP_CONCAT(sede.nombreSede ORDER BY sede.idSede) AS nombreSede
+              FROM 
+                  taeho_v2.evento
+              INNER JOIN 
+                  sede ON FIND_IN_SET(sede.idSede, evento.idSede) > 0
+               $where 
+               GROUP BY 
+                  evento.nombreEvento, 
+                  evento.idSede,
+                  evento.fechaEvento
+              ORDER BY 
+                  evento.fechaEvento 
+              LIMIT 40";
+
+
+
+//echo $query; die;
     $datos = parent::ObtenerDatos($query);
+
+    //print_r($datos); die;
     return $datos;
   }
 
@@ -307,18 +385,12 @@ class event extends conexion
           $this->flayerTipo  =@$datos['imagen']['tipoArchivo'];
           $this->rutaFichero  =@$datos['imagen']['rutaImagen'];
 
+          if($datos['mod']==1){
+            $resp = $this->Insertar();
+          }else{
+            $resp = $this->Update();
+          }
 
-
-         if($datos['mod']==1){
-          $resp = $this->Insertar();
-         }else{
-          $resp = $this->Update();
-         }
-
-          
-
-
-            
           if ($resp) {
             $respuesta = $_respuestas->response;
             $respuesta['status'] = 'OK';

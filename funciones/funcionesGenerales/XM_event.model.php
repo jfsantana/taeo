@@ -17,13 +17,13 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creador'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r(($_POST),true)."</pre>");  die;
+//print("<pre>".print_r(($_POST),true)."</pre>");  die; 
 
 $request=array();
 
 $request['idEvento']=@$_POST['idEvento'];
 $request['nombreEvento']=@$_POST['nombreEvento'];
-$request['idSede']=@$_POST['idSede'];
+$request['idSede']=implode(',', @$_POST['idSede']); //  @$_POST['idSede'];
 $request['descripcionEvento']=@$_POST['descripcionEvento'];
 $request['lugarEvento']=@$_POST['lugarEvento'];
 $request['fechaEvento']=@$_POST['fechaEvento'];
@@ -37,34 +37,60 @@ $request['ponentes']=@$_POST['ponentes'];
 $request['mod']=@$_POST['mod'];
 $request['token'] = $_SESSION['token'];
 $request['creador'] = $_SESSION['usuario'];
+$request['flagImagen'] = $_POST['flagImagen']; // 1: si ya tiene  imagen 0: no tiene imagen
 
-//print("<pre>".print_r($_SERVER,true)."</pre>");
 
-if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0) {
+if($_POST['flagImagen']==1){  //ya tenia imagen 
+    if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0){// verifica que no este vacio
+     
+        $nombreArchivo = @$_FILES['afiche']['name'];
+        $nombreArchivo = str_replace(' ', '%20', $nombreArchivo);
+        $carpetaDestino = @$_SERVER['DOCUMENT_ROOT'] . '/funciones/wsdl/uploads/';
+        $rutaImagen=  @$_SERVER['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
+        $tamanoArchivo = @$_FILES['afiche']['size'];
+    
+        // Ruta de guardado
+        $request['imagen']['nombreFichero'] =  $nombreArchivo;
+        $request['imagen']['rutaFichero'] = $carpetaDestino . $nombreArchivo;
+        $request['imagen']['rutaImagen'] = $rutaImagen . $nombreArchivo;
+        $request['imagen']['tamanoArchivo'] = $tamanoArchivo;
+        $request['imagen']['tipoArchivo'] = $_FILES['afiche']['type'];
+        // Mover el archivo a la carpeta de destino
+        move_uploaded_file($_FILES['afiche']['tmp_name'], $request['imagen']['rutaFichero']);
+    }else{
+     
+        $request['imagen']['nombreFichero'] =  $_POST['flayerNameAux'];
+        $request['imagen']['rutaFichero'] = $_POST['flayerImgAux'];
+        $request['imagen']['rutaImagen'] =  $_POST['flayerImgAux'];
+        $request['imagen']['tamanoArchivo'] = '0.1';
+        $request['imagen']['tipoArchivo'] = $_POST['flayerTipoAux'];
+    }
+}else{
+    if (isset($_FILES['afiche']) && $_FILES['afiche']['error'] == 0) {
 
-    $nombreArchivo = $_FILES['afiche']['name'];
-    $carpetaDestino = $_SERVER['DOCUMENT_ROOT'] . '/funciones/wsdl/uploads/';
-    $rutaImagen=  $_SERVER['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
-    $tamanoArchivo = $_FILES['afiche']['size'];
-
-    // Ruta de guardado
-    $request['imagen']['nombreFichero'] =  $nombreArchivo;
-    $request['imagen']['rutaFichero'] = $carpetaDestino . $nombreArchivo;
-    $request['imagen']['rutaImagen'] = $rutaImagen . $nombreArchivo;
-    $request['imagen']['tamanoArchivo'] = $tamanoArchivo;
-    $request['imagen']['tipoArchivo'] = $_FILES['afiche']['type'];
-    // Mover el archivo a la carpeta de destino
-    move_uploaded_file($_FILES['afiche']['tmp_name'], $request['imagen']['rutaFichero']);
-
-} else {
-    $request['imagen']['nombreFichero'] =  null;
-    $request['imagen']['rutaFichero'] =   null;
-    $request['imagen']['rutaImagen'] =   null;
-    $request['imagen']['tamanoArchivo'] =   null;
-    $request['imagen']['tipoArchivo'] =   null;
+        $nombreArchivo = @$_FILES['afiche']['name'];
+        $nombreArchivo = str_replace(' ', '%20', $nombreArchivo);
+        $carpetaDestino = @$_SERVER['DOCUMENT_ROOT'] . '/funciones/wsdl/uploads/';
+        $rutaImagen=  @$_SERVER['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
+        $tamanoArchivo = @$_FILES['afiche']['size'];
+    
+        // Ruta de guardado
+        $request['imagen']['nombreFichero'] =  $nombreArchivo;
+        $request['imagen']['rutaFichero'] = $carpetaDestino . $nombreArchivo;
+        $request['imagen']['rutaImagen'] = $rutaImagen . $nombreArchivo;
+        $request['imagen']['tamanoArchivo'] = $tamanoArchivo;
+        $request['imagen']['tipoArchivo'] = $_FILES['afiche']['type'];
+        // Mover el archivo a la carpeta de destino
+        move_uploaded_file($_FILES['afiche']['tmp_name'], $request['imagen']['rutaFichero']);
+    
+    } else {
+        $request['imagen']['nombreFichero'] =  null;
+        $request['imagen']['rutaFichero'] =   null;
+        $request['imagen']['rutaImagen'] =   null;
+        $request['imagen']['tamanoArchivo'] =   null;
+        $request['imagen']['tipoArchivo'] =   null;
+    }
 }
-
-
 
 
 //echo "<pre>" . json_encode($request, JSON_PRETTY_PRINT) . "</pre>";die;

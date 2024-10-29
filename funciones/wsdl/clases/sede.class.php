@@ -39,7 +39,7 @@ class sede extends conexion
     if ($idSede != '') {
       $where =  $where . " and idSede = " . $idSede;
     }
-    $query = "select *, CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where";
+    $query = "select *, CASE WHEN activo = 1 THEN 'Activo' ELSE 'Desactivado' END AS estado  from $this->tabla $where order by nombreSede";
     //echo $query; die;
     $datos = parent::ObtenerDatos($query);
     return $datos;

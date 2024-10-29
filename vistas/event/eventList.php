@@ -86,7 +86,7 @@ $arrayEjecutados  = API::JSON_TO_ARRAY($rs);
         <div class="small-box bg-info">
           <div class="inner">
             <h3><?php echo count($arrayEjecutados); ?></h3>
-            <p>Eventos Cerrados</p>
+            <p>Eventos Ejecutados</p>
           </div>
           <div class="icon">
           <i class="ion " ><ion-icon name="settings-outline"></ion-icon></i>
@@ -158,7 +158,7 @@ $arrayEjecutados  = API::JSON_TO_ARRAY($rs);
                   <th>Ponentes</th>
                   <th>Fecha / Hora</th>
                   <th>Sede Responsable</th>
-                  <th>Logar</th>
+                  <th>Direccion</th>
                   <th>Descripcion</th>
                   <th>Envio por Correo</th>
                   <th>Tipo Evento</th>

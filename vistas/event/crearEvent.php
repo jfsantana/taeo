@@ -11,6 +11,7 @@ $token = $_SESSION['token'];
 
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
+  $flagImagen = 0;
 } else {
   $accion = "Editar";
 
@@ -36,6 +37,25 @@ if ($_POST['mod'] == 1) {
   $tipoEvento = @$arrayEvent[0]['tipoEvento'];
 
   $urlImagen = @$arrayEvent[0]['flayerImg'];
+
+  $fechaEventoDateTime = new DateTime($fechaEvento);
+  $fechaActualDateTime = new DateTime();
+  if ($fechaEventoDateTime > $fechaActualDateTime) {
+    $enableBottonEnvioCorreo = '';
+} else {
+    $enableBottonEnvioCorreo = 'disabled';
+}
+ 
+  if ($urlImagen != null) {
+    $flagImagen = 1;
+    $flayerImgAux=@$arrayEvent[0]['flayerImg'];
+    $flayerNameAux=@$arrayEvent[0]['flayerName'];
+    $flayerTipoAux=@$arrayEvent[0]['flayerTipo'];
+    
+  } else {
+    $flagImagen = 0;
+  }
+
     // Convertir la fecha al formato deseado
     $fechaEventoObj = new DateTime($fechaEvento);
     $fechaEventoFormateada = $fechaEventoObj->format('m/d/Y g:i A');
@@ -73,6 +93,12 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
   <input type="hidden" name="idEvento" value="<?php echo @$_POST["id"] ?>">
   <input type="hidden" name="creadoPor" value="<?php echo @$creadoPor ?>">
   <input type="hidden" name="accion" value="<?php echo @$accion ?>">
+  <input type="hidden" name="flagImagen" value="<?php echo @$flagImagen ?>"> <!--//si es 1 es porque ya tiene imagen -->
+  <?php   if (@$flagImagen == 1) {  ?>
+    <input type="hidden" name="flayerImgAux" value="<?php echo @$flayerImgAux ?>"> <!--//si es 1 es porque ya tiene imagen -->
+    <input type="hidden" name="flayerNameAux" value="<?php echo @$flayerNameAux ?>"> <!--//si es 1 es porque ya tiene imagen -->
+    <input type="hidden" name="flayerTipoAux" value="<?php echo @$flayerTipoAux ?>"> <!--//si es 1 es porque ya tiene imagen -->
+  <?php }   ?>
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -82,7 +108,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
         <div class="card-header d-flex justify-content-between align-items-center">
           <h3 class="card-title mb-0"><?php echo $accion; ?> Eventos</h3>
           <?php if ($_POST['mod'] == 2) { ?>
-            <button type="button" class="btn btn-warning ml-auto" id="sendEmailButton">Envio de Email para evento</button>
+            <button type="button" class="btn btn-warning ml-auto" id="sendEmailButton" <?php echo $enableBottonEnvioCorreo; ?> >Envio de Email para evento</button>
           <?php } ?>
         </div>
           <!-- /.card-header -->
@@ -125,15 +151,25 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-2">
                   <label>Sede</label>
-                  <select class="form-control" name="idSede" id="idSede" required>
-                  <option >Seleccione</option>
-                    <?php foreach ($arraySede as $sede) { ?>
-                      <option <?php if (@$idSede == $sede['idSede']) {
-                                echo 'selected';
-                              } ?> value="<?php echo $sede['idSede']; ?>"><?php echo $sede['nombreSede']; ?></option>
+                  <div class="form-group">
+                    <?php 
+                        // Asegurarse de que $idSede sea un array
+                    if (!is_array(@$idSede)) {
+                      @$idSede = explode(',', @$idSede);
+                    }
+                    foreach ($arraySede as $sede) { ?>
+                      <div class="custom-control custom-checkbox">
+                        <input  type="checkbox" 
+                                class="custom-control-input"
+                                id="sede_<?php echo $sede['idSede']; ?>" 
+                                name="idSede[]" 
+                                value="<?php echo $sede['idSede']; ?>" 
+                                <?php if (in_array($sede['idSede'], (array)@$idSede)) { echo 'checked'; } ?>
+                          >
+                        <label class="custom-control-label" for="sede_<?php echo $sede['idSede']; ?>"><?php echo $sede['nombreSede']; ?></label>
+                      </div>
                     <?php } ?>
- 
-                  </select>
+                  </div>
                 </div>
 
                 <div class="col-sm-2">
@@ -150,7 +186,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-3">
                 <label for="flayer">Flayer del Evento</label>
-                    <input type="file" name="afiche" id="afiche" accept=".jpg, .jpeg, .png"  required/>
+                    <input type="file" name="afiche" id="afiche" accept=".jpg, .jpeg, .png"  />
                 </div>
 
                 <div class="col-sm-2">
@@ -192,7 +228,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
                 </div>
 
                 <?php 
-                if(  isset($urlImagen) ){?>
+                if(  (isset($urlImagen))&&($urlImagen!=null) ){?>
                   <div class="col-sm-12">
                       <label>Imagen Actual</label>
                       <img src="<?php echo @$urlImagen; ?>" class="img-fluid" alt="Responsive image">
