@@ -12,6 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * type:
    * 1 listar todos las areas
    * 2 listar todos los niveles de un area
+   * 3 nombre de los niveles
    */
    if ($_GET['type']==1){
     $datosArray = $_area->getArea(@$_GET['idArea']);
@@ -20,6 +21,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
    }elseif(($_GET['type']==2)||(isset($_GET['idArea']))){
     $datosArray = $_area->getNiveleByArea(@$_GET['idArea']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+   }elseif(($_GET['type']==3)){
+    $datosArray = $_area->getDatosNivele(@$_GET['idNivelAreaObjetivo']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);

@@ -3,7 +3,7 @@ $token = $_SESSION['token'];
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=" . @$idArea;
 $rs = API::GET($URL, $token);
 $arrayNiveles = API::JSON_TO_ARRAY($rs);
-?>
+?> 
 <form action="../funciones/funcionesGenerales/XM_planningItem.model.php" name="formPlanningModal" id="formPlanningModal" method="post">
 
   <input type="hidden" name="mod" value="1">
@@ -119,8 +119,41 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 
-
 <script>
+document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('formPlanningModal');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var actionUrl = this.getAttribute('action');
+      var formData = $(this).serialize();
+      
+      console.log(formData);
+      //alert(formData);
+      
+      $.ajax({
+        type: "POST",
+        url: actionUrl,
+        data: formData,
+        success: function(response) {
+          console.log("Response: ", response);
+          alert("CORRECTO al salvar objetivos");
+          window.location.reload();
+        },
+        error: function(xhr, status, error) {
+          console.error("Error: ", error);
+          console.error("XHR: ", xhr);
+          console.error("Status: ", status);
+          alert("Error al salvar objetivos");
+        }
+      });
+    });
+  } else {
+    console.error("Form with ID 'formPlanningModal' not found.");
+  }
+});
+</script>
+<!-- <script>
 
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('formPlanningModal').addEventListener('submit', function(e) {
@@ -128,21 +161,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var actionUrl = this.getAttribute('action');
     //alert (actionUrl);
     console.log($(this).serialize());
+    alert($(this).serialize());
     $.ajax({
       type: "POST",
       url: actionUrl,
       data: $(this).serialize(),
       success: function(response) {
         console.log("Response: ", response);
-
         //$('#modal-lg').modal('hide');
         alert("CORRECTO al salvar objetivos");
         window.location.reload();
       },
       error: function() {
+        alert("Response: ", response);
         alert("Error al salvar objetivos");
       }
     });
   });
 });
-</script>
+</script> -->

@@ -12,13 +12,13 @@ $token = $_SESSION['token'];
 
  //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 
-
 /*Tipos de MOD
 *!MOD =1 CREATE
 *!MOR = 2 UPDATE
 */
 
 if ($_POST['mod'] == 1) {
+   //Cerear Planificacion
   $accion = "Crear";
   if(isset($_POST['id'])){
     $idObjetivoHeader = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
@@ -26,10 +26,10 @@ if ($_POST['mod'] == 1) {
   $creadoPor = $_SESSION['usuario'];
   $fechaCreacion = date('Y-m-d');
 } elseif($_POST['mod'] == 2) {
+  //Editar Planificacion
+
   $flag=true;
   $accion = "Editar";
-
-  //datos Representante
   $idObjetivoHeader = @$_POST["id"];
 
   $token = $_SESSION['token'];
@@ -58,53 +58,7 @@ if ($_POST['mod'] == 1) {
     $estado = 1;
   else
     $estado = 0;
-
-}elseif(($_POST['mod'] == 3)||($_POST['mod'] == 4)){
-  $flag=false;
-  $token = $_SESSION['token'];
-  $accion = "Carga de Contenido";
-
-  $idObjetivoHeader = @$_POST["id"];
-
-  //consulta el header del objetivo
-  $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
-  $rs         = API::GET($URL, $token);
-  $arrayHeader  = API::JSON_TO_ARRAY($rs);
-  $nombreObjetivo = $arrayHeader[0]['nombreObjetivo'];
-  $observacion = $arrayHeader[0]['observacion'];
-  $fechaCreacion = $arrayHeader[0]['fechaCreacion'];
-  $creadoPor = $arrayHeader[0]['creadoPor'];
-  $activo = $arrayHeader[0]['activo'];
-  $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $nivelObjetivo = $arrayHeader[0]['nivelObjetivo'];
-  $idAreaObjetivo = $arrayHeader[0]['idAreaObjetivo'];
-
 }
-
-if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
-  $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=4&idHeader=$idObjetivoHeader";
-  $rs         = API::GET($URL, $token);
-  $arrayVersiones  = API::JSON_TO_ARRAY($rs);
-
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=5&idHeader=$idObjetivoHeader";
-  $rs         = API::GET($URL, $token);
-  $arrayMaxVersion  = API::JSON_TO_ARRAY($rs);
-  // hacer la validacion si el valor del select no viene
-  if(isset($_POST['select'])){
-   // echo 'entr';
-    $maxVersion=$_POST['select'];
-  }else{
-    $maxVersion=$arrayMaxVersion[0]['maximo'];
-  }
-
-
-}
-  if($_POST['mod'] ==4){
-    $maxVersion=$maxVersion+1;
-  }
-
 
   $token = $_SESSION['token'];
   $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1";
@@ -131,7 +85,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   //echo $URL1;
   //print("<pre>".print_r(($arraySede) ,true)."</pre>");
 ?>
-<!-- Content Header (Page header) -->
+
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
@@ -141,13 +95,13 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
     </div><!-- /.row -->
   </div><!-- /.container -fluid -->
 </div>
-<!-- /.content-header -->
+
 
 <!-- Main content -->
 <form action="../funciones/funcionesGenerales/XM_planning.model.php" method="post" name="objetivo" id="objetivo"  enctype="multipart/form-data">
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idObjetivoHeader" value="<?php echo @$idObjetivoHeader; ?>">
-  <input type="hidden" name="versionActual" value="<?php echo @$maxVersion; ?>">
+  
   <div class="container-fluid">
     <!-- Small boxes (Stat box) -->
     <div class="row">
@@ -163,16 +117,16 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <label for="nivelObjetivo">Área</label>
+                  <label for="area">Área</label>
                   <select class="form-control" name="idArea" id="idArea" <?php if($_POST['mod']==2){echo 'disabled';}?>>
-                    <option>Seleccione</option>
+                    <option>Seleccione:</option>
                     <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
                       <option <?php if ($areaObjetivo['idArea'] == @$idArea) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
                     <?php }?>
                   </select>
                 </div>
                 <div class="col-sm-4">
-                  <label for="sede">Sede </label>
+                  <label for="sede">Sede:</label>
                   <select class="form-control" name="idSede" id="idSede"  onchange="fetchNiveles(this.value)">
                     <option>Seleccione</option>
                     <?php foreach($arraySede as $sede ){?>
@@ -181,7 +135,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   </select>
                 </div>
                 <div class="col-sm-4">
-                  <label for="aprendiz">Mediador(a)</label>
+                  <label for="aprendiz">Mediador(a):</label>
                   <select class="form-control" name="idFacilitador" id="idFacilitador" <?php if ($_POST['mod']==1){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayFacilitadores as $facilitador ){?>
@@ -190,7 +144,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   </select>
                 </div>
                 <div class="col-sm-8">
-                  <label for="aprendiz">Aprendiz </label>
+                  <label for="aprendiz">Aprendiz:</label>
                   <select class="form-control select2"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="idAprendiz" id="idAprendiz" <?php if($_POST['mod']==2){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayAprendices as $aprendiz ){?>
@@ -199,7 +153,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   </select>
                 </div>
                 <div class="col-sm-2">
-                  <label>Periodo Evaluacion</label>
+                  <label>Periodo Evaluación:</label>
                   <select class="form-control" name="periodoEvaluacion" id="periodoEvaluacion">
                     <?php
                     if  ((is_null($periodoEvaluacion)) ||(empty($periodoEvaluacion))){$periodoEvaluacion=4;}
@@ -209,7 +163,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   </select>
                 </div>
                 <div class="col-sm-2">
-                  <label>Activo</label>
+                  <label>Activo:</label>
                   <?php
                     if  ((is_null(@$activo)) ||(empty(@$activo))){@$activo=1;}
                     ?>
@@ -223,7 +177,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                   </select>
                 </div>
                 <div class="col-sm-12">
-                    <label for="nombreCliente">Descripción</label>
+                    <label for="nombreCliente">Descripción:</label>
                     <textarea  id="summernote" name="observacion"><?php echo @$observacion; ?></textarea>
                 </div>
                 <div class="col-sm-3">
@@ -236,7 +190,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                 </div>
                 <?php if($_POST['mod']==2){?>
                   <div class="col-sm-12">
-                            </br>
+                    </br>
                     <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
                   </div>
                 <?php }?>
@@ -250,9 +204,6 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                         <div class="card-header align-items-center">
                           <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
                         </div>
-
-
-
                     <?php  }?>
                 </div>
                 <?php
@@ -260,22 +211,22 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
               </div>
             </div>
             <div class="card-footer">
-                  <!-- <button type="submit" class="btn btn-success" >< ?php echo $accion; ?> Encabezado del Plan </button> -->
                   <?php if($_POST['mod']!=2){?>
                   <div class="col-sm-12">
-                            </br>
+                    </br>
                     <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Plan </button>
                   </div>
                 <?php }?>
-            </form>
+</form>
+                    <button type="button" class="btn btn-primary" onclick="enviarParametros('planning/planningListar.php')">Volver al Listado de Planes</button>
                     <?php
                       if(($_POST['mod']<>1)&&($flag)){ ?>
-                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">Agregar de  Actividades</button>
+                      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">Agregar Actividad(es)</button>
                       <!-- MODAL -->
                       <?php include ('planningModal.php'); ?>
                     <?php  }?>
 
-              <button type="button" class="btn btn-primary" onclick="enviarParametros('planning/planningListar.php')">Volver al Listado de Planes</button>
+                  
             </div>
 
         </div>

@@ -55,6 +55,19 @@ class area extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  public function getDatosNivele($idNivelAreaObjetivo) //(revisado)
+  {
+    $where = " WHERE idNivelAreaObjetivo <> '' ";
+    if ($idNivelAreaObjetivo != '') {
+      $where =  $where . " and idNivelAreaObjetivo = " . $idNivelAreaObjetivo;
+    }
+    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
+              FROM  nivelareaobjetivo
+               $where ";
+
+    return parent::ObtenerDatos($query);
+  }
+
   public function post($json)  //(revisado)
   {
 

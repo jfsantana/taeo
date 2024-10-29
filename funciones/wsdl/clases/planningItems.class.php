@@ -14,10 +14,7 @@ require_once 'respuestas.class.php';
 // hereda de la clase conexion
 class planningItems extends conexion
 {
-  // Tabla Principal de Empleados
   private $tabla = 'planificacion_items';
-
-  // se debe crear atributos para las tablas que se van a validar en la funcion "post"
   private $idItems ='';
   private $idPlanificacionHeader ='';
   private $jerarquia ='';
@@ -26,22 +23,17 @@ class planningItems extends conexion
   private $tipo ='';
   private $fechaCreacion='1980-01-01';
   private $creadoPor='';
-
   private $idAreaObjetivo=0;
   private $nivelObjetivo=0;
   private $nivelPadre='';
-
   private $nivel1='';
   private $nivel2='';
   private $nivel3='';
   private $nivel4='';
-
-
-
-  // Activaciond e token
+  private $nivel5='';
+  private $nivel6='';
+  private $nivel0PlanEstructura='';
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
-
-
 
   public function getExistePadre($idPlanificacionHeader, $jerarquia, $idNivel) //()
   {
@@ -65,10 +57,22 @@ class planningItems extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  public function almacenarPlanificacion($token, $idObjetivoHeader,$nodoNivel,$nodo)
+  {
+    $existeN1=$this->getExistePadre($this->idPlanificacionHeader, $nodoNivel,$this->nivelObjetivo  );
+    if (empty($existeN1)) {
+      $this->jerarquia = $nodoNivel;
+      $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='. $nodo;
+      $rs = API::GET($URL, $token, $_POST);
+      $rs = API::JSON_TO_ARRAY($rs);
+      $this->descripcion = @$rs[0]['descripcion'];
+      $resp = $this->InsertarItems(
+      );
+    }
+  }
+
   public function post($json)  //()
   {
-
-
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
@@ -93,7 +97,7 @@ class planningItems extends conexion
         } else {
           // Asignacion de datos validados su existencia en el If anterior
 
-//print_r($datos); die;
+
 
            $this->idItems = @$datos['idItems'];
            $this->idPlanificacionHeader = @$datos['idObjetivoHeader'];
@@ -105,22 +109,37 @@ class planningItems extends conexion
            $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
 
            $this->idAreaObjetivo =  @$datos['idAreaObjetivo'];
+
+           
+
            $this->nivelObjetivo =  @$datos['nivelObjetivo'];
 
+           //este es el nuverl del objetivo que debe ser el primero de a estructrua
+           $this->nivel0PlanEstructura = str_pad(@$datos['nivelObjetivo'], 2, '0', STR_PAD_LEFT);
+           
            $this->nivelPadre =  @$datos['nivelPadre'];
-
            $this->nivel1 =  @$datos['nivel1'];
            $this->nivel2 =  @$datos['nivel2'];
            $this->nivel3 =  @$datos['nivel3'];
            $this->nivel4 =  @$datos['nivel4'];
+           $this->nivel5 =  @$datos['nivel5'];
+           $this->nivel6 =  @$datos['nivel6'];
+
+           /** esto es una prueba para agregar en el primer nivel la estructura del nivel de la planificacion           */
+          $this->nivel6 =  $this->nivel0PlanEstructura.'.'.$this->nivel5;
+          $this->nivel6 =  $this->nivel0PlanEstructura.'.'.$this->nivel5;
+          $this->nivel5 =  $this->nivel0PlanEstructura.'.'.$this->nivel4;
+          $this->nivel4 =  $this->nivel0PlanEstructura.'.'.$this->nivel3;
+          $this->nivel3 =  $this->nivel0PlanEstructura.'.'.$this->nivel2;
+          $this->nivel2 =  $this->nivel0PlanEstructura.'.'.$this->nivel1;
+          $this->nivel1 =  $this->nivel0PlanEstructura.'.'.$this->nivelPadre;
+          $this->nivelPadre =  $this->nivel0PlanEstructura;
 
 
-
-
-
-//con el valor de  nivelObjetivo  y el area que esta en la cabecera de la planificacion necesito el id del objetivoid para poder obtener la descripcion
+          //con el valor de  nivelObjetivo  y el area que esta en la cabecera de la planificacion necesito el id del objetivoid para poder obtener la descripcion
           $token= $this->token ;
           $URL='http://taeo/funciones/wsdl/objetivo?type=6&idArea='.$this->idAreaObjetivo.'&idNivel='.$this->nivelObjetivo;
+          //print_r($URL); die;
           $rs = API::GET($URL, $token, $_POST);
           $rs = API::JSON_TO_ARRAY($rs);
           $idObjetivoHeader=$rs[0]['idObjetivoHeader'];
@@ -128,89 +147,58 @@ class planningItems extends conexion
 
           if($datos['mod']==1){
 
-            //******************PADRE
-           // echo "<script>console.log('PADRE');</script>";
+         //******************PADRE     OK
            //validar que solo no esta repetido el padre en la planificacion en  curso
            $existePadre=$this->getExistePadre($this->idPlanificacionHeader, $this->nivelPadre,$this->nivelObjetivo  );
-          //print_r($existePadre); die;
+        //  print_r($this->nivelPadre); die;
            if (empty($existePadre)) {
             $this->jerarquia = $this->nivelPadre;
-            $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$this->jerarquia;
+
+            /* se cambio para que el nivel del objetivo fuese el primer nivel*/ 
+            $URL='http://taeo/funciones/wsdl/area?type=3&idNivelAreaObjetivo='.$this->jerarquia;
+            
             $rs = API::GET($URL, $token, $_POST);
             $rs = API::JSON_TO_ARRAY($rs);
-            $this->descripcion = @$rs[0]['descripcion'];
+            $this->descripcion = @$rs[0]['nombreNivelAreaObjetivo'];
+            //inserta el nivel 0 de la jerarquia  (el nivel del objetivo)
             $resp = $this->InsertarItems();
            }
+           
+           //NivePadre
+           $this->almacenarPlanificacion($token, $idObjetivoHeader, $this->nivel1,$datos['nivelPadre'] );
+          //Nive1
+          if(Isset($datos['nivel1']))
+           $this->almacenarPlanificacion($token, $idObjetivoHeader, $this->nivel2,$datos['nivel1'] );
+           //Nive2
+          if(Isset($datos['nivel2']))
+            $this->almacenarPlanificacion($token, $idObjetivoHeader, $this->nivel3,$datos['nivel2'] );
+           //Nive3
+          if(Isset($datos['nivel3']))
+           $this->almacenarPlanificacion($token, $idObjetivoHeader, $this->nivel4,$datos['nivel3'] );
+           //Nive4
+          if(Isset($datos['nivel4']))
+           $this->almacenarPlanificacion($token, $idObjetivoHeader, $this->nivel5,$datos['nivel4'] );
+           //Nive5
+          if(Isset($datos['nivel5']))
+           $this->almacenarPlanificacion($token, $idObjetivoHeader, $this->nivel6,$datos['nivel5'] );
 
 
-            //******************NIVEL 1
-            if(Isset($datos['nivel1'])){
-              $existeN1=$this->getExistePadre($this->idPlanificacionHeader, $this->nivel1,$this->nivelObjetivo  );
-              if (empty($existeN1)) {
-                //echo "<script>console.log('nivel1');</script>";
-                $this->jerarquia = $datos['nivel1'];
-                $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$this->jerarquia;
-                $rs = API::GET($URL, $token, $_POST);
-                $rs = API::JSON_TO_ARRAY($rs);
-                $this->descripcion = @$rs[0]['descripcion'];
-                $resp = $this->InsertarItems();
-              }
-            }
-
-            //******************NIVEL 2
-            if(Isset($datos['nivel2'])){
-              $existeN2=$this->getExistePadre($this->idPlanificacionHeader, $this->nivel2,$this->nivelObjetivo  );
-              if (empty($existeN2)) {
-                //echo "<script>console.log('nivel2');</script>";
-                $this->jerarquia = $datos['nivel2'];
-                $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$this->jerarquia;
-                $rs = API::GET($URL, $token, $_POST);
-                $rs = API::JSON_TO_ARRAY($rs);
-                $this->descripcion = @$rs[0]['descripcion'];
-                $resp = $this->InsertarItems();
-              }
-            }
-
-            //******************NIVEL 3
-            if(Isset($datos['nivel3'])){
-              $existeN3=$this->getExistePadre($this->idPlanificacionHeader, $this->nivel3,$this->nivelObjetivo  );
-              if (empty($existeN3)) {
-                //echo "<script>console.log('nivel3');</script>";
-                $this->jerarquia = $datos['nivel3'];
-                $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$this->jerarquia;
-                $rs = API::GET($URL, $token, $_POST);
-                $rs = API::JSON_TO_ARRAY($rs);
-                $this->descripcion = @$rs[0]['descripcion'];
-                $resp = $this->InsertarItems();
-              }
-            }
-
-            //******************NIVEL 4
-            if(Isset($datos['nivel4'])){
-              $existeN4=$this->getExistePadre($this->idPlanificacionHeader, $this->nivel4,$this->nivelObjetivo  );
-              if (empty($existeN4)) {
-                //echo "<script>console.log('nivel4');</script>";
-                $this->jerarquia = $datos['nivel4'];
-                $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$this->jerarquia;
-                $rs = API::GET($URL, $token, $_POST);
-                $rs = API::JSON_TO_ARRAY($rs);
-                $this->descripcion = @$rs[0]['descripcion'];
-                $resp = $this->InsertarItems();
-              }
-            }
+           
 
 
             //aui inserta las actividades
             if (isset($datos['actividad']) && is_array($datos['actividad'])) {
               //echo "<script>console.log('ACTIVIDADES');</script>";
               foreach ($datos['actividad'] as $jerarquia) {
-                $existeactividad=$this->getExistePadre($this->idPlanificacionHeader, $jerarquia,$this->nivelObjetivo  );
+
+                $nodoReal= $this->nivel0PlanEstructura.'.'.$jerarquia; 
+                $existeactividad=$this->getExistePadre($this->idPlanificacionHeader, $nodoReal,$this->nivelObjetivo  );
                 //print_r($existeactividad);
                 if (empty($existeactividad)) {
                   $URL='http://taeo/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$jerarquia;
                   $rs = API::GET($URL, $token, $_POST);
                   $rs = API::JSON_TO_ARRAY($rs);
-                  $this->jerarquia = $jerarquia;
+                  $this->jerarquia = $nodoReal;
                   $this->descripcion = @$rs[0]['descripcion'];
                   $resp = $this->InsertarItems();
                   $this->descripcion='';  //valida que no se repita la misma herarquia dos veces
@@ -220,7 +208,7 @@ class planningItems extends conexion
               }
           }
 
-          die;
+         // die;
 
 
 
@@ -276,7 +264,7 @@ class planningItems extends conexion
                '$this->creadoPor'
             )";
 
-    //echo $query;
+    //echo $query; die;
      $Insertar = parent::nonQueryId($query);
 
 

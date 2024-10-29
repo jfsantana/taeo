@@ -19,6 +19,8 @@ $token = $_SESSION['token'];
 
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planningItem";
 
+//print("<pre>".print_r(($_POST),true)."</pre>");die;
+
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
