@@ -354,10 +354,170 @@
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                                 <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
-                                                                                                                <?php
-                                                                                                                  nivel4($datosArrayhijosNexLevel,5,$token,$idObjetivoHeader);
-                                                                                                                  
-                                                                                                                ?>
+                                                                                                               <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
+                                                                                                              <?php
+
+                                                                                                                $arrayhijosNexLevel  = hijos($datosNodoPadre['idPlanificacionHeader'], $datosArrayhijosNexLevel['jerarquia'], $token);
+                                                                                                                if(count($arrayhijosNexLevel)>0)
+                                                                                                                {?>
+                                                                                                                    <tr class="expandable-body">
+                                                                                                                    <td>
+                                                                                                                        <div class="p-0">
+                                                                                                                                <table class="table table-hover">
+                                                                                                                                <tbody>
+                                                                                                                                    <?php
+                                                                                                                                    //************************ INICIO DEL RECORRIDO NIVEL 4 ********************/
+                                                                                                                                    foreach($arrayhijosNexLevel as $datosArrayhijosNexLevel)
+                                                                                                                                    {?>
+                                                                                                                                    <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                                                        <td>
+                                                                                                                                        <div class="p-0">
+                                                                                                                                            <table class="table table-hover">
+                                                                                                                                            <tbody>
+                                                                                                                                                <?php
+                                                                                                                                                $arrayhijosN3  = hijos($datosNodoPadre['idPlanificacionHeader'], $datosArrayhijosNexLevel['jerarquia'], $token);
+                                                                                                                                                $variable=$datosArrayhijosNexLevel['idItems'].'-'. @$idObjetivoHeader;
+
+                                                                                                                                                if(count($arrayhijosN3)<1)
+                                                                                                                                                {
+                                                                                                                                                //No tiene Hijos?>
+                                                                                                                                                <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                                                                    <td>
+                                                                                                                                                    <?php 
+                                                                                                                                                    $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel['jerarquia']);
+                                                                                                                                                    echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'].'
+                                                                                                                                                    (
+                                                                                                                                                      <a href="#"
+                                                                                                                                                      onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
+                                                                                                                                                      ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                                                                                    )
+                                                                                                                                                    ';?>
+                                                                                                                                                    </td>
+                                                                                                                                                </tr>
+                                                                                                                                                <?php
+                                                                                                                                                }else
+                                                                                                                                                {// si tiene Hijo?>
+                                                                                                                                                <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                                                                    <td>
+                                                                                                                                                        <button type="button" class="btn btn-primary p-0">
+                                                                                                                                                        <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                                                                                                                                                        </button>
+                                                                                                                                                        <?php 
+                                                                                                                                                          $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel['jerarquia']);
+                                                                                                                                                          echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'].'
+                                                                                                                                                                (
+                                                                                                                                                                  <a href="#"
+                                                                                                                                                                  onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
+                                                                                                                                                                  ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                                                                                                )
+                                                                                                                                                                ';?>
+                                                                                                                                                      </td>
+                                                                                                                                                  </tr>
+                                                                                                                                                  <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
+                                                                                                                                                  <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
+                                                                                                                                                  <?php
+
+                                                                                                                                                    $arrayhijosNexLevel  = hijos($datosNodoPadre['idPlanificacionHeader'], $datosArrayhijosNexLevel['jerarquia'], $token);
+                                                                                                                                                    if(count($arrayhijosNexLevel)>0)
+                                                                                                                                                    {?>
+                                                                                                                                                        <tr class="expandable-body">
+                                                                                                                                                        <td>
+                                                                                                                                                            <div class="p-0">
+                                                                                                                                                                    <table class="table table-hover">
+                                                                                                                                                                    <tbody>
+                                                                                                                                                                        <?php
+                                                                                                                                                                        //************************ INICIO DEL RECORRIDO NIVEL 5 ********************/
+                                                                                                                                                                        foreach($arrayhijosNexLevel as $datosArrayhijosNexLevel5)
+                                                                                                                                                                        {?>
+                                                                                                                                                                        <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                                                                                            <td>
+                                                                                                                                                                            <div class="p-0">
+                                                                                                                                                                                <table class="table table-hover">
+                                                                                                                                                                                <tbody>
+                                                                                                                                                                                    <?php
+                                                                                                                                                                                    $arrayhijosN3  = hijos($datosNodoPadre['idPlanificacionHeader'], $datosArrayhijosNexLevel5['jerarquia'], $token);
+                                                                                                                                                                                    $variable=$datosArrayhijosNexLevel5['idItems'].'-'. @$idObjetivoHeader;
+
+                                                                                                                                                                                    if(count($arrayhijosN3)<1)
+                                                                                                                                                                                    {
+                                                                                                                                                                                    //No tiene Hijos?>
+                                                                                                                                                                                    <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                                                                                                        <td>
+                                                                                                                                                                                        <?php 
+                                                                                                                                                                                        $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel5['jerarquia']);
+                                                                                                                                                                                        echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel5['descripcion'].'
+                                                                                                                                                                                        (
+                                                                                                                                                                                          <a href="#"
+                                                                                                                                                                                          onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
+                                                                                                                                                                                          ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                                                                                                                        )
+                                                                                                                                                                                        ';?>
+                                                                                                                                                                                        </td>
+                                                                                                                                                                                    </tr>
+                                                                                                                                                                                    <?php
+                                                                                                                                                                                    }else
+                                                                                                                                                                                    {// si tiene Hijo?>
+                                                                                                                                                                                    <tr data-widget="expandable-table" aria-expanded="false">
+                                                                                                                                                                                        <td>
+                                                                                                                                                                                            <button type="button" class="btn btn-primary p-0">
+                                                                                                                                                                                            <i class="expandable-table-caret fas fa-caret-right fa-fw"></i>
+                                                                                                                                                                                            </button>
+                                                                                                                                                                                            <?php 
+                                                                                                                                                                                              $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel5['jerarquia']);
+                                                                                                                                                                                              echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel5['descripcion'].'
+                                                                                                                                                                                                    (
+                                                                                                                                                                                                      <a href="#"
+                                                                                                                                                                                                      onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
+                                                                                                                                                                                                      ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
+                                                                                                                                                                                                    )
+                                                                                                                                                                                                    ';?>
+                                                                                                                                                                                          </td>
+                                                                                                                                                                                      </tr>
+                                                                                                                                                                                      <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
+                                                                                                                                                                                      <?php
+                                                                                                                                                                                        nivel4($datosArrayhijosNexLevel5,5,$token,$idObjetivoHeader);
+                                                                                                                                                                                        
+                                                                                                                                                                                      ?>
+                                                                                                                                                                                      <!-- /*fin  va el codigo para el siguiente nivel*/ -->
+                                                                                                                                                                                      <?php
+                                                                                                                                                                                    }?>
+                                                                                                                                                                                </tbody>
+                                                                                                                                                                                </table>
+                                                                                                                                                                            </div>
+                                                                                                                                                                            </td>
+                                                                                                                                                                        </tr>
+                                                                                                                                                                        <?php
+                                                                                                                                                                        }?>
+                                                                                                                                                                    </tbody>
+                                                                                                                                                                    </table>
+                                                                                                                                                            </div>
+                                                                                                                                                            </td>
+                                                                                                                                                        </tr>
+
+                                                                                                                                                        <?php
+                                                                                                                                                    }
+                                                                                                                                                    ?>
+                                                                                                                                                    <!-- /*fin  va el codigo para el siguiente nivel*/ -->
+                                                                                                                                                  <!-- /*fin  va el codigo para el siguiente nivel*/ -->
+                                                                                                                                                  <?php
+                                                                                                                                                }?>
+                                                                                                                                            </tbody>
+                                                                                                                                            </table>
+                                                                                                                                        </div>
+                                                                                                                                        </td>
+                                                                                                                                    </tr>
+                                                                                                                                    <?php
+                                                                                                                                    }?>
+                                                                                                                                </tbody>
+                                                                                                                                </table>
+                                                                                                                        </div>
+                                                                                                                        </td>
+                                                                                                                    </tr>
+
+                                                                                                                    <?php
+                                                                                                                }
+                                                                                                              ?>
+                                                                            <!-- /*fin  va el codigo para el siguiente nivel*/ -->
                                                                                                                 <!-- /*fin  va el codigo para el siguiente nivel*/ -->
                                                                                                                 <?php
                                                                                                               }?>
