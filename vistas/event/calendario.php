@@ -7,15 +7,13 @@
   ?>
 
 
-<div class="wrapper">
+
   <!-- /.navbar -->
 
 
 
   <!-- Content Wrapper. Contains page content -->
-  <div >
-
-
+  
     <div class="small-box">
 
       <!-- Main content -->
@@ -56,8 +54,8 @@
         </div>
       </section>
     </div>
-  </div>
-</div>
+  
+
 <!-- ./wrapper -->
 
 
@@ -65,6 +63,17 @@
 
 <!-- ***************** -->
 
+  <!-- fullCalendar -->
+  <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
+
+<!-- fullCalendar 2.2.5 -->
+<script src="../plugins/moment/moment.min.js"></script>
+<script src="../plugins/fullcalendar/main.js"></script>
+
+
+
+<!-- jQuery -->
+<script src="../plugins/jquery/jquery.min.js"></script>
 
 
 <!-- ***************** -->
