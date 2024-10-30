@@ -31,8 +31,6 @@ if (($_SESSION['id_rol']==1)){
 
   $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso;
   $UrlAccesoResumen  = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso."&status=";
-
-
 }
 //echo $UrlAcceso ; 
 

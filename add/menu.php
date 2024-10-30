@@ -98,16 +98,6 @@
           </a>
         </li>
 
-        <!-- 
-
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-edit  text-info"></i>
-            <p>Evaluación</p>
-          </a>
-        </li>
-         -->
-
       </ul>
     </li>
     <?php }    ?>
@@ -129,26 +119,6 @@
               <p>Gestión de Registros</p>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a href="#" onclick="enviarParametros('admin/clienteList.php')" class="nav-link ">
-              <i class="nav-icon fas fa-diagnoses"></i>
-              <p>Mi Primera Evaluacion</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" onclick="enviarParametros('admin/empresaConsultoraList.php')" class="nav-link">
-              <i class="nav-icon fas fa-diagnoses"></i>
-              <p>Re-Evaluacion</p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="#" onclick="enviarParametros('time/cargaTimeResumenAprobList.php')" class="nav-link">
-              <i class="nav-icon fas fa-edit text-warning"></i>
-              <p>
-                Consulta de Evaluacion
-              </p>
-            </a>
-          </li> -->
         </ul>
       </li> 
     <?php }    ?>
