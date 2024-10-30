@@ -19,9 +19,10 @@ $token = $_SESSION['token'];
 
 if (($_SESSION['id_rol']==1)){
 
-  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status";
+  $UrlAcceso         = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status";
+  $UrlAccesoResumen  = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=";
   
-}elseif(($_SESSION['id_rol']==2)){
+}else{
 
   //1.SABER TODAS LAS SEDES ASOCIADAS AL USUARIOS LOGUEADO POR SU ID
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
@@ -29,6 +30,8 @@ if (($_SESSION['id_rol']==1)){
   $sedesPermiso  = API::JSON_TO_ARRAY($rs);
 
   $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso;
+  $UrlAccesoResumen  = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso."&status=";
+
 
 }
 //echo $UrlAcceso ; 
@@ -44,22 +47,22 @@ $array  = API::JSON_TO_ARRAY($rs);
 
 
 //total  Planificados
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Planificados";
+$URL        = $UrlAccesoResumen."Planificados";
 $rs         = API::GET($URL, $token);
 $arrayPlanificados  = API::JSON_TO_ARRAY($rs);
 
 //Total  Cerrados
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Cerrados";
+$URL        = $UrlAccesoResumen."Cerrados";
 $rs         = API::GET($URL, $token);
 $arrayCerrados  = API::JSON_TO_ARRAY($rs);
 
 //Todos Eventos 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Todos";
+$URL        = $UrlAccesoResumen."Todos";
 $rs         = API::GET($URL, $token);
 $arrayTodos  = API::JSON_TO_ARRAY($rs);
 
 //total  ejecutados
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Ejecutados";
+$URL        = $UrlAccesoResumen."Ejecutados";
 $rs         = API::GET($URL, $token);
 $arrayEjecutados  = API::JSON_TO_ARRAY($rs);
 //print("<pre>".print_r(($array) ,true)."</pre>"); die;
@@ -142,14 +145,14 @@ $arrayEjecutados  = API::JSON_TO_ARRAY($rs);
         </div>
       </div>
 
-
+      <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
       <div class="col-lg-12 col-12">
         <!-- small box -->
         <div class="small-box bg-warning">
           <a href="#" onclick="enviarParametrosGetsionCreate('event/crearEvent.php','1')" class="small-box-footer">Crear Evento <i class="fas fa-arrow-circle-right"></i></a>
         </div>
       </div>
-
+      <?php }   ?>
 
       <!-- ./col -->
     </div>

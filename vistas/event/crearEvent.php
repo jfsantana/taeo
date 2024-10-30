@@ -9,6 +9,12 @@ if (!isset($_SESSION['id_user'])) {
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
+if($_SESSION['ponderacion']<40)
+  $disabled='';
+else
+  $disabled='disabled';
+
+  
 if ($_POST['mod'] == 1) {
   $accion = "Crear";
   $flagImagen = 0;
@@ -107,8 +113,10 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
         <div class="card card-primary">
         <div class="card-header d-flex justify-content-between align-items-center">
           <h3 class="card-title mb-0"><?php echo $accion; ?> Eventos</h3>
+          <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
           <?php if ($_POST['mod'] == 2) { ?>
             <button type="button" class="btn btn-warning ml-auto" id="sendEmailButton" <?php echo $enableBottonEnvioCorreo; ?> >Envio de Email para evento</button>
+          <?php } ?>
           <?php } ?>
         </div>
           <!-- /.card-header -->
@@ -118,13 +126,13 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
               <div class="row">
                 <div class="col-sm-6">
                   <label for="nombreAprendiz">Nombre del Evento</label>
-                  <input type="text" class="form-control" name="nombreEvento" id="nombreEvento" placeholder="Nombre del Evento" value="<?php echo @$nombreEvento; ?>" required>
+                  <input type="text" class="form-control" name="nombreEvento" id="nombreEvento" placeholder="Nombre del Evento" value="<?php echo @$nombreEvento; ?>" required <?php echo $disabled; ?>>
                 </div>
 
                 <div class="col-sm-3">
                     <label>Fecha de Evento:</label>
                     <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
-                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="fechaEvento" id="fechaEvento"  value="<?php echo @$fechaEventoFormateada; ?>" required/>
+                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" name="fechaEvento" id="fechaEvento"  value="<?php echo @$fechaEventoFormateada; ?>" required <?php echo $disabled; ?>/>
                         <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                             <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                         </div>
@@ -134,19 +142,29 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-3">
                   <label for="organizadoPor">Organizadora del Evento</label>
-                  <input type="text" class="form-control" name="organizadoPor" id="organizadoPor" placeholder="Nombre de la Organizadora" value="<?php echo @$organizadoPor; ?>" required>
+                  <input type="text" class="form-control" name="organizadoPor" id="organizadoPor" placeholder="Nombre de la Organizadora" value="<?php echo @$organizadoPor; ?>" required <?php echo $disabled; ?>>
                 </div>
 
 
 
                 <div class="col-sm-6">
                     <label for="descripcionEvento">Descripción  del Evento</label>
-                    <textarea  id="eventDesciption" name="descripcionEvento" required><?php echo @$descripcionEvento; ?></textarea>
+                    <?php if($_SESSION['ponderacion']<40){?>
+                      <textarea  id="eventDesciption" name="descripcionEvento" required <?php echo $disabled; ?>><?php echo @$descripcionEvento; ?></textarea>
+                    <?php }else {
+                       echo @$descripcionEvento;
+                    }?>
+                    
                 </div>
                 
                 <div class="col-sm-6">
                     <label for="ponentes">Ponentes  del Evento</label>
-                    <textarea  id="ponentes" name="ponentes" required><?php echo @$ponentes; ?></textarea>
+                    <?php if($_SESSION['ponderacion']<40){?>
+                      <textarea  id="ponentes" name="ponentes" required><?php echo @$ponentes; ?></textarea>
+                    <?php }else {
+                       echo @$ponentes;
+                    }?>
+                    
                 </div>
 
                 <div class="col-sm-2">
@@ -164,6 +182,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
                                 id="sede_<?php echo $sede['idSede']; ?>" 
                                 name="idSede[]" 
                                 value="<?php echo $sede['idSede']; ?>" 
+                                <?php echo $disabled; ?>
                                 <?php if (in_array($sede['idSede'], (array)@$idSede)) { echo 'checked'; } ?>
                           >
                         <label class="custom-control-label" for="sede_<?php echo $sede['idSede']; ?>"><?php echo $sede['nombreSede']; ?></label>
@@ -174,7 +193,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-2">
                   <label for="envioCorreo">Desea Enviar por Correo</label>
-                  <select class="form-control" name="envioCorreo" id="envioCorreo">
+                  <select class="form-control" name="envioCorreo" id="envioCorreo" <?php echo $disabled; ?>>
                     <option <?php if (@$envioCorreo == "SI") {
                               echo 'selected';
                             } ?> value="SI">Si</option>
@@ -186,12 +205,12 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-3">
                 <label for="flayer">Flayer del Evento</label>
-                    <input type="file" name="afiche" id="afiche" accept=".jpg, .jpeg, .png"  />
+                    <input type="file" name="afiche" id="afiche" accept=".jpg, .jpeg, .png"  <?php echo $disabled; ?>/>
                 </div>
 
                 <div class="col-sm-2">
                   <label>Activo</label>
-                  <select class="form-control" name="activo" id="activo">
+                  <select class="form-control" name="activo" id="activo" <?php echo $disabled; ?>>
                     <option <?php if (@$estado == 1) {
                               echo 'selected';
                             } ?> value=1>Activo</option>
@@ -207,7 +226,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
                     @$tipoEvento = 'Administrativo';
                   }?>
                   <label>Tipo de Evento</label>
-                  <select class="form-control" name="tipoEvento" id="tipoEvento">
+                  <select class="form-control" name="tipoEvento" id="tipoEvento" <?php echo $disabled; ?>>
                     <option <?php if (@$tipoEvento == 'Administrativo') {
                               echo 'selected';
                             } ?> value='Administrativo'>Administrativo</option>
@@ -224,7 +243,12 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
                 <div class="col-sm-12">
                     <label for="nombreCliente">Direccion  del Evento</label>
-                    <textarea  id="direcion" name="lugarEvento"><?php echo @$lugarEvento; ?></textarea>
+                    <?php if($_SESSION['ponderacion']<40){?>
+                      <textarea  id="direcion" name="lugarEvento"><?php echo @$lugarEvento; ?></textarea>
+                    <?php }else {
+                       echo @$lugarEvento;
+                    }?>
+                    
                 </div>
 
                 <?php 
@@ -239,11 +263,15 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 
             </div>
 
+            
             <div class="card-footer">
-              <button type="submit" class="btn btn-primary" ><?php echo $accion; ?></button>
-              <button type="button" class="btn btn-primary" onclick="enviarParametros('event/eventList.php')">Volver</button>
+              <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
+                <button type="submit" class="btn btn-primary" ><?php echo $accion; ?></button>
+              <?php }?>
 
+              <button type="button" class="btn btn-primary" onclick="enviarParametros('event/eventList.php')">Volver</button>
             </div>
+            
 
           </form>
         </div>

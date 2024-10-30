@@ -153,7 +153,7 @@
       </li> 
     <?php }    ?>
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
+    <?php if ($_SESSION['ponderacion'] < 60) { //Solo Administradores    ?>
       <li class="nav-item menu-close">
         <a href="#" class="nav-link ">
 
@@ -164,12 +164,14 @@
           </p>
         </a>
         <ul class="nav nav-treeview">
+        <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
           <li class="nav-item">
             <a href="#" onclick="enviarParametrosGetsionCreate('event/crearEvent.php','1')" class="nav-link ">
               <i class="nav-icon fas fa-plus"></i>
               <p>Creación</p>
             </a>
           </li>
+          <?php } ?>
           <li class="nav-item">
             <a href="#" onclick="enviarParametros('event/eventList.php')" class="nav-link ">
               <i class="nav-icon far fa-circle text-danger"></i>
