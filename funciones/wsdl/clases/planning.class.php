@@ -41,12 +41,18 @@ class planning extends conexion
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
 
-  public function getPlanningHeadere($idPlanificacion) //()
+  public function getPlanningHeadere($idPlanificacion, $sede) //()
   {
     $where = " WHERE planificacion_header.idPlanificacion <> '' ";
     if ($idPlanificacion != '') {
       $where =  $where . " and planificacion_header.idPlanificacion = " . $idPlanificacion;
     }
+
+    if ($sede != '') {
+      $where =  $where . " and planificacion_header.idSede in (" . $sede . ")";
+    }
+
+
     $query = "select
             planificacion_header.*
             ,case when planificacion_header.activo = 1 Then 'Activo' else 'Bloqueado' end estado

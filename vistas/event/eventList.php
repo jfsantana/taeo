@@ -14,16 +14,34 @@ if (@$_POST['mod']==null){
 }else{
   $status=@$_POST['mod'];
 }
+$token = $_SESSION['token'];
+
+
+if (($_SESSION['id_rol']==1)){
+
+  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status";
+  
+}elseif(($_SESSION['id_rol']==2)){
+
+  //1.SABER TODAS LAS SEDES ASOCIADAS AL USUARIOS LOGUEADO POR SU ID
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
+  $rs         = API::GET($URL, $token);
+  $sedesPermiso  = API::JSON_TO_ARRAY($rs);
+
+  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso;
+
+}
+//echo $UrlAcceso ; 
 
 
 //Listado Eventos para Pagina segun filtro
-//$idEmpresaConsultora = @$_POST["id"];
-$token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status";
+$URL        = $UrlAcceso ; 
 $rs         = API::GET($URL, $token);
 $array  = API::JSON_TO_ARRAY($rs);
 
-//print_r($_POST );
+
+
+
 
 //total  Planificados
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=Planificados";

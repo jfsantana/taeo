@@ -80,6 +80,30 @@ class sede extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  
+  public function getSedeByEmpleadString($idUsuario)//(revisado)
+  {
+    $where = " WHERE sede.idSede <> '' ";
+    if ($idUsuario != '') {
+      $where =  $where . " and usuario_sede.idUsuario = " . $idUsuario;
+    }
+
+    $query = "SELECT sede.*
+              FROM usuario_sede
+                inner join sede on usuario_sede.idSede=sede.idSede
+              $where";
+  $arraySedes = parent::ObtenerDatos($query);
+    $sedesId='';
+    foreach ($arraySedes as $sedes) {
+      $sedesId = $sedesId.','.$sedes['idSede'];
+    }
+    $sedesId = ltrim($sedesId, ',');
+    //echo $query; die;
+    return $sedesId;
+  }
+
+
+
   //Crear una Sede
   public function post($json)//(revisado)
   {

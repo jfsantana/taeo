@@ -285,7 +285,7 @@ class event extends conexion
 
   }
 
-  public function getAllEvent($estatus)//(fino)
+  public function getAllEvent($estatus, $idsede)//(fino)
   {  //Planificados, Cerrados Todos
     if ($estatus=='Planificados') {
       $where =' WHERE evento.activo = 1 AND evento.fechaEvento >= CURDATE() ';
@@ -299,8 +299,12 @@ class event extends conexion
       $where = ' WHERE evento.activo = 1 AND evento.fechaEvento >= CURDATE() ';
     }
 
-    $query = "SELECT evento.*, sede.nombreSede FROM taeho_v2.evento 
-                inner join sede on evento.idSede=sede.idSede $where";
+    if ($idsede != '') {
+      $where =  $where . " and evento.idSede in (" . $idsede . ")";
+    }
+
+    // $query = "SELECT evento.*, sede.nombreSede FROM taeho_v2.evento 
+    //             inner join sede on evento.idSede=sede.idSede $where";
 
                 
     $query = "SELECT 

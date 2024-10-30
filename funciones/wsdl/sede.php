@@ -34,6 +34,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($getEmpleados);
     http_response_code(200);
+  }elseif ($_GET['type']==4) {
+
+    $getEmpleados = $_sede->getSedeByEmpleadString(@$_GET['idUsuario']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($getEmpleados);
+    http_response_code(200);
   }
 
 

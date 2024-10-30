@@ -51,6 +51,7 @@ if (@$rs['result']['token']) {
 
   //echo   $URL; die;
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
+  $_SESSION['ponderacion'] = $datosEmpleado[0]['orderRol'];
   $_SESSION['sedeId'] = $_POST['locacion'];  //sede con la que se logeo
   $_SESSION['sedeNombre']=$arraySede[0]['nombreSede'];
   $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];

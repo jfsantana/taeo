@@ -152,7 +152,7 @@ $meses = array(
           <div class="inner">
             <h3>Consultar Planificaci&oacute;n</h3>
 
-            <p>Seccion para visualizar las evaluaciones de una Planificaci&oacute;n</p>
+            <p>Seccion para visualizar los avances de una Planificaci&oacute;n</p>
           </div>
           <div class="icon">
             <i class="ion ion-edit "></i>
@@ -176,7 +176,7 @@ $meses = array(
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Listado las ultimas Evaluaciones</h3>
+            <h3 class="card-title">Listado los ultimos Avances </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">

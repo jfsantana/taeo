@@ -96,7 +96,8 @@ class empleados extends conexion
 
     $query = "SELECT
               usuario.*,
-              rol.descripcionRol
+              rol.descripcionRol,
+              rol.orderRol
               FROM
               usuario_token
               INNER JOIN usuario ON usuario_token.loginUsuario = usuario.loginUsuario
@@ -104,7 +105,7 @@ class empleados extends conexion
 
               WHERE
               usuario_token.token =  '$token'";
-        //  echo $query ; die;
+         // echo $query ; die;
     return parent::ObtenerDatos($query);
   }
 

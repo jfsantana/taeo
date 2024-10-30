@@ -10,26 +10,26 @@ $_event = new event(); // Replace $requiredArgument with the actual argument nee
         /*****!SECTION
        * type:
        * 1 lista de eventos desc por fecha
-       * 2 consulta de 1 evento por id
+       * 2 consulta de 1 evento por id 
        * 3 envio de correo de evento
-       * 4 listado de todos los eventos con formato para el calendario
+       * 4 listado de todos los eventos con formato para el calendario idsede
        */
 
     if ($_GET['type'] == 1) {
-        $getSede = $_event->getAllEvent($_GET['status']);
+        $getSede = $_event->getAllEvent(@$_GET['status'],@$_GET['idsede']);
         header('Content-Type: application/json;charset=utf-8');
         echo json_encode($getSede);
         http_response_code(200);
     } elseif ($_GET['type'] == 2) {
         if (isset($_GET['idEvento'])) {
-            $getEmpleados = $_event->getEvent($_GET['idEvento']);
+            $getEmpleados = $_event->getEvent(@$_GET['idEvento']);
             header('Content-Type: application/json;charset=utf-8');
             echo json_encode($getEmpleados);
             http_response_code(200);
         } 
     } elseif($_GET['type'] == 3){
       //ENVIO DE CORREO POR ID
-      $getSendEmailById = $_event->getSendEventById($_GET['idEvento']);
+      $getSendEmailById = $_event->getSendEventById(@$_GET['idEvento']);
       header('Content-Type: application/json;charset=utf-8');
       echo json_encode($getSendEmailById);
       http_response_code(200);

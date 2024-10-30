@@ -1,0 +1,221 @@
+<?php
+if (!isset($_SESSION)) {
+  session_start();
+}
+if (!isset($_SESSION['id_user'])) {
+  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  exit();
+}
+require_once '../funciones/wsdl/clases/consumoApi.class.php';
+
+$token = $_SESSION['token'];
+
+//print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+
+/*Tipos de MOD
+*!MOD =1 CREATE
+*!MOR = 2 UPDATE
+*/
+
+if ($_POST['mod'] == 1) {
+   //Cerear Planificacion
+  $accion = "Crear";
+  if(isset($_POST['id'])){
+    $idObjetivoHeader = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
+  }
+  $creadoPor = $_SESSION['usuario'];
+  $fechaCreacion = date('Y-m-d');
+} elseif($_POST['mod'] == 2) {
+  //Editar Planificacion
+
+  $flag=true;
+  $accion = "Editar";
+  $idObjetivoHeader = @$_POST["id"];
+
+  $token = $_SESSION['token'];
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1&idPlanificacion=$idObjetivoHeader";
+  $rs         = API::GET($URL, $token);
+  $arrayHeader  = API::JSON_TO_ARRAY($rs);
+
+  $idPlanificacion = $arrayHeader[0]['idPlanificacion'];
+  $idArea = $arrayHeader[0]['idArea'];
+  $idSede = $arrayHeader[0]['idSede'];
+  $idFacilitador = $arrayHeader[0]['idFacilitador'];
+  $idAprendiz = $arrayHeader[0]['idAprendiz'];
+  $periodoEvaluacion = $arrayHeader[0]['periodoEvaluacion'];
+  $observacion = $arrayHeader[0]['observacion'];
+  $fechaCreacion = $arrayHeader[0]['fechaCreacion'];
+  $creadoPor = $arrayHeader[0]['creadoPor'];
+  $activo = $arrayHeader[0]['activo'];
+  $estado = $arrayHeader[0]['estado'];
+  $nombreArea = $arrayHeader[0]['nombreArea'];
+  $nombreSede = $arrayHeader[0]['nombreSede'];
+  $facilitador = $arrayHeader[0]['facilitador'];
+  $aprendiz = $arrayHeader[0]['aprendiz'];
+  $aprendizFullName = $arrayHeader[0]['aprendiz'];
+
+  if ($arrayHeader[0]['activo'] == 1)
+    $estado = 1;
+  else
+    $estado = 0;
+}
+
+  $token = $_SESSION['token'];
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1";
+  $rs         = API::GET($URL1, $token);
+  $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
+
+  $token = $_SESSION['token'];
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+  $rs         = API::GET($URL1, $token);
+  $arraySede  = API::JSON_TO_ARRAY($rs);
+
+  $token = $_SESSION['token'];
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz?type=1";
+  $rs         = API::GET($URL1, $token);
+  $arrayAprendices  = API::JSON_TO_ARRAY($rs);
+
+  $token = $_SESSION['token'];
+  //rolUsuario=3  SE REFIERE A LOS FACILITADORES
+  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=3&rolUsuario=3";
+  $rs         = API::GET($URL1, $token);
+  $arrayFacilitadores  = API::JSON_TO_ARRAY($rs);
+
+
+  //echo $URL1;
+  //print("<pre>".print_r(($arraySede) ,true)."</pre>");
+?>
+
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0">Registro de Avances</h1>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container -fluid -->
+</div>
+
+
+<!-- Main content -->
+<form action="../funciones/funcionesGenerales/XM_planning.model.php" method="post" name="objetivo" id="objetivo"  enctype="multipart/form-data">
+  <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
+  <input type="hidden" name="idObjetivoHeader" value="<?php echo @$idObjetivoHeader; ?>">
+  
+  <div class="container-fluid">
+    <!-- Small boxes (Stat box) -->
+    <div class="row">
+      <div class="col-lg-12 col-12">
+        <!-- general form elements -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title"><?php echo $accion; ?> Evaluacion</h3>
+          </div>
+          <!-- /.card-header -->
+          <!-- form start -->
+
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-4">
+                  <label for="area">Área</label>
+                  <select class="form-control" name="idArea" id="idArea" disabled>
+                    <option>Seleccione:</option>
+                    <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
+                      <option <?php if ($areaObjetivo['idArea'] == @$idArea) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
+                    <?php }?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label for="sede">Sede:</label>
+                  <select class="form-control" name="idSede" id="idSede"  onchange="fetchNiveles(this.value)" disabled>
+                    <option>Seleccione</option>
+                    <?php foreach($arraySede as $sede ){?>
+                      <option <?php if ($sede['idSede'] == @$idSede) {echo 'selected';} ?> value=<?php echo $sede['idSede']; ?>><?php echo $sede['nombreSede']; ?></option>
+                    <?php }?>
+                  </select>
+                </div>
+                <div class="col-sm-4">
+                  <label for="aprendiz">Mediador(a):</label>
+                  <select class="form-control" name="idFacilitador" id="idFacilitador" disabled>
+                    <option>Seleccione</option>
+                    <?php foreach($arrayFacilitadores as $facilitador ){?>
+                      <option <?php if ($facilitador['idUsuario'] == @$idFacilitador) {echo 'selected';} ?> value=<?php echo $facilitador['idUsuario']; ?>><?php echo $facilitador['apellidoUsuario'].', '.$facilitador['nombreUsuario']; ?></option>
+                    <?php }?>
+                  </select>
+                </div>
+                <div class="col-sm-8">
+                  <label for="aprendiz">Aprendiz:</label>
+                  <select class="form-control select2"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="idAprendiz" id="idAprendiz" <?php if($_POST['mod']==2){echo 'disabled';}?>>
+                    <option>Seleccione</option>
+                    <?php foreach($arrayAprendices as $aprendiz ){?>
+                      <option <?php if ($aprendiz['idAprendiz'] == @$idAprendiz) {echo 'selected';} ?> value=<?php echo $aprendiz['idAprendiz']; ?>><?php echo $aprendiz['nombreAprendiz']; ?></option>
+                    <?php }?>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <label>Periodo Evaluación:</label>
+                  <select class="form-control" name="periodoEvaluacion" id="periodoEvaluacion" disabled>
+                    <?php
+                    if  ((is_null($periodoEvaluacion)) ||(empty($periodoEvaluacion))){$periodoEvaluacion=4;}
+                    for ($i = 1; $i <= 5; $i++) { ?>
+                      <option <?php if (@$periodoEvaluacion == $i) {echo 'selected';} ?> value=<?php echo $i; ?>><?php echo $i; ?> Eva.</option>
+                    <?php }?>
+                  </select>
+                </div>
+                <div class="col-sm-2">
+                  <label>Activo:</label>
+                  <?php
+                    if  ((is_null(@$activo)) ||(empty(@$activo))){@$activo=1;}
+                    ?>
+                  <select class="form-control" name="activo" id="activo" disabled>
+                    <option <?php if (@$activo == 1) {
+                              echo 'selected';
+                            } ?> value=1>Activo</option>
+                    <option <?php if (@$activo == 0) {
+                              echo 'selected';
+                            } ?> value=0>Desactivado</option>
+                  </select>
+                </div>
+                <div class="col-sm-12">
+                    <label for="nombreCliente">Descripción:</label>
+                    <?php echo @$observacion; ?>
+                </div>
+                <div class="col-sm-3">
+                  <label for="cedulaRepresentante">Fecha Creación</label>
+                  <?php echo @$fechaCreacion; ?>
+                </div>
+                <div class="col-sm-3">
+                  <label for="telefonoRepresentante">Creado Por</label>
+                  <?php echo @$creadoPor; ?>
+                </div>
+
+                <div class="col-sm-12">
+                  <div class="card card-primary">
+                        <div class="card-header align-items-center">
+                          <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
+                        </div>
+
+                </div>
+                <?php include_once("evaluacionView.php");?>
+              </div>
+            </div>
+            <div class="card-footer">
+
+</form>
+                    <button type="button" class="btn btn-primary" onclick="enviarParametros('evaluacion/evaluacionListar.php')">Volver al Listado de Registros de Avances</button>
+
+                  
+            </div>
+
+        </div>
+      </div>
+      <!-- ./col -->
+    </div>
+    <!-- /.row (main row) -->
+  </div><!-- /.container-fluid -->
+   </div>
+  <!--  </section> -->
+
+
+
+

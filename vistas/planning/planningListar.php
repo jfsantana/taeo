@@ -8,16 +8,26 @@ if (!isset($_SESSION['id_user'])) {
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
-//Listado de planificaicones
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1";
+
+//1.SABER TODAS LAS SEDES ASOCIADAS AL USUARIOS LOGUEADO POR SU ID
+$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
+$rs         = API::GET($URL, $token);
+$sedesPermiso  = API::JSON_TO_ARRAY($rs);
+
+//Listado de planificaicones
+if ($_SESSION['id_rol']==1){
+  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1";
+}else{
+  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1&sede=".$sedesPermiso;
+}
+//print("<pre>".print_r(($UrlAcceso),true)."</pre>");
+$URL        = $UrlAcceso;
 $rs         = API::GET($URL, $token);
 $arrayPlanificaciones  = API::JSON_TO_ARRAY($rs);
 
 //Listado de planificaicones por sede
-$id = @$_POST["id"];
-$token = $_SESSION['token'];
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=2";
 $rs         = API::GET($URL, $token);
 $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
@@ -47,10 +57,15 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
             <div class="icon">
               <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
             </div>
-            <a href="#" onclick="enviarParametrosGetsionCreate('planning/planningCreate.php','1')" class="small-box-footer">Crear Planificaciones </i></a>
+            
           </div>
         </div>
       <?php }?>
+      <div class="col-lg-12 col-12">
+          <div class="small-box bg-green">
+            <a href="#" onclick="enviarParametrosGetsionCreate('planning/planningCreate.php','1')" class="small-box-footer">Crear Planificaciones </i></a>
+          </div>
+        </div>
     </div>
 
     <div class="row">
