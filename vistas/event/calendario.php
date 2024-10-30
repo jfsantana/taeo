@@ -18,56 +18,45 @@
 
     <div class="small-box">
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="container-fluid ">
-        <div class="row">
-        <div class="col-md-2">
-            <div class="sticky-top mb-3 ">
-              <div class="card ">
-                <div class="card-header">
-                  <h4 class="card-title">Tipos de Eventos</h4>
-                </div>
-                <div class="card-body">
-                  <!-- the events -->
-                  <div id="external-events">
-                    <div class="external-event bg-success">Sede</div>
-                    <div class="external-event bg-warning">Facilitadores</div>
-                    <div class="external-event bg-info">Administrativo</div>
-                    <div class="external-event bg-gray">No Disponibles</div>
-
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid ">
+          <div class="row">
+          <div class="col-md-2">
+              <div class="sticky-top mb-3 ">
+                <div class="card ">
+                  <div class="card-header">
+                    <h4 class="card-title">Tipos de Eventos</h4>
                   </div>
-                </div>
-                <!-- /.card-body -->
-              </div>
+                  <div class="card-body">
+                    <!-- the events -->
+                    <div id="external-events">
+                      <div class="external-event bg-success">Sede</div>
+                      <div class="external-event bg-warning">Facilitadores</div>
+                      <div class="external-event bg-info">Administrativo</div>
+                      <div class="external-event bg-gray">No Disponibles</div>
 
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-lg-10 connectedSortable">
-            <div class="card card-primary">
-              <div class="card-body">
-                <!-- THE CALENDAR -->
-                <div id="calendar"></div>
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                </div>
+
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
+            <!-- /.col -->
+            <div class="col-lg-10 connectedSortable">
+              <div class="card card-primary">
+                <div class="card-body">
+                  <!-- THE CALENDAR -->
+                  <div id="calendar"></div>
+                </div>
+              </div>
+            </div>
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+      </section>
+    </div>
   </div>
-  <!-- /.content-wrapper -->
-  
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
