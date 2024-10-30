@@ -1,20 +1,18 @@
-<?php
-if (!isset($_SESSION)) {
-  session_start();
-}
-if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
-  exit();
-}
-require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
-?>
+    
+
+
+  <?php 
+  include_once('../add/script.php');
+  ?>
+
+
 <div class="wrapper">
   <!-- /.navbar -->
 
 
 
-  <!-- Content Wrapper. Contains page content --> 
+  <!-- Content Wrapper. Contains page content -->
   <div >
 
 
@@ -73,18 +71,15 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery -->
-<script src="../plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../plugins//bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- jQuery UI -->
-<script src="../plugins/jquery-ui/jquery-ui.min.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-<!-- fullCalendar 2.2.5 -->
-<script src="../plugins/moment/moment.min.js"></script>
-<script src="../plugins/fullcalendar/main.js"></script>
+
 <!-- Page specific script -->
+
+<!-- ***************** -->
+
+
+
+<!-- ***************** -->
+
 <script>
   $(function () {
 
