@@ -389,6 +389,8 @@ class event extends conexion
           $this->flayerTipo  =@$datos['imagen']['tipoArchivo'];
           $this->rutaFichero  =@$datos['imagen']['rutaImagen'];
 
+
+          
           if($datos['mod']==1){
             $resp = $this->Insertar();
           }else{
@@ -553,7 +555,7 @@ class event extends conexion
   {
     $query = 'update ' . $this->tabla . " set
                                             nombreEvento  ='$this->nombreEvento',
-                                            idSede  =$this->idSede,
+                                            idSede  ='$this->idSede',
                                             descripcionEvento  ='$this->descripcionEvento',
                                             lugarEvento  ='$this->lugarEvento',
                                             fechaEvento  ='$this->fechaEvento',
@@ -568,7 +570,7 @@ class event extends conexion
                                             flayerTipo  ='$this->flayerTipo',
                                             tipoEvento = '$this->tipoEvento'
                                         WHERE idEvento = $this->idEvento";
-    //  print_r($query);    die;
+      //print_r($query);    die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {

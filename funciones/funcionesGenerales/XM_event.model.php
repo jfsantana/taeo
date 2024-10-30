@@ -102,6 +102,7 @@ if($_POST['flagImagen']==1){  //ya tenia imagen
     (@$_POST['fechaEvento']!="")
     ){
         $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event";
+       // echo $URL; die;
             $rs = API::POST($URL, $token, $request);
             $rs = API::JSON_TO_ARRAY($rs);
     }

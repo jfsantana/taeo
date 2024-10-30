@@ -45,7 +45,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 }
 
 $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=2&idItems=$idItems";
-echo $URL;
+//echo $URL;
 $rs         = API::GET($URL, $token);
 $arrayActividad  = API::JSON_TO_ARRAY($rs);
 
@@ -104,7 +104,7 @@ if ($numEvaluacionesPlanificadas<$numEvaluacionesPermitidas) {
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Creacion de una Evaluacion  </h1>
+        <h1 class="m-0">Creacion de un Registro de Avance  </h1>
       </div>
     </div>
   </div>
