@@ -1,9 +1,22 @@
+<?php 
+if (!isset($_SESSION)) {
+  session_start();
+}
+if (!isset($_SESSION['id_user'])) {
+  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  exit();
+}
 
-    
-
-
-  <?php 
   include_once('../add/script.php');
+  require_once '../funciones/wsdl/clases/consumoApi.class.php';
+
+
+  $idEvento = @$_POST["id"];
+  $token = $_SESSION['token'];
+  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=4";
+  $rs         = API::GET($URL, $token);
+  $arrayEvent  = API::JSON_TO_ARRAY($rs);
+  //print("<pre>".print_r(($arrayEvent) ,true)."</pre>"); die;
   ?>
 
 
@@ -79,48 +92,22 @@
 <!-- ***************** -->
 
 <script>
-  $(function () {
+    document.addEventListener('DOMContentLoaded', function() {
+      var Calendar = FullCalendar.Calendar;
+      var calendarEl = document.getElementById('calendar');
 
-    
-    /* initialize the calendar
-     -----------------------------------------------------------------*/
-    //Date for the calendar events (dummy data)
-    var date = new Date()
-    var d    = date.getDate(),
-        m    = date.getMonth(),
-        y    = date.getFullYear()
+      // Pasar los datos de PHP a JavaScript
+      var events = <?php echo json_encode($arrayEvent); ?>;
 
-    var Calendar = FullCalendar.Calendar;
-    var Draggable = FullCalendar.Draggable;
-
-    var calendarEl = document.getElementById('calendar');
-    var containerEl = document.getElementById('external-events');
-
-    // Initialize Draggable
-
-
-    // Function to fetch events from the service
-    function fetchEvents() {
-      return $.ajax({
-        url: "http://<?php echo $_SERVER['HTTP_HOST']; ?>/funciones/wsdl/event?type=4",
-        method: 'GET',
-        dataType: 'json'
-      });
-    }
-
-    
-
-
-    // Initialize the calendar after fetching events
-    fetchEvents().done(function(data) {
-      var events = data.map(function(event) {
+      // Mapear los datos para el calendario
+      var mappedEvents = events.map(function(event) {
         return {
           title: event.title,
           start: event.start,
           end: event.end,
           backgroundColor: event.backgroundColor,
           borderColor: event.borderColor,
-          allDay: "false"
+          allDay: event.allDay === "true"
         };
       });
 
@@ -132,58 +119,12 @@
         },
         themeSystem: 'bootstrap',
         locale: 'ES',
-        events: events,
+        events: mappedEvents,
         editable  : false,
-        droppable : true, // this allows things to be dropped onto the calendar !!!
-        drop      : function(info) {
-          // is the "remove after drop" checkbox checked?
-          if (checkbox.checked) {
-            // if so, remove the element from the "Draggable Events" list
-            info.draggedEl.parentNode.removeChild(info.draggedEl);
-          }
-        }
+        droppable : true // this allows things to be dropped onto the calendar !!!
       });
 
       calendar.render();
     });
-
-    /* ADDING EVENTS */
-    var currColor = '#3c8dbc' //Red by default
-    // Color chooser button
-    $('#color-chooser > li > a').click(function (e) {
-      e.preventDefault()
-      // Save color
-      currColor = $(this).css('color')
-      // Add color effect to button
-      $('#add-new-event').css({
-        'background-color': currColor,
-        'border-color'    : currColor
-      })
-    })
-    $('#add-new-event').click(function (e) {
-      e.preventDefault()
-      // Get value and make sure it is not null
-      var val = $('#new-event').val()
-      if (val.length == 0) {
-        return
-      }
-
-      // Create events
-      var event = $('<div />')
-      event.css({
-        'background-color': currColor,
-        'border-color'    : currColor,
-        'color'           : '#fff'
-      }).addClass('external-event')
-      event.text(val)
-      $('#external-events').prepend(event)
-
-      // Add draggable funtionality
-      ini_events(event)
-
-      // Remove event from text input
-      $('#new-event').val('')
-    })
-  })
-</script>
+  </script>
 
