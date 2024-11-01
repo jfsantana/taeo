@@ -41,6 +41,16 @@ class preEvaluacion extends conexion
   private $observacion='';
   private $creadoPor = '';  
 
+  //Tabla Items
+  private $edadCronologica='';
+  private $idNivelEvaluacion='';
+  private $idAreaEvaluacion='';
+
+  //tagbla detalles
+  private $idItemEvaluacion='';
+  private $detalleEvalaacion='';
+  private $evaluacion_detalle='';
+
 
   public function getHeader($idHeaderEvaluacion) //( 01112024 )
   {
@@ -134,11 +144,9 @@ class preEvaluacion extends conexion
                 evaluacion_area AS ea ON ei.idAreaEvaluacion = ea.idAreaEvaluacion
               $where
                order by ei.idNivelEvaluacion, ea.nombreAreaEvaluacion";
-   // echo $query; die;
+    //echo $query; die;
     return parent::ObtenerDatos($query);
   }
-
-
 
   public function getNivelesAll() //(01112024)
   {
@@ -244,10 +252,11 @@ class preEvaluacion extends conexion
 
   public function post($json)  //()
   {
-
+    
+    $flag=false;
+    
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
-    //print_r($datos); die;
     if (!isset($datos['token'])) {
       return $_respuestas->error_401();
     } else {
@@ -257,23 +266,17 @@ class preEvaluacion extends conexion
 
       if ($arrayToken) {
 
-        // valida los campos obligatorios
         if (
           (count($datos['idEvaluadoPor'])>0)&&
-          (!isset($datos['Aprendiz'])) &&
-          (!isset($datos['idSede'])) 
+          (!isset($datos['fechaCreacion'])) 
         ) {
-          // en caso de que la validacion no se cumpla se arroja un error
           $datosArray = $_respuestas->error_400();
           echo json_encode($datosArray);
         } else {
 
-          //echo $json; die;
-          // Asignacion de datos validados su existencia en el If anterior
           $this->idHeaderEvaluacion             = @$datos['idHeaderEvaluacion'];
           $this->idAprendiz                     = @$datos['idAprendiz'];
-          $this->idSede                         = @$datos['idSede'];
-          
+          $this->idSede                         = @$datos['idSede'];        
           $this->fechaUltimaEvaluacion          = @$datos['fechaUltimaEvaluacion'];
           $this->fechaEvaluacion                = @$datos['fechaCreacion'];
           $this->conclucionesRecomendaciones    = @$datos['conclucionesRecomendaciones'];
@@ -282,23 +285,50 @@ class preEvaluacion extends conexion
           $this->observacion                    = @$datos['observacion'];
           $this->creadoPor                      = @$datos['creadoPor'];
 
+
+          //print("<pre>".print_r(($datos),true)."</pre>");die;
           $this->idEvaluadoPor = isset($datos['idEvaluadoPor']) ? implode(',', $datos['idEvaluadoPor']) : '';
 
           if($datos['mod']==1){//creacion del header y los items
             $resp = $this->InsertarHeader();
-            $idHeader = $resp ;
+            $flag=true;
 
-          }elseif($datos['mod']==2){//uldate solo del header
-            $resp = $this->UpdateHeader();
+          }elseif($datos['mod']==2){
+            
+            $updateHeaderResult = $this->UpdateHeader();
+            if(@$datos['detalleEvalaacion']!=''){
+              $this->edadCronologica                     = @$datos['edadCronologica'];
+              $this->idNivelEvaluacion                   = @$datos['idNivelEvaluacion'];
+              $this->idAreaEvaluacion                    = @$datos['idAreaEvaluacion'];
+  
+              $idItmes = $this->updateItems();
+                if($idItmes){
+                  $this->idItemEvaluacion                     = @$idItmes;
+                  $this->detalleEvalaacion                   = @$datos['detalleEvalaacion'];
+                  $this->evaluacion_detalle                    = @$datos['evaluacion_detalle'];
+              
+                $insertDetail = $this->insertDetail();
+                $flag=true;
+              }
+
+            }else{
+              if($updateHeaderResult){
+                $flag=true;
+              }
+            }
+
+
+           
+
+
           }
 
           //echo $resp; die;
 
-          if ($resp) {
+          if ($flag) {
             $respuesta = $_respuestas->response;
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
-              'idHeaderNew' => $resp,
               'mensaje' => 'Operacion Finalizada con Exito'
             ];
           } else {
@@ -314,6 +344,62 @@ class preEvaluacion extends conexion
         return $_respuestas->error_401('El Token que envio es invalido o ha caducado');
       }
     }
+  }
+  private function updateItems()//()
+  {
+    /*cuando es mod=2 en la tabla items debo validar que no existe el siguiente 
+    idHeaderEvaluacion - edadCronologica - idNivelEvaluacion - idAreaEvaluacion,*/
+    $flag=true;
+    $queryValidateString = "SELECT * 
+              FROM $this->tablaItems 
+              WHERE 
+                idHeaderEvaluacion = $this->idHeaderEvaluacion and 
+                edadCronologica = $this->edadCronologica and 
+                idNivelEvaluacion = $this->idNivelEvaluacion and 
+                idAreaEvaluacion = $this->idAreaEvaluacion";
+    $queryValidate = parent::nonQuery($queryValidateString);
+
+    if($queryValidate==0){
+      $query = 'insert Into ' . $this->tablaItems . "
+              ( `idHeaderEvaluacion`,
+                `edadCronologica`,
+                `idNivelEvaluacion`,
+                `idAreaEvaluacion`)
+          value
+          (
+              '$this->idHeaderEvaluacion',
+              '$this->edadCronologica',
+              '$this->idNivelEvaluacion',
+              '$this->idAreaEvaluacion'
+              )";
+        $Insertar = parent::nonQueryId($query);
+    }else{
+      $flag=false;
+      $queryIdItmes = parent::ObtenerDatos($queryValidateString);
+    }
+    
+      if ($flag) {
+        return $Insertar; // retorna el id del item creado 
+      } else {
+        return $queryIdItmes[0]['idItemEvaluacion']; //retorna el id Encontado
+      }
+
+
+    //$this->idHeaderEvaluacion , $this->conclucionesRecomendaciones , $this->activo, $this->observacion 
+     $query = 'update ' . $this->tablaHeader . "
+                           set
+                           conclucionesRecomendaciones='$this->conclucionesRecomendaciones',
+                           activo='$this->activo',
+                           observacion='$this->observacion'
+                       WHERE idHeaderEvaluacion = $this->idHeaderEvaluacion";
+    // echo  $query; die;
+    $update = parent::nonQuery($query);
+
+     if ($update >= 1) {
+       return $update;
+     } else {
+       return 0;
+     }
   }
 
   public function jerarquiaValidate($jerarquia){
@@ -410,6 +496,29 @@ class preEvaluacion extends conexion
 
       }
   }
+  
+  private function insertDetail()//()
+  {
+    $query = 'insert Into ' . $this->tablaDetalle . "
+              ( `idItemEvaluacion`,
+                `detalleEvalaacion`,
+                `evaluacion_detalle`)
+          value
+          (
+              '$this->idItemEvaluacion',
+              '$this->detalleEvalaacion',
+              '$this->evaluacion_detalle'
+              )";
+    //echo $query; die;
+    $Insertar = parent::nonQueryId($query);
+
+    // print_r ($Insertar);die;
+    if ($Insertar) {
+      return $Insertar;
+    } else {
+      return 0;
+    }
+  }
 
   private function InsertarHeader()//()
   {
@@ -450,25 +559,21 @@ class preEvaluacion extends conexion
 
   private function UpdateHeader()//()
   {
-    // $query = 'update ' . $this->tablaHeader . "
-    //                       set
-    //                       nombreObjetivo='$this->nombreObjetivo',
-    //                       observacionObjetivo='$this->observacionObjetivo',
-    //                       activo='$this->activo',
-    //                       fechaCreacion='$this->fechaCreacion',
-    //                       creadoPor='$this->creadoPor',
-    //                       nivelObjetivo='$this->nivelObjetivo',
-    //                       idAreaObjetivo='$this->idAreaObjetivo'
-    //                   WHERE idObjetivoHeader = $this->idObjetivoHeader";
+    //$this->idHeaderEvaluacion , $this->conclucionesRecomendaciones , $this->activo, $this->observacion 
+     $query = 'update ' . $this->tablaHeader . "
+                           set
+                           conclucionesRecomendaciones='$this->conclucionesRecomendaciones',
+                           activo='$this->activo',
+                           observacion='$this->observacion'
+                       WHERE idHeaderEvaluacion = $this->idHeaderEvaluacion";
+    // echo  $query; die;
+    $update = parent::nonQuery($query);
 
-                     // echo  $query; die;
-    //$update = parent::nonQuery($query);
-
-    // if ($update >= 1) {
-    //   return $update;
-    // } else {
-    //   return 0;
-    // }
+     if ($update >= 1) {
+       return $update;
+     } else {
+       return 0;
+     }
   }
   public function put($json)//()
   {

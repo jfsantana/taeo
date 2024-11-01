@@ -1,3 +1,4 @@
+<div id="printableArea">
 <?php
 if (!isset($_SESSION)) {
   session_start();
@@ -10,13 +11,16 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 $token = $_SESSION['token'];
 
-print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+//print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 
 function edadAprendiz($fechaNacimiento){
-  $fecha_nacimiento = $fechaNacimiento;
+  $fecha_nacimiento = @$fechaNacimiento;
   $fecha_actual = date("Y-m-d H:i:s");
-  $timestamp_nacimiento = strtotime($fecha_nacimiento);
-  $timestamp_actual = strtotime($fecha_actual);
+  if (!$fecha_nacimiento) {
+    return 0;
+  }
+  $timestamp_nacimiento = strtotime(@$fecha_nacimiento);
+  $timestamp_actual = strtotime(@$fecha_actual);
   $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
   $anios = floor($diferencia / (365 * 60 * 60 * 24));
   $meses = floor(($diferencia - $anios * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
@@ -105,10 +109,7 @@ if ($_POST['mod'] == 1) {
     $rs         = API::GET($URL, $token);
     $arrayResumen  = API::JSON_TO_ARRAY($rs);
 
-
-
-
-
+    
     
   //consulta de los items
     $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=2";
@@ -122,8 +123,11 @@ if ($_POST['mod'] == 1) {
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
-      <div class="col-sm-6">
+    <div class="col-sm-6">
         <h1 class="m-0">Evaluaciones</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6 text-right">
+        <!-- <button id="printButton" class="btn btn-primary">Imprimir</button> -->
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container -fluid -->
@@ -266,7 +270,7 @@ if ($_POST['mod'] == 1) {
             <div class="card-body">
               <div class="row">
                 <div class="col-sm-4">
-                  <label for="Aprendiz">Nivel Evaluada</label>
+                  <label for="idNivelEvaluacion">Nivel Evaluada</label>
                   <select class="form-control" name="idNivelEvaluacion" id="idNivelEvaluacion">
                     <option  value=''>Seleccione</option>
                     <?php foreach($arrayNiveles as $dataNiveles ){?>
@@ -276,7 +280,7 @@ if ($_POST['mod'] == 1) {
                 </div>
                 <div class="col-sm-4">
                   <label for="Aprendiz">Edad Cronologia</label>
-                  <select class="form-control" name="idNivelEvaluacion" id="idNivelEvaluacion">
+                  <select class="form-control" name="edadCronologica" id="edadCronologica">
                     <option  value=''>Seleccione</option>
                     <?php
                       for ($i = 0; $i <= @$anioAprendiz; $i++) { ?>
@@ -287,7 +291,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-4">
                   <label for="Aprendiz">Area Evaluada</label>
-                  <select class="form-control" name="idNivelEvaluacion" id="idNivelEvaluacion">
+                  <select class="form-control" name="idAreaEvaluacion" id="idAreaEvaluacion">
                     <option  value=''>Seleccione</option>
                     <?php foreach($arrayItemCreate as $dataItemCreate ){?>
                       <option  value=<?php echo $dataItemCreate['idAreaEvaluacion']; ?>><?php echo strtoupper($dataItemCreate['nombreAreaEvaluacion']);?></option>
@@ -296,13 +300,13 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-10">
-                    <label for="conclucionesRecomendaciones">Descripcion</label>
-                    <input type="text" class="form-control" name="creadoPor" id="creadoPor" placeholder="creadoPor"  >
+                    <label for="detalleEvalaacion">Descripcion</label>
+                    <input type="text" class="form-control" name="detalleEvalaacion" id="detalleEvalaacion" placeholder="creadoPor"  >
                 </div>
 
                 <div class="col-sm-2">
-                  <label for="Aprendiz">Evaluacion</label>
-                  <select class="form-control" name="resultadoEvaluacion" id="resultadoEvaluacion">
+                  <label for="evaluacion_detalle">Evaluacion</label>
+                  <select class="form-control" name="evaluacion_detalle" id="evaluacion_detalle">
                     <option  value=''>Seleccione</option>
                     <?php foreach($arrayEvaluacion as $dataEvaluacion ){?>
                       <option  value=<?php echo $dataEvaluacion['descripcionCorta']; ?>><?php echo strtoupper($dataEvaluacion['descripcionLarga']);?></option>
@@ -336,43 +340,70 @@ if ($_POST['mod'] == 1) {
                     <div class="card-body">
                       <table id="example1" class="table table-bordered table-striped">
                         <thead>
-                          <tr>
-                            
-                          <th colspan='3'>Descripcion</th>
-                            
-                            <th>Evaluacion</th>
-                          </tr>
                         </thead>
-                        
                         <tbody>
                           <?php 
                           $currentNivel = '';
                           $currentEdad = '';
-                          $currentArea = '';
-                          foreach ($arrayResumen as $datoResumen) { 
-                            if ($currentNivel != $datoResumen['nombreNivelEvaluacion']) {
-                              $currentNivel = $datoResumen['nombreNivelEvaluacion'];
-                              echo "<tr><td colspan='5'><strong>Nivel: " . strtoupper($currentNivel) . "</strong></td></tr>";
+                          $areas = [];
+                          $dataByNivelAndEdad = [];
+                        
+                          // Organize data by nivel and edad
+                          foreach ($arrayResumen as $datoResumen) {
+                            $nivel = $datoResumen['nombreNivelEvaluacion'];
+                            $edad = $datoResumen['edadCronologica'];
+                            $area = $datoResumen['nombreAreaEvaluacion'];
+                        
+                            if (!isset($dataByNivelAndEdad[$nivel])) {
+                              $dataByNivelAndEdad[$nivel] = [];
                             }
-                            if ($currentEdad != $datoResumen['edadCronologica']) {
-                              $currentEdad = $datoResumen['edadCronologica'];
-                              echo "<tr><td colspan='5'><strong>Edad Cronologica: " . $currentEdad . "</strong></td></tr>";
+                            if (!isset($dataByNivelAndEdad[$nivel][$edad])) {
+                              $dataByNivelAndEdad[$nivel][$edad] = [];
                             }
-                            if ($currentArea != $datoResumen['nombreAreaEvaluacion']) {
-                              $currentArea = $datoResumen['nombreAreaEvaluacion'];
-                              echo "<tr><td colspan='5'><strong>Area: " . strtoupper($currentArea) . "</strong></td></tr>";
+                            if (!isset($dataByNivelAndEdad[$nivel][$edad][$area])) {
+                              $dataByNivelAndEdad[$nivel][$edad][$area] = [];
                             }
-                            ?>
-                            <tr>
-                              <td colspan="3"><?php echo $datoResumen['detalleEvalaacion']; ?></td>
-                              <td colspan="2"><?php echo $datoResumen['evaluacion_detalle']; ?></td>
-                            </tr>
-                          <?php } ?>
-                        </tbody>
+                        
+                            $dataByNivelAndEdad[$nivel][$edad][$area][] = $datoResumen;
+                        
+                            if (!in_array($area, $areas)) {
+                              $areas[] = $area;
+                            }
+                          }
+                        
+                          $numAreas = count($areas);
+                        
+                          // Print data
+                          foreach ($dataByNivelAndEdad as $nivel => $edades) {
+                            echo "<tr><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
+                            ksort($edades); // Sort edades by key (edad) in ascending order
+                            foreach ($edades as $edad => $areasData) {
+                              echo "<tr><td colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
+                              echo "<tr>";
+                              foreach ($areas as $area) {
+                                echo "<th>" . strtoupper($area) . "</th>";
+                              }
+                              echo "</tr>";
+                              $maxRows = max(array_map('count', $areasData));
+                              for ($i = 0; $i < $maxRows; $i++) {
+                                echo "<tr>";
+                                foreach ($areas as $area) {
+                                  if (isset($areasData[$area][$i])) {
+                                    $detalle = $areasData[$area][$i]['detalleEvalaacion'];
+                                    $evaluacion = $areasData[$area][$i]['evaluacion_detalle'];
+                                    echo "<td>$detalle - $evaluacion</td>";
+                                  } else {
+                                    echo "<td></td>";
+                                  }
+                                }
+                                echo "</tr>";
+                              }
+                            }
+                          }
+                          ?>
+                        </tbody>                        
                         <tfoot>
                           <tr>
-                            <th colspan='3'>Descripcion</th>                  
-                            <th>Evaluacion</th>
                           </tr>
                         </tfoot>
                       </table>
@@ -393,7 +424,7 @@ if ($_POST['mod'] == 1) {
   
   <!--  </section> -->
 </form>
-
+</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
       <?php if ($_POST['mod'] == 2): ?>
@@ -410,3 +441,38 @@ if ($_POST['mod'] == 1) {
 
 <!-- ******************** -->
 <?php include("script.php");?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<script>
+  document.getElementById('printButton').addEventListener('click', function () {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // Obtener el nombre del aprendiz y la fecha actual
+    const nombreAprendiz = "<?php echo $nombreAprendiz; ?>";
+    const fechaActual = new Date().toLocaleDateString('es-ES');
+
+    html2canvas(document.body, {
+      onrendered: function (canvas) {
+        const imgData = canvas.toDataURL('image/png');
+        const imgWidth = 210; // A4 width in mm
+        const pageHeight = 295; // A4 height in mm
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0;
+
+        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+          position = heightLeft - imgHeight;
+          doc.addPage();
+          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+        }
+
+        doc.save(`${nombreAprendiz}_${fechaActual}.pdf`);
+      }
+    });
+  });
+</script>
