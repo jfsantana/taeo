@@ -1,3 +1,5 @@
+
+
 <!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->
@@ -9,7 +11,8 @@
 
 
 <!-- /************************** */ --> 
-
+<link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
+<link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 
 
@@ -99,6 +102,10 @@
      // Summernote
      $('#summernote').summernote({
       height: 200
+     })
+
+     $('#observacion').summernote({
+      height: 100
      })
 
      $('#direcion').summernote({

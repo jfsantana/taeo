@@ -60,6 +60,7 @@
       </ul>
     </li>
     <?php }    ?>
+
     <!-- ****************************** -->
     <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
     <li class="nav-item menu-close">
@@ -80,8 +81,30 @@
       </ul>
     </li>
     <?php }    ?>
+
+  <!-- ****************************** -->
+  <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
+    <li class="nav-item menu-close">
+      <a href="#" class="nav-link ">
+        <i class="nav-icon fas fa-book-reader text-warning"></i>
+        <p>
+          Evaluaciones
+          <i class="right fas fa-angle-left"></i>
+        </p>
+      </a>
+      <ul class="nav nav-treeview">
+        <li class="nav-item">
+          <a href="#" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')" class="nav-link ">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-diagnoses text-warning"></i>
+            <p>Gestión de Evaluación</p>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <?php }    ?>
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
+    <!-- ****************************** -->
+    <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores  y coordinadores  ?>
     <li class="nav-item menu-close">
       <a href="#" class="nav-link ">
         <i class="nav-icon fas fa-book  text-info"></i>

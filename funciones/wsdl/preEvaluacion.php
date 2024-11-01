@@ -2,49 +2,62 @@
 
 // ARCHIVO BASE PARA LOS SERVICIOS
 require_once 'clases/respuestas.class.php';
-require_once 'clases/empleados.class.php';
+require_once 'clases/preEvaluacion.class.php';
+require '../../vendor/autoload.php';
 
 $_respuestas = new respuestas();
-$_empleados = new empleados();
+$_preEvaluacion = new preEvaluacion();
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     /*****!SECTION
    * type:
-   * 1 listar todos los empleados, recibe el idUsuario (opcional) para busacr un usuario
-   * 2 Lista los cargos disponibles
-   * 3 Facilitadores por cargo
-   * 4 Facilitadores por sede
+   * 1 listar todos los header de los _preEvaluacion o el detalle de uno si se envia idHeaderEvaluacion
+   * 1.1 para listar los representantes de un aprendeiz http://taeo/funciones/wsdl/aprendiz?type=2&idAprendiz=1
+   * 2 listar todos los Items de una preEvaluacion recibe idHeader= (id del preEvaluacion)
+   * 3 Listas todos los detalles de cada Items de una preEvaluacion recibe id_padre= (id de lItems)
+   * 4 todas las evaluaciones de un aprediz recibe idAprendiz= (id del aprendiz)
+   *  5 lista todas las areas para una evaluacion
+   * 6 lista todos los niveles
+   * 7 resumen de evaluacion por header
+   * 
+   * 
+   
+
    */
-  if (isset($_GET['token'])) { //TAEO LISTO
-    $token = $_GET['token'];
-    $datosEmpleado = $_empleados->obtenerEmpleadoToken($token);
+  if ($_GET['type']==1){
+    $datosArray = $_preEvaluacion->getHeader(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
+    echo json_encode($datosArray);
     http_response_code(200);
-  }elseif($_GET['type']==1){
-    $datosEmpleado = $_empleados->getEmpleado(@$_GET['idUsuario']);
+  }elseif(($_GET['type']==2)){
+    $datosArray = $_preEvaluacion->getItemsByHeader(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
+    echo json_encode($datosArray);
     http_response_code(200);
-  }elseif($_GET['type']==2){
-    $datosEmpleado = $_empleados->getCargos(@$_GET['idUsuario']);
+  }elseif(($_GET['type']==3)){
+    $datosArray = $_preEvaluacion->getDetalleByIems(@$_GET['idItemEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
+    echo json_encode($datosArray);
     http_response_code(200);
-  }elseif($_GET['type']==3){
-    $datosEmpleado = $_empleados->getFacilitadorByCargos(@$_GET['rolUsuario']);
+  }elseif(($_GET['type']==4)){
+    $datosArray = $_preEvaluacion->getPreEvaluacioensByAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
+    echo json_encode($datosArray);
     http_response_code(200);
-  }elseif($_GET['type']==4){
-    $datosEmpleado = $_empleados->getFacilitadorBySede(@$_GET['idSede']);
+  }elseif(($_GET['type']==5)){
+    $datosArray = $_preEvaluacion->getItemsAll();
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
+    echo json_encode($datosArray);
     http_response_code(200);
-  }elseif($_GET['type']==5){
-    $datosEmpleado = $_empleados->getEvaluadorBySede(@$_GET['idSede']);
+  }elseif(($_GET['type']==6)){
+    $datosArray = $_preEvaluacion->getNivelesAll();
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif(($_GET['type']==7)){
+    $datosArray = $_preEvaluacion->getResumenEva(@$_GET['idHeaderEvaluacion']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
     http_response_code(200);
   }else {
     http_response_code(404);
@@ -52,7 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
 
   
-
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
 
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
@@ -61,7 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_POST);
   }
 
-  $datosArray = $_empleados->post($postBody);
+  $datosArray = $_preEvaluacion->post($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -78,8 +90,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } else {
       $postBody = json_encode($_PUT);
   }
-
-  $datosArray = $_empleados->put($postBody);
+  print_r($_PUT); die;
+    $datosArray = $_preEvaluacion->put($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {
@@ -88,7 +100,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   } else {
     http_response_code(200);
   }
-  //echo json_encode($datosArray);
+  echo json_encode($datosArray);
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') { // DELETE
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
@@ -97,7 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       $postBody = json_encode($_DELETE);
   }
 
-  $datosArray = $_empleados->del($postBody);
+  //$datosArray = $_preEvaluacion->del($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {

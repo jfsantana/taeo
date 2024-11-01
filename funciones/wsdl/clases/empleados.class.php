@@ -91,6 +91,27 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  public function getEvaluadorBySede($idSede) //(revisado)
+  {
+    $where = " WHERE u.rolUsuario<>'' ";  // solo facilitadores
+    if ($idSede != '') {
+      $where =  $where . " and us.idSede = " . $idSede;
+    }
+    $query = "SELECT 
+                  us.*,
+                  u.cargoUsuario,
+                  c.descripcionCargo,
+                  CONCAT(u.apellidoUsuario, ', ', u.nombreUsuario) AS facilitador
+              FROM
+                  usuario_sede AS us
+                      INNER JOIN
+                  usuario AS u ON us.idUsuario = u.idUsuario
+                      INNER JOIN
+                  cargo AS c ON c.idcargos = u.cargoUsuario  $where order by facilitador";
+      //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
   public function obtenerEmpleadoToken($token)  //(revisado)
   {
 
