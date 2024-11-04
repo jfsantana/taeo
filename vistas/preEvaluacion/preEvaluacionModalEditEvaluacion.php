@@ -12,6 +12,7 @@
       </div>
       <div class="modal-body">
         <form id="editForm_<?php echo $modalData['modalId']; ?>">
+          <input type="hidden" class="form-control" id="editIdHeaderEvaluacion_<?php echo $modalData['modalId']; ?>" name="idHeaderEvaluacion" value="<?php echo $modalData['idHeaderEvaluacion']; ?>">
           <div class="form-group">
             <label for="editNivel_<?php echo $modalData['modalId']; ?>">Nivel</label>
             <select class="form-control" name="idNivelEvaluacion" id="editNivel_<?php echo $modalData['modalId']; ?>" required>

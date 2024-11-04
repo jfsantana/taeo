@@ -11,7 +11,9 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 $token = $_SESSION['token'];
 
-print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+//print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+
+
 
 function edadAprendiz($fechaNacimiento){
   $fecha_nacimiento = @$fechaNacimiento;
@@ -54,14 +56,14 @@ if ($_POST['mod'] == 1) {
   $activo =1;
   $accion = "Crear";
   if(isset($_POST['id'])){
-    $idHeaderEvaluacion = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
+    $idHeaderEvaluacion = @$_POST["id"];  
   }
   $creadoPor = $_SESSION['usuario'];
   $fechaCreacion = date('Y-m-d');
 } elseif($_POST['mod'] == 2) {
 
   $flag=true;
-  $accion = "Editar";
+  $accion = "Actualizar";
   $disabled = 'disabled';
 
   //datos Representante
@@ -122,53 +124,15 @@ if ($_POST['mod'] == 1) {
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
 }
+
+require_once("style.php")  ;
 ?>
 <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="./style.css" >
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<style>
-  .gradient-blue-1 {
-    background: rgba(204,204,204, 1); /* 100% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-2 {
-    background: rgba(204,204,204, 0.90); /* 87.5% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-3 {
-    background: rgba(204,204,204, 0.80); /* 75% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-4 {
-    background: rgba(204,204,204, 0.70); /* 62.5% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-5 {
-    background: rgba(204,204,204, 0.6); /* 50% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-6 {
-    background: rgba(204,204,204, 0.5); /* 37.5% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-7 {
-    background: rgba(204,204,204, 0.4); /* 25% opacity */
-    color: rgb(102,102,102);
-  }
-  .gradient-blue-8 {
-    background: rgba(204,204,204, 0.3); /* 12.5% opacity */
-    color: rgb(102,102,102);
-  }
-  .Atotal {
-    background-color: yellow;
-    color: black;
-  }
-  .AParcial {
-  background-color: #6DBD4B; /* Sin comillas */
-  color: black;
-}
-</style>
+
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
@@ -354,6 +318,12 @@ if ($_POST['mod'] == 1) {
                   </div>
                 </div>
 
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Cabecera de la Evaluacion </button>
+                  <button type="button" class="btn btn-primary" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')">Volver al Listado de Evaluaciones</button>
+                </div>
+              </div>
+
                 <div class="row">
                   <div class="col-lg-12 col-12">
                     <div class="card">
@@ -405,7 +375,7 @@ if ($_POST['mod'] == 1) {
 
 
                             foreach ($dataByNivelAndEdad as $nivel => $edades) {
-                              echo "<tr class='bg-success'><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
+                              echo "<tr class='bg-danger'><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
                               ksort($edades); // Sort edades by key (edad) in ascending order
                               foreach ($edades as $edad => $areasData) {
                                 echo "<tr><td class='bg-info' colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
@@ -446,7 +416,7 @@ if ($_POST['mod'] == 1) {
                                       // Generar un ID único para el modal
                                       $modalId = "editModal_$id";
 
-                                      echo "<td class='$class'><a href='#' class='edit-link' data-toggle='modal' data-target='#$modalId' data-id='$id' data-nivel='$nivel' data-edad='$edad' data-area='$area' data-descripcion='$detalle' data-evaluacion='$evaluacion'>$detalle</a></td><td class='$class'> $icon ($evaluacion)</td>";
+                                      echo "<td class='$class'><a href='#' class='edit-link' data-toggle='modal' data-target='#$modalId' data-id='$id' data-idHeaderEvaluacion='$idHeaderEvaluacion' data-nivel='$nivel' data-edad='$edad' data-area='$area' data-descripcion='$detalle' data-evaluacion='$evaluacion'>$detalle</a></td><td class='$class'> $icon ($evaluacion)</td>";
 
                                       // Almacenar los datos del modal en el array
                                       $modalsData[] = [
@@ -459,7 +429,8 @@ if ($_POST['mod'] == 1) {
                                         'area' => $area,
                                         'idAreaEvaluacion' => $areasData[$area][$i]['idAreaEvaluacion'],
                                         'descripcion' => $detalle,
-                                        'evaluacion' => $evaluacion
+                                        'evaluacion' => $evaluacion,
+                                        'idHeaderEvaluacion'=>$idHeaderEvaluacion
                                       ];
                                     } else {
                                       echo "<td class='$class'></td><td class='$class'></td>";
@@ -508,7 +479,7 @@ if ($_POST['mod'] == 1) {
         fetchMediadores('<?php echo @$idSede; ?>','<?php echo  $idEvaluadoPor; ?>');
 
         document.getElementById('HeaderTable').click();
-        document.getElementById('HeaderItems').click();
+       // document.getElementById('HeaderItems').click();
        // document.getElementById('HeaderDetail').click();
 
       <?php endif; ?>
@@ -559,6 +530,7 @@ if ($_POST['mod'] == 1) {
   $(document).on('show.bs.modal', '.modal', function (event) {
     var button = $(event.relatedTarget); // Botón que activó el modal
     var id = button.data('id');
+    var idHeaderEvaluacion = button.data('idHeaderEvaluacion');
     var nivel = button.data('nivel');
     var idNivelEvaluacion = button.data('idNivelEvaluacion');
     var edad = button.data('edad');
@@ -594,6 +566,8 @@ if ($_POST['mod'] == 1) {
     modal.find('#editDescripcion_' + modal.attr('id')).val(descripcion);
     modal.find('#editEvaluacion_' + modal.attr('id')).val(evaluacion);
 
+    modal.find('#editIdHeaderEvaluacion_' + modal.attr('id')).val(idHeaderEvaluacion);
+
     // Guardar el ID del registro para eliminarlo
     modal.find('#deleteButton_' + modal.attr('id')).data('id', id);
   });
@@ -609,6 +583,10 @@ if ($_POST['mod'] == 1) {
     var descripcion = form.find('#editDescripcion_' + modalId).val();
     var evaluacion = form.find('#editEvaluacion_' + modalId).val();
 
+    var idHeaderEvaluacion = form.find('#editIdHeaderEvaluacion_' + modalId).val();
+
+    
+
     // Crear el objeto de datos para enviar en la solicitud POST
     var data = {
       idDetalleEvaluacion: id,
@@ -616,10 +594,11 @@ if ($_POST['mod'] == 1) {
       edadCronologica: edadCronologica,
       idAreaEvaluacion: idAreaEvaluacion,
       detalleEvalaacion: descripcion,
-      evaluacion_detalle: evaluacion
+      evaluacion_detalle: evaluacion,
+      idHeaderEvaluacion: idHeaderEvaluacion
     };
 
-    
+    alert('Datos enviados:' + JSON.stringify(data));
     // Realizar la solicitud POST al servicio
     $.ajax({
       url: 'http://taeo/funciones/wsdl/preEvaluacion',
@@ -627,8 +606,11 @@ if ($_POST['mod'] == 1) {
       data: JSON.stringify(data),
       contentType: 'application/json',
       success: function(response) {
-        $(form).closest('.modal').modal('hide');
-      },
+        // Cerrar el modal
+        enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', idHeaderEvaluacion,idNivelEvaluacion, edadCronologica , idAreaEvaluacion);
+
+       
+    },
       error: function(xhr, status, error) {
         console.error('Error en la actualización:', error);
       }
@@ -645,6 +627,7 @@ if ($_POST['mod'] == 1) {
     var idAreaEvaluacion = form.find('#editArea_' + modalId).val();
     var descripcion = form.find('#editDescripcion_' + modalId).val();
     var evaluacion = form.find('#editEvaluacion_' + modalId).val();
+    var idHeaderEvaluacion = form.find('#editIdHeaderEvaluacion_' + modalId).val();
 
     // Crear el objeto de datos para enviar en la solicitud POST
     var data = {
@@ -653,7 +636,8 @@ if ($_POST['mod'] == 1) {
         edadCronologica: edadCronologica,
         idAreaEvaluacion: idAreaEvaluacion,
         detalleEvalaacion: descripcion,
-        evaluacion_detalle: evaluacion
+        evaluacion_detalle: evaluacion,
+        idHeaderEvaluacion: idHeaderEvaluacion
     };
 
     console.log('Datos enviados:', JSON.stringify(data));
@@ -665,14 +649,17 @@ if ($_POST['mod'] == 1) {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function(response) {
-            console.log('Respuesta del servidor:', response);
-            $(form).closest('.modal').modal('hide');
+            
+          enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', idHeaderEvaluacion,idNivelEvaluacion, edadCronologica , idAreaEvaluacion);
         },
         error: function(xhr, status, error) {
             console.error('Error en la actualización:', error);
         }
     });
   });
+
+
+
 </script>
 
 
