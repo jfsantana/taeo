@@ -20,10 +20,11 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 
 //print("<pre>".print_r(($_POST),true)."</pre>"); die;
 
-if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
+if (@$_POST['idNivelEvaluacion'] == '') {
+    $continuidadAlmacenamientoidNivelEvaluacion = $_POST['idNivelEvaluacion'];
+}
 
- // echo $_POST['idHeaderEvaluacionAnterior'];
-  //tengo que hacer una consulta a la tabla evaluacion_header para buscar este idHeaderEvaluacion y traer la fechaEvaluacion
+if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
     $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=".$_POST['idHeaderEvaluacionAnterior'];
     $rs         = API::GET($URL, $token);
     $arrayPreEvaluacion  = API::JSON_TO_ARRAY($rs);
@@ -31,28 +32,29 @@ if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
     $_POST['fechaUltimaEvaluacion'] =$arrayPreEvaluacion[0]['fechaEvaluacion'] ;
 }
 
-
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion";
-
-    //  print("<pre>".print_r(json_encode($_POST),true)."</pre>");
-    //  echo $URL; die;
-
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
 //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 
-//onclick="enviarParametros('admin/clienteList.php')"
+$idEvaluacion= $_POST['idHeaderEvaluacion'];
+$aux1=$_POST['idNivelEvaluacion'];
+$aux2=$_POST['edadCronologica'];
+$aux3=$_POST['idAreaEvaluacion'];
+
 $idHeaderNew = @$rs['result']['idHeaderNew'];
 
 if (@$rs['status'] == 'OK') {
-    $url = "onclick=\"enviarParametrosGetsionUpdate2('preEvaluacion/preEvaluacionCreate.php','2', $idHeaderNew)\"";
+    if(@$aux1 != ''){
+        $url = "onclick=\"enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', $idEvaluacion,$aux1, $aux2 , $aux3)\"";
+    }else{
+        $url = "onclick=\"enviarParametrosGetsionUpdate2('preEvaluacion/preEvaluacionCreate.php','2', $idHeaderNew)\"";
+    }    
 } else {
     $url = "onclick=\"enviarParametrosCRUD('objetivo/objetivoCreate.php','1')\"";
-}
-
-?>
+}?>
 
 <div class="modal fade" id="modal-success">
     <div class="modal-dialog">

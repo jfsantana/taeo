@@ -86,7 +86,11 @@ if ($_POST['mod'] == 1) {
   $fechaNacimientoAprendiz = @$arrayHeader[0]['fechaNacimientoAprendiz'];
   $nombreAprendiz= @$arrayHeader[0]['apellidoAprendiz'].', '.@$arrayHeader[0]['nombreAprendiz'];
   $nombreAprendizAux= '('.$nombreAprendiz.')';
-    $anioAprendiz=edadAprendiz($fechaNacimientoAprendiz);
+  $anioAprendiz=edadAprendiz($fechaNacimientoAprendiz);
+
+  $idNivelEvaluacion= @$_POST["idNivelEvaluacion"];
+  $edadCronologica= @$_POST["edadCronologica"];
+  $idAreaEvaluacion= @$_POST["idAreaEvaluacion"];
 
 
   //consulta de los NIVELES PARA LA CREACION
@@ -117,20 +121,62 @@ if ($_POST['mod'] == 1) {
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
 }
-
 ?>
+
+<style>
+  .gradient-blue-1 {
+    background: rgba(204,204,204, 1); /* 100% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-2 {
+    background: rgba(204,204,204, 0.90); /* 87.5% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-3 {
+    background: rgba(204,204,204, 0.80); /* 75% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-4 {
+    background: rgba(204,204,204, 0.70); /* 62.5% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-5 {
+    background: rgba(204,204,204, 0.6); /* 50% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-6 {
+    background: rgba(204,204,204, 0.5); /* 37.5% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-7 {
+    background: rgba(204,204,204, 0.4); /* 25% opacity */
+    color: rgb(102,102,102);
+  }
+  .gradient-blue-8 {
+    background: rgba(204,204,204, 0.3); /* 12.5% opacity */
+    color: rgb(102,102,102);
+  }
+  .Atotal {
+    background-color: yellow;
+    color: black;
+  }
+  .AParcial {
+  background-color: #6DBD4B; /* Sin comillas */
+  color: black;
+}
+</style>
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
     <div class="row mb-2">
     <div class="col-sm-6">
         <h1 class="m-0">Evaluaciones</h1>
-      </div><!-- /.col -->
+      </div>
       <div class="col-sm-6 text-right">
         <!-- <button id="printButton" class="btn btn-primary">Imprimir</button> -->
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container -fluid -->
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /.content-header -->
 
@@ -144,7 +190,6 @@ if ($_POST['mod'] == 1) {
 
 
   <div class="container-fluid">
-    <!-- Small boxes (Stat box) -->
     <div class="row">
       <!-- HEADER-->
       <div class="col-lg-12 col-12">
@@ -167,7 +212,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-3">
                   <label for="Aprendiz">Aprendiz</label>
-                  <select class="form-control" name="idAprendiz" id="Aprendiz" <?php echo $disabled;?> onchange="fetchNiveles(this.value,<?php echo $_POST['mod'];?>)">
+                  <select class="form-control" name="idAprendiz" id="Aprendiz" <?php echo $disabled;?> onchange="fetchNiveles(this.value,<?php echo $_POST['mod'];?>)" required>
                     <option  value=''>Seleccione</option>
                     <?php foreach($arrayAprendices as $dataAprendices ){?>
                       <option <?php if ($dataAprendices['idAprendiz'] == @$idAprendiz) {echo 'selected';} ?> value=<?php echo $dataAprendices['idAprendiz']; ?>><?php echo strtoupper($dataAprendices['apellidoAprendiz'].', '. $dataAprendices['nombreAprendiz']);?></option>
@@ -184,7 +229,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-2">
                   <label for="sede">Sede:</label>
-                  <select class="form-control" name="idSede" id="idSede"  <?php echo $disabled;?>  onchange="fetchMediadores(this.value,'')" >
+                  <select class="form-control" name="idSede" id="idSede"  <?php echo $disabled;?>  onchange="fetchMediadores(this.value,'')"  required>
                     <option value=''>Seleccione</option>
                     <?php foreach($arraySede as $sede ){?>
                       <option <?php if ($sede['idSede'] == @$idSede) {echo 'selected';} ?> value=<?php echo $sede['idSede']; ?>><?php echo $sede['nombreSede']; ?></option>
@@ -206,7 +251,7 @@ if ($_POST['mod'] == 1) {
 
                 <div class="col-sm-1">
                   <label>Activo</label>
-                  <select class="form-control" name="activo" id="activo">
+                  <select class="form-control" name="activo" id="activo"  required>
                     <option <?php if (@$activo == 1) {
                               echo 'selected';
                             } ?> value=1>Activo</option>
@@ -241,190 +286,194 @@ if ($_POST['mod'] == 1) {
               </div>
 
             </div>
-
-            <div class="card-footer">
-
-              <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Cabecera de la Evaluacion </button>
-              <?php if($_POST['mod']==1){?>
-                <button type="button" class="btn btn-primary" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')">Volver al Listado de Evaluaciones</button>
-              <?php } ?>
-            </div>
-
-
-
           </form>
         </div>
       </div>
-      <!-- ITEMS -->
-      <div class="col-lg-12 col-12">
-        <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">ITEMS </h3>
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse"  id="HeaderItems">
-                  <i class="fas fa-minus"></i>
-                </button>
-                
+      <?php if($_POST['mod']!=1){?>
+        <!-- ITEMS -->
+        <div class="col-lg-12 col-12">
+          <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">ITEMS </h3>
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"  id="HeaderItems">
+                    <i class="fas fa-minus"></i>
+                  </button>
+                  
+                </div>
               </div>
-            </div>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-sm-4">
-                  <label for="idNivelEvaluacion">Nivel Evaluada</label>
-                  <select class="form-control" name="idNivelEvaluacion" id="idNivelEvaluacion">
-                    <option  value=''>Seleccione</option>
-                    <?php foreach($arrayNiveles as $dataNiveles ){?>
-                      <option  value=<?php echo $dataNiveles['idNivelesEvaluacion']; ?>><?php echo strtoupper($dataNiveles['nombreNivelEvaluacion']);?></option>
-                    <?php }?>
-                  </select>
-                </div>
-                <div class="col-sm-4">
-                  <label for="Aprendiz">Edad Cronologia</label>
-                  <select class="form-control" name="edadCronologica" id="edadCronologica">
-                    <option  value=''>Seleccione</option>
-                    <?php
-                      for ($i = 0; $i <= @$anioAprendiz; $i++) { ?>
-                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                      <?php } ?>
-                  </select>
-                </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <label for="idNivelEvaluacion">Nivel Evaluada</label>
+                    <select class="form-control" name="idNivelEvaluacion" id="idNivelEvaluacion"  required>
+                      <option  value=''>Seleccione</option>
+                      <?php foreach($arrayNiveles as $dataNiveles ){?>
+                        <option  <?php if ($dataNiveles['idNivelesEvaluacion'] == @$idNivelEvaluacion) {echo 'selected';} ?> value=<?php echo $dataNiveles['idNivelesEvaluacion']; ?>><?php echo strtoupper($dataNiveles['nombreNivelEvaluacion']);?></option>
+                      <?php }?>
+                    </select>
+                  </div>
+                  <div class="col-sm-4">
+                    <label for="Aprendiz">Edad Cronologia</label>
+                    <select class="form-control" name="edadCronologica" id="edadCronologica"  required>
+                      <option  value=''>Seleccione</option>
+                      <?php
+                        for ($i = 0; $i <= @$anioAprendiz; $i++) { ?>
+                          <option  <?php if ($i== @$edadCronologica) {echo 'selected';} ?> value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                        <?php } ?>
+                    </select>
+                  </div>
 
-                <div class="col-sm-4">
-                  <label for="Aprendiz">Area Evaluada</label>
-                  <select class="form-control" name="idAreaEvaluacion" id="idAreaEvaluacion">
-                    <option  value=''>Seleccione</option>
-                    <?php foreach($arrayItemCreate as $dataItemCreate ){?>
-                      <option  value=<?php echo $dataItemCreate['idAreaEvaluacion']; ?>><?php echo strtoupper($dataItemCreate['nombreAreaEvaluacion']);?></option>
-                    <?php }?>
-                  </select>
-                </div>
+                  <div class="col-sm-4">
+                    <label for="Aprendiz">Area Evaluada</label>
+                    <select class="form-control" name="idAreaEvaluacion" id="idAreaEvaluacion"  required>
+                      <option  value=''>Seleccione</option>
+                      <?php foreach($arrayItemCreate as $dataItemCreate ){?>
+                        <option   <?php if ($dataItemCreate['idAreaEvaluacion'] == @$idAreaEvaluacion) {echo 'selected';} ?> value=<?php echo $dataItemCreate['idAreaEvaluacion']; ?>><?php echo strtoupper($dataItemCreate['nombreAreaEvaluacion']);?></option>
+                      <?php }?>
+                    </select>
+                  </div>
 
-                <div class="col-sm-10">
-                    <label for="detalleEvalaacion">Descripcion</label>
-                    <input type="text" class="form-control" name="detalleEvalaacion" id="detalleEvalaacion" placeholder="creadoPor"  >
-                </div>
+                  <div class="col-sm-10">
+                      <label for="detalleEvalaacion">Descripcion</label>
+                      <input type="text" class="form-control" name="detalleEvalaacion" id="detalleEvalaacion" placeholder="creadoPor"  required >
+                  </div>
 
-                <div class="col-sm-2">
-                  <label for="evaluacion_detalle">Evaluacion</label>
-                  <select class="form-control" name="evaluacion_detalle" id="evaluacion_detalle">
-                    <option  value=''>Seleccione</option>
-                    <?php foreach($arrayEvaluacion as $dataEvaluacion ){?>
-                      <option  value=<?php echo $dataEvaluacion['descripcionCorta']; ?>><?php echo strtoupper($dataEvaluacion['descripcionLarga']);?></option>
-                    <?php }?>
-                  </select>
-                </div>
-                
-
-              </div>
-
-              <div class="card-footer">
-                  <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Cabecera de la Evaluacion </button>
-                  <?php if($_POST['mod']==1){?>
-                    <button type="button" class="btn btn-primary" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')">Volver al Listado de Evaluaciones</button>
-                  <?php } ?>
-              </div>
-
-              <div class="row">
-              
-                <div class="col-lg-12 col-12">
-                  <div class="card">
-                    <div class="card-header bg-gray">
-                      <h3 class="card-title">Resumen  de Evaluaciones Creadas</h3>
-                      <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse"  id="HeaderDetail">
-                          <i class="fas fa-minus"></i>
-                        </button>
-                        
-                      </div>
-                    </div>
-                    <div class="card-body">
-                      <table id="example1" class="table table-bordered table-striped">
-                        <thead>
-                        </thead>
-                        <tbody>
-                          <?php 
-                          $currentNivel = '';
-                          $currentEdad = '';
-                          $areas = [];
-                          $dataByNivelAndEdad = [];
-                        
-                          // Organize data by nivel and edad
-                          foreach ($arrayResumen as $datoResumen) {
-                            $nivel = $datoResumen['nombreNivelEvaluacion'];
-                            $edad = $datoResumen['edadCronologica'];
-                            $area = $datoResumen['nombreAreaEvaluacion'];
-                        
-                            if (!isset($dataByNivelAndEdad[$nivel])) {
-                              $dataByNivelAndEdad[$nivel] = [];
-                            }
-                            if (!isset($dataByNivelAndEdad[$nivel][$edad])) {
-                              $dataByNivelAndEdad[$nivel][$edad] = [];
-                            }
-                            if (!isset($dataByNivelAndEdad[$nivel][$edad][$area])) {
-                              $dataByNivelAndEdad[$nivel][$edad][$area] = [];
-                            }
-                        
-                            $dataByNivelAndEdad[$nivel][$edad][$area][] = $datoResumen;
-                        
-                            if (!in_array($area, $areas)) {
-                              $areas[] = $area;
-                            }
-                          }
-                        
-                          $numAreas = count($areas);
-                        
-                          // Print data
-                          foreach ($dataByNivelAndEdad as $nivel => $edades) {
-                            echo "<tr><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
-                            ksort($edades); // Sort edades by key (edad) in ascending order
-                            foreach ($edades as $edad => $areasData) {
-                              echo "<tr><td colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
-                              echo "<tr>";
-                              foreach ($areas as $area) {
-                                echo "<th>" . strtoupper($area) . "</th>";
-                              }
-                              echo "</tr>";
-                              $maxRows = max(array_map('count', $areasData));
-                              for ($i = 0; $i < $maxRows; $i++) {
-                                echo "<tr>";
-                                foreach ($areas as $area) {
-                                  if (isset($areasData[$area][$i])) {
-                                    $detalle = $areasData[$area][$i]['detalleEvalaacion'];
-                                    $evaluacion = $areasData[$area][$i]['evaluacion_detalle'];
-                                    echo "<td>$detalle - $evaluacion</td>";
-                                  } else {
-                                    echo "<td></td>";
-                                  }
-                                }
-                                echo "</tr>";
-                              }
-                            }
-                          }
-                          ?>
-                        </tbody>                        
-                        <tfoot>
-                          <tr>
-                          </tr>
-                        </tfoot>
-                      </table>
-                    </div>
+                  <div class="col-sm-2">
+                    <label for="evaluacion_detalle">Evaluacion</label>
+                    <select class="form-control" name="evaluacion_detalle" id="evaluacion_detalle"  required>
+                      <option  value=''>Seleccione</option>
+                      <?php foreach($arrayEvaluacion as $dataEvaluacion ){?>
+                        <option  value=<?php echo $dataEvaluacion['descripcionCorta']; ?>><?php echo strtoupper($dataEvaluacion['descripcionLarga']);?></option>
+                      <?php }?>
+                    </select>
                   </div>
                 </div>
 
-              </div>
+                <div class="row">
+                  <div class="col-lg-12 col-12">
+                    <div class="card">
+                      <div class="card-header bg-gray">
+                        <h3 class="card-title">Resumen  de Evaluaciones Creadas</h3>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse"  id="HeaderDetail">
+                            <i class="fas fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                          <thead>
+                          </thead>
+                          <tbody>
+                            <?php 
+                            $currentNivel = '';
+                            $currentEdad = '';
+                            $areas = [];
+                            $dataByNivelAndEdad = [];
+                            foreach ($arrayResumen as $datoResumen) {
+                              $nivel = $datoResumen['nombreNivelEvaluacion'];
+                              $edad = $datoResumen['edadCronologica'];
+                              $area = $datoResumen['nombreAreaEvaluacion'];
+                          
+                              if (!isset($dataByNivelAndEdad[$nivel])) {
+                                $dataByNivelAndEdad[$nivel] = [];
+                              }
+                              if (!isset($dataByNivelAndEdad[$nivel][$edad])) {
+                                $dataByNivelAndEdad[$nivel][$edad] = [];
+                              }
+                              if (!isset($dataByNivelAndEdad[$nivel][$edad][$area])) {
+                                $dataByNivelAndEdad[$nivel][$edad][$area] = [];
+                              }
+                          
+                              $dataByNivelAndEdad[$nivel][$edad][$area][] = $datoResumen;
+                          
+                              if (!in_array($area, $areas)) {
+                                $areas[] = $area;
+                              }
+                            }
+                          
+                            $numAreas = count($areas)*2;
+                          
 
-            </div>
+                            // Print data
+                            foreach ($dataByNivelAndEdad as $nivel => $edades) {
+                              echo "<tr class='bg-success'><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
+                              ksort($edades); // Sort edades by key (edad) in ascending order
+                              foreach ($edades as $edad => $areasData) {
+                                echo "<tr><td class='' colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
+                                echo "<tr>";
+                                $columnIndex = 1;
+                                foreach ($areas as $area) {
+                                  $class = "gradient-blue-$columnIndex";
+                                  echo "<th class='$class'>" . strtoupper($area) . "</th>";
+                                  echo "<th class='$class'>eva.</th>";
+                                  $columnIndex = ($columnIndex % 8) + 1; // Cycle through 1 to 8
+                                }
+                                echo "</tr>";
+                                $maxRows = max(array_map('count', $areasData));
+                                for ($i = 0; $i < $maxRows; $i++) {
+                                  echo "<tr>";
+                                  $columnIndex = 1;
+                                  foreach ($areas as $area) {
+                                    $class = "gradient-blue-$columnIndex";
+                                    if (isset($areasData[$area][$i])) {
+                                      $detalle = $areasData[$area][$i]['detalleEvalaacion'];
+                                      $evaluacion = $areasData[$area][$i]['evaluacion_detalle'];
+                                      
+                                      switch ($evaluacion) {
+                                        case 'AT':
+                                            $icon = 'X';
+                                            $class = 'Atotal';
+                                            break;
+                                        case 'AP':
+                                            $icon = 'P';
+                                            $class = 'AParcial';
+                                            break;
+                                        case 'SA':
+                                            $icon='√';
+                                            break;
+                                      }
+                            
+                                      echo "<td class='$class'>$detalle </td><td class='$class'> $icon ($evaluacion)</td>";
+                                    } else {
+                                      echo "<td class='$class'></td><td class='$class'></td>";
+                                    }
+                                    $columnIndex = ($columnIndex % 8) + 1; // Cycle through 1 to 8
+                                  }
+                                  echo "</tr>";
+                                }
+                              }
+                            }
+                            ?>
+                          </tbody>                        
+                          <tfoot>
+                            <tr>
+                            </tr>
+                          </tfoot>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+          </div>
+        </div>
+      <?php } ?>
+      <!-- botton volver -->
+      <div class="">
+      <div class="card-footer">
+          <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Cabecera de la Evaluacion </button>
+          <button type="button" class="btn btn-primary" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')">Volver al Listado de Evaluaciones</button>
         </div>
       </div>
     </div>
-    
-    <!-- /.row (main row) -->
-  </div><!-- /.container-fluid -->
-
-  
-  <!--  </section> -->
+  </div>  
 </form>
 </div>
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
       <?php if ($_POST['mod'] == 2): ?>
@@ -433,7 +482,7 @@ if ($_POST['mod'] == 1) {
 
         document.getElementById('HeaderTable').click();
         document.getElementById('HeaderItems').click();
-        document.getElementById('HeaderDetail').click();
+       // document.getElementById('HeaderDetail').click();
 
       <?php endif; ?>
     });

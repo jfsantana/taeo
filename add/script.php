@@ -328,7 +328,6 @@
     form.submit();
   }
 
-
   function enviarParametrosGetsionCreate(page, mod) {
 
     var form = document.createElement('form');
@@ -380,10 +379,10 @@
     parametro1.name = 'select';
     parametro1.value = select;
     form.appendChild(parametro1);
-//alert(parametro1);
+    //alert(parametro1);
     document.body.appendChild(form);
     form.submit();
-    }
+  }
 
   function enviarParametrosGetsionUpdate(page, mod, id) {
     var form = document.createElement('form');
@@ -508,40 +507,112 @@
     form.submit();
   }
 
+  function enviarParametrosGetsionUpdate2(page, mod, id) {
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '../../vistas/home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'id';
+    parametro1.value = id;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
+  function enviarParametrosEvaluacion(page, mod, id, idNivelEvaluacion, edadCronologica, idAreaEvaluacion) {
+
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = '../../vistas/home.php';
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'id';
+    parametro1.value = id;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'idNivelEvaluacion';
+    parametro1.value = idNivelEvaluacion;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'edadCronologica';
+    parametro1.value = edadCronologica;
+    form.appendChild(parametro1);
+
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'idAreaEvaluacion';
+    parametro1.value = idAreaEvaluacion;
+    form.appendChild(parametro1);
+
+    document.body.appendChild(form);
+    form.submit();
+  }
+
   function enviar3Parametror (page, mod, id, idItem) {
 
-var form = document.createElement('form');
-form.method = 'POST';
-form.action = 'home.php';
+    var form = document.createElement('form');
+    form.method = 'POST';
+    form.action = 'home.php';
 
-var parametro1 = document.createElement('input');
-parametro1.type = 'hidden';
-parametro1.name = 'page';
-parametro1.value = page;
-form.appendChild(parametro1);
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'page';
+    parametro1.value = page;
+    form.appendChild(parametro1);
 
-var parametro1 = document.createElement('input');
-parametro1.type = 'hidden';
-parametro1.name = 'mod';
-parametro1.value = mod;
-form.appendChild(parametro1);
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'mod';
+    parametro1.value = mod;
+    form.appendChild(parametro1);
 
-var parametro1 = document.createElement('input');
-parametro1.type = 'hidden';
-parametro1.name = 'id';
-parametro1.value = id;
-form.appendChild(parametro1);
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'id';
+    parametro1.value = id;
+    form.appendChild(parametro1);
 
-var parametro1 = document.createElement('input');
-parametro1.type = 'hidden';
-parametro1.name = 'idItem';
-parametro1.value = idItem;
-form.appendChild(parametro1);
+    var parametro1 = document.createElement('input');
+    parametro1.type = 'hidden';
+    parametro1.name = 'idItem';
+    parametro1.value = idItem;
+    form.appendChild(parametro1);
 
-document.body.appendChild(form);
-form.submit();
-}
-
+    document.body.appendChild(form);
+    form.submit();
+  }
 
   function enviarRegistoTiempo(page, corteActual, corteSelect) {
 
