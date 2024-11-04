@@ -11,7 +11,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
 $token = $_SESSION['token'];
 
-//print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 
 function edadAprendiz($fechaNacimiento){
   $fecha_nacimiento = @$fechaNacimiento;
@@ -112,6 +112,7 @@ if ($_POST['mod'] == 1) {
     $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=7&idHeaderEvaluacion=$idHeaderEvaluacion";
     $rs         = API::GET($URL, $token);
     $arrayResumen  = API::JSON_TO_ARRAY($rs);
+    
 
     
     
@@ -122,7 +123,10 @@ if ($_POST['mod'] == 1) {
 
 }
 ?>
-
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <style>
   .gradient-blue-1 {
     background: rgba(204,204,204, 1); /* 100% opacity */
@@ -394,14 +398,17 @@ if ($_POST['mod'] == 1) {
                             }
                           
                             $numAreas = count($areas)*2;
-                          
 
                             // Print data
+
+                            $modalsData = []; // Array para almacenar los datos de los modales
+
+
                             foreach ($dataByNivelAndEdad as $nivel => $edades) {
                               echo "<tr class='bg-success'><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
                               ksort($edades); // Sort edades by key (edad) in ascending order
                               foreach ($edades as $edad => $areasData) {
-                                echo "<tr><td class='' colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
+                                echo "<tr><td class='bg-info' colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
                                 echo "<tr>";
                                 $columnIndex = 1;
                                 foreach ($areas as $area) {
@@ -420,22 +427,40 @@ if ($_POST['mod'] == 1) {
                                     if (isset($areasData[$area][$i])) {
                                       $detalle = $areasData[$area][$i]['detalleEvalaacion'];
                                       $evaluacion = $areasData[$area][$i]['evaluacion_detalle'];
+                                      $id = isset($areasData[$area][$i]['idDetalleEvaluacion']) ? $areasData[$area][$i]['idDetalleEvaluacion'] : ''; // Verificar si 'idDetalleEvaluacion' existe
                                       
                                       switch ($evaluacion) {
                                         case 'AT':
-                                            $icon = 'X';
-                                            $class = 'Atotal';
-                                            break;
+                                          $icon = 'X';
+                                          $class = 'Atotal';
+                                          break;
                                         case 'AP':
-                                            $icon = 'P';
-                                            $class = 'AParcial';
-                                            break;
+                                          $icon = 'P';
+                                          $class = 'AParcial';
+                                          break;
                                         case 'SA':
-                                            $icon='√';
-                                            break;
+                                          $icon = '√';
+                                          break;
                                       }
-                            
-                                      echo "<td class='$class'>$detalle </td><td class='$class'> $icon ($evaluacion)</td>";
+
+                                      // Generar un ID único para el modal
+                                      $modalId = "editModal_$id";
+
+                                      echo "<td class='$class'><a href='#' class='edit-link' data-toggle='modal' data-target='#$modalId' data-id='$id' data-nivel='$nivel' data-edad='$edad' data-area='$area' data-descripcion='$detalle' data-evaluacion='$evaluacion'>$detalle</a></td><td class='$class'> $icon ($evaluacion)</td>";
+
+                                      // Almacenar los datos del modal en el array
+                                      $modalsData[] = [
+                                        'modalId' => $modalId,
+                                        'id' => $id,
+                                        'nivel' => $nivel,
+                                        'idNivelEvaluacion' => $areasData[$area][$i]['idNivelEvaluacion'],
+                                        'edad' => $edad,
+                                        'edadCronologica' => $areasData[$area][$i]['edadCronologica'],
+                                        'area' => $area,
+                                        'idAreaEvaluacion' => $areasData[$area][$i]['idAreaEvaluacion'],
+                                        'descripcion' => $detalle,
+                                        'evaluacion' => $evaluacion
+                                      ];
                                     } else {
                                       echo "<td class='$class'></td><td class='$class'></td>";
                                     }
@@ -473,6 +498,8 @@ if ($_POST['mod'] == 1) {
   </div>  
 </form>
 </div>
+
+<?php  include_once("preEvaluacionModalEditEvaluacion.php"); ?>
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
@@ -525,3 +552,130 @@ if ($_POST['mod'] == 1) {
     });
   });
 </script>
+
+
+
+<script>
+  $(document).on('show.bs.modal', '.modal', function (event) {
+    var button = $(event.relatedTarget); // Botón que activó el modal
+    var id = button.data('id');
+    var nivel = button.data('nivel');
+    var idNivelEvaluacion = button.data('idNivelEvaluacion');
+    var edad = button.data('edad');
+    var edadCronologica = button.data('edadCronologica');
+    var area = button.data('area');
+    var idAreaEvaluacion = button.data('idAreaEvaluacion');
+    var descripcion = button.data('descripcion');
+    var evaluacion = button.data('evaluacion');
+
+    console.log('ID:', id);
+    console.log('Nivel:', nivel);
+    console.log('ID Nivel Evaluacion:', idNivelEvaluacion);
+    console.log('Edad:', edad);
+    console.log('Edad Cronologica:', edadCronologica);
+    console.log('Área:', area);
+    console.log('ID Área Evaluacion:', idAreaEvaluacion);
+    console.log('Descripción:', descripcion);
+    console.log('Evaluación:', evaluacion);
+
+    var modal = $(this);
+    // Rellenar la vista previa
+    modal.find('#previewId_' + modal.attr('id')).text(id);
+    modal.find('#previewNivel_' + modal.attr('id')).text(nivel);
+    modal.find('#previewEdad_' + modal.attr('id')).text(edad);
+    modal.find('#previewArea_' + modal.attr('id')).text(area);
+    modal.find('#previewDescripcion_' + modal.attr('id')).text(descripcion);
+    modal.find('#previewEvaluacion_' + modal.attr('id')).text(evaluacion);
+
+    // Seleccionar los valores en los select
+    modal.find('#editNivel_' + modal.attr('id')).val(idNivelEvaluacion);
+    modal.find('#editEdad_' + modal.attr('id')).val(edadCronologica);
+    modal.find('#editArea_' + modal.attr('id')).val(idAreaEvaluacion);
+    modal.find('#editDescripcion_' + modal.attr('id')).val(descripcion);
+    modal.find('#editEvaluacion_' + modal.attr('id')).val(evaluacion);
+
+    // Guardar el ID del registro para eliminarlo
+    modal.find('#deleteButton_' + modal.attr('id')).data('id', id);
+  });
+
+  $(document).on('submit', '[id^=editForm_]', function (event) {
+    event.preventDefault();
+    var form = $(this);
+    var modalId = form.attr('id').replace('editForm_', '');
+    var id = form.find('#deleteButton_' + modalId).data('id');
+    var idNivelEvaluacion = form.find('#editNivel_' + modalId).val();
+    var edadCronologica = form.find('#editEdad_' + modalId).val();
+    var idAreaEvaluacion = form.find('#editArea_' + modalId).val();
+    var descripcion = form.find('#editDescripcion_' + modalId).val();
+    var evaluacion = form.find('#editEvaluacion_' + modalId).val();
+
+    // Crear el objeto de datos para enviar en la solicitud POST
+    var data = {
+      idDetalleEvaluacion: id,
+      idNivelEvaluacion: idNivelEvaluacion,
+      edadCronologica: edadCronologica,
+      idAreaEvaluacion: idAreaEvaluacion,
+      detalleEvalaacion: descripcion,
+      evaluacion_detalle: evaluacion
+    };
+
+    
+    // Realizar la solicitud POST al servicio
+    $.ajax({
+      url: 'http://taeo/funciones/wsdl/preEvaluacion',
+      type: 'PUT',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      success: function(response) {
+        $(form).closest('.modal').modal('hide');
+      },
+      error: function(xhr, status, error) {
+        console.error('Error en la actualización:', error);
+      }
+    });
+  });
+
+  $(document).on('click', '[id^=deleteButton_]', function () {
+    event.preventDefault();
+    var form = $(this).closest('form');
+    var modalId = form.attr('id').replace('editForm_', '');
+    var id = form.find('#deleteButton_' + modalId).data('id');
+    var idNivelEvaluacion = form.find('#editNivel_' + modalId).val();
+    var edadCronologica = form.find('#editEdad_' + modalId).val();
+    var idAreaEvaluacion = form.find('#editArea_' + modalId).val();
+    var descripcion = form.find('#editDescripcion_' + modalId).val();
+    var evaluacion = form.find('#editEvaluacion_' + modalId).val();
+
+    // Crear el objeto de datos para enviar en la solicitud POST
+    var data = {
+        idDetalleEvaluacion: id,
+        idNivelEvaluacion: idNivelEvaluacion,
+        edadCronologica: edadCronologica,
+        idAreaEvaluacion: idAreaEvaluacion,
+        detalleEvalaacion: descripcion,
+        evaluacion_detalle: evaluacion
+    };
+
+    console.log('Datos enviados:', JSON.stringify(data));
+
+    // Realizar la solicitud POST al servicio
+    $.ajax({
+        url: 'http://taeo/funciones/wsdl/preEvaluacion',
+        type: 'DELETE',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function(response) {
+            console.log('Respuesta del servidor:', response);
+            $(form).closest('.modal').modal('hide');
+        },
+        error: function(xhr, status, error) {
+            console.error('Error en la actualización:', error);
+        }
+    });
+  });
+</script>
+
+
+
+
+

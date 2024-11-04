@@ -577,26 +577,57 @@ class preEvaluacion extends conexion
   }
   public function put($json)//()
   {
-    //echo  $json; die;
+    
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
-    $datos['versionObjetivo'];
-    $query = 'update ' . $this->tablaItems . "
-                          set
-                          activo='0'
-                      WHERE idHeader =". $datos['idObjetivoHeader']."
-                      And versionObjetivo=".$datos['versionObjetivo'];
 
-     //echo  $query; die;
-    $update = parent::nonQuery($query);
+    // actualizar la tabla evaluacion_item
+    $queryEvaluacion_item = "
+          Update taeho_v2.evaluacion_item
+          set edadCronologica = ".@$datos['edadCronologica'].",
+          idNivelEvaluacion=".@$datos['idNivelEvaluacion'].",
+          idAreaEvaluacion=".@$datos['idAreaEvaluacion']."
+          where 
+            idItemEvaluacion=(
+                                select idItemEvaluacion 
+                                from evaluacion_detalle 
+                                where idDetalleEvaluacion=".@$datos['idDetalleEvaluacion']." )
+                            ";
+    //echo $queryEvaluacion_item; die;                        
+    $update = parent::nonQuery($queryEvaluacion_item);
 
-    if ($update >= 1) {
-      return $update;
-    } else {
-      return 0;
-    }
+      // actualizar la tabla evaluacion_detalle
+      $queryEvaluacion_detalle = "
+      UPDATE evaluacion_detalle
+       SET
+       detalleEvalaacion = '".@$datos['detalleEvalaacion']."',
+       evaluacion_detalle = '".@$datos['evaluacion_detalle']."'
+       WHERE idDetalleEvaluacion=".@$datos['idDetalleEvaluacion'];
+
+                         
+    $update = parent::nonQuery($queryEvaluacion_detalle);
+
+    return 1;
   }
+
+
+  public function delete($json)//()
+  {
+   // echo $json; die;
+    $_respuestas = new respuestas();
+    $datos = json_decode($json, true);
+
+      // actualizar la tabla evaluacion_detalle
+      $queryEvaluacion_detalle = "
+      DELETE FROM  evaluacion_detalle
+       WHERE idDetalleEvaluacion=".@$datos['idDetalleEvaluacion'];
+      //echo $queryEvaluacion_detalle; die;             
+    $update = parent::nonQuery($queryEvaluacion_detalle);
+
+    return 1;
+  }
+
 
   private function buscarToken()//()
   {
