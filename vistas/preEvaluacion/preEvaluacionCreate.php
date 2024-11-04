@@ -8,12 +8,9 @@ if (!isset($_SESSION['id_user'])) {
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
-
 $token = $_SESSION['token'];
 
 //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
-
-
 
 function edadAprendiz($fechaNacimiento){
   $fecha_nacimiento = @$fechaNacimiento;
@@ -48,8 +45,6 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=3&rolUsuario=3";
 $rs         = API::GET($URL1, $token);
 $arrayFacilitadores  = API::JSON_TO_ARRAY($rs);
-
-
 
 
 if ($_POST['mod'] == 1) {
@@ -322,9 +317,7 @@ require_once("style.php")  ;
                   <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Cabecera de la Evaluacion </button>
                   <button type="button" class="btn btn-primary" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')">Volver al Listado de Evaluaciones</button>
                 </div>
-              </div>
-
-                <div class="row">
+      
                   <div class="col-lg-12 col-12">
                     <div class="card">
                       <div class="card-header bg-gray">

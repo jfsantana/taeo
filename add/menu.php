@@ -199,11 +199,15 @@
 
           </p>
         </a>
+
+
+        
+
         <ul class="nav nav-treeview">
           <li class="nav-item">
-            <a href="#" onclick="enviarParametros('report/porConsultor.php')" class="nav-link">
+            <a href="#"  class="nav-link ">
               <i class="far fa-circle nav-icon"></i>
-              <p>Registros de Avances por Niño</p>
+              <p>Registros (Integral) Aprendiz</p>
             </a>
           </li>
           <li class="nav-item">

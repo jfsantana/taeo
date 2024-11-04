@@ -39,6 +39,17 @@ class aprendiz extends conexion
   // Activaciond e token
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
+  
+  public function getAprendizActivos($idAprendiz) //(revisado)
+  {
+    $where = " WHERE activoAprendiz <> 1 ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and idAprendiz = " . $idAprendiz;
+    }
+    $query = "select * , case when aprendiz.activoAprendiz = 1 Then 'Activo' else 'Bloqueado' end estado from " . $this->tabla . " $where ";
+
+    return parent::ObtenerDatos($query);
+  }
 
   public function getAprendiz($idAprendiz) //(revisado)
   {

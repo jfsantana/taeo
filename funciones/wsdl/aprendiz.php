@@ -13,6 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * 1 listar todos los aprendices, recibe el idAprendiz (opcional) para busacr un aprendiz
    * 2 listar los representante de un aprendiz activos
    * 3 listar los representante de un aprendiz activos
+   * 4 listado de aprendices activos
    */
   if ($_GET['type']==1){
     $datosArray = $_aprendiz->getAprendiz(@$_GET['idAprendiz']);
@@ -26,6 +27,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
   }elseif(($_GET['type']==3)||(isset($_GET['idAprendiz']))){
     $datosArray = $_aprendiz->getRepresentanteByAprendiz(@$_GET['idAprendiz']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif(($_GET['type']==4)){
+    $datosArray = $_aprendiz->getAprendizActivos(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
