@@ -5,7 +5,7 @@ require_once 'respuestas.class.php';
 class auth extends conexion{
 
     public function login($json){
-
+//echo $json; die;
         $_respuestas = new respuestas;
         $datos = json_decode($json,true);
 
@@ -16,13 +16,13 @@ class auth extends conexion{
 
             $usuario = $datos['usuario']; //empleados_nroPersonal
             $password = $datos['password'];
-            $sede = $datos['locacion'];
+           // $sede = $datos['locacion'];
 
             $datos = $this->obtenerDatosUsuarios($usuario,$password);
            // return ($datos); die;
             if($datos){
                 //Despues de obtener los datos del usuarios se genera el TOKEN
-                $verificar = $this->insertarToken($datos[0]["loginUsuario"], $sede);
+                $verificar = $this->insertarToken($datos[0]["loginUsuario"], @$sede);
 
                 if($verificar){
                     // Si se genero el Token
@@ -61,7 +61,7 @@ class auth extends conexion{
         $datetoken = date("Y-m-d H:i");
         $estadoToken=1;
 
-        $query = "insert into usuario_token (loginUsuario, token, estado, fecha, sede) value('$usuario','$token','$estadoToken','$datetoken',' $sede')";
+        $query = "insert into usuario_token (loginUsuario, token, estado, fecha, sede) value('$usuario','$token','$estadoToken','$datetoken',' @$sede')";
         $verificar = parent::nonQuery($query);
         if($verificar){
             // si incerto

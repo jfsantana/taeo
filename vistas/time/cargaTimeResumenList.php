@@ -72,7 +72,7 @@ $array  = API::JSON_TO_ARRAY($rs);
         <div class="small-box bg-info">
           <div class="inner">
             <h3>Registro de Avance </h3>
-            <p>Muestra el listado de Planificaciones para ser evaluadas<br></p>
+            <p>Muestra de Avances para los Aprendices<br></p>
           </div>
           <div class="icon">
             <i class="ion ion-archive"></i>
@@ -124,7 +124,7 @@ $array  = API::JSON_TO_ARRAY($rs);
         <!-- Custom tabs (Charts with tabs)-->
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Listado los ultimos Avances </h3>
+            <h3 class="card-title">Proximos Eventos </h3>
           </div>
           <!-- /.card-header -->
           <div class="card-body">

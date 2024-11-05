@@ -294,7 +294,7 @@ class preEvaluacion extends conexion
             $flag=true;
 
           }elseif($datos['mod']==2){
-            
+            $resp=$this->idHeaderEvaluacion;
             $updateHeaderResult = $this->UpdateHeader();
             if(@$datos['detalleEvalaacion']!=''){
               $this->edadCronologica                     = @$datos['edadCronologica'];
@@ -317,10 +317,6 @@ class preEvaluacion extends conexion
               }
             }
 
-
-           
-
-
           }
 
           //echo $resp; die;
@@ -329,12 +325,14 @@ class preEvaluacion extends conexion
             $respuesta = $_respuestas->response;
             $respuesta['status'] = 'OK';
             $respuesta['result'] = [
+              'idHeaderNew' => $resp,
               'mensaje' => 'Operacion Finalizada con Exito'
             ];
           } else {
             $respuesta = $_respuestas->response;
             $respuesta['status'] = 'ERROR';
             $respuesta['result'] = [
+              'idHeaderNew' => $resp,
               'mensaje' => 'ERROR - Operacion con el Representante'
             ];
           }

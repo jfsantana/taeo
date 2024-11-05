@@ -22,20 +22,20 @@ $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/auth';
 $parametros = [
   'usuario' => $_POST['user'],
   'password' => $_POST['password'],
-  'locacion' => $_POST['locacion'],
 ];
 
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
-//   echo $URL;
-//   print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
+  //  echo $URL; 
+  // print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
   //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 if (@$rs['result']['token']) {
 
   $token = $rs['result']['token'];
   $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/empleados?token=' . $rs['result']['token'];
+  //echo $URL; die;
   $rs = API::GET($URL, $token);
   $array = API::JSON_TO_ARRAY($rs);
   $datosEmpleado = $array;

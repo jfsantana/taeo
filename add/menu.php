@@ -233,6 +233,14 @@
       </a>
     </li>
     <li class="nav-item">
+      <a href="https://galeria.organizaciontaeo.com/" target="_blank" class="nav-link ">
+        <i class="nav-icon far fa-circle text-danger"></i>
+        <p>Galeria Taeo</p>
+      </a>
+    </li>
+
+    
+    <li class="nav-item">
       <a href="../funciones/funcionesGenerales/XM_validarusu.php" class="nav-link">
         <i class="nav-icon far fa-close"></i>
         <p>

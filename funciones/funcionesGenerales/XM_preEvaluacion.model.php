@@ -18,7 +18,7 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r(($_POST),true)."</pre>"); die;
+print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); die;
 
 if (@$_POST['idNivelEvaluacion'] == '') {
     $continuidadAlmacenamientoidNivelEvaluacion = @$_POST['idNivelEvaluacion'];
@@ -33,6 +33,7 @@ if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
 }
 
 $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion";
+//print("<pre>".print_r(($URL),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
@@ -48,7 +49,7 @@ $idHeaderNew = @$rs['result']['idHeaderNew'];
 
 if (@$rs['status'] == 'OK') {
     if(@$aux1 != ''){
-        $url = "onclick=\"enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', $idEvaluacion,$aux1, $aux2 , $aux3)\"";
+        $url = "onclick=\"enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', $idHeaderNew,$aux1, $aux2 , $aux3)\"";
     }else{
         $url = "onclick=\"enviarParametrosGetsionUpdate2('preEvaluacion/preEvaluacionCreate.php','2', $idHeaderNew)\"";
     }    

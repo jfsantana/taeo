@@ -55,7 +55,8 @@ if ($_POST['mod'] == 1) {
     $idHeaderEvaluacion = @$_POST["id"];  
   }
   $creadoPor = $_SESSION['usuario'];
-  $fechaCreacion = date('Y-m-d');
+  $fechaEvaluacion = date('Y-m-d');
+  
 } elseif($_POST['mod'] == 2) {
 
   $flag=true;
@@ -90,7 +91,7 @@ if ($_POST['mod'] == 1) {
   $edadCronologica= @$_POST["edadCronologica"];
   $idAreaEvaluacion= @$_POST["idAreaEvaluacion"];
 
-
+  //echo $fechaUltimaEvaluacion; 
   //consulta de los NIVELES PARA LA CREACION
   $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=6";
   $rs         = API::GET($URL, $token);
@@ -258,7 +259,7 @@ require_once("style.php")  ;
         <div class="col-lg-12 col-12">
           <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title">ITEMS </h3>
+                <h3 class="card-title">Detalle de la Evaluacion </h3>
                 <div class="card-tools">
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"  id="HeaderItems">
                     <i class="fas fa-minus"></i>

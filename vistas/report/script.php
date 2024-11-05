@@ -56,7 +56,7 @@ function fetchMediadores(idSede,idEvaluadoPor) {
 //Evaluacion Previas (fechas)
 function fetchNiveles(idAprendiz,mod) {
   var idHeaderEvaluacionAnterior = $('#idHeaderEvaluacionAnterior');
-
+  
   if (idAprendiz) {
     console.log('VER PARA EL idAprendiz:', idAprendiz); // Agrega esta línea para depuración
     $.ajax({
@@ -71,11 +71,13 @@ function fetchNiveles(idAprendiz,mod) {
 
           // Verifica si niveles es un array y tiene elementos
           if (Array.isArray(niveles) && niveles.length > 0) {
+
+            
             idHeaderEvaluacionAnterior.empty();
             //idHeaderEvaluacionAnterior.append('<option value="">Seleccione</option>');
             // Agrega las nuevas opciones
             niveles.forEach(function(nivel) {
-              if( nivel.fechaUltimaEvaluacion='0000-00-00'){
+              if( nivel.fechaUltimaEvaluacion=='0000-00-00'){
                 idHeaderEvaluacionAnterior.append('<option value="">No hay evaluaciones previas</option>');
               }else{
                 idHeaderEvaluacionAnterior.append('<option value="' + nivel.idHeaderEvaluacion + '">' + nivel.fechaUltimaEvaluacion + '</option>');

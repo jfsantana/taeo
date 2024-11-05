@@ -46,16 +46,7 @@ session_destroy();
           ?>
 
           <form name="login" id="login" action="funciones/funcionesGenerales/XM_validarusu.php" method="POST">
-            <div class="col-sm-12">
-              <label>Sede o Localidad</label>
-              <select class="form-control select " name="locacion" required id="idEmpresaConsultora">
-                <option value="">Seleccione</option>
-                <?php foreach ($arraySede as $sede) {?>
-                <option value='<?php echo $sede['idSede']; ?>' ><?php echo $sede['nombreSede']; ?></option>
-                <?php } ?>
-              </select>
-                        </br>
-            </div>
+
 
             <div class="input-group mb-3">
               <input name="user" type="text" class="form-control" required placeholder="Usuario">

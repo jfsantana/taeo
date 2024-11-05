@@ -5,45 +5,31 @@
 <link rel="stylesheet" href='./plugins/toastr/toastr.min.js'>
 <link rel="stylesheet" href='./dist/css/adminlte.min.css'>
 <?php
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include_once('../../add/script.php');
+    require_once '../wsdl/clases/consumoApi.class.php';
 
-if (!isset($_SESSION)) {
-    session_start();
-}
-include_once('../../add/script.php');
-require_once '../wsdl/clases/consumoApi.class.php';
+    $token = $_SESSION['token'];
+    $_POST['token'] = $_SESSION['token'];
+    $_POST['creadoPor'] = $_SESSION['usuario'];
+    $_POST['creador'] = $_SESSION['usuario'];
 
-$token = $_SESSION['token'];
-$_POST['token'] = $_SESSION['token'];
-$_POST['creadoPor'] = $_SESSION['usuario'];
-
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz";
-
-  // echo $URL;
-  //  print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
-
-$rs = API::POST($URL, $token, $_POST);
-$rs = API::JSON_TO_ARRAY($rs);
+    $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz";
+    $rs = API::POST($URL, $token, $_POST);
+    $rs = API::JSON_TO_ARRAY($rs);
 
 
-//onclick="enviarParametros('admin/clienteList.php')"
-$idArendiz = @$rs['result']['idHeaderNew'];
+    //onclick="enviarParametros('admin/clienteList.php')"
+    @$idArendiz = @$rs['result']['idHeaderNew'];
 
-if (@$rs['status'] == 'OK') {
+    if (@$rs['status'] == 'OK') {
+        $url = " onclick= \"enviarParametrosCRUD('admin/aprendizList.php','1')\" ";
 
-  //print("<pre>".print_r(($_POST),true)."</pre>");die;
-
-  if($_POST['accion']=="Crear"){
-    //$idArendiz;
-
-    $url = " onclick= \"enviarParametrosGetsionUpdate('admin/aprendizCreate.php',2,'$idArendiz')\" ";
-//echo $url; die;
-  }else{
-    $url = "onclick=\"enviarParametrosCRUD('admin/aprendizList.php')\"";
-  }
-
-} else {
-    $url = 'onclick="history.back()"';
-}
+    } else {
+        $url = 'onclick="history.back()"';
+    }
 
 ?>
 
@@ -68,12 +54,14 @@ if (@$rs['status'] == 'OK') {
                 <p><?php echo @$rs['result']['MSG']; ?></p>
             </div>
             <div class="modal-footer justify-content-between">
-                <a href="#" onclick="enviarParametrosGetsionUpdate('admin/aprendizCreate.php',2,'<?php echo $idArendiz; ?>')" class="nav-link ">Close</a>
                 <button type="button" class="btn btn-outline-light" <?php echo @$url; ?>>Close</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
 
 <!-- jQuery -->
 <script src="./plugins/jquery/jquery.min.js"></script>

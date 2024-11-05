@@ -68,11 +68,14 @@ function fetchNiveles(idAprendiz,mod) {
           var niveles = JSON.parse(response);
           if (Array.isArray(niveles) && niveles.length > 0) { // Verifica si niveles es un array y tiene elementos
             idHeaderEvaluacionAnterior.empty();
-
+            
             // Agrega las nuevas opciones
             niveles.forEach(function(nivel) {
-              if( nivel.fechaEvaluacion=='0000-00-00'){
-                idHeaderEvaluacionAnterior.append('<option value="">No hay evaluaciones previas1</option>');
+              
+
+              if( nivel.fechaUltimaEvaluacion =="0000-00-00"){
+                
+                idHeaderEvaluacionAnterior.append('<option value="">No hay evaluaciones previas</option>');
               }else{
                 idHeaderEvaluacionAnterior.append('<option value="' + nivel.idHeaderEvaluacion + '">' + nivel.fechaEvaluacion + '</option>');
               }              
