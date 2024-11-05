@@ -56,7 +56,6 @@ function fetchMediadores(idSede,idEvaluadoPor) {
 //Evaluacion Previas (fechas)
 function fetchNiveles(idAprendiz,mod) {
   var idHeaderEvaluacionAnterior = $('#idHeaderEvaluacionAnterior');
-
   if (idAprendiz) {
     console.log('VER PARA EL idAprendiz:', idAprendiz); // Agrega esta línea para depuración
     $.ajax({
@@ -64,23 +63,19 @@ function fetchNiveles(idAprendiz,mod) {
       url: "preEvaluacion/fetch_evaluaciones_previas.php",
       data: { idAprendiz: idAprendiz },
       success: function(response) {
-        console.log('Response:', response); // Agrega esta línea para depuración
-
+        //console.log('Response:', response); // Agrega esta línea para depuración
         try {
           var niveles = JSON.parse(response);
-
-          // Verifica si niveles es un array y tiene elementos
-          if (Array.isArray(niveles) && niveles.length > 0) {
+          if (Array.isArray(niveles) && niveles.length > 0) { // Verifica si niveles es un array y tiene elementos
             idHeaderEvaluacionAnterior.empty();
-            //idHeaderEvaluacionAnterior.append('<option value="">Seleccione</option>');
+
             // Agrega las nuevas opciones
             niveles.forEach(function(nivel) {
-              if( nivel.fechaUltimaEvaluacion='0000-00-00'){
-                idHeaderEvaluacionAnterior.append('<option value="">No hay evaluaciones previas</option>');
+              if( nivel.fechaEvaluacion=='0000-00-00'){
+                idHeaderEvaluacionAnterior.append('<option value="">No hay evaluaciones previas1</option>');
               }else{
-                idHeaderEvaluacionAnterior.append('<option value="' + nivel.idHeaderEvaluacion + '">' + nivel.fechaUltimaEvaluacion + '</option>');
-              }
-              
+                idHeaderEvaluacionAnterior.append('<option value="' + nivel.idHeaderEvaluacion + '">' + nivel.fechaEvaluacion + '</option>');
+              }              
             });
 
             // Ajusta el estado del campo según el valor de mod
@@ -115,9 +110,5 @@ function fetchNiveles(idAprendiz,mod) {
     idHeaderEvaluacionAnterior.append('<option value="">Seleccione</option>');
   }
 }
-
-
-
-
 
   </script>

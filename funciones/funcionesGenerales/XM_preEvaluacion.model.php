@@ -21,7 +21,7 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 //print("<pre>".print_r(($_POST),true)."</pre>"); die;
 
 if (@$_POST['idNivelEvaluacion'] == '') {
-    $continuidadAlmacenamientoidNivelEvaluacion = $_POST['idNivelEvaluacion'];
+    $continuidadAlmacenamientoidNivelEvaluacion = @$_POST['idNivelEvaluacion'];
 }
 
 if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
@@ -40,9 +40,9 @@ $rs = API::JSON_TO_ARRAY($rs);
 
 
 $idEvaluacion= $_POST['idHeaderEvaluacion'];
-$aux1=$_POST['idNivelEvaluacion'];
-$aux2=$_POST['edadCronologica'];
-$aux3=$_POST['idAreaEvaluacion'];
+$aux1=@$_POST['idNivelEvaluacion'];
+$aux2=@$_POST['edadCronologica'];
+$aux3=@$_POST['idAreaEvaluacion'];
 
 $idHeaderNew = @$rs['result']['idHeaderNew'];
 

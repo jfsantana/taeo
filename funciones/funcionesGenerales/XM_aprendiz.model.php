@@ -36,7 +36,7 @@ if (@$rs['status'] == 'OK') {
     //$idArendiz;
 
     $url = " onclick= \"enviarParametrosGetsionUpdate('admin/aprendizCreate.php',2,'$idArendiz')\" ";
-echo $url; die;
+//echo $url; die;
   }else{
     $url = "onclick=\"enviarParametrosCRUD('admin/aprendizList.php')\"";
   }

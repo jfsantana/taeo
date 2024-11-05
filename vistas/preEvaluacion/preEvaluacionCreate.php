@@ -7,6 +7,7 @@ if (!isset($_SESSION['id_user'])) {
   header("Location:  http://" . $_SERVER['HTTP_HOST']);
   exit();
 }
+include("scriptEva.php");
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
@@ -46,7 +47,7 @@ $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?ty
 $rs         = API::GET($URL1, $token);
 $arrayFacilitadores  = API::JSON_TO_ARRAY($rs);
 
-
+$disabled ='';
 if ($_POST['mod'] == 1) {
   $activo =1;
   $accion = "Crear";
@@ -175,7 +176,7 @@ require_once("style.php")  ;
 
                 <div class="col-sm-3">
                   <label for="Aprendiz">Aprendiz</label>
-                  <select class="form-control" name="idAprendiz" id="Aprendiz" <?php echo $disabled;?> onchange="fetchNiveles(this.value,<?php echo $_POST['mod'];?>)" required>
+                                    <select class="form-control" name="idAprendiz" id="Aprendiz" <?php echo @$disabled;?> onchange="fetchNiveles(this.value,<?php echo $_POST['mod'];?>)" required>
                     <option  value=''>Seleccione</option>
                     <?php foreach($arrayAprendices as $dataAprendices ){?>
                       <option <?php if ($dataAprendices['idAprendiz'] == @$idAprendiz) {echo 'selected';} ?> value=<?php echo $dataAprendices['idAprendiz']; ?>><?php echo strtoupper($dataAprendices['apellidoAprendiz'].', '. $dataAprendices['nombreAprendiz']);?></option>
@@ -185,14 +186,14 @@ require_once("style.php")  ;
 
                 <div class="col-sm-2">
                   <label for="idHeaderEvaluacionAnteriorl">Evaluación previa</label>
-                  <select class="form-control" name="idHeaderEvaluacionAnterior" id="idHeaderEvaluacionAnterior" <?php echo $disabled;?>  <?php if ($_POST['mod']==1){echo 'disabled';}?>>
+                  <select class="form-control" name="idHeaderEvaluacionAnterior" id="idHeaderEvaluacionAnterior" <?php echo @$disabled;?>  <?php if ($_POST['mod']==1){echo 'disabled';}?>>
 
                   </select>
                 </div>
 
                 <div class="col-sm-2">
                   <label for="sede">Sede:</label>
-                  <select class="form-control" name="idSede" id="idSede"  <?php echo $disabled;?>  onchange="fetchMediadores(this.value,'')"  required>
+                  <select class="form-control" name="idSede" id="idSede"  <?php echo @$disabled;?>  onchange="fetchMediadores(this.value,'')"  required>
                     <option value=''>Seleccione</option>
                     <?php foreach($arraySede as $sede ){?>
                       <option <?php if ($sede['idSede'] == @$idSede) {echo 'selected';} ?> value=<?php echo $sede['idSede']; ?>><?php echo $sede['nombreSede']; ?></option>
@@ -480,10 +481,11 @@ require_once("style.php")  ;
 </script>
 
 <!-- ******************** -->
-<?php include("script.php");?>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 <script>
+  //este script es para imprimir el contenido de la pagina
   document.getElementById('printButton').addEventListener('click', function () {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -520,6 +522,7 @@ require_once("style.php")  ;
 
 
 <script>
+  //este es el script que se encarga de enviar los datos al modal de edicion y almacenarlos
   $(document).on('show.bs.modal', '.modal', function (event) {
     var button = $(event.relatedTarget); // Botón que activó el modal
     var id = button.data('id');
@@ -650,7 +653,6 @@ require_once("style.php")  ;
         }
     });
   });
-
 
 
 </script>
