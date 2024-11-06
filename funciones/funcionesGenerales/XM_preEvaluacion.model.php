@@ -18,7 +18,7 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); //die;
+//print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); //die;
 ?><script> console.log("<?php echo json_encode($_POST)?>")</script><?php
 
 if (@$_POST['idNivelEvaluacion'] == '') {
