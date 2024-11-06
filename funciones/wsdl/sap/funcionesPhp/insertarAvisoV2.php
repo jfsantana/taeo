@@ -35,7 +35,7 @@ function notifica($equipment,$short_text,$reportedby,$notif_date,$notiftime,$lon
 		
     
 		
-		$ruta =  "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sap/in/ZEHS_CREATE_NOTIF_Sync_OutService.wsdl";
+		$ruta =  $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sap/in/ZEHS_CREATE_NOTIF_Sync_OutService.wsdl";
 		$oSoapClient = new nusoap_client($ruta, true);
 		$oSoapClient->setCredentials('PIUSERWS01', 'Pequiven21*', 'basic');
 		if ($sError = $oSoapClient->getError()) 

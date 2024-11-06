@@ -11,6 +11,8 @@ session_destroy();
 
   <?php include_once('add/head_Aux_.php');
   require_once './funciones/wsdl/clases/consumoApi.class.php';
+
+  //print("<pre>".print_r(($_SERVER),true)."</pre>");
    ?>
   <style>
     .login-page {
@@ -39,8 +41,10 @@ session_destroy();
           <!-- <p class="login-box-msg">Inicie sesión</p> -->
 
         <?php
+
+
         $token='';
-          $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+          $URL        = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']. "/funciones/wsdl/sede?type=1";
           $rs         = API::GET($URL, $token);
           $arraySede  = API::JSON_TO_ARRAY($rs);
           ?>

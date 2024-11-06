@@ -26,7 +26,7 @@ $host= $_SERVER["HTTP_HOST"];
 $url= $_SERVER["REQUEST_URI"];
 
 //var_dump($_SESSION); die;
-header('Location: http://'.$_SERVER['HTTP_HOST']);
+header('Location: '.$_SESSION['HTTP_ORIGIN']);
 exit;
 ?>
 

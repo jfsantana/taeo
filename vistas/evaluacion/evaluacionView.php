@@ -3,7 +3,7 @@
 
       <?php
         function  hijos ($idPlanificacionHeader,$jerarquia,$token){
-          $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=6&idPlanificacionHeader=$idPlanificacionHeader&jerarquia=$jerarquia";
+          $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=6&idPlanificacionHeader=$idPlanificacionHeader&jerarquia=$jerarquia";
 
                     $rs         = API::GET($URL, $token);
                     $arrayhijos  = API::JSON_TO_ARRAY($rs);
@@ -169,7 +169,7 @@
         }
 
         //busca todos los nodos padres registrados en la planificaicon
-        $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=5&idPlanificacionHeader=$idObjetivoHeader";
+        $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=5&idPlanificacionHeader=$idObjetivoHeader";
         $rs         = API::GET($URL, $token);
         $arrayNodoPadre  = API::JSON_TO_ARRAY($rs);        
         //print("<pre>".print_r(($arrayNodoPadre),true)."</pre>");die;

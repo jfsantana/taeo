@@ -21,7 +21,7 @@ $date = date('Y-m-d');
 $idR24h = $_GET['R24Hid'];
 // WS datos empleado
 $token = $_SESSION['token'];
-$URL = 'http://'.$_SERVER['HTTP_HOST']."/funciones/wsdl/r24h?R24Hid=$idR24h"; // .$consultarepo ['R24Hid'];
+$URL = ''.$_SESSION['HTTP_ORIGIN']."/funciones/wsdl/r24h?R24Hid=$idR24h"; // .$consultarepo ['R24Hid'];
 $rs = API::GET($URL, $token);
 
 $arrayReporte24 = API::JSON_TO_ARRAY($rs);

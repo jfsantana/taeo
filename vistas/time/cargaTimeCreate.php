@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -13,27 +13,27 @@ $token = $_SESSION['token'];
 $_SESSION['id_user'];
 
 //Listado Consultora
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/consultora?idEmpresaConsultora=";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/consultora?idEmpresaConsultora=";
 $rs         = API::GET($URL, $token);
 $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
 
 //Listado Clientes
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?idActivos=";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/clientes?idActivos=";
 $rs         = API::GET($URL, $token);
 $arrayClientes  = API::JSON_TO_ARRAY($rs);
 
 //Listado Proyecto
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idProyecto=";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/proyecto?idProyecto=";
 $rs         = API::GET($URL, $token);
 $arrayProyecto  = API::JSON_TO_ARRAY($rs);
 
 //Listado Tipo de Actividad
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idTipoActividad=";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/factura?idTipoActividad=";
 $rs         = API::GET($URL, $token);
 $arrayTipoActividad  = API::JSON_TO_ARRAY($rs);
 
 //Listado Modulos
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?modulos=";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/time?modulos=";
 $rs         = API::GET($URL, $token);
 $arrayModulos = API::JSON_TO_ARRAY($rs);
 //var_dump($URL);
@@ -51,7 +51,7 @@ if ($_POST['mod'] == 1) {
   //Listado Registro Horas
   $id = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?idRegister=$id";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/time?idRegister=$id";
   //var_dump($URL);
   $rs         = API::GET($URL, $token);
   $arrayRegistroTimne  = API::JSON_TO_ARRAY($rs);

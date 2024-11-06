@@ -4,7 +4,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 include("scriptEva.php");
@@ -33,17 +33,17 @@ function edadAprendiz($fechaNacimiento){
 */
 
 // busqueda de los distintos aprendices activos creados
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz?type=1";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=1";
 $rs         = API::GET($URL, $token);
 $arrayAprendices  = API::JSON_TO_ARRAY($rs);
 
 //Sedes
-$URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+$URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1";
 $rs         = API::GET($URL1, $token);
 $arraySede  = API::JSON_TO_ARRAY($rs);
 
 //facilitadores
-$URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=3&rolUsuario=3";
+$URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=3&rolUsuario=3";
 $rs         = API::GET($URL1, $token);
 $arrayFacilitadores  = API::JSON_TO_ARRAY($rs);
 
@@ -67,7 +67,7 @@ if ($_POST['mod'] == 1) {
   $idHeaderEvaluacion = @$_POST["id"];
 
   //consulta de los header
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=$idHeaderEvaluacion";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=$idHeaderEvaluacion";
   $rs         = API::GET($URL, $token);
   $arrayHeader  = API::JSON_TO_ARRAY($rs);
 
@@ -93,22 +93,22 @@ if ($_POST['mod'] == 1) {
 
   //echo $fechaUltimaEvaluacion; 
   //consulta de los NIVELES PARA LA CREACION
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=6";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=6";
   $rs         = API::GET($URL, $token);
   $arrayNiveles  = API::JSON_TO_ARRAY($rs);
 
   //consulta de los ITEMS PARA LA CREACION
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=5";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=5";
   $rs         = API::GET($URL, $token);
   $arrayItemCreate  = API::JSON_TO_ARRAY($rs);
 
   //consulta las calificaciones de una evaluaicon
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=3";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=3";
   $rs         = API::GET($URL, $token);
   $arrayEvaluacion  = API::JSON_TO_ARRAY($rs);
 
     //consulta de los ITEMS PARA LA CREACION
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=7&idHeaderEvaluacion=$idHeaderEvaluacion";
+    $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=7&idHeaderEvaluacion=$idHeaderEvaluacion";
     $rs         = API::GET($URL, $token);
     $arrayResumen  = API::JSON_TO_ARRAY($rs);
     
@@ -116,7 +116,7 @@ if ($_POST['mod'] == 1) {
     
     
   //consulta de los items
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=2";
+    $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=2";
     $rs         = API::GET($URL, $token);
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 

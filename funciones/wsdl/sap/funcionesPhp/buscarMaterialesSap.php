@@ -48,7 +48,7 @@ if ($grpoCompraDesde!='' && $grpoCompraHasta!='') {$grpoCompra = array("DESDE" =
 	
  //// ACCESO LOGICO AL WSDL 		
  
-		$ruta =  "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sap/out/listastockInventarios_Sync_OutService.wsdl";
+		$ruta =  $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sap/out/listastockInventarios_Sync_OutService.wsdl";
     
 		$oSoapClient = new nusoap_client($ruta, true);
         // USUARIO Y PASS DE AUTENTIFICACION PO

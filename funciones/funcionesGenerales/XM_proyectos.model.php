@@ -18,7 +18,7 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/proyecto";
 
 // echo $URL;
 // print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;

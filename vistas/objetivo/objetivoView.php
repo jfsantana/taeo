@@ -4,7 +4,7 @@
       <?php
 
         //busca cuantos padres tiene el objetivo
-        $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=2&idHeader=$idObjetivoHeader&maxVersion=$maxVersion";
+        $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=2&idHeader=$idObjetivoHeader&maxVersion=$maxVersion";
         $rs         = API::GET($URL, $token);
         $arrayNodoPadre  = API::JSON_TO_ARRAY($rs);
         $banderaNodoPadre=false;

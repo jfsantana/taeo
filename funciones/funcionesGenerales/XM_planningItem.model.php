@@ -17,7 +17,7 @@ $token = $_SESSION['token'];
  $_POST['token'] = $_SESSION['token'];
  $_POST['creadoPor'] = $_SESSION['usuario'];
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planningItem";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planningItem";
 
 //print("<pre>".print_r(($_POST),true)."</pre>");die;
 

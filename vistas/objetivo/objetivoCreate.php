@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -93,7 +93,7 @@ $token = $_SESSION['token'];
 }
 
 function  hijos ($padre, $token){
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=3&id_padre=".$padre;
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=3&id_padre=".$padre;
                         $rs         = API::GET($URL, $token);
                         $arrayhijos  = API::JSON_TO_ARRAY($rs);
                         $banderaNodoPadre=false;
@@ -121,7 +121,7 @@ if ($_POST['mod'] == 1) {
   $idObjetivoHeader = @$_POST["id"];
 
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayHeader  = API::JSON_TO_ARRAY($rs);
 
@@ -140,7 +140,7 @@ if ($_POST['mod'] == 1) {
   else
     $estado = 0;
 
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=2&idObjetivoHeader=$idObjetivoHeader";
+    $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=2&idObjetivoHeader=$idObjetivoHeader";
     $rs         = API::GET($URL, $token);
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
@@ -153,7 +153,7 @@ if ($_POST['mod'] == 1) {
 
   //consulta el header del objetivo
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=1&idObjetivoHeader=$idObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayHeader  = API::JSON_TO_ARRAY($rs);
   $nombreObjetivo = $arrayHeader[0]['nombreObjetivo'];
@@ -169,11 +169,11 @@ if ($_POST['mod'] == 1) {
 
 if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=4&idHeader=$idObjetivoHeader";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=4&idHeader=$idObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayVersiones  = API::JSON_TO_ARRAY($rs);
 
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=5&idHeader=$idObjetivoHeader";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=5&idHeader=$idObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayMaxVersion  = API::JSON_TO_ARRAY($rs);
   // hacer la validacion si el valor del select no viene
@@ -192,12 +192,12 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/area?type=1";
   $rs         = API::GET($URL1, $token);
   $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=".@$idAreaObjetivo;
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=".@$idAreaObjetivo;
   $rs         = API::GET($URL1, $token);
   $arrayNivelAreaObjetivo  = API::JSON_TO_ARRAY($rs);
   //echo $URL1;

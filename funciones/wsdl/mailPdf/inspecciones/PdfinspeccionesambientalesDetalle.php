@@ -19,7 +19,7 @@ require '../../../../funciones/wsdl/clases/consumoApi.class.php';
 $date = date('Y-m-d');
 $headerId = $_GET['codigo_incidencia'];
 $token = '99';
-$URL = 'http://'.$_SERVER['HTTP_HOST']."/funciones/wsdl/inspecciones?detalleIncidenciaId=$headerId";
+$URL = ''.$_SESSION['HTTP_ORIGIN']."/funciones/wsdl/inspecciones?detalleIncidenciaId=$headerId";
 
 $rs = API::GET($URL, $token);
 $arrayInspeccion = API::JSON_TO_ARRAY($rs);

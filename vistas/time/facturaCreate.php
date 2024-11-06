@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -36,7 +36,7 @@ $accion = "Editar";
 //Listado Clientes
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/factura?idUser=" . $idAux . "&corteFactura=$corteAux";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/factura?idUser=" . $idAux . "&corteFactura=$corteAux";
 $rs         = API::GET($URL, $token);
 $arrayFactura  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayFactura);

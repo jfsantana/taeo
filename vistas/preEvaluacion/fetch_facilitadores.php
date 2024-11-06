@@ -25,7 +25,7 @@ $token = $_SESSION['token'];
 
 // Realiza la solicitud a la API para obtener los FACILITADORES DE CADA SEDE
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=5&idSede=" . $idSedeObjetivo;
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=5&idSede=" . $idSedeObjetivo;
 $rs = API::GET($URL, $token);
 $arrayNivelAreaObjetivo = API::JSON_TO_ARRAY($rs);
 

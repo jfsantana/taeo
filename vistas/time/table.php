@@ -11,7 +11,7 @@
         <div class="modal-body">
 
           <?php
-          $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time?id=" . $ResumenConsultore['id_usu'] . "&corte=" . $_SESSION['corte'];
+          $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/time?id=" . $ResumenConsultore['id_usu'] . "&corte=" . $_SESSION['corte'];
           $rs         = API::GET($URL, $token);
           $arrayTiempo  = API::JSON_TO_ARRAY($rs);
           ?>

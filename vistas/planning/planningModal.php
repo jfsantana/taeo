@@ -1,6 +1,6 @@
 <?php
 $token = $_SESSION['token'];
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=" . @$idArea;
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=" . @$idArea;
 $rs = API::GET($URL, $token);
 $arrayNiveles = API::JSON_TO_ARRAY($rs);
 ?> 

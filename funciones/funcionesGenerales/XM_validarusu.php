@@ -12,13 +12,13 @@ if ((@$_POST['user'] == '') && ($_POST['password'] == '')) {
 
 $token = '';
 //Update Token
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/auth?updateToken";
+$URL        = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']. "/funciones/wsdl/auth?updateToken";
 $rs         = API::GET($URL, $token);
 $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
 
 
 
-$URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/auth';
+$URL = $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'] . '/funciones/wsdl/auth';
 $parametros = [
   'usuario' => $_POST['user'],
   'password' => $_POST['password'],
@@ -27,14 +27,14 @@ $parametros = [
 $rs = API::POST($URL, $token, $parametros);
 $rs = API::JSON_TO_ARRAY($rs);
 
-  //  echo $URL; 
-  // print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
+  //   echo $URL; 
+  //  print("<pre>".print_r(json_encode($parametros),true)."</pre>");die;
   //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 if (@$rs['result']['token']) {
 
   $token = $rs['result']['token'];
-  $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/empleados?token=' . $rs['result']['token'];
+  $URL =  $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'] . '/funciones/wsdl/empleados?token=' . $rs['result']['token'];
   //echo $URL; die;
   $rs = API::GET($URL, $token);
   $array = API::JSON_TO_ARRAY($rs);
@@ -45,7 +45,7 @@ if (@$rs['result']['token']) {
     exit;
   }
 
-  $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/sede?type=1&idSede='.$_POST['locacion'];
+  $URL =  $_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'] . '/funciones/wsdl/sede?type=1&idSede='.@$_POST['locacion'];
   $rs = API::GET($URL, $token);
   $arraySede = API::JSON_TO_ARRAY($rs);
 
@@ -55,7 +55,8 @@ if (@$rs['result']['token']) {
 
   //echo   $URL; die;
 
-
+  $_SESSION['HTTP_ORIGIN']=$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST'];
+  //print("<pre>".print_r(($_SERVER),true)."</pre>");die;
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
   $_SESSION['ponderacion'] = $datosEmpleado[0]['orderRol'];
 
@@ -73,7 +74,7 @@ if (@$rs['result']['token']) {
 
   //print_r($_SESSION); die;
 
-  $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/empleados?type=6&idUsuario='. $_SESSION['id_user'];
+  $URL = $_SESSION['HTTP_ORIGIN'] . '/funciones/wsdl/empleados?type=6&idUsuario='. $_SESSION['id_user'];
   $rs = API::GET($URL, $token);
   $arraySedebyEmpleado = API::JSON_TO_ARRAY($rs);
   //print_r($arraySedebyEmpleado); die;

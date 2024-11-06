@@ -49,12 +49,12 @@ $valorPadre = $_POST['valorPadre'];
 $token = $_SESSION['token'];
 
 // Realiza la solicitud a la API para obtener los VALORES DEL PROXIMO SELECT
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=3&idArea=$idArea&nivelObjetivo=$nivelObjetivo&nivel_nodo=$nivelNodo&valor_padre=$valorPadre";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=3&idArea=$idArea&nivelObjetivo=$nivelObjetivo&nivel_nodo=$nivelNodo&valor_padre=$valorPadre";
 $rs = API::GET($URL, $token);
 $arrayNivelAreaObjetivo = API::JSON_TO_ARRAY($rs);
 
 // Indica si un Nodo es abuelo
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=4&jerarquia=$valorPadre&nivelObjetivo=$nivelObjetivo&idAreaObjetivo=$idArea";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=4&jerarquia=$valorPadre&nivelObjetivo=$nivelObjetivo&idAreaObjetivo=$idArea";
 $rs = API::GET($URL, $token);
 $arrayAbuelo = API::JSON_TO_ARRAY($rs);
 

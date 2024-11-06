@@ -16,7 +16,7 @@ $token = $_SESSION['token'];
 $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/time";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/time";
 //  echo $URL;
 //  print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);

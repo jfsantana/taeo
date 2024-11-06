@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 
@@ -13,7 +13,7 @@ if (!isset($_SESSION['id_user'])) {
 
   $idEvento = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=4";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=4";
   $rs         = API::GET($URL, $token);
   $arrayEvent  = API::JSON_TO_ARRAY($rs);
   //print("<pre>".print_r(($arrayEvent) ,true)."</pre>"); die;

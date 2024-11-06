@@ -21,7 +21,7 @@ $date = date('Y-m-d');
 $headerId = $_GET['idHeaderNew'];
 // WS datos empleado
 $token = $_SESSION['token'];
-$URL = 'http://'.$_SERVER['HTTP_HOST']."/funciones/wsdl/inspecciones?detalleIncidenciaId=$headerId";
+$URL = ''.$_SESSION['HTTP_ORIGIN']."/funciones/wsdl/inspecciones?detalleIncidenciaId=$headerId";
 
 $rs = API::GET($URL, $token);
 $arrayInspeccion = API::JSON_TO_ARRAY($rs);

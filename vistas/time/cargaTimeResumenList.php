@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 
@@ -11,22 +11,22 @@ if (!isset($_SESSION['id_user'])) {
 $status='Planificados';
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
-// print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
+ //print("<pre>".print_r(($_SERVER) ,true)."</pre>"); //die;
 
 if (($_SESSION['id_rol']==1)){
 
-  $UrlAcceso         = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status";
-  $UrlAccesoResumen  = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=";
+  $UrlAcceso         = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=1&status=$status";
+  $UrlAccesoResumen  = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=1&status=";
   
 }else{
 
   //1.SABER TODAS LAS SEDES ASOCIADAS AL USUARIOS LOGUEADO POR SU ID
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
   $rs         = API::GET($URL, $token);
   $sedesPermiso  = API::JSON_TO_ARRAY($rs);
 
-  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso;
-  $UrlAccesoResumen  = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso."&status=";
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso;
+  $UrlAccesoResumen  = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=1&status=$status&idsede=".$sedesPermiso."&status=";
 }
 //echo $UrlAcceso ; 
 

@@ -223,7 +223,7 @@ class API
     //         require_once '../../../../public/plugins/nusoap/lib/nusoap.php';
     //     }
 
-    //     $ruta = 'http://'.$_SERVER['HTTP_HOST'].'/funciones/wsdl/sap/in/ZEHS_CREATE_NOTIF_Sync_OutService.wsdl';
+    //     $ruta = ''.$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/sap/in/ZEHS_CREATE_NOTIF_Sync_OutService.wsdl';
 
     //     $oSoapClient = new nusoap_client($ruta, true);
 

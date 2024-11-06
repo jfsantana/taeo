@@ -11,7 +11,7 @@ if (!isset($idEvento)) {
     exit;
 }
 
-$apiUrl = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=2&idEvento=" . $idEvento;
+$apiUrl = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=2&idEvento=" . $idEvento;
 $response = file_get_contents($apiUrl);
 $eventData = json_decode($response, true);
 
@@ -20,7 +20,7 @@ if (empty($eventData)) {
     exit;
 }
 
-$apiUrl = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/config?type=2&tipo=email";
+$apiUrl = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/config?type=2&tipo=email";
 $response = file_get_contents($apiUrl);
 $mailData = json_decode($response, true);
 

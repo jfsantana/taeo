@@ -180,7 +180,7 @@ class objetivo extends conexion
             $this->versionObjetivo=@$datos['versionActual'];
 
             $token='';
-            $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivoItem?idHeader=$this->idObjetivoHeader&versionObjetivo=$this->versionObjetivo";
+            $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivoItem?idHeader=$this->idObjetivoHeader&versionObjetivo=$this->versionObjetivo";
             $rs         = API::DELETE($URL, $token);
             $delItemByHeader  = API::JSON_TO_ARRAY($rs);
 

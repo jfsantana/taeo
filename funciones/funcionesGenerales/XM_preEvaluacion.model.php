@@ -25,14 +25,14 @@ if (@$_POST['idNivelEvaluacion'] == '') {
 }
 
 if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
-    $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=".$_POST['idHeaderEvaluacionAnterior'];
+    $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=".$_POST['idHeaderEvaluacionAnterior'];
     $rs         = API::GET($URL, $token);
     $arrayPreEvaluacion  = API::JSON_TO_ARRAY($rs);
     //echo "<pre>".print_r($URL,true)."</pre>";die;
     $_POST['fechaUltimaEvaluacion'] =$arrayPreEvaluacion[0]['fechaEvaluacion'] ;
 }
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion";
 //print("<pre>".print_r(($URL),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);

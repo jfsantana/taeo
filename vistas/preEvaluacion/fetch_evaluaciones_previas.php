@@ -24,7 +24,7 @@ $idAprendiz = $_POST['idAprendiz'];
 $token = $_SESSION['token'];
 
 // Realiza la solicitud a la API para obtener los niveles del área
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/preEvaluacion?type=4&idAprendiz=" . $idAprendiz;
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=4&idAprendiz=" . $idAprendiz;
 $rs = API::GET($URL, $token);
 $arrayEvaluacionesPrevias = API::JSON_TO_ARRAY($rs);
 

@@ -4,7 +4,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -26,7 +26,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
     $accion = "Editar";
 
   
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=6&idEvaluacion=".$_POST['idItem'];
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=6&idEvaluacion=".$_POST['idItem'];
   $rs         = API::GET($URL, $token);
   $arrayEvaluacion  = API::JSON_TO_ARRAY($rs);
 
@@ -44,19 +44,19 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
   @$_POST['mod'] = 1;
 }
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=2&idItems=$idItems";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=2&idItems=$idItems";
 //echo $URL;
 $rs         = API::GET($URL, $token);
 $arrayActividad  = API::JSON_TO_ARRAY($rs);
 
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=3";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=3";
 $rs         = API::GET($URL, $token);
 $arrayValoresEvaluaciones  = API::JSON_TO_ARRAY($rs);
 
 /**********VALIDACIONES*************** */
 // QUE TENGA AL MENOS UNA EVALUACION INICIAL ANTES DE PODER HACER LAS PLANIFICADAS, esto se busca en la tabla planificacion_evaluacion en el campo tipo de evaluacion
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=4&idItem=$idItems";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=4&idItem=$idItems";
 $rs         = API::GET($URL, $token);
 $arrayEvaInicial  = API::JSON_TO_ARRAY($rs);
 
@@ -68,14 +68,14 @@ if (!is_array($arrayEvaInicial) || count($arrayEvaInicial) == 0) {
 
 
 //EL NUMERO DE registros de avances PLANIFICADAS LAS ESPECIFICA LA CABECEA DE LA PLANIFICACION $idPlanificacionHeader 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1&idPlanificacion=$idPlanificacionHeader";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1&idPlanificacion=$idPlanificacionHeader";
 $rs         = API::GET($URL, $token);
 $arrayHeaderPlanificacion  = API::JSON_TO_ARRAY($rs);
 
 $numEvaluacionesPermitidas=$arrayHeaderPlanificacion[0]['periodoEvaluacion'] ;
 
 
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion?type=5&idItem=$idItems";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=5&idItem=$idItems";
 $rs         = API::GET($URL, $token);
 $arrayEvaluaciones  = API::JSON_TO_ARRAY($rs);
 $numEvaluacionesPlanificadas=0;

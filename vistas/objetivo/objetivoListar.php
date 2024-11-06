@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -11,7 +11,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 //Listado Clientes
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo?type=1";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=1";
 //echo $URL ;
 $rs         = API::GET($URL, $token);
 $arrayObjetivo  = API::JSON_TO_ARRAY($rs);

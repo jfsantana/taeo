@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -12,7 +12,7 @@ $token = $_SESSION['token'];
 
 
 // print("<pre>".print_r(($arrayClientes) ,true)."</pre>"); //die;
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/clientes?id=&status=1";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/clientes?id=&status=1";
 $rs         = API::GET($URL, $token);
 $arrayClientes  = API::JSON_TO_ARRAY($rs);
 
@@ -23,7 +23,7 @@ if ($_POST['mod'] == 1) {
   $accion = "Editar";
   //Listado Clientes
   $id = @$_POST["id"];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/proyecto?idProyecto=$id";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/proyecto?idProyecto=$id";
   $rs         = API::GET($URL, $token);
   $arrayProyecto  = API::JSON_TO_ARRAY($rs);
   $Nombre = $arrayProyecto[0]['nameProyecto'];

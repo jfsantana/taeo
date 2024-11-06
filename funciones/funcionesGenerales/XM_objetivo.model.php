@@ -21,7 +21,7 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 //print("<pre>".print_r(json_encode($_POST),true)."</pre>");
 //print("<pre>".print_r(json_encode($_FILES),true)."</pre>");
 $_POST['file']=@$_FILES;
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/objetivo";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo";
 
   //  print("<pre>".print_r(json_encode($_POST),true)."</pre>");
   //  echo $URL; die;

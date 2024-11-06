@@ -24,7 +24,7 @@ $date = date('Y-m-d');
 $token = $_SESSION['token'];
 
 $idInforme = $_GET['idInforme'];
-$URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/ambienteInforme?idInforme=$idInforme';
+$URL = $_SESSION['HTTP_ORIGIN'] . '/funciones/wsdl/ambienteInforme?idInforme=$idInforme';
 
 $rs = API::GET($URL, $token);
 $rs = API::JSON_TO_ARRAY($rs);

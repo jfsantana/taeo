@@ -46,7 +46,7 @@ if($_POST['flagImagen']==1){  //ya tenia imagen
         $nombreArchivo = @$_FILES['afiche']['name'];
         $nombreArchivo = str_replace(' ', '%20', $nombreArchivo);
         $carpetaDestino = @$_SERVER['DOCUMENT_ROOT'] . '/funciones/wsdl/uploads/';
-        $rutaImagen=  @$_SERVER['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
+        $rutaImagen=  @$_SESSION['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
         $tamanoArchivo = @$_FILES['afiche']['size'];
     
         // Ruta de guardado
@@ -71,7 +71,7 @@ if($_POST['flagImagen']==1){  //ya tenia imagen
         $nombreArchivo = @$_FILES['afiche']['name'];
         $nombreArchivo = str_replace(' ', '%20', $nombreArchivo);
         $carpetaDestino = @$_SERVER['DOCUMENT_ROOT'] . '/funciones/wsdl/uploads/';
-        $rutaImagen=  @$_SERVER['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
+        $rutaImagen=  @$_SESSION['HTTP_ORIGIN'] . '/funciones/wsdl/uploads/';
         $tamanoArchivo = @$_FILES['afiche']['size'];
     
         // Ruta de guardado
@@ -101,7 +101,7 @@ if($_POST['flagImagen']==1){  //ya tenia imagen
     (@$_POST['descripcionEvento']!="")&&
     (@$_POST['fechaEvento']!="")
     ){
-        $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event";
+        $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event";
        // echo $URL; die;
             $rs = API::POST($URL, $token, $request);
             $rs = API::JSON_TO_ARRAY($rs);

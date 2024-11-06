@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -13,19 +13,19 @@ $token = $_SESSION['token'];
 
 
 //Lista de Cargos
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=2";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=2";
 $rs         = API::GET($URL, $token);
 $arrayCargos  = API::JSON_TO_ARRAY($rs);
 
 //Lista de Roles
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/rol?type=1";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/rol?type=1";
 $rs         = API::GET($URL, $token);
 $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
 
 //Lista de Sedes de taeo
 $token = $_SESSION['token'];
-$URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+$URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1";
 $rs         = API::GET($URL1, $token);
 $arraySede  = API::JSON_TO_ARRAY($rs);
 
@@ -38,7 +38,7 @@ if ($_POST['mod'] == 1) {
   //datos facilitador o empleado
   $idUsuario = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=1&idUsuario=$idUsuario";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=1&idUsuario=$idUsuario";
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
 
@@ -63,7 +63,7 @@ if ($_POST['mod'] == 1) {
 
 
   //Lista de Sede del Facilitador
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$idUsuario";//$idUsuario
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$idUsuario";//$idUsuario
   $rs         = API::GET($URL1, $token);
   $arraySedeFacilitador  = API::JSON_TO_ARRAY($rs);
   $SedeFacilitador='';

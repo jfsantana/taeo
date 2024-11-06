@@ -24,7 +24,7 @@ $idAreaObjetivo = $_POST['idArea'];
 $token = $_SESSION['token'];
 
 // Realiza la solicitud a la API para obtener los niveles del área
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=" . $idAreaObjetivo;
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=" . $idAreaObjetivo;
 $rs = API::GET($URL, $token);
 $arrayNivelAreaObjetivo = API::JSON_TO_ARRAY($rs);
 

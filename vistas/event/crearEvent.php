@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -24,7 +24,7 @@ if ($_POST['mod'] == 1) {
   //datos facilitador o empleado
   $idEvento = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/event?type=2&idEvento=$idEvento";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/event?type=2&idEvento=$idEvento";
   $rs         = API::GET($URL, $token);
   $arrayEvent  = API::JSON_TO_ARRAY($rs);
 
@@ -74,7 +74,7 @@ if ($_POST['mod'] == 1) {
 /*******************************
  * SEDES API
  */
-$UrlSede= "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+$UrlSede= $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1";
 $rs         = API::GET($UrlSede, $token);
 $arraySede  = API::JSON_TO_ARRAY($rs);
 //print("<pre>".print_r(($arraySede) ,true)."</pre>"); / /die;
@@ -286,7 +286,7 @@ $arraySede  = API::JSON_TO_ARRAY($rs);
 <script>
 document.getElementById('sendEmailButton').addEventListener('click', function() {
     var idEvento = <?php echo  $idEvento ; ?>; // Reemplaza con el ID del evento correspondiente
-    var apiUrl = 'http://<?php echo $_SERVER['HTTP_HOST'];?>/funciones/wsdl/event?type=3&idEvento=' + idEvento;
+    var apiUrl = '<?php echo $_SESSION['HTTP_ORIGIN'];?>/funciones/wsdl/event?type=3&idEvento=' + idEvento;
   alert("Enviando correo esto podra tardar unos minutos. Espere el mensaje de confirmaación antes de salir de esta pagina.");
     fetch(apiUrl)
         .then(response => response.json())

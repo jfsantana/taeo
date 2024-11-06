@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -11,7 +11,7 @@ $token = $_SESSION['token'];
 //print("<pre>".print_r(($_SESSION) ,true)."</pre>"); //die;
 
 //verificar que rol tiene el usuario
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?rol";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?rol";
 $rs         = API::GET($URL, $token);
 $arrayRoles  = API::JSON_TO_ARRAY($rs);
 //var_dump($arrayRoles[0]['id_rol']);
@@ -24,7 +24,7 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
   $token = $_SESSION['token'];
 
   //datos del facilitador
-  $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/empleados?token=' . $_SESSION['token'];
+  $URL = $_SESSION['HTTP_ORIGIN'] . '/funciones/wsdl/empleados?token=' . $_SESSION['token'];
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
 
@@ -42,7 +42,7 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
   $estado =   $act_usu ;
 
   //sede del facilitador
-  $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$id";
+  $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleadosSede?type=1&idUsuario=$id";
   $rs         = API::GET($URL, $token);
   $arraySede  = API::JSON_TO_ARRAY($rs);
 
@@ -54,7 +54,7 @@ $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
   //Listado Sedes
     $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1";
 
 
   $rs         = API::GET($URL1, $token);

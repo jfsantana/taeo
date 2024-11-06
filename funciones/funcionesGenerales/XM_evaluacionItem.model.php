@@ -24,7 +24,7 @@ $itemHeader=$_POST['idItems'].'-'.$_POST['idPlanificacionHeader'];
 
 
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/evaluacion";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion";
 // echo $URL;
 // print("<pre>".print_r(json_encode($_POST),true)."</pre>"); die;
 $rs = API::POST($URL, $token, $_POST);

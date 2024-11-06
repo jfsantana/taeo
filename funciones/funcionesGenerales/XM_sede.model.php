@@ -27,7 +27,7 @@ $_POST['creador'] = $_SESSION['usuario'];
     ($_POST['emailSede']!="")&&
     ($_POST['direccionSede']!="")
     ){
-      $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede";
+      $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede";
       $rs = API::POST($URL, $token, $_POST);
       $rs = API::JSON_TO_ARRAY($rs);
     }

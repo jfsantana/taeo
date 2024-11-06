@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -21,7 +21,7 @@ if ($_POST['mod'] == 1) {
   //datos facilitador o empleado
   $idAprendiz = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz?type=1&idAprendiz=$idAprendiz";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=1&idAprendiz=$idAprendiz";
   $rs         = API::GET($URL, $token);
   $arrayUsuario  = API::JSON_TO_ARRAY($rs);
 
@@ -44,13 +44,13 @@ if ($_POST['mod'] == 1) {
 
 
 //Lista de Representantes Activos  del Aprendiz
-$URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz?type=2&idAprendiz=$idAprendiz";//$idAprendiz
+$URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=2&idAprendiz=$idAprendiz";//$idAprendiz
 $rs         = API::GET($URL1, $token);
 $arrayRepresentanteByAprendiz  = API::JSON_TO_ARRAY($rs);
 
 
   //Lista de Representantes Activos  del Aprendiz
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz?type=2&idAprendiz=$idAprendiz";//$idAprendiz
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=2&idAprendiz=$idAprendiz";//$idAprendiz
   $rs         = API::GET($URL1, $token);
   $arrayRepresentanteByAprendizActivos  = API::JSON_TO_ARRAY($rs);
   $representanteByAprendizActivos='';

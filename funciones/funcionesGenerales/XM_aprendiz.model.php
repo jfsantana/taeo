@@ -16,7 +16,7 @@
     $_POST['creadoPor'] = $_SESSION['usuario'];
     $_POST['creador'] = $_SESSION['usuario'];
 
-    $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz";
+    $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz";
     $rs = API::POST($URL, $token, $_POST);
     $rs = API::JSON_TO_ARRAY($rs);
 

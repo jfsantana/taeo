@@ -3,14 +3,14 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
  //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 $token='';
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?aprobadores";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?aprobadores";
 $rs         = API::GET($URL, $token);
 $arrayAprobadores  = API::JSON_TO_ARRAY($rs);
 
@@ -23,7 +23,7 @@ if (@$_POST['mod'] == 1) {
   //Listado Sede
   $id = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1&idSede=$id";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1&idSede=$id";
   $rs         = API::GET($URL, $token);
   $arrayCconsultora  = API::JSON_TO_ARRAY($rs);
 

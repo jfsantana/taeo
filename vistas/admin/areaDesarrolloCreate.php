@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -21,7 +21,7 @@ if ($_POST['mod'] == 1) {
   //datos del area seleccioada
   $idArea = @$_POST["id"];
   $token = $_SESSION['token'];
-  $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1&idArea=$idArea";
+  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/area?type=1&idArea=$idArea";
   $rs         = API::GET($URL, $token);
   $arrayArea  = API::JSON_TO_ARRAY($rs);
 
@@ -29,7 +29,7 @@ if ($_POST['mod'] == 1) {
   $descripcionArea = $arrayArea[0]['descripcionArea'];
 
   //Lista de Niveles del &Aacute;rea Seleccioanda
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=2&idArea=$idArea";//$idArea
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/area?type=2&idArea=$idArea";//$idArea
   $rs         = API::GET($URL1, $token);
   $arrayNivelesArea  = API::JSON_TO_ARRAY($rs);
 

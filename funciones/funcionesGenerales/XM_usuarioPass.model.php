@@ -19,7 +19,7 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 //print("<pre>" . print_r(($_POST), true) . "</pre>");die;
 
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleadosPass";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleadosPass";
 //echo $URL;
 //print("<pre>" . print_r(json_encode($_POST), true) . "</pre>");die;
 $rs = API::POST($URL, $token, $_POST);

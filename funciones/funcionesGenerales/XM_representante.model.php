@@ -20,7 +20,7 @@ $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/representante";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/representante";
 
 //  echo $URL;
 // print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
@@ -41,7 +41,7 @@ if (@$rs['status'] == 'OK') {
         'idRepresentante' => @$idRepresentante,
         'token' => $_SESSION['token'], ];
 
-      $URL2 = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendizRepresentante";
+      $URL2 = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendizRepresentante";
       $rs2 = API::POST($URL2, $token, $parameter);
       $rs2 = API::JSON_TO_ARRAY($rs2);
 

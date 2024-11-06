@@ -21,7 +21,7 @@ $date = date('Y-m-d');
 $proyectoAHOHeaderId = $_GET['proyectoAHOHeaderId'];
 // WS datos empleado
 $token = $_SESSION['token'];
-$URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/proyectos?proyectoAHOHeaderId=$proyectoAHOHeaderId';
+$URL = $_SESSION['HTTP_ORIGIN'] . '/funciones/wsdl/proyectos?proyectoAHOHeaderId=$proyectoAHOHeaderId';
 $rs = API::GET($URL, $token);
 $arrayProyecto = API::JSON_TO_ARRAY($rs);
 

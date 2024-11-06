@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -12,15 +12,15 @@ $id = @$_POST["id"];
 $token = $_SESSION['token'];
 
 //1.SABER TODAS LAS SEDES ASOCIADAS AL USUARIOS LOGUEADO POR SU ID
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
 $rs         = API::GET($URL, $token);
 $sedesPermiso  = API::JSON_TO_ARRAY($rs);
 
 //Listado de planificaicones
 if ($_SESSION['id_rol']==1){
-  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1";
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1";
 }else{
-  $UrlAcceso        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1&sede=".$sedesPermiso;
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1&sede=".$sedesPermiso;
 }
 //print("<pre>".print_r(($UrlAcceso),true)."</pre>");
 $URL        = $UrlAcceso;
@@ -28,7 +28,7 @@ $rs         = API::GET($URL, $token);
 $arrayPlanificaciones  = API::JSON_TO_ARRAY($rs);
 
 //Listado de planificaicones por sede
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=2";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=2";
 $rs         = API::GET($URL, $token);
 $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
 

@@ -16,7 +16,7 @@ function empleado($n_personal){
 		
     
 		
-		$ruta = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sap/out/ZEHS_DATOSEMPLEADO_Sync_OutService_PRD.wsdl";
+		$ruta = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sap/out/ZEHS_DATOSEMPLEADO_Sync_OutService_PRD.wsdl";
 		$oSoapClient = new nusoap_client($ruta, true);
 		$oSoapClient->setCredentials('PIUSERWS01', 'Pequiven21*', 'basic');
 		if ($sError = $oSoapClient->getError()) 

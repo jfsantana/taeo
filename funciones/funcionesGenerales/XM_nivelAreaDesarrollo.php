@@ -16,11 +16,11 @@ $token = $_SESSION['token'];
 $_POST['token'] = $_SESSION['token'];
 $_POST['creador'] = $_SESSION['usuario'];
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede";
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
-$URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea";
+$URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/nivelArea";
 // echo $URL;
 // print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
 
@@ -34,7 +34,7 @@ $rs = API::JSON_TO_ARRAY($rs);
   //   ($_POST['emailSede']!="")&&
   //   ($_POST['direccionSede']!="")
   //   ){
-  //     $URL = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/nivelArea";
+  //     $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/nivelArea";
   //     $rs = API::POST($URL, $token, $_POST);
   //     $rs = API::JSON_TO_ARRAY($rs);
   //   }

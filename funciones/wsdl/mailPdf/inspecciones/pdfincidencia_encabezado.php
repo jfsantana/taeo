@@ -1,7 +1,7 @@
 <?php
 // WS datos empleado
 $token = '4c699809ad1f36ad58a3ab06163ffad1';
-$URL = 'http://'.$_SERVER['HTTP_HOST']."/funciones/wsdl/empleados?token=$token";
+$URL = ''.$_SESSION['HTTP_ORIGIN']."/funciones/wsdl/empleados?token=$token";
 // echo $URL;die;
 $rs = API::GET($URL, $token);
 $arrayPersonal = API::JSON_TO_ARRAY($rs);

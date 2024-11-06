@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['id_user'])) {
-  header("Location:  http://" . $_SERVER['HTTP_HOST']);
+  header("Location:  " . $_SESSION['HTTP_ORIGIN']);
   exit();
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
@@ -11,7 +11,7 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 //Listado Clientes
 $id_usu = @$_POST["id_usu"];
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=1";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=1";
 $rs         = API::GET($URL, $token);
 $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
 
@@ -40,13 +40,13 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
 
       <?php
       // indicador de usuarios por rol
-      $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/rol?type=1";
+      $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/rol?type=1";
       $rs         = API::GET($URL, $token);
       $arrayRoles  = API::JSON_TO_ARRAY($rs);
 
       foreach ($arrayRoles as $rol) {
 
-        $URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/rol?type=2&idRol=".$rol['idRol'];
+        $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/rol?type=2&idRol=".$rol['idRol'];
         $rs         = API::GET($URL, $token);
         $arrayUsuarioRol  = API::JSON_TO_ARRAY($rs);
         ?>

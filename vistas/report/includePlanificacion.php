@@ -5,7 +5,7 @@ $accion = "Editar";
 $idObjetivoHeader = @$_POST["id"];
 
 $token = $_SESSION['token'];
-$URL        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/planning?type=1&idPlanificacion=$idObjetivoHeader";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1&idPlanificacion=$idObjetivoHeader";
 $rs         = API::GET($URL, $token);
 $arrayHeader  = API::JSON_TO_ARRAY($rs);
 
@@ -32,23 +32,23 @@ else
   $estado = 0;
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/area?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/area?type=1";
   $rs         = API::GET($URL1, $token);
   $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/sede?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1";
   $rs         = API::GET($URL1, $token);
   $arraySede  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/aprendiz?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=1";
   $rs         = API::GET($URL1, $token);
   $arrayAprendices  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
   //rolUsuario=3  SE REFIERE A LOS FACILITADORES
-  $URL1        = "http://" . $_SERVER['HTTP_HOST'] . "/funciones/wsdl/empleados?type=3&rolUsuario=3";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=3&rolUsuario=3";
   $rs         = API::GET($URL1, $token);
   $arrayFacilitadores  = API::JSON_TO_ARRAY($rs);
 
