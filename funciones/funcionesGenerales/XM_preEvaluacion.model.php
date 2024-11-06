@@ -18,7 +18,7 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); die;
+print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); //die;
 
 if (@$_POST['idNivelEvaluacion'] == '') {
     $continuidadAlmacenamientoidNivelEvaluacion = @$_POST['idNivelEvaluacion'];
@@ -33,7 +33,7 @@ if (@$_POST['idHeaderEvaluacionAnterior'] != '') {
 }
 
 $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion";
-//print("<pre>".print_r(($URL),true)."</pre>");die;
+print("<pre>".print_r(($URL),true)."</pre>");die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
