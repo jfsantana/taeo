@@ -17,7 +17,7 @@ if (!empty($modalsData)) {
               <form id="editForm_<?php echo $modalData['modalId']; ?>">
                 <input type="hidden" class="form-control" id="editIdHeaderEvaluacion_<?php echo $modalData['modalId']; ?>" name="idHeaderEvaluacion" value="<?php echo $modalData['idHeaderEvaluacion']; ?>">
                 <div class="form-group">
-                    <label for="editNivel_<?php echo $modalData['modalId']; ?>">Nivel <?php echo $modalData['idNivelEvaluacion']; ?></label>
+                    <label for="editNivel_<?php echo $modalData['modalId']; ?>">Nivel </label>
                     <select class="form-control" name="idNivelEvaluacion" id="editNivel_<?php echo $modalData['modalId']; ?>" required>
                         <option value=''>Seleccione</option>
                         <?php foreach($arrayNiveles as $dataNiveles) { ?>
@@ -39,12 +39,12 @@ if (!empty($modalsData)) {
                   </select>
                 </div>
                 <div class="form-group">
-                  <label for="editArea_<?php echo $modalData['modalId']; ?>">Área <?php echo $modalData['idAreaEvaluacion'];?></label>
+                  <label for="editArea_<?php echo $modalData['modalId']; ?>">Área </label>
                   <select class="form-control" name="idAreaEvaluacion" id="editArea_<?php echo $modalData['modalId']; ?>" required>
                     <option value=''>Seleccione</option>
                     <?php foreach($arrayItemCreate as $dataItemCreate ){?>
                       
-                      <option <?php if ($dataItemCreate['idAreaEvaluacion'] == @$modalData['idAreaEvaluacion']) {echo 'selected';} ?> value=<?php echo $dataItemCreate['idAreaEvaluacion'];?>><?php echo strtoupper($dataItemCreate['idAreaEvaluacion'].$dataItemCreate['nombreAreaEvaluacion']);?></option>
+                      <option <?php if ($dataItemCreate['idAreaEvaluacion'] == @$modalData['idAreaEvaluacion']) {echo 'selected';} ?> value=<?php echo $dataItemCreate['idAreaEvaluacion'];?>><?php echo strtoupper($dataItemCreate['nombreAreaEvaluacion']);?></option>
                     <?php }?>
                   </select>
                 </div>
