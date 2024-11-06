@@ -267,7 +267,6 @@ class preEvaluacion extends conexion
       if ($arrayToken) {
 
         if (
-          (count($datos['idEvaluadoPor'])>0)&&
           (!isset($datos['fechaCreacion'])) 
         ) {
           $datosArray = $_respuestas->error_400();
