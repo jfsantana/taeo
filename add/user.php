@@ -11,13 +11,19 @@ if (!isset($_SESSION)) {
           <a href="#" class="d-block">
               <?php  echo $_SESSION['nombre']; ?>
               </br>
-              (
                   <?php
-                    echo $_SESSION['des_rol'] ;
-                    if(isset($_SESSION['nombreEmpresaConsultora'] ))
-                    echo ' / '.$_SESSION['sedeNombre'];
+                    echo 'Rol:'.$_SESSION['des_rol']. '<br><br>(Acceso a Sede:<br>' ;
+                    if(isset($_SESSION['nombreSede'] ))
+                      $sedes = explode('*', $_SESSION['nombreSede']);
+                      foreach ($sedes as $index => $sede) {
+                          if ($index === count($sedes) - 1) {
+                              echo $sede . ')<br>';
+                          } else {
+                              echo $sede . '<br>';
+                          }
+                      }
                     ;
-                  ?>)</a>
+                  ?></a>
         </div>
       </div>
 

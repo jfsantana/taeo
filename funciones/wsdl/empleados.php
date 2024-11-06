@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * 2 Lista los cargos disponibles
    * 3 Facilitadores por cargo
    * 4 Facilitadores por sede
+   * 
+   * 6 lista de sedes de un empleado
    */
   if (isset($_GET['token'])) { //TAEO LISTO
     $token = $_GET['token'];
@@ -43,6 +45,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
   }elseif($_GET['type']==5){
     $datosEmpleado = $_empleados->getEvaluadorBySede(@$_GET['idSede']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosEmpleado);
+    http_response_code(200);
+  }elseif($_GET['type']==6){
+    $datosEmpleado = $_empleados->getSedeByEvaluador(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosEmpleado);
     http_response_code(200);

@@ -49,11 +49,16 @@ if (@$rs['result']['token']) {
   $rs = API::GET($URL, $token);
   $arraySede = API::JSON_TO_ARRAY($rs);
 
+
+
+
+
   //echo   $URL; die;
+
+
   $_SESSION['usuario'] = $datosEmpleado[0]['loginUsuario'];
   $_SESSION['ponderacion'] = $datosEmpleado[0]['orderRol'];
-  $_SESSION['sedeId'] = $_POST['locacion'];  //sede con la que se logeo
-  $_SESSION['sedeNombre']=$arraySede[0]['nombreSede'];
+
   $_SESSION['id_user'] = @$datosEmpleado[0]['idUsuario'];
   $_SESSION['id_rol'] = @$datosEmpleado[0]['rolUsuario'];
   $_SESSION['perfil'] = @$datosEmpleado[0]['descripcionRol'];
@@ -67,6 +72,29 @@ if (@$rs['result']['token']) {
   $_SESSION['last_activity'] = time();
 
   //print_r($_SESSION); die;
+
+  $URL = 'http://' . $_SERVER['HTTP_HOST'] . '/funciones/wsdl/empleados?type=6&idUsuario='. $_SESSION['id_user'];
+  $rs = API::GET($URL, $token);
+  $arraySedebyEmpleado = API::JSON_TO_ARRAY($rs);
+  //print_r($arraySedebyEmpleado); die;
+//  print("<pre>".print_r(($arraySedebyEmpleado),true)."</pre>");die;
+
+  $_SESSION['sedeNombre']='';
+  foreach ($arraySedebyEmpleado as $sede) {
+        //print("<pre>".print_r(($arraySedebyEmpleado),true)."</pre>");die;
+    $_SESSION['idusuario_sede'] = @$sede['idusuario_sede'] . "*" . @$_SESSION['idusuario_sede'];
+    $_SESSION['nombreSede'] = @$sede['nombreSede'] . "*" . @$_SESSION['nombreSede'];
+  }
+//necesiot eliminar el ultimo '*' de las variables de session que estan en el ultimiop foreach
+  $_SESSION['idusuario_sede'] = substr($_SESSION['idusuario_sede'], 0, -1);
+  $_SESSION['nombreSede'] = substr($_SESSION['nombreSede'], 0, -1); 
+  
+
+  //print("<pre>".print_r(($_SESSION['nombreSede'] ),true)."</pre>");die;
+  
+  $_SESSION['sedeId'] = $_POST['locacion'];  //sede con la que se logeo
+
+
 
   foreach ($datosEmpleado as $dato) {
     //    print("<pre>".print_r(($dato),true)."</pre>");die;

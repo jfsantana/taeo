@@ -56,6 +56,18 @@ class empleados extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  
+  public function getSedeByEvaluador($idUsuario) //(revisado)
+  {
+   
+      $query = "SELECT * 
+                FROM taeho_v2.usuario_sede 
+                      inner join sede on usuario_sede.idSede=sede.idSede 
+                where usuario_sede.idUsuario = $idUsuario";
+
+    return parent::ObtenerDatos($query);
+  }
+
   public function getCargos($idUsuario) //(revisado)
   {
     $where = " WHERE cargo.idcargos <> '' ";
