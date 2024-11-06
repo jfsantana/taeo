@@ -255,7 +255,7 @@ require_once("style.php")  ;
         </div>
       </div>
       <?php if($_POST['mod']!=1){?>
-        <!-- ITEMS -->
+        <!-- ITEMS  -->
         <div class="col-lg-12 col-12">
           <div class="card card-primary">
               <div class="card-header">
@@ -485,6 +485,7 @@ require_once("style.php")  ;
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+
 <script>
   //este script es para imprimir el contenido de la pagina
   document.getElementById('printButton').addEventListener('click', function () {
@@ -518,144 +519,6 @@ require_once("style.php")  ;
       }
     });
   });
-</script>
-
-
-
-<script>
-  //este es el script que se encarga de enviar los datos al modal de edicion y almacenarlos
-  $(document).on('show.bs.modal', '.modal', function (event) {
-    var button = $(event.relatedTarget); // Botón que activó el modal
-    var id = button.data('id');
-    var idHeaderEvaluacion = button.data('idHeaderEvaluacion');
-    var nivel = button.data('nivel');
-    var idNivelEvaluacion = button.data('idNivelEvaluacion');
-    var edad = button.data('edad');
-    var edadCronologica = button.data('edadCronologica');
-    var area = button.data('area');
-    var idAreaEvaluacion = button.data('idAreaEvaluacion');
-    var descripcion = button.data('descripcion');
-    var evaluacion = button.data('evaluacion');
-
-    console.log('ID:', id);
-    console.log('Nivel:', nivel);
-    console.log('ID Nivel Evaluacion:', idNivelEvaluacion);
-    console.log('Edad:', edad);
-    console.log('Edad Cronologica:', edadCronologica);
-    console.log('Área:', area);
-    console.log('ID Área Evaluacion:', idAreaEvaluacion);
-    console.log('Descripción:', descripcion);
-    console.log('Evaluación:', evaluacion);
-
-    var modal = $(this);
-    // Rellenar la vista previa
-    modal.find('#previewId_' + modal.attr('id')).text(id);
-    modal.find('#previewNivel_' + modal.attr('id')).text(nivel);
-    modal.find('#previewEdad_' + modal.attr('id')).text(edad);
-    modal.find('#previewArea_' + modal.attr('id')).text(area);
-    modal.find('#previewDescripcion_' + modal.attr('id')).text(descripcion);
-    modal.find('#previewEvaluacion_' + modal.attr('id')).text(evaluacion);
-
-    // Seleccionar los valores en los select
-    modal.find('#editNivel_' + modal.attr('id')).val(idNivelEvaluacion);
-    modal.find('#editEdad_' + modal.attr('id')).val(edadCronologica);
-    modal.find('#editArea_' + modal.attr('id')).val(idAreaEvaluacion);
-    modal.find('#editDescripcion_' + modal.attr('id')).val(descripcion);
-    modal.find('#editEvaluacion_' + modal.attr('id')).val(evaluacion);
-
-    modal.find('#editIdHeaderEvaluacion_' + modal.attr('id')).val(idHeaderEvaluacion);
-
-    // Guardar el ID del registro para eliminarlo
-    modal.find('#deleteButton_' + modal.attr('id')).data('id', id);
-  });
-
-  $(document).on('submit', '[id^=editForm_]', function (event) {
-    event.preventDefault();
-    var form = $(this);
-    var modalId = form.attr('id').replace('editForm_', '');
-    var id = form.find('#deleteButton_' + modalId).data('id');
-    var idNivelEvaluacion = form.find('#editNivel_' + modalId).val();
-    var edadCronologica = form.find('#editEdad_' + modalId).val();
-    var idAreaEvaluacion = form.find('#editArea_' + modalId).val();
-    var descripcion = form.find('#editDescripcion_' + modalId).val();
-    var evaluacion = form.find('#editEvaluacion_' + modalId).val();
-
-    var idHeaderEvaluacion = form.find('#editIdHeaderEvaluacion_' + modalId).val();
-
-    
-
-    // Crear el objeto de datos para enviar en la solicitud POST
-    var data = {
-      idDetalleEvaluacion: id,
-      idNivelEvaluacion: idNivelEvaluacion,
-      edadCronologica: edadCronologica,
-      idAreaEvaluacion: idAreaEvaluacion,
-      detalleEvalaacion: descripcion,
-      evaluacion_detalle: evaluacion,
-      idHeaderEvaluacion: idHeaderEvaluacion
-    };
-
-    alert('Datos enviados:' + JSON.stringify(data));
-    // Realizar la solicitud POST al servicio
-    $.ajax({
-      url: 'http://taeo/funciones/wsdl/preEvaluacion',
-      type: 'PUT',
-      data: JSON.stringify(data),
-      contentType: 'application/json',
-      success: function(response) {
-        // Cerrar el modal
-        enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', idHeaderEvaluacion,idNivelEvaluacion, edadCronologica , idAreaEvaluacion);
-
-       
-    },
-      error: function(xhr, status, error) {
-        console.error('Error en la actualización:', error);
-      }
-    });
-  });
-
-  $(document).on('click', '[id^=deleteButton_]', function () {
-    event.preventDefault();
-    var form = $(this).closest('form');
-    var modalId = form.attr('id').replace('editForm_', '');
-    var id = form.find('#deleteButton_' + modalId).data('id');
-    var idNivelEvaluacion = form.find('#editNivel_' + modalId).val();
-    var edadCronologica = form.find('#editEdad_' + modalId).val();
-    var idAreaEvaluacion = form.find('#editArea_' + modalId).val();
-    var descripcion = form.find('#editDescripcion_' + modalId).val();
-    var evaluacion = form.find('#editEvaluacion_' + modalId).val();
-    var idHeaderEvaluacion = form.find('#editIdHeaderEvaluacion_' + modalId).val();
-
-    // Crear el objeto de datos para enviar en la solicitud POST
-    var data = {
-        idDetalleEvaluacion: id,
-        idNivelEvaluacion: idNivelEvaluacion,
-        edadCronologica: edadCronologica,
-        idAreaEvaluacion: idAreaEvaluacion,
-        detalleEvalaacion: descripcion,
-        evaluacion_detalle: evaluacion,
-        idHeaderEvaluacion: idHeaderEvaluacion
-    };
-
-    console.log('Datos enviados:', JSON.stringify(data));
-
-    // Realizar la solicitud POST al servicio
-    $.ajax({
-        url: 'http://taeo/funciones/wsdl/preEvaluacion',
-        type: 'DELETE',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        success: function(response) {
-            
-          enviarParametrosEvaluacion('preEvaluacion/preEvaluacionCreate.php','2', idHeaderEvaluacion,idNivelEvaluacion, edadCronologica , idAreaEvaluacion);
-        },
-        error: function(xhr, status, error) {
-            console.error('Error en la actualización:', error);
-        }
-    });
-  });
-
-
 </script>
 
 
