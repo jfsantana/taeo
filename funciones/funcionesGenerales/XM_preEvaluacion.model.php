@@ -18,8 +18,8 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); //die;
-echo "<script> console.clear(); console.log(".json_encode($_POST).")</script>"; 
+print("<pre>".print_r((json_encode($_POST)),true)."</pre>"); //die;
+echo "<script> console.log(".json_encode($_POST).")</script>"; 
 
 if (@$_POST['idNivelEvaluacion'] == '') {
     $continuidadAlmacenamientoidNivelEvaluacion = @$_POST['idNivelEvaluacion'];
@@ -38,7 +38,7 @@ echo "<script> console.log(".$URL.")</script>";
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
-echo "<script> console.clear(); console.log(".json_encode($rs).")</script>"; 
+echo "<script> console.log(".json_encode($rs).")</script>"; 
 
 //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
