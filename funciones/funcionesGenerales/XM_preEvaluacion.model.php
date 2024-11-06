@@ -39,7 +39,7 @@ $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
 ?><script> console.log("<?php echo json_encode($rs)?>")</script><?php
-//print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
+//print("<pre>".print_r(json_encode($rs),true)."</pre>");die;  
 
 
 $idEvaluacion= $_POST['idHeaderEvaluacion'];
