@@ -2,88 +2,99 @@
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
   
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
-    <li class="nav-item menu-close">
-      <a href="#" class="nav-link ">
-        <i class="nav-icon fas fa-cogs  text-danger"></i>
-        <p>
-          Configuración
-          <i class="right fas fa-angle-left"></i>
-        </p>
-      </a>
-      <ul class="nav nav-treeview">
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/rolesList.php')" class="nav-link">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Roles</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/SedeList.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Sedes</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Mediador(a)</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/aprendizList.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Aprendices</p>
-          </a>
-        </li>
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/representanteList.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Representantes</p>
-          </a>
-        </li>
+    <?php if ($_SESSION['ponderacion'] < 40) { ///***CONFIGURACION :**** Solo Administradores y parcialmente coordinadores      ?>
+      <li class="nav-item menu-close">
+        <a href="#" class="nav-link ">
+          <i class="nav-icon fas fa-cogs  text-danger"></i>
+          <p>
+            Configuración
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
+            <li class="nav-item">
+              <a href="#" onclick="enviarParametros('admin/rolesList.php')" class="nav-link">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+                <p>Roles</p>
+              </a>
+            </li>
+          <?php }?>
 
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('admin/areaDesarrolloList.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>&Aacute;rea de Desarrollo</p>
-          </a>
-        </li>
+          <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
+            <li class="nav-item">
+              <a href="#" onclick="enviarParametros('admin/SedeList.php')" class="nav-link ">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+                <p>Sedes</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
+              </a>
+            </li>
+          <?php }?>
 
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('admin/usuarioList.php')" class="nav-link ">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+              <p>Mediador(a)</p>
+            </a>
+          </li>
 
-        <li class="nav-item">
-        <a href="#" onclick="enviarParametros('admin/configList.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-            <p>Configuración</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
-          </a>
-        </li>
-      </ul>
-    </li>
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('admin/aprendizList.php')" class="nav-link ">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+              <p>Aprendices</p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('admin/representanteList.php')" class="nav-link ">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+              <p>Representantes</p>
+            </a>
+          </li>
+          
+          <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
+            <li class="nav-item">
+              <a href="#" onclick="enviarParametros('admin/areaDesarrolloList.php')" class="nav-link ">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+                <p>&Aacute;rea de Desarrollo</p>
+              </a>
+            </li>
+          <?php }?>
+
+          <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
+            <li class="nav-item">
+              <a href="#" onclick="enviarParametros('admin/configList.php')" class="nav-link ">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
+                <p>Configuración</p> <!--Activar o Desactivar Envio de Correos (cumple, Evento, notificaiocnes especiales) -->
+              </a>
+            </li>
+          <?php }?>
+        </ul>
+      </li>
     <?php }    ?>
 
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
-    <li class="nav-item menu-close">
-      <a href="#" class="nav-link ">
-        <i class="nav-icon fas fa-book text-warning"></i>
-        <p>
-          Objetivos
-          <i class="right fas fa-angle-left"></i>
-        </p>
-      </a>
-      <ul class="nav nav-treeview">
-        <li class="nav-item">
-          <a href="#" onclick="enviarParametros('objetivo/objetivoListar.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-warning"></i>
-            <p>Gestión de Objetivos</p>
-          </a>
-        </li>
-      </ul>
-    </li>
+    <?php if ($_SESSION['ponderacion'] < 20) { ///***OBJETIVOS:**** Solo Administradores       ?>
+      <li class="nav-item menu-close">
+        <a href="#" class="nav-link ">
+          <i class="nav-icon fas fa-book text-warning"></i>
+          <p>
+            Objetivos
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+          <li class="nav-item">
+            <a href="#" onclick="enviarParametros('objetivo/objetivoListar.php')" class="nav-link ">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-warning"></i>
+              <p>Gestión de Objetivos</p>
+            </a>
+          </li>
+        </ul>
+      </li>
     <?php }    ?>
 
   <!-- ****************************** -->
-  <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores    ?>
+  <?php if ($_SESSION['ponderacion'] < 40) { //***EVALUACION:**** Solo Administradores  y coordinadores      ?>
     <li class="nav-item menu-close">
       <a href="#" class="nav-link ">
         <i class="nav-icon fas fa-book-reader text-warning"></i>
@@ -101,31 +112,32 @@
         </li>
       </ul>
     </li>
-    <?php }    ?>
-    <!-- ****************************** -->
-    <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 40) { //Solo Administradores  y coordinadores  ?>
-    <li class="nav-item menu-close">
-      <a href="#" class="nav-link ">
-        <i class="nav-icon fas fa-book  text-info"></i>
-        <p>
-          Planificaci&oacute;n
-          <i class="right fas fa-angle-left"></i>
-        </p>
-      </a>
-      <ul class="nav nav-treeview">
-      <li class="nav-item">
-          <a href="#" onclick="enviarParametros('planning/planningListar.php')" class="nav-link ">
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-info"></i>
-            <p>Gestión Planificación</p>
-          </a>
-        </li>
+  <?php }    ?>
 
-      </ul>
-    </li>
-    <?php }    ?>
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 60) { //Solo Administradores    ?>
+    <?php if ($_SESSION['ponderacion'] < 40) { //***PLANIFICAICON:**** Solo Administradores  y coordinadores  ?>
+      <li class="nav-item menu-close">
+        <a href="#" class="nav-link ">
+          <i class="nav-icon fas fa-book  text-info"></i>
+          <p>
+            Planificaci&oacute;n
+            <i class="right fas fa-angle-left"></i>
+          </p>
+        </a>
+        <ul class="nav nav-treeview">
+        <li class="nav-item">
+            <a href="#" onclick="enviarParametros('planning/planningListar.php')" class="nav-link ">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-id-card text-info"></i>
+              <p>Gestión Planificación</p>
+            </a>
+          </li>
+
+        </ul>
+      </li>
+    <?php }    ?>
+
+    <!-- ****************************** -->
+    <?php if ($_SESSION['ponderacion'] < 60) { ///***AVANCES:**** Solo Administradores Y COORDINADORES   ?>
       <li class="nav-item menu-close">
         <a href="#" class="nav-link ">
 
@@ -145,8 +157,9 @@
         </ul>
       </li> 
     <?php }    ?>
+
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 60) { //Solo Administradores    ?>
+    <?php if ($_SESSION['ponderacion'] < 60) {///***EVENTOS:**** Solo Administradores Y parcial Coordinadores     ?>
       <li class="nav-item menu-close">
         <a href="#" class="nav-link ">
 
@@ -188,8 +201,9 @@
         </ul>
       </li>
     <?php }    ?>
+
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 30) { //Solo Administradores    ?>
+    <?php if ($_SESSION['ponderacion'] < 30) { ///***REPORTES:**** TODOS      ?>
       <li class="nav-item">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-copy  text-info"></i>
@@ -226,6 +240,7 @@
         </ul>
       </li>
     <?php } ?>
+    
     <li class="nav-item">
       <a href="#" class="nav-link ">
         <i class="nav-icon far fa-circle text-danger"></i>
