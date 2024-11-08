@@ -306,7 +306,7 @@ require_once("style.php")  ;
     alert('Datos enviados:' + JSON.stringify(data));
     // Realizar la solicitud POST al servicio
     $.ajax({
-      url: 'http://taeo/funciones/wsdl/preEvaluacion',
+      url: '<?php echo $_SESSION['HTTP_ORIGIN'];?>/funciones/wsdl/preEvaluacion',
       type: 'PUT',
       data: JSON.stringify(data),
       contentType: 'application/json',
@@ -349,7 +349,7 @@ require_once("style.php")  ;
 
     // Realizar la solicitud POST al servicio
     $.ajax({
-        url: 'http://taeo/funciones/wsdl/preEvaluacion',
+        url: '<?php echo $_SESSION['HTTP_ORIGIN'];?>//funciones/wsdl/preEvaluacion',
         type: 'DELETE',
         data: JSON.stringify(data),
         contentType: 'application/json',

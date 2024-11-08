@@ -128,8 +128,9 @@ document.addEventListener('DOMContentLoaded', function() {
       var actionUrl = this.getAttribute('action');
       var formData = $(this).serialize();
       
-      console.log(formData);
-      //alert(formData);
+      console.log("formData: ", formData);
+      
+      console.log("actionUrl: ", actionUrl);
       
       $.ajax({
         type: "POST",
