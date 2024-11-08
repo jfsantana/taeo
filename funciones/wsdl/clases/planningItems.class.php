@@ -67,7 +67,7 @@ class planningItems extends conexion
     $existeN1=$this->getExistePadre($this->idPlanificacionHeader, $nodoNivel,$this->nivelObjetivo  );
     if (empty($existeN1)) {
       $this->jerarquia = $nodoNivel;
-      $URL=$_SESSION['HTTP_ORIGIN'].'funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='. $nodo;
+      $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='. $nodo;
       $rs = API::GET($URL, $token, $_POST);
       $rs = API::JSON_TO_ARRAY($rs);
       $this->descripcion = @$rs[0]['descripcion'];
