@@ -68,9 +68,11 @@ class planningItems extends conexion
     if (empty($existeN1)) {
       $this->jerarquia = $nodoNivel;
       $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='. $nodo;
+      echo '<script>console.log("busca la info de la descripcion: '.$URL.'");</script>';
       $rs = API::GET($URL, $token, $_POST);
       $rs = API::JSON_TO_ARRAY($rs);
       $this->descripcion = @$rs[0]['descripcion'];
+      echo '<script>console.log("descripcionquinta: '.$this->descripcion.'");</script>';
       $resp = $this->InsertarItems(
       );
     }
@@ -110,6 +112,7 @@ class planningItems extends conexion
 
            $this->idPadre =  @$datos['idPadre'];
            $this->descripcion = @$datos['descripcion'];
+           echo '<script>console.log("descripcion desde el post: '.$this->descripcion.'");</script>';
            $this->tipo = @$datos['tipo'];
            $this->fechaCreacion = date('Y-m-d');
            $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
@@ -170,6 +173,7 @@ class planningItems extends conexion
             $rs = API::GET($URL, $token, $_POST);
             $rs = API::JSON_TO_ARRAY($rs);
             $this->descripcion = @$rs[0]['nombreNivelAreaObjetivo'];
+            echo '<script>console.log("tercera descripcion: '.$this->descripcion.'");</script>';
             //inserta el nivel 0 de la jerarquia  (el nivel del objetivo)
             $resp = $this->InsertarItems();
            }
@@ -217,6 +221,7 @@ class planningItems extends conexion
                 $rs = API::JSON_TO_ARRAY($rs);
                 $this->jerarquia = $nodoReal;
                 $this->descripcion = @$rs[0]['descripcion'];
+                echo '<script>console.log("descripcion cuarta: '.$this->descripcion.'");</script>';
                 $resp = $this->InsertarItems();
                 $this->descripcion='';  //valida que no se repita la misma herarquia dos veces
               }
@@ -269,7 +274,7 @@ class planningItems extends conexion
            value
            (
                '$this->idPlanificacionHeader',
-                '$this->nivelObjetivo',
+               '$this->nivelObjetivo',
                '$this->jerarquia',
                '$this->idPadre',
                '$this->descripcion',
