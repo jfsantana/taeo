@@ -325,13 +325,7 @@
                                                                                                                   <td>
                                                                                                                   <?php 
                                                                                                                    $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel['jerarquia']);
-                                                                                                                   echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'].'
-                                                                                                                  (
-                                                                                                                    <a href="#"
-                                                                                                                    onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                    ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-                                                                                                                  )
-                                                                                                                  ';?>
+                                                                                                                   echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'];?>
                                                                                                                   </td>
                                                                                                               </tr>
                                                                                                               <?php
@@ -344,13 +338,7 @@
                                                                                                                       </button>
                                                                                                                       <?php 
                                                                                                                         $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel['jerarquia']);
-                                                                                                                        echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'].'
-                                                                                                                              (
-                                                                                                                                <a href="#"
-                                                                                                                                onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                                ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-                                                                                                                              )
-                                                                                                                              ';?>
+                                                                                                                        echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'];?>
                                                                                                                     </td>
                                                                                                                 </tr>
                                                                                                                 <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -385,13 +373,7 @@
                                                                                                                                                     <td>
                                                                                                                                                     <?php 
                                                                                                                                                     $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel['jerarquia']);
-                                                                                                                                                    echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'].'
-                                                                                                                                                    (
-                                                                                                                                                      <a href="#"
-                                                                                                                                                      onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                                                      ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-                                                                                                                                                    )
-                                                                                                                                                    ';?>
+                                                                                                                                                    echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'];?>
                                                                                                                                                     </td>
                                                                                                                                                 </tr>
                                                                                                                                                 <?php
@@ -404,13 +386,7 @@
                                                                                                                                                         </button>
                                                                                                                                                         <?php 
                                                                                                                                                           $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel['jerarquia']);
-                                                                                                                                                          echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'].'
-                                                                                                                                                                (
-                                                                                                                                                                  <a href="#"
-                                                                                                                                                                  onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                                                                  ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-                                                                                                                                                                )
-                                                                                                                                                                ';?>
+                                                                                                                                                          echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel['descripcion'];?>
                                                                                                                                                       </td>
                                                                                                                                                   </tr>
                                                                                                                                                   <!-- /*Inicio va el codigo para el siguiente nivel*/ -->
@@ -445,13 +421,7 @@
                                                                                                                                                                                         <td>
                                                                                                                                                                                         <?php 
                                                                                                                                                                                         $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel5['jerarquia']);
-                                                                                                                                                                                        echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel5['descripcion'].'
-                                                                                                                                                                                        (
-                                                                                                                                                                                          <a href="#"
-                                                                                                                                                                                          onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                                                                                          ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-                                                                                                                                                                                        )
-                                                                                                                                                                                        ';?>
+                                                                                                                                                                                        echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel5['descripcion'];?>
                                                                                                                                                                                         </td>
                                                                                                                                                                                     </tr>
                                                                                                                                                                                     <?php
@@ -464,13 +434,7 @@
                                                                                                                                                                                             </button>
                                                                                                                                                                                             <?php 
                                                                                                                                                                                               $jerarquia = preg_replace('/^[^.]*\./', '', $datosArrayhijosNexLevel5['jerarquia']);
-                                                                                                                                                                                              echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel5['descripcion'].'
-                                                                                                                                                                                                    (
-                                                                                                                                                                                                      <a href="#"
-                                                                                                                                                                                                      onclick="enviarParametrosGetsionUpdate(\'objetivo/itemCreate.php\',2,\''.$variable.'\')"
-                                                                                                                                                                                                      ><i class="fas fa-edit"  style="color: #228A13;"></i></ a>
-                                                                                                                                                                                                    )
-                                                                                                                                                                                                    ';?>
+                                                                                                                                                                                              echo ' ' . $jerarquia . ' - ' . $datosArrayhijosNexLevel5['descripcion'];?>
                                                                                                                                                                                           </td>
                                                                                                                                                                                       </tr>
                                                                                                                                                                                       <!-- /*Inicio va el codigo para el siguiente nivel*/ -->

@@ -120,32 +120,7 @@ class objetivoItems extends conexion
 
   private function InsertarHeader()//()
   {
-    // $query = 'insert Into ' . $this->tabla . "
-    //           (
-    //             nombreObjetivo,
-    //             versionObjetivo,
-    //             activo,
-    //             fechaCreacion,
-    //             creadoPor
-    //               )
-    //       value
-    //       (
-    //           '$this->nombreObjetivo',
-    //           '$this->versionObjetivo',
-    //           '$this->activo',
-    //           '$this->fechaCreacion',
-    //           '$this->creadoPor'
-    //           )";
 
-    // //echo $query; die;
-    // $Insertar = parent::nonQueryId($query);
-
-    // print_r ($Insertar);die;
-    // if ($Insertar) {
-    //   return $Insertar;
-    // } else {
-    //   return 0;
-    // }
   }
 
   private function UpdateItems()//()
@@ -195,7 +170,7 @@ class objetivoItems extends conexion
                       WHERE idHeader =". $datos['idObjetivoHeader']."
                       And versionObjetivo=".$datos['versionObjetivo'];
 
-     echo  $query; die;
+     //echo  $query; die;
     $update = parent::nonQuery($query);
 
     if ($update >= 1) {
