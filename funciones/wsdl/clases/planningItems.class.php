@@ -179,7 +179,6 @@ class planningItems extends conexion
             $rs = API::GET($URL, $token, $_POST);
             $rs = API::JSON_TO_ARRAY($rs);
             $this->descripcion = @$rs[0]['nombreNivelAreaObjetivo'];
-            echo '<script>alert("tercera descripcion: '.$this->descripcion.'");</script>';
             //inserta el nivel 0 de la jerarquia  (el nivel del objetivo)
             $resp = $this->InsertarItems();
            }
@@ -227,7 +226,6 @@ class planningItems extends conexion
                 $rs = API::JSON_TO_ARRAY($rs);
                 $this->jerarquia = $nodoReal;
                 $this->descripcion = @$rs[0]['descripcion'];
-                echo '<script>alert("descripcion cuarta: '.$this->descripcion.'");</script>';
                 $resp = $this->InsertarItems();
                 $this->descripcion='';  //valida que no se repita la misma herarquia dos veces
               }
