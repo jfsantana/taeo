@@ -64,7 +64,7 @@ class area extends conexion
     $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
               FROM  nivelareaobjetivo
                $where ";
-
+    //echo $query; die;
     return parent::ObtenerDatos($query);
   }
 

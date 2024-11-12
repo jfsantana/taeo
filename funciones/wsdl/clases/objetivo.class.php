@@ -69,7 +69,7 @@ class objetivo extends conexion
       $where =  $where . " and idAreaObjetivo = " . $idArea . " and nivelObjetivo =".$idNivel;
 
     $query = "SELECT idObjetivoHeader FROM objetivo_header $where";
-    //echo $query; die;
+    echo $query; die;
     return parent::ObtenerDatos($query);
   }
 

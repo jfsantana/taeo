@@ -50,7 +50,7 @@ class planningItems extends conexion
       $where =  $where . " and idNivel=".$idNivel." and jerarquia = '".$jerarquia."' and idPlanificacionHeader = " . $idPlanificacionHeader ;
     }
     $query = "select * from " . $this->tabla . " $where ";
-    //echo   $query; die;
+    //echo   $query; 
     return parent::ObtenerDatos($query);
   }
 
@@ -70,12 +70,15 @@ class planningItems extends conexion
     $existeN1=$this->getExistePadre($this->idPlanificacionHeader, $nodoNivel,$this->nivelObjetivo  );
     if (empty($existeN1)) {
       $this->jerarquia = $nodoNivel;
-      $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='. $nodo;
-      echo '<script>alert("busca la info de la descripcion: '.$URL.'");</script>';
-      $rs = API::GET($URL, $token, $_POST);
-      $rs = API::JSON_TO_ARRAY($rs);
+
+      // $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='. $nodo;
+      // $rs = API::GET($URL, $token, $_POST);
+      // $rs = API::JSON_TO_ARRAY($rs);
+
+      $queryDescripcion="select * from objetivo_item WHERE activo = 1 and idHeader = $idObjetivoHeader and jerarquia = '$nodo'";
+      $rs = parent::ObtenerDatos($queryDescripcion);
+
       $this->descripcion = @$rs[0]['descripcion'];
-      echo '<script>alert("descripcionquinta: '.$this->descripcion.'");</script>';
       $resp = $this->InsertarItems(
       );
     }
@@ -149,17 +152,21 @@ class planningItems extends conexion
           $this->nivel2 =  $this->nivel0PlanEstructura.'.'.$this->nivel1;
           $this->nivel1 =  $this->nivel0PlanEstructura.'.'.$this->nivelPadre;
           $this->nivelPadre =  $this->nivel0PlanEstructura;
+          $token= $this->token ;
 
           
           //con el valor de  nivelObjetivo  y el area que esta en la cabecera de la planificacion necesito el id del objetivoid para poder obtener la descripcion
-          $token= $this->token ;
-          $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivo?type=6&idArea='.$this->idAreaObjetivo.'&idNivel='.$this->nivelObjetivo;
-         // print_r($URL); die;
-          $rs = API::GET($URL, $token, $_POST);
-          $rs = API::JSON_TO_ARRAY($rs);
+          $queryobjetivoDescripcion="SELECT idObjetivoHeader FROM objetivo_header 
+          WHERE activo = 1 and idAreaObjetivo = ".$this->idAreaObjetivo." and nivelObjetivo =".$this->nivelObjetivo;          
+          $rs = parent::ObtenerDatos($queryobjetivoDescripcion);
+
+          /*codigo eliminado:
+           //  $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivo?type=6&idArea='.$this->idAreaObjetivo.'&idNivel='.$this->nivelObjetivo;
+          //  $rs = API::GET($URL, $token, $_POST);
+          //  $rs = API::JSON_TO_ARRAY($rs);
+          */
+
           $idObjetivoHeader=$rs[0]['idObjetivoHeader'];
-          
-          
           
 
           if($datos['mod']==1){
@@ -174,11 +181,17 @@ class planningItems extends conexion
             $this->jerarquia = $this->nivelPadre;
 
             /* se cambio para que el nivel del objetivo fuese el primer nivel*/ 
-            $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/area?type=3&idNivelAreaObjetivo='.$this->jerarquia;
-                        
-            $rs = API::GET($URL, $token, $_POST);
-            $rs = API::JSON_TO_ARRAY($rs);
+            // $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/area?type=3&idNivelAreaObjetivo='.$this->jerarquia;  
+            // $rs = API::GET($URL, $token, $_POST);
+            // $rs = API::JSON_TO_ARRAY($rs);
+
+            $queryArea="SELECT nivelareaobjetivo.* , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
+                          FROM nivelareaobjetivo
+                          WHERE idNivelAreaObjetivo <> '' and idNivelAreaObjetivo = ".$this->jerarquia;
+            $rs = parent::ObtenerDatos($queryArea);                           
+
             $this->descripcion = @$rs[0]['nombreNivelAreaObjetivo'];
+
             //inserta el nivel 0 de la jerarquia  (el nivel del objetivo)
             $resp = $this->InsertarItems();
            }
@@ -211,21 +224,30 @@ class planningItems extends conexion
 
           //aui inserta las actividades
           if (isset($datos['actividad']) && is_array($datos['actividad'])) {
-            //echo "<script>alert('ACTIVIDADES');</script>";
+            //print_r($datos['actividad']); die;
             foreach ($datos['actividad'] as $jerarquia) {
               
+              //concateno el nivel para el ajuste de la impresion 
               $nodoReal= $this->nivel0PlanEstructura.'.'.$jerarquia; 
+
+              //verifica que el padre no este repetido en la planificacion
               $existeactividad=$this->getExistePadre($this->idPlanificacionHeader, $nodoReal,$this->nivelObjetivo  );
               
               if (empty($existeactividad)) {
                 //print_r($existeactividad); die;
 
-                $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$jerarquia;
-                //print_r($URL); die;
-                $rs = API::GET($URL, $token, $_POST);
-                $rs = API::JSON_TO_ARRAY($rs);
-                $this->jerarquia = $nodoReal;
+                // $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivoItem?type=2&idHeader='.$idObjetivoHeader.'&jerarquia='.$jerarquia;
+                // //print_r($URL); die;
+                // $rs = API::GET($URL, $token, $_POST);
+                // $rs = API::JSON_TO_ARRAY($rs);
+
+                $queryDescripcionActividad="select * from objetivo_item WHERE activo = 1 and idHeader = $idObjetivoHeader and jerarquia = '$jerarquia'";
+                $rs = parent::ObtenerDatos($queryDescripcionActividad);   
+
+
+                $this->jerarquia = $nodoReal;                
                 $this->descripcion = @$rs[0]['descripcion'];
+
                 $resp = $this->InsertarItems();
                 $this->descripcion='';  //valida que no se repita la misma herarquia dos veces
               }
