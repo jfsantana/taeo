@@ -83,7 +83,7 @@ class planningItems extends conexion
 
   public function post($json)  //()
   {
-    print("<pre>".print_r(($_SESSION),true)."</pre>");die;
+   // print("<pre>".print_r(($_SESSION),true)."</pre>");die;
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
