@@ -19,11 +19,10 @@ $token = $_SESSION['token'];
 
 $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planningItem";
 
-print("<pre>".print_r(($_POST),true)."</pre>");die;
+//print("<pre>".print_r(($_POST),true)."</pre>");die;
 
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
 // print("<pre>".print_r(($rs),true)."</pre>");die; die;
 ?>
-<script>console.log('aqui');</script>

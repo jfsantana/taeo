@@ -3,8 +3,11 @@ if (!isset($_SESSION)) {
   session_start();
 }
 if (!isset($_SESSION['HTTP_ORIGIN'])) {
-  $_SESSION['HTTP_ORIGIN'] = 'http://taeo';
+  $_SESSION['HTTP_ORIGIN'] = 'https://gestion.organizaciontaeo.com';
 }
+
+
+
 /************************************************************
  * Diseñado por Jesus Santana
  * CLASE EMPLEADOS
@@ -80,7 +83,7 @@ class planningItems extends conexion
 
   public function post($json)  //()
   {
-  
+    print("<pre>".print_r(($_SESSION),true)."</pre>");die;
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
@@ -151,7 +154,7 @@ class planningItems extends conexion
           //con el valor de  nivelObjetivo  y el area que esta en la cabecera de la planificacion necesito el id del objetivoid para poder obtener la descripcion
           $token= $this->token ;
           $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivo?type=6&idArea='.$this->idAreaObjetivo.'&idNivel='.$this->nivelObjetivo;
-          print_r($URL); die;
+         // print_r($URL); die;
           $rs = API::GET($URL, $token, $_POST);
           $rs = API::JSON_TO_ARRAY($rs);
           $idObjetivoHeader=$rs[0]['idObjetivoHeader'];
