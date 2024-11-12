@@ -128,8 +128,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var actionUrl = this.getAttribute('action');
       var formData = $(this).serialize();
       
-      console.log("formData: ", formData);
-      
+      console.log("formData: ", formData);    
       console.log("actionUrl: ", actionUrl);
       
       $.ajax({
@@ -137,7 +136,7 @@ document.addEventListener('DOMContentLoaded', function() {
         url: actionUrl,
         data: formData,
         success: function(response) {
-          console.log("Response: ", response);
+          //console.log("Response: ", response);
           alert("CORRECTO al salvar objetivos");
           window.location.reload();
         },

@@ -80,7 +80,7 @@ class planningItems extends conexion
 
   public function post($json)  //()
   {
-   
+  
     $_respuestas = new respuestas();
     $datos = json_decode($json, true);
 
@@ -112,7 +112,6 @@ class planningItems extends conexion
 
            $this->idPadre =  @$datos['idPadre'];
            $this->descripcion = @$datos['descripcion'];
-           echo '<script>alert("descripcion desde el post: '.$this->descripcion.'");</script>';
            $this->tipo = @$datos['tipo'];
            $this->fechaCreacion = date('Y-m-d');
            $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
@@ -123,8 +122,12 @@ class planningItems extends conexion
 
            $this->nivelObjetivo =  @$datos['nivelObjetivo'];
 
+           
+
            //este es el nuverl del objetivo que debe ser el primero de a estructrua
            $this->nivel0PlanEstructura = str_pad(@$datos['nivelObjetivo'], 2, '0', STR_PAD_LEFT);
+
+           //echo $this->nivel0PlanEstructura; die;
            
            $this->nivelPadre =  @$datos['nivelPadre'];
            $this->nivel1 =  @$datos['nivel1'];
@@ -148,7 +151,7 @@ class planningItems extends conexion
           //con el valor de  nivelObjetivo  y el area que esta en la cabecera de la planificacion necesito el id del objetivoid para poder obtener la descripcion
           $token= $this->token ;
           $URL=$_SESSION['HTTP_ORIGIN'].'/funciones/wsdl/objetivo?type=6&idArea='.$this->idAreaObjetivo.'&idNivel='.$this->nivelObjetivo;
-          //print_r($URL); die;
+          print_r($URL); die;
           $rs = API::GET($URL, $token, $_POST);
           $rs = API::JSON_TO_ARRAY($rs);
           $idObjetivoHeader=$rs[0]['idObjetivoHeader'];

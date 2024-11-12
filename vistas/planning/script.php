@@ -11,7 +11,7 @@ function fetchNiveles(idSede) {
         url: "planning/fetch_facilitadores.php",
         data: { idSede: idSede },
         success: function(response) {
-          console.log('Response:', response); // Agrega esta línea para depuración
+          //console.log('Response:', response); // Agrega esta línea para depuración
           var niveles = JSON.parse(response);
           // Limpia las opciones actuales
           nivelSelect.empty();
@@ -86,7 +86,7 @@ function fetchNiveles(idSede) {
                },
 
         success: function(response) {
-            console.log('Response:', response);
+            //console.log('Response:', response);
           // Agrega esta línea para depuración
             var niveles = JSON.parse(response);
             // Limpia las opciones actuales
