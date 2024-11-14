@@ -49,6 +49,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosEmpleado);
     http_response_code(200);
+  }elseif($_GET['type']==7){
+    $datosEmpleado = $_evaluacion->getPlanningHeadereActivo(@$_GET['idPlanificacion'], @$_GET['idsede'], @$_GET['facilitador']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosEmpleado);
+    http_response_code(200);
   }
 
   else {

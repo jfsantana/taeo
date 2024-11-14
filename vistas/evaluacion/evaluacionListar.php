@@ -14,18 +14,21 @@ $token = $_SESSION['token'];
 
 
 
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
+$rs         = API::GET($URL, $token);
+$sedesPermiso  = API::JSON_TO_ARRAY($rs);
+$sedesPermisoIds = explode(',', @$sedesPermiso);
+
 
 if (($_SESSION['id_rol']==1)){
-  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=1";
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=7";
 }elseif(($_SESSION['id_rol']==2)){
   //1.SABER TODAS LAS SEDES ASOCIADAS AL USUARIOS LOGUEADO POR SU ID
-  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
-  $rs         = API::GET($URL, $token);
-  $sedesPermiso  = API::JSON_TO_ARRAY($rs);
-  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=1&idsede=".$sedesPermiso;
+
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=7&idsede=".$sedesPermiso;
 }
 else{
-  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=1&facilitador=".$_SESSION['id_user'];
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/evaluacion?type=7&facilitador=".$_SESSION['id_user'];
 }
 
 
@@ -54,19 +57,23 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <div class="row">
 
-      <?php foreach ($arrayPlanificacionesbySede as $planificacionesbySede) { ?>
-        <div class="col-lg-3 col-12">
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3><?php echo $planificacionesbySede['total']; ?></h3>
-              <p><?php echo $planificacionesbySede['nombreSede']; ?></p>
+
+      <?php foreach ($arrayPlanificacionesbySede as $planificacionesbySede) { 
+        if (in_array($planificacionesbySede['idSede'], $sedesPermisoIds)) {?>
+            <div class="col-lg-3 col-12">
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3><?php echo $planificacionesbySede['total']; ?></h3>
+                  <p><?php echo $planificacionesbySede['nombreSede']; ?></p>
+                </div>
+                <div class="icon">
+                  <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
+                </div>
+              </div>
             </div>
-            <div class="icon">
-              <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
-            </div>   
-          </div>
-        </div>
-      <?php }?>
+          <?php
+        } 
+      } ?>
       
     </div>
 
@@ -80,12 +87,12 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
+                  <th>Codigo</th>
                   <th>Aprendiz</th>
                   <th>Sede</th>
                   <th>Área</th>
                   <th>Observación</th>
                   <th>Creado por</th>
-                  <th>Activo</th>
                 </tr>
               </thead>
               <tbody>
@@ -93,7 +100,8 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
                 if(@$arrayPlanificaciones){
                   foreach (@$arrayPlanificaciones as $planificaciones) { ?>
                   <tr>
-                    <td><?php echo strtoupper($planificaciones['aprendiz']); ?></td>
+                    <td><?php echo strtoupper($planificaciones['idPlanificacion']); ?></td>  
+                    <td><?php echo $planificaciones['aprendiz']; ?></td>
                     <td><?php echo $planificaciones['nombreSede']; ?></td>
                     <td><a href="#" onclick="enviarParametrosGetsionUpdate('evaluacion/evaluacionCreate.php',2,'<?php echo $planificaciones['idPlanificacion']; ?>')" class="nav-link "><?php echo $planificaciones['nombreArea']; ?></a></td>
                     <td><?php echo substr($planificaciones['observacion'], 0, 1000); ?></td>
@@ -106,12 +114,12 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
               </tbody>
               <tfoot>
                 <tr>
-                <th>Aprendiz</th>
+                  <th>Codigo</th>   
+                  <th>Aprendiz</th>
                   <th>Sede</th>
                   <th>Área</th>
                   <th>Observación</th>
                   <th>Creado por</th>
-                  <th>Activo</th>
                 </tr>
               </tfoot>
             </table>

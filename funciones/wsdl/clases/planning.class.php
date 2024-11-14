@@ -53,19 +53,76 @@ class planning extends conexion
     }
 
 
-    $query = "select
-            planificacion_header.*
-            ,case when planificacion_header.activo = 1 Then 'Activo' else 'Desactivado' end estado
-            ,areasobjetivos.nombreArea
-            ,sede.nombreSede
-              ,concat(usuario.nombreUsuario,', ',usuario.apellidoUsuario) as facilitador
-              ,concat(aprendiz.nombreAprendiz,', ',aprendiz.apellidoAprendiz) as aprendiz
-          from planificacion_header
-            inner join areasobjetivos on areasobjetivos.idArea =planificacion_header.idArea
-            inner join sede on sede.idSede =planificacion_header.idSede
-              inner join usuario on usuario.idUsuario =planificacion_header.idFacilitador
-              inner join aprendiz on aprendiz.idAprendiz =planificacion_header.idAprendiz  $where
-              order by aprendiz.nombreAprendiz";
+    $query = "SELECT 
+          planificacion_header.*,
+          CASE
+              WHEN planificacion_header.activo = 1 THEN 'Activo'
+              ELSE 'Desactivado'
+          END AS estado,
+          areasobjetivos.nombreArea,
+          sede.nombreSede,
+          CONCAT(usuario.nombreUsuario, ', ', usuario.apellidoUsuario) AS facilitador,
+          CONCAT(aprendiz.nombreAprendiz, ', ', aprendiz.apellidoAprendiz) AS aprendiz,
+          CASE
+              WHEN EXISTS (
+                  SELECT 1
+                  FROM planificacion_items pi
+                  INNER JOIN planificacion_evaluacion pe ON pi.idItems = pe.idItems
+                  WHERE pi.idPlanificacionHeader = planificacion_header.idPlanificacion
+              ) THEN 1
+              ELSE 0
+          END AS evaluacion
+      FROM
+          planificacion_header
+          INNER JOIN areasobjetivos ON areasobjetivos.idArea = planificacion_header.idArea
+          INNER JOIN sede ON sede.idSede = planificacion_header.idSede
+          INNER JOIN usuario ON usuario.idUsuario = planificacion_header.idFacilitador
+          INNER JOIN aprendiz ON aprendiz.idAprendiz = planificacion_header.idAprendiz
+      $where 
+      ORDER BY aprendiz.nombreAprendiz;";
+
+    return parent::ObtenerDatos($query);
+  }
+
+  public function getPlanningHeadereActivo($idPlanificacion, $sede) //()
+  {
+    $where = " WHERE planificacion_header.activo=1 ";
+    if ($idPlanificacion != '') {
+      $where =  $where . " and planificacion_header.idPlanificacion = " . $idPlanificacion;
+    }
+
+    if ($sede != '') {
+      $where =  $where . " and planificacion_header.idSede in (" . $sede . ")";
+    }
+
+
+    $query = "SELECT 
+          planificacion_header.*,
+          CASE
+              WHEN planificacion_header.activo = 1 THEN 'Activo'
+              ELSE 'Desactivado'
+          END AS estado,
+          areasobjetivos.nombreArea,
+          sede.nombreSede,
+          CONCAT(usuario.nombreUsuario, ', ', usuario.apellidoUsuario) AS facilitador,
+          CONCAT(aprendiz.nombreAprendiz, ', ', aprendiz.apellidoAprendiz) AS aprendiz,
+          CASE
+              WHEN EXISTS (
+                  SELECT 1
+                  FROM planificacion_items pi
+                  INNER JOIN planificacion_evaluacion pe ON pi.idItems = pe.idItems
+                  WHERE pi.idPlanificacionHeader = planificacion_header.idPlanificacion
+              ) THEN 1
+              ELSE 0
+          END AS evaluacion
+      FROM
+          planificacion_header
+          INNER JOIN areasobjetivos ON areasobjetivos.idArea = planificacion_header.idArea
+          INNER JOIN sede ON sede.idSede = planificacion_header.idSede
+          INNER JOIN usuario ON usuario.idUsuario = planificacion_header.idFacilitador
+          INNER JOIN aprendiz ON aprendiz.idAprendiz = planificacion_header.idAprendiz
+      $where 
+      ORDER BY aprendiz.nombreAprendiz;";
 
     return parent::ObtenerDatos($query);
   }
@@ -81,6 +138,18 @@ class planning extends conexion
     return parent::ObtenerDatos($query);
   }
 
+
+  public function getPlanningbySedeActiva() //()
+  {
+    $query = " select sede.idSede, count(idPlanificacion) as total,sede.nombreSede
+              from sede
+              left join planificacion_header on sede.idSede =planificacion_header.idSede
+              where planificacion_header.activo=1
+              group by sede.idSede
+              order by sede.nombreSede";
+
+    return parent::ObtenerDatos($query);
+  }
 
 
   public function getNumPadres($idPlanificacionHeader)  {
@@ -234,7 +303,7 @@ class planning extends conexion
             $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
             $this->activo = @$datos['activo'];
 
-       
+            
 
           if($datos['mod']==1){//creacion del header y los items
             $resp = $this->InsertarHeader();
@@ -458,30 +527,72 @@ class planning extends conexion
 
   private function UpdateHeader()//()
   {
-  $updateFile='';
-  if (isset($this->idArea)){$updateFile = $updateFile . " idArea='$this->idArea', "; }
-  if (isset($this->idSede)){$updateFile = $updateFile . " idSede='$this->idSede', "; }
-  if (isset($this->idFacilitador)){$updateFile = $updateFile . " idFacilitador='$this->idFacilitador', "; }
-  if (isset($this->idAprendiz)){$updateFile = $updateFile . " idAprendiz='$this->idAprendiz', "; }
-  if (isset($this->periodoEvaluacion)){$updateFile = $updateFile . " periodoEvaluacion='$this->periodoEvaluacion', "; }
-  if (isset($this->observacion)){$updateFile = $updateFile . " observacion='$this->observacion', "; }
-  if (isset($this->fechaCreacion)){$updateFile = $updateFile . " fechaCreacion='$this->fechaCreacion', "; }
-  if (isset($this->creadoPor)){$updateFile = $updateFile . " creadoPor='$this->creadoPor', "; }
-  if (isset($this->activo)){$updateFile = $updateFile . " activo='$this->activo' "; }
+     //buscar los datos de la planifiacion que se quiere actualizar
+    $validarHeader="SELECT * FROM taeho_v2.planificacion_header where idPlanificacion=$this->idPlanificacion";
+    $validaractual = parent::ObtenerDatos($validarHeader);
+   
+    $queryValidarexistencia="SELECT * FROM taeho_v2.planificacion_header
+                            where idArea= ".$validaractual[0]['idArea']." and
+                                  idSede= ".$validaractual[0]['idSede']." and
+                                  idAprendiz= ".$validaractual[0]['idAprendiz']." and 
+                                  activo = 1";
+                              //valida que no exitsa una 
+      $validarExistencia = parent::ObtenerDatos($queryValidarexistencia);
+      
+      if($validarExistencia){
+        return 'errorExisteRegistro';
+      }else{
+        $updateFile='';
+        if (isset($this->idArea)){$updateFile = $updateFile . " idArea='$this->idArea', "; }
+        if (isset($this->idSede)){$updateFile = $updateFile . " idSede='$this->idSede', "; }
+        if (isset($this->idFacilitador)){$updateFile = $updateFile . " idFacilitador='$this->idFacilitador', "; }
+        if (isset($this->idAprendiz)){$updateFile = $updateFile . " idAprendiz='$this->idAprendiz', "; }
+        if (isset($this->periodoEvaluacion)){$updateFile = $updateFile . " periodoEvaluacion='$this->periodoEvaluacion', "; }
+        if (isset($this->observacion)){$updateFile = $updateFile . " observacion='$this->observacion', "; }
+        if (isset($this->fechaCreacion)){$updateFile = $updateFile . " fechaCreacion='$this->fechaCreacion', "; }
+        if (isset($this->creadoPor)){$updateFile = $updateFile . " creadoPor='$this->creadoPor', "; }
+        if (isset($this->activo)){$updateFile = $updateFile . " activo='$this->activo' "; }
+  
+  
+          $query = 'update ' . $this->tablaHeader . "
+                                set
+                                $updateFile
+  
+                            WHERE idPlanificacion = $this->idPlanificacion";
+  
+   
+          $update = parent::nonQuery($query);
+  
+        return 1;
+      }
+
+     
+
+  }
 
 
-    $query = 'update ' . $this->tablaHeader . "
-                          set
-                          $updateFile
+  
+  
+  public function del($json)//()
+  {
+    
+    $_respuestas = new respuestas();
+    $datos = json_decode($json, true);
+    
+    $idHeader=$datos['idPlanificacion'];
+    
+    //Borrado de Items
+    $queryDelItemPlan = "DELETE FROM planificacion_items WHERE idPlanificacionHeader = $idHeader";
+   
+    parent::nonQuery($queryDelItemPlan);
 
-                      WHERE idPlanificacion = $this->idPlanificacion";
-
-                      //echo  $query; die;
-    $update = parent::nonQuery($query);
+    $queryDelHeaderPlan = "DELETE FROM planificacion_header WHERE idPlanificacion = $idHeader";
+    parent::nonQuery($queryDelHeaderPlan);
 
       return 1;
 
   }
+
   public function put($json)//()
   {
     //echo  $json; die;

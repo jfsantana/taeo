@@ -60,6 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
       echo json_encode($datosArray);
       http_response_code(200);
       }
+  elseif ( $_GET['type']==7){
+        $datosArray = $_planning->getPlanningHeadereActivo(@$_GET['idPlanificacion'],@$_GET['sede']);
+  
+        header('Content-Type: application/json;charset=utf-8');
+        echo json_encode($datosArray);
+        http_response_code(200);
+        }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
 
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
@@ -101,10 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
     $postBody = file_get_contents('php://input');
   } else {
-      $postBody = json_encode($_DELETE);
-  }
-
-  //$datosArray = $_planning->del($postBody);
+      $postBody = json_encode($_POST);
+  } 
+  $datosArray = $_planning->del($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {

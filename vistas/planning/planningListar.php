@@ -85,35 +85,53 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
+                <th>Codigo</th>
                 <th>Aprendiz</th>
                 <th>Sede</th>
                 <th>Área</th>
                 <th>Observación</th>
                 <th>Creado por</th>
                 <th>Activo</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               <?php foreach ($arrayPlanificaciones as $planificaciones) { ?>
                 <tr>
+                  <td><a href="#" onclick="enviarParametrosGetsionUpdate('planning/planningCreate.php',2,'<?php echo $planificaciones['idPlanificacion']; ?>')" class="nav-link "><?php echo $planificaciones['idPlanificacion']; ?></a></td>
                   <td><?php echo strtoupper($planificaciones['aprendiz']); ?></td>
                   <td><?php echo $planificaciones['nombreSede']; ?></td>
-                  <td><a href="#" onclick="enviarParametrosGetsionUpdate('planning/planningCreate.php',2,'<?php echo $planificaciones['idPlanificacion']; ?>')" class="nav-link "><?php echo $planificaciones['nombreArea']; ?></a></td>
+                  <td>
+                    
+                      <?php echo $planificaciones['nombreArea']; ?>
+                    
+                  </td>
                   <td><?php echo substr($planificaciones['observacion'], 0, 1000); ?></td>
                   <td><?php echo $planificaciones['creadoPor']; ?></td>
                   <td><?php echo $planificaciones['estado']; ?></td>
+                  <td>
+
+                  
+                  <?php if ($planificaciones['evaluacion'] == 0) { ?>
+                    <a href="#" onclick="eliminarPlanificacion('<?php echo $planificaciones['idPlanificacion']; ?>')">
+                      <i class="fa fa-trash"></i>
+                    </a>
+                  <?php } ?>
+                  </td>
                 </tr>
               <?php } ?>
 
             </tbody>
             <tfoot>
               <tr>
-               <th>Aprendiz</th>
+                <th>Codigo</th>
+                <th>Aprendiz</th>
                 <th>Sede</th>
                 <th>Área</th>
                 <th>Observación</th>
                 <th>Creado por</th>
                 <th>Activo</th>
+                <th></th>
               </tr>
             </tfoot>
           </table>
@@ -125,3 +143,30 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
 </div>
 </div>
 </section>
+
+
+<script>
+  async function eliminarPlanificacion(idPlanificacion) {
+    if (confirm('¿Está seguro de que desea eliminar esta planificación?')) {
+      try {
+        const response = await fetch('http://taeo/funciones/wsdl/planning', {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ idPlanificacion: idPlanificacion })
+        });
+
+        if (response.ok) {
+          alert('Planificación eliminada con éxito.');
+          location.reload(); // Actualiza la página
+        } else {
+          const errorData = await response.json();
+          alert('Error al eliminar la planificación: ' + errorData.message);
+        }
+      } catch (error) {
+        alert('Error al eliminar la planificación: ' + error.message);
+      }
+    }
+  }
+</script>

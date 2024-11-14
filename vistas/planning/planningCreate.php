@@ -215,7 +215,13 @@ if ($_POST['mod'] == 1) {
 </form>
                     <button type="button" class="btn btn-primary" onclick="enviarParametros('planning/planningListar.php')">Volver al Listado de Planes</button>
                     <?php
-                      if(($_POST['mod']<>1)&&($flag)){ ?>
+                      if(
+                          ($_POST['mod']<>1)
+                            &&
+                          ($flag)
+                          &&
+                          (@$activo == 1)
+                          ){ ?>
                       <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal-lg">Agregar Actividad(es)</button>
                       <!-- MODAL -->
                       <?php include ('planningModal.php'); ?>
