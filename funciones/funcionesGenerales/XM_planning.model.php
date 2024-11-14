@@ -30,12 +30,13 @@ $rs = API::JSON_TO_ARRAY($rs);
 //onclick="enviarParametros('admin/clienteList.php')"
 $idHeaderNew = @$rs['result']['idHeaderNew'];
 $mensaje = @$rs['result']['mensaje'];
+$mensajeDetalle = 'Verifique los datos o Busque en la lista de Evaluaciones la evaluacion creada';
 
 if (@$rs['status'] == 'OK') {
   //id= 2 es por que se creo correctamente debe precargar y cargar el modal
     $url = "onclick=\"enviarParametrosGetsionUpdate2('planning/planningCreate.php','2', $idHeaderNew)\"";
 } else {
-    $url = "onclick=\"enviarParametrosCRUD('planning/planningCreate.php','1')\"";
+    $url = "onclick=\"enviarParametrosCRUD('planning/planningListar.php','1')\"";
 }
 
 ?>
@@ -58,7 +59,7 @@ if (@$rs['status'] == 'OK') {
                 </button>
             </div>
             <div class="modal-body">
-                <p><?php echo @$rs['result']['mensaje']; ?></p>
+                <p><?php echo @$mensajeDetalle; ?></p>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-outline-light" <?php echo @$url; ?>>Close</button>
