@@ -39,6 +39,25 @@ class aprendiz extends conexion
   // Activaciond e token
   private $token = ''; // b43bbfc8bcf8625eed413d91186e8534
 
+
+  
+  public function getAprendizByCountryByUser($idUsuario) //(revisado)
+  {
+    $where = " WHERE activo = 1 ";
+    if ($idUsuario != '') {
+      $where =  $where . " and usuario_sede.idUsuario = " . $idUsuario;
+    }
+    $query = "select distinct * from aprendiz as a
+              where a.paisAprendiz in (SELECT DISTINCT sede.paisSede
+                            FROM usuario_sede
+                              inner join sede on usuario_sede.idSede=sede.idSede
+                              
+                              $where ) AND a.activoAprendiz = 1 ";
+
+    return parent::ObtenerDatos($query);
+  }
+
+
   
   public function getAprendizActivos($idAprendiz) //(revisado)
   {

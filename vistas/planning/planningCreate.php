@@ -66,12 +66,12 @@ if ($_POST['mod'] == 1) {
   $arrayAreaObjetivo  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=3&idUsuario=".$_SESSION['id_user'];
   $rs         = API::GET($URL1, $token);
   $arraySede  = API::JSON_TO_ARRAY($rs);
 
   $token = $_SESSION['token'];
-  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=1";
+  $URL1        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=5&idUsuario=".$_SESSION['id_user'];
   $rs         = API::GET($URL1, $token);
   $arrayAprendices  = API::JSON_TO_ARRAY($rs);
 

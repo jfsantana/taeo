@@ -15,6 +15,9 @@ $token = $_SESSION['token'];
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/sede?type=4&idUsuario=".$_SESSION['id_user'];
 $rs         = API::GET($URL, $token);
 $sedesPermiso  = API::JSON_TO_ARRAY($rs);
+//$sedesPermisoIds = array_column($sedesPermiso, 'idSede');
+$sedesPermisoIds = explode(',', @$sedesPermiso);
+//print("<pre>".print_r(($sedesPermiso),true)."</pre>");
 
 //Listado de planificaicones
 if ($_SESSION['id_rol']==1){
@@ -47,20 +50,24 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <div class="row">
 
-      <?php foreach ($arrayPlanificacionesbySede as $planificacionesbySede) { ?>
-        <div class="col-lg-3 col-12">
-          <div class="small-box bg-info">
-            <div class="inner">
-              <h3><?php echo $planificacionesbySede['total']; ?></h3>
-              <p><?php echo $planificacionesbySede['nombreSede']; ?></p>
+    <?php foreach ($arrayPlanificacionesbySede as $planificacionesbySede) { 
+        if (in_array($planificacionesbySede['idSede'], $sedesPermisoIds)) {?>
+            <div class="col-lg-3 col-12">
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3><?php echo $planificacionesbySede['total']; ?></h3>
+                  <p><?php echo $planificacionesbySede['nombreSede']; ?></p>
+                </div>
+                <div class="icon">
+                  <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
+                </div>
+              </div>
             </div>
-            <div class="icon">
-              <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
-            </div>
-            
-          </div>
-        </div>
-      <?php }?>
+          <?php
+        } 
+      } ?>
+
+
       <div class="col-lg-12 col-12">
           <div class="small-box bg-green">
             <a href="#" onclick="enviarParametrosGetsionCreate('planning/planningCreate.php','1')" class="small-box-footer">Crear Planificaciones </i></a>
