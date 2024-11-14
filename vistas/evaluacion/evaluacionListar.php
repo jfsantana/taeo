@@ -93,6 +93,7 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
                   <th>Área</th>
                   <th>Observación</th>
                   <th>Creado por</th>
+                  <th>Status</th>
                 </tr>
               </thead>
               <tbody>
@@ -120,6 +121,7 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
                   <th>Área</th>
                   <th>Observación</th>
                   <th>Creado por</th>
+                  <th>Status</th>
                 </tr>
               </tfoot>
             </table>
