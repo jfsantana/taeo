@@ -18,7 +18,7 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-print("<pre>".print_r(json_encode($_POST),true)."</pre>"); die;
+//print("<pre>".print_r(json_encode($_POST),true)."</pre>"); die;
 
 $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning";
 $rs = API::POST($URL, $token, $_POST);
@@ -29,6 +29,7 @@ $rs = API::JSON_TO_ARRAY($rs);
 
 //onclick="enviarParametros('admin/clienteList.php')"
 $idHeaderNew = @$rs['result']['idHeaderNew'];
+$mensaje = @$rs['result']['mensaje'];
 
 if (@$rs['status'] == 'OK') {
   //id= 2 es por que se creo correctamente debe precargar y cargar el modal
@@ -50,14 +51,14 @@ if (@$rs['status'] == 'OK') {
                 <h4 class="modal-title"><?php if (@$rs['status'] == 'OK') {
                     echo 'Se Actualizo Correctamente con Exito.';
                 } else {
-                    echo 'Error';
+                    echo $mensaje;
                 } ?></h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p><?php echo @$rs['result']['MSG']; ?></p>
+                <p><?php echo @$rs['result']['mensaje']; ?></p>
             </div>
             <div class="modal-footer justify-content-between">
                 <button type="button" class="btn btn-outline-light" <?php echo @$url; ?>>Close</button>
