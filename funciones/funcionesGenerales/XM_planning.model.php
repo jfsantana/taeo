@@ -18,7 +18,7 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r(json_encode($_POST),true)."</pre>"); die;
+print("<pre>".print_r(json_encode($_POST),true)."</pre>"); die;
 
 $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning";
 $rs = API::POST($URL, $token, $_POST);
