@@ -37,7 +37,7 @@ class area extends conexion
     if ($idAreas != '') {
       $where =  $where . " and idArea = " . $idAreas;
     }
-    $query = "select * , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado from " . $this->tabla . " $where ";
+    $query = "select * , case when activo = 1 Then 'Activo' else 'Desactivado' end estado from " . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
@@ -48,7 +48,7 @@ class area extends conexion
     if ($idAreas != '') {
       $where =  $where . " and idAreaObjetivo = " . $idAreas;
     }
-    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
+    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Desactivado' end estado
               FROM  nivelareaobjetivo
                $where ";
 
@@ -61,7 +61,7 @@ class area extends conexion
     if ($idNivelAreaObjetivo != '') {
       $where =  $where . " and idNivelAreaObjetivo = " . $idNivelAreaObjetivo;
     }
-    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
+    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Desactivado' end estado
               FROM  nivelareaobjetivo
                $where ";
     //echo $query; die;

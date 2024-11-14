@@ -18,24 +18,33 @@ $_POST['token'] = $_SESSION['token'];
 $_POST['creadoPor'] = $_SESSION['usuario'];
 
 
-//print("<pre>".print_r(json_encode($_POST),true)."</pre>"); die;
+
+
+//print("<pre>".print_r(json_encode($_POST),true)."</pre>"); 
 
 $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning";
+//echo $URL; die;
 $rs = API::POST($URL, $token, $_POST);
 $rs = API::JSON_TO_ARRAY($rs);
 
 //print("<pre>".print_r(json_encode($rs),true)."</pre>");die;
 
 
-//onclick="enviarParametros('admin/clienteList.php')"
-$idHeaderNew = @$rs['result']['idHeaderNew'];
+if($_POST["mod"] == 1){
+    
+    $idHeaderNew = @$rs['result']['idHeaderNew'];
+}else{
+    $idHeaderNew = $_POST["idObjetivoHeader"];
+}
+
 $mensaje = @$rs['result']['mensaje'];
-$mensajeDetalle = 'Verifique los datos o Busque en la lista de Evaluaciones la evaluacion creada';
+
 
 if (@$rs['status'] == 'OK') {
-  //id= 2 es por que se creo correctamente debe precargar y cargar el modal
+    $mensajeDetalle = 'Proceda a cargar las actividades de esta Planificacion';
     $url = "onclick=\"enviarParametrosGetsionUpdate2('planning/planningCreate.php','2', $idHeaderNew)\"";
 } else {
+    $mensajeDetalle = 'Verifique los datos o Busque en la lista de Evaluaciones la evaluacion creada';
     $url = "onclick=\"enviarParametrosCRUD('planning/planningListar.php','1')\"";
 }
 

@@ -36,7 +36,7 @@ class nivelArea extends conexion
     if ($idNivelAreaObjetivo != '') {
       $where =  $where . " and idNivelAreaObjetivo = " . $idNivelAreaObjetivo;
     }
-    $query = "select nivelareaobjetivo.*, case when nivelareaobjetivo.activo = 1 Then 'Activo' else 'Bloqueado' end estado , areasobjetivos.nombreArea
+    $query = "select nivelareaobjetivo.*, case when nivelareaobjetivo.activo = 1 Then 'Activo' else 'Desactivado' end estado , areasobjetivos.nombreArea
     from nivelareaobjetivo
     inner join areasobjetivos on nivelareaobjetivo.idAreaObjetivo=areasobjetivos.idArea $where ";
 
@@ -51,7 +51,7 @@ class nivelArea extends conexion
     if ($idAreas != '') {
       $where =  $where . " and idAreaObjetivo = " . $idAreas;
     }
-    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
+    $query = "SELECT nivelareaobjetivo.*  , case when activo = 1 Then 'Activo' else 'Desactivado' end estado
               FROM  nivelareaobjetivo
                $where ";
   //echo $idAreas; die;

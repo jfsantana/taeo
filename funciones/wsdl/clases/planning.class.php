@@ -55,7 +55,7 @@ class planning extends conexion
 
     $query = "select
             planificacion_header.*
-            ,case when planificacion_header.activo = 1 Then 'Activo' else 'Bloqueado' end estado
+            ,case when planificacion_header.activo = 1 Then 'Activo' else 'Desactivado' end estado
             ,areasobjetivos.nombreArea
             ,sede.nombreSede
               ,concat(usuario.nombreUsuario,', ',usuario.apellidoUsuario) as facilitador
@@ -215,13 +215,6 @@ class planning extends conexion
       if ($arrayToken) {
         // valida los campos obligatorios
         if (
-          (strlen($datos['idArea'])<>'')&&
-          (!isset($datos['idSede'])) &&
-          (!isset($datos['idFacilitador'])) &&
-          (!isset($datos['idAprendiz'])) &&
-          (!isset($datos['periodoEvaluacion'])) &&
-          (!isset($datos['observacion'])) &&
-          (!isset($datos['idSede'])) &&
           (!isset($datos['activo']))
         ) {
           // en caso de que la validacion no se cumpla se arroja un error
@@ -230,7 +223,7 @@ class planning extends conexion
         } else {
 
           // Asignacion de datos validados su existencia en el If anterior
-            $this->idPlanificacion = @$datos['idPlanificacion'];
+            $this->idPlanificacion = @$datos['idObjetivoHeader'];
             $this->idArea = @$datos['idArea'];
             $this->idSede = @$datos['idSede'];
             $this->idFacilitador = @$datos['idFacilitador'];
@@ -240,6 +233,8 @@ class planning extends conexion
             $this->fechaCreacion = date('Y-m-d');
             $this->creadoPor =  @$datos['creadoPor'];//@$_SESSION['usuario'];
             $this->activo = @$datos['activo'];
+
+       
 
           if($datos['mod']==1){//creacion del header y los items
             $resp = $this->InsertarHeader();
@@ -406,17 +401,16 @@ class planning extends conexion
   private function InsertarHeader()//()
   {
 
+    //consulta que busca las planifiaciones de un alumna para que no se repitan:
+    // valida AREA, Sede, Aprnediz y que este activio
     $validarHeader="SELECT * FROM taeho_v2.planificacion_header
     where
       idArea=$this->idArea and
       idSede=$this->idSede and
-      idFacilitador=$this->idFacilitador and
-      idAprendiz= $this->idAprendiz";
-
-
+      idAprendiz= $this->idAprendiz and 
+      activo = 1";
+      //valida que no exitsa una 
       $validarExistencia = parent::ObtenerDatos($validarHeader);
-
-
 
       if($validarExistencia){
         return 'errorExisteRegistro';
@@ -464,30 +458,29 @@ class planning extends conexion
 
   private function UpdateHeader()//()
   {
+  $updateFile='';
+  if (isset($this->idArea)){$updateFile = $updateFile . " idArea='$this->idArea', "; }
+  if (isset($this->idSede)){$updateFile = $updateFile . " idSede='$this->idSede', "; }
+  if (isset($this->idFacilitador)){$updateFile = $updateFile . " idFacilitador='$this->idFacilitador', "; }
+  if (isset($this->idAprendiz)){$updateFile = $updateFile . " idAprendiz='$this->idAprendiz', "; }
+  if (isset($this->periodoEvaluacion)){$updateFile = $updateFile . " periodoEvaluacion='$this->periodoEvaluacion', "; }
+  if (isset($this->observacion)){$updateFile = $updateFile . " observacion='$this->observacion', "; }
+  if (isset($this->fechaCreacion)){$updateFile = $updateFile . " fechaCreacion='$this->fechaCreacion', "; }
+  if (isset($this->creadoPor)){$updateFile = $updateFile . " creadoPor='$this->creadoPor', "; }
+  if (isset($this->activo)){$updateFile = $updateFile . " activo='$this->activo' "; }
+
+
     $query = 'update ' . $this->tablaHeader . "
                           set
-                          idArea='$this->idArea',
-                          idSede='$this->idSede',
-                          idFacilitador='$this->idFacilitador',
-                          idAprendiz='$this->idAprendiz',
-                          periodoEvaluacion='$this->periodoEvaluacion',
-                          observacion='$this->observacion',
-                          fechaCreacion='$this->fechaCreacion',
-                          creadoPor='$this->creadoPor',
-                          activo='$this->activo'
-
-
+                          $updateFile
 
                       WHERE idPlanificacion = $this->idPlanificacion";
 
-                      echo  $query; die;
+                      //echo  $query; die;
     $update = parent::nonQuery($query);
 
-    if ($update >= 1) {
-      return $update;
-    } else {
-      return 0;
-    }
+      return 1;
+
   }
   public function put($json)//()
   {

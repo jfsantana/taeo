@@ -185,7 +185,7 @@ class planningItems extends conexion
             // $rs = API::GET($URL, $token, $_POST);
             // $rs = API::JSON_TO_ARRAY($rs);
 
-            $queryArea="SELECT nivelareaobjetivo.* , case when activo = 1 Then 'Activo' else 'Bloqueado' end estado
+            $queryArea="SELECT nivelareaobjetivo.* , case when activo = 1 Then 'Activo' else 'Desactivado' end estado
                           FROM nivelareaobjetivo
                           WHERE idNivelAreaObjetivo <> '' and idNivelAreaObjetivo = ".$this->jerarquia;
             $rs = parent::ObtenerDatos($queryArea);                           

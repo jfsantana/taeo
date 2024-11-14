@@ -50,7 +50,7 @@ class objetivo extends conexion
     }
     $query = "select
               objetivo_header.*,
-              case when objetivo_header.activo = 1 Then 'Activo' else 'Bloqueado' end estado,
+              case when objetivo_header.activo = 1 Then 'Activo' else 'Desactivado' end estado,
               areasobjetivos.nombreArea ,
               nivelareaobjetivo.nombreNivelAreaObjetivo
             from objetivo_header

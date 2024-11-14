@@ -65,7 +65,7 @@ class aprendiz extends conexion
     if ($idAprendiz != '') {
       $where =  $where . " and idAprendiz = " . $idAprendiz;
     }
-    $query = "select * , case when aprendiz.activoAprendiz = 1 Then 'Activo' else 'Bloqueado' end estado from " . $this->tabla . " $where ";
+    $query = "select * , case when aprendiz.activoAprendiz = 1 Then 'Activo' else 'Desactivado' end estado from " . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }
@@ -76,7 +76,7 @@ class aprendiz extends conexion
     if ($idAprendiz != '') {
       $where =  $where . " and idAprendiz = " . $idAprendiz;
     }
-    $query = "select * , case when aprendiz.activoAprendiz = 1 Then 'Activo' else 'Bloqueado' end estado from " . $this->tabla . " $where ";
+    $query = "select * , case when aprendiz.activoAprendiz = 1 Then 'Activo' else 'Desactivado' end estado from " . $this->tabla . " $where ";
 
     return parent::ObtenerDatos($query);
   }

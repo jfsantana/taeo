@@ -25,6 +25,7 @@ if ($_POST['mod'] == 1) {
   }
   $creadoPor = $_SESSION['usuario'];
   $fechaCreacion = date('Y-m-d');
+  $activo =1;
 } elseif($_POST['mod'] == 2) {
   //Editar Planificacion
 
@@ -54,10 +55,6 @@ if ($_POST['mod'] == 1) {
   $aprendiz = $arrayHeader[0]['aprendiz'];
   $aprendizFullName = $arrayHeader[0]['aprendiz'];
 
-  if ($arrayHeader[0]['activo'] == 1)
-    $estado = 1;
-  else
-    $estado = 0;
 }
 
   $token = $_SESSION['token'];
@@ -164,9 +161,7 @@ if ($_POST['mod'] == 1) {
                 </div>
                 <div class="col-sm-2">
                   <label>Activo:</label>
-                  <?php
-                    if  ((is_null(@$activo)) ||(empty(@$activo))){@$activo=1;}
-                    ?>
+                 
                   <select class="form-control" name="activo" id="activo">
                     <option <?php if (@$activo == 1) {
                               echo 'selected';

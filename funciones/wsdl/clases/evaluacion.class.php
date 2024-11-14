@@ -58,7 +58,7 @@ class evaluacion extends conexion
     }
     $query = "select
             planificacion_header.*
-            ,case when planificacion_header.activo = 1 Then 'Activo' else 'Bloqueado' end estado
+            ,case when planificacion_header.activo = 1 Then 'Activo' else 'Desactivado' end estado
             ,areasobjetivos.nombreArea
             ,sede.nombreSede
               ,concat(usuario.nombreUsuario,', ',usuario.apellidoUsuario) as facilitador

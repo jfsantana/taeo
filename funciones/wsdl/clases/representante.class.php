@@ -46,7 +46,7 @@ class representante extends conexion
     if ($idRepresentante != '') {
       $where =  $where . " and idRepresentante = " . $idRepresentante;
     }
-    $query = "select *, case when representantes.activoRepresentante = 1 Then 'Activo' else 'Bloqueado' end estado from " . $this->tabla . " $where ";
+    $query = "select *, case when representantes.activoRepresentante = 1 Then 'Activo' else 'Desactivado' end estado from " . $this->tabla . " $where ";
     return parent::ObtenerDatos($query);
   }
 
