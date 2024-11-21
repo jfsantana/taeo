@@ -221,10 +221,10 @@
           <li class="nav-item">
             <a href="#"  onclick="enviarParametros('report/reportIntegralAprendizList.php')" class="nav-link ">
               <i class="far fa-circle nav-icon"></i>
-              <p>Registros (Integral) Aprendiz</p>
+              <p>Reporte Integral</p>
             </a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" onclick="enviarParametros('report/fiRealMensual.php')" class="nav-link">
               <i class="far fa-circle nav-icon"></i>
               <p>Reporte por Sesión</p>
@@ -235,7 +235,7 @@
               <i class="far fa-circle nav-icon"></i>
               <p>Programas por Niño</p>
             </a>
-          </li>
+          </li> -->
 
         </ul>
       </li>
