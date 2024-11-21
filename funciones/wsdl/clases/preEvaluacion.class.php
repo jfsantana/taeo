@@ -102,17 +102,23 @@ class preEvaluacion extends conexion
 
   public function getPreEvaluacioensByAprendiz($idAprendiz) //( 01112024 )
   {
-    $where = " WHERE idAprendiz <> '' ";
+    $where = " WHERE eh.idAprendiz <> '' ";
     if ($idAprendiz != '') {
-      $where =  $where . " and idAprendiz = " . $idAprendiz;
+      $where =  $where . " and eh.idAprendiz = " . $idAprendiz;
     }
     $query = "SELECT 
-                  *
+                  eh.*,
+                  a.nombreAprendiz,
+                  a.apellidoAprendiz,
+                  a.fechaNacimientoAprendiz,
+                  concat(u.nombreUsuario,', ', u.apellidousuario) as evaluadorPor
               FROM
-                  taeho_v2.evaluacion_header
+                   taeho_v2.evaluacion_header as eh
+                    inner join aprendiz as a on eh.idAprendiz= a.idAprendiz
+                    inner join	usuario as u on eh.idEvaluadoPor=u.idUsuario
               $where
-              ORDER BY fechaEvaluacion DESC";
-    //echo   $query; die;
+              ORDER BY eh.fechaEvaluacion DESC";
+      //echo   $query; die;
     return parent::ObtenerDatos($query);
   }
 

@@ -18,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * 4 saber si tiene evaluacion inicial
    * 5 Lista las evaluaciones de una actividad
    * 6 DETALLED E UNA EVALUACION POR SU ID
+   * 7
+   *  8  listar los avances de un aprendiz
    */
   if ($_GET['type']==1){
     $datosArray = $_evaluacion->getPlanningHeadere(@$_GET['idPlanificacion'], @$_GET['idsede'], @$_GET['facilitador']);
@@ -51,6 +53,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
   }elseif($_GET['type']==7){
     $datosEmpleado = $_evaluacion->getPlanningHeadereActivo(@$_GET['idPlanificacion'], @$_GET['idsede'], @$_GET['facilitador']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosEmpleado);
+    http_response_code(200);
+  }elseif($_GET['type']==8){
+    $datosEmpleado = $_evaluacion->getPlanningHeadereActivoByidAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosEmpleado);
     http_response_code(200);

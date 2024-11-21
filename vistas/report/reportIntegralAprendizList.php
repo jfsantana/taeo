@@ -21,25 +21,27 @@ function edadAprendiz($fechaNacimiento){
 }
 
 function edadByEvaluacion($fechaNacimiento, $fechaEvaluacion){
-// Convertir las fechas a objetos DateTime
-$fechaNacimientoDateTime = new DateTime($fechaNacimiento);
-$fechaEvaluacionDateTime = new DateTime($fechaEvaluacion);
+  // Convertir las fechas a objetos DateTime 
+  $fechaNacimientoDateTime = new DateTime($fechaNacimiento);
+  $fechaEvaluacionDateTime = new DateTime($fechaEvaluacion);
 
-// Calcular la diferencia entre las dos fechas
-$diferencia = $fechaNacimientoDateTime->diff($fechaEvaluacionDateTime);
+  // Calcular la differentia entre las dos fechas
+  $diferencia = $fechaNacimientoDateTime->diff($fechaEvaluacionDateTime);
 
-// Obtener los años y meses de la diferencia
-$anios = $diferencia->y;
-$meses = $diferencia->m;
+  // Obtener los años y meses de la diferencia
+  $anios = $diferencia->y;
+  $meses = $diferencia->m;
 
-// Imprimir la edad en años y meses
-return  $anios . " años, " . $meses . " meses"; 
-}
+  // Imprimir la edad en años y meses
+  return  $anios . " años, " . $meses . " meses"; 
+  }
 
-//Listado Aprenidces
+
+  //Listado Aprenidces
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=4";
+echo $URL;
 $rs         = API::GET($URL, $token);
 $arrayPreEvaluacion  = API::JSON_TO_ARRAY($rs);
 

@@ -118,8 +118,4 @@ function fetchNiveles(idAprendiz,mod) {
   }
 }
 
-
-
-
-
   </script>

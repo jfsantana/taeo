@@ -139,6 +139,18 @@
       "buttons": ["csv", "excel", "pdf", "print", "colvis"],
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 
+    $("#resumenRepresentante").DataTable({
+      "responsive": true,
+      "order": [
+        [0, "asc"]
+      ],
+      "lengthChange": true,
+      "autoWidth": false,
+      
+    }).buttons().container().appendTo('#resumenRepresentante_wrapper .col-md-6:eq(0)');
+
+    
+
     $("#Aprobacion").DataTable({
       "responsive": true,
       "order": [

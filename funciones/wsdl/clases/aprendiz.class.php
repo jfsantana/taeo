@@ -61,7 +61,7 @@ class aprendiz extends conexion
   
   public function getAprendizActivos($idAprendiz) //(revisado)
   {
-    $where = " WHERE activoAprendiz <> 1 ";
+    $where = " WHERE activoAprendiz <> 0 ";
     if ($idAprendiz != '') {
       $where =  $where . " and idAprendiz = " . $idAprendiz;
     }

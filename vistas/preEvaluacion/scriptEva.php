@@ -71,10 +71,8 @@ function fetchNiveles(idAprendiz,mod) {
             
             // Agrega las nuevas opciones
             niveles.forEach(function(nivel) {
-              
-
-              if( nivel.fechaUltimaEvaluacion =="0000-00-00"){
-                
+              if( nivel.fechaEvaluacion == "0000-00-00")
+              {
                 idHeaderEvaluacionAnterior.append('<option value="">No hay evaluaciones previas</option>');
               }else{
                 idHeaderEvaluacionAnterior.append('<option value="' + nivel.idHeaderEvaluacion + '">' + nivel.fechaEvaluacion + '</option>');

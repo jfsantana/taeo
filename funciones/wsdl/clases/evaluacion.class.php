@@ -74,6 +74,32 @@ class evaluacion extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  
+  public function getPlanningHeadereActivoByidAprendiz($idAprendiz) //(LISTO PARA EVALUACIONES)
+  {
+    $where = " WHERE planificacion_header.activo = 1 ";
+    if ($idAprendiz != '') {
+      $where =  $where . " and planificacion_header.idAprendiz = " . $idAprendiz;
+    }
+
+    $query = "select
+            planificacion_header.*
+            ,case when planificacion_header.activo = 1 Then 'Activo' else 'Desactivado' end estado
+            ,areasobjetivos.nombreArea
+            ,sede.nombreSede
+              ,concat(usuario.nombreUsuario,', ',usuario.apellidoUsuario) as facilitador
+              ,concat(aprendiz.nombreAprendiz,', ',aprendiz.apellidoAprendiz) as aprendiz
+          from planificacion_header
+            inner join areasobjetivos on areasobjetivos.idArea =planificacion_header.idArea
+            inner join sede on sede.idSede =planificacion_header.idSede
+              inner join usuario on usuario.idUsuario =planificacion_header.idFacilitador
+              inner join aprendiz on aprendiz.idAprendiz =planificacion_header.idAprendiz 
+               $where
+              order by aprendiz.nombreAprendiz";
+
+    return parent::ObtenerDatos($query);
+  }
+
   public function getPlanningHeadereActivo($idPlanificacion, $idsede, $idFacilitador) //(LISTO PARA EVALUACIONES)
   {
     $where = " WHERE planificacion_header.activo = 1 ";
