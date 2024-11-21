@@ -12,12 +12,13 @@ function fetchMediadores(idSede,idEvaluadoPor) {
   }
 
   const token = '<?php echo $_SESSION['token']; ?>';
-  const url = `http://${window.location.host}/funciones/wsdl/empleados?type=5&idSede=${idSede}`;
+  const protocol = window.location.protocol;
+  const url = `${protocol}//${window.location.host}/funciones/wsdl/empleados?type=5&idSede=${idSede}`;
 
   fetch(url, {
     method: 'GET',
     headers: {
-   
+      'Authorization': `Bearer ${token}`
     }
   })
   .then(response => response.json())
