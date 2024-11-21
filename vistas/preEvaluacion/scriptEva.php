@@ -17,7 +17,7 @@ function fetchMediadores(idSede,idEvaluadoPor) {
   fetch(url, {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`
+   
     }
   })
   .then(response => response.json())
