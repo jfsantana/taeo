@@ -11,8 +11,9 @@ function fetchMediadores(idSede,idEvaluadoPor) {
     return; // Exit the function
   }
 
-  const token = '<?php echo $_SESSION['token']; ?>';
-  const url = `http://${window.location.host}/funciones/wsdl/empleados?type=5&idSede=${idSede}`;
+  const token = '<?php echo $_SESSION['token']; ?>'; 
+  const protocol = window.location.protocol;
+  const url = `${protocol}//${window.location.host}/funciones/wsdl/empleados?type=5&idSede=${idSede}`;
 
   fetch(url, {
     method: 'GET',

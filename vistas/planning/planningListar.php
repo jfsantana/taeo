@@ -149,7 +149,9 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
   async function eliminarPlanificacion(idPlanificacion) {
     if (confirm('¿Está seguro de que desea eliminar esta planificación?')) {
       try {
-        const response = await fetch('http://taeo/funciones/wsdl/planning', {
+        const protocol = window.location.protocol;
+        const url = `${protocol}//${window.location.host}/funciones/wsdl/planning`;
+        const response = await fetch(url, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json'
