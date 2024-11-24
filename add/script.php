@@ -10,17 +10,17 @@
 </script>
 
 
-<!-- /************************** */ --> 
+<!-- /************************** */ -->
 <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
 <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
 
 
 
-<!-- /************************** */ --> 
+<!-- /************************** */ -->
 <script src="../plugins/fullcalendar/main.js"></script>
 
 
-<!-- /************************** */ --> 
+<!-- /************************** */ -->
 <!-- Bootstrap 4-->
 <script src="../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- ChartJS-->
@@ -146,10 +146,10 @@
       ],
       "lengthChange": true,
       "autoWidth": false,
-      
+
     }).buttons().container().appendTo('#resumenRepresentante_wrapper .col-md-6:eq(0)');
 
-    
+
 
     $("#Aprobacion").DataTable({
       "responsive": true,

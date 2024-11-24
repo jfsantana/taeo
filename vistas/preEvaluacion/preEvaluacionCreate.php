@@ -11,7 +11,7 @@ include("scriptEva.php");
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
-//print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 
 function edadAprendiz($fechaNacimiento){
   $fecha_nacimiento = @$fechaNacimiento;
@@ -24,7 +24,7 @@ function edadAprendiz($fechaNacimiento){
   $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
   $anios = floor($diferencia / (365 * 60 * 60 * 24));
   $meses = floor(($diferencia - $anios * 365 * 60 * 60 * 24) / (30 * 60 * 60 * 24));
-  return  $anios; 
+  return  $anios;
 }
 
 /*Tipos de MOD
@@ -52,11 +52,11 @@ if ($_POST['mod'] == 1) {
   $activo =1;
   $accion = "Crear";
   if(isset($_POST['id'])){
-    $idHeaderEvaluacion = @$_POST["id"];  
+    $idHeaderEvaluacion = @$_POST["id"];
   }
   $creadoPor = $_SESSION['usuario'];
   $fechaEvaluacion = date('Y-m-d');
-  
+
 } elseif($_POST['mod'] == 2) {
 
   $flag=true;
@@ -91,7 +91,7 @@ if ($_POST['mod'] == 1) {
   $edadCronologica= @$_POST["edadCronologica"];
   $idAreaEvaluacion= @$_POST["idAreaEvaluacion"];
 
-  //echo $fechaUltimaEvaluacion; 
+  //echo $fechaUltimaEvaluacion;
   //consulta de los NIVELES PARA LA CREACION
   $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=6";
   $rs         = API::GET($URL, $token);
@@ -111,10 +111,10 @@ if ($_POST['mod'] == 1) {
     $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=7&idHeaderEvaluacion=$idHeaderEvaluacion";
     $rs         = API::GET($URL, $token);
     $arrayResumen  = API::JSON_TO_ARRAY($rs);
-    
 
-    
-    
+
+
+
   //consulta de los items
     $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=2";
     $rs         = API::GET($URL, $token);
@@ -138,7 +138,7 @@ require_once("style.php")  ;
         <h1 class="m-0">Evaluaciones</h1>
       </div>
       <div class="col-sm-6 text-right">
-        <!-- <button id="printButton" class="btn btn-primary">Imprimir</button> -->
+         <button id="printButton" class="btn btn-primary">Imprimir</button>
       </div>
     </div>
   </div>
@@ -150,7 +150,7 @@ require_once("style.php")  ;
 
   <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
   <input type="hidden" name="idHeaderEvaluacion" value="<?php echo @$idHeaderEvaluacion; ?>">
-  
+
 
 
 
@@ -166,7 +166,7 @@ require_once("style.php")  ;
               <button type="button" class="btn btn-tool" data-card-widget="collapse" id="HeaderTable">
                 <i class="fas fa-minus"></i>
               </button>
-              
+
             </div>
           </div>
           <!-- /.card-header -->
@@ -210,9 +210,9 @@ require_once("style.php")  ;
                   </div>
                 </div>
 
-                
 
-               
+
+
 
                 <div class="col-sm-1">
                   <label>Activo</label>
@@ -264,7 +264,7 @@ require_once("style.php")  ;
                   <button type="button" class="btn btn-tool" data-card-widget="collapse"  id="HeaderItems">
                     <i class="fas fa-minus"></i>
                   </button>
-                  
+
                 </div>
               </div>
               <div class="card-body">
@@ -319,7 +319,7 @@ require_once("style.php")  ;
                   <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Cabecera de la Evaluacion </button>
                   <button type="button" class="btn btn-primary" onclick="enviarParametros('preEvaluacion/preEvaluacionListar.php')">Volver al Listado de Evaluaciones</button>
                 </div>
-      
+
                   <div class="col-lg-12 col-12">
                     <div class="card">
                       <div class="card-header bg-gray">
@@ -335,7 +335,7 @@ require_once("style.php")  ;
                           <thead>
                           </thead>
                           <tbody>
-                            <?php 
+                            <?php
                             $currentNivel = '';
                             $currentEdad = '';
                             $areas = [];
@@ -344,7 +344,7 @@ require_once("style.php")  ;
                               $nivel = $datoResumen['nombreNivelEvaluacion'];
                               $edad = $datoResumen['edadCronologica'];
                               $area = $datoResumen['nombreAreaEvaluacion'];
-                          
+
                               if (!isset($dataByNivelAndEdad[$nivel])) {
                                 $dataByNivelAndEdad[$nivel] = [];
                               }
@@ -354,14 +354,14 @@ require_once("style.php")  ;
                               if (!isset($dataByNivelAndEdad[$nivel][$edad][$area])) {
                                 $dataByNivelAndEdad[$nivel][$edad][$area] = [];
                               }
-                          
+
                               $dataByNivelAndEdad[$nivel][$edad][$area][] = $datoResumen;
-                          
+
                               if (!in_array($area, $areas)) {
                                 $areas[] = $area;
                               }
                             }
-                          
+
                             $numAreas = count($areas)*2;
 
                             // Print data
@@ -393,7 +393,7 @@ require_once("style.php")  ;
                                       $detalle = $areasData[$area][$i]['detalleEvalaacion'];
                                       $evaluacion = $areasData[$area][$i]['evaluacion_detalle'];
                                       $id = isset($areasData[$area][$i]['idDetalleEvaluacion']) ? $areasData[$area][$i]['idDetalleEvaluacion'] : ''; // Verificar si 'idDetalleEvaluacion' existe
-                                      
+
                                       switch ($evaluacion) {
                                         case 'AT':
                                           $icon = 'X';
@@ -437,7 +437,7 @@ require_once("style.php")  ;
                               }
                             }
                             ?>
-                          </tbody>                        
+                          </tbody>
                           <tfoot>
                             <tr>
                             </tr>
@@ -461,7 +461,7 @@ require_once("style.php")  ;
         </div>
       </div>
     </div>
-  </div>  
+  </div>
 </form>
 </div>
 
@@ -487,38 +487,57 @@ require_once("style.php")  ;
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
 <script>
+document.getElementById('printButton').addEventListener('click', function() {
+    var id = <?php echo json_encode($_POST['id']); ?>;
+    var host = '<?php echo $_SESSION['HTTP_ORIGIN']; ?>/vistas/report/';
+    var url = 'informeEvaluacionAprendiz.php?id=' + id;
+
+    url=host+url;
+
+    window.open(url, '_blank', 'width=1200,height=600');
+
+
+
+//     url = host + "/vistas/report/"+url;
+
+// alert(url);
+
+
+
+});
+
   //este script es para imprimir el contenido de la pagina
-  document.getElementById('printButton').addEventListener('click', function () {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+  // document.getElementById('printButton').addEventListener('click', function () {
+  //   const { jsPDF } = window.jspdf;
+  //   const doc = new jsPDF();
 
-    // Obtener el nombre del aprendiz y la fecha actual
-    const nombreAprendiz = "<?php echo $nombreAprendiz; ?>";
-    const fechaActual = new Date().toLocaleDateString('es-ES');
+  //   // Obtener el nombre del aprendiz y la fecha actual
+  //   const nombreAprendiz = "<?php echo $nombreAprendiz; ?>";
+  //   const fechaActual = new Date().toLocaleDateString('es-ES');
 
-    html2canvas(document.body, {
-      onrendered: function (canvas) {
-        const imgData = canvas.toDataURL('image/png');
-        const imgWidth = 210; // A4 width in mm
-        const pageHeight = 295; // A4 height in mm
-        const imgHeight = canvas.height * imgWidth / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0;
+  //   html2canvas(document.body, {
+  //     onrendered: function (canvas) {
+  //       const imgData = canvas.toDataURL('image/png');
+  //       const imgWidth = 210; // A4 width in mm
+  //       const pageHeight = 295; // A4 height in mm
+  //       const imgHeight = canvas.height * imgWidth / canvas.width;
+  //       let heightLeft = imgHeight;
+  //       let position = 0;
 
-        doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-        heightLeft -= pageHeight;
+  //       doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+  //       heightLeft -= pageHeight;
 
-        while (heightLeft >= 0) {
-          position = heightLeft - imgHeight;
-          doc.addPage();
-          doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
-          heightLeft -= pageHeight;
-        }
+  //       while (heightLeft >= 0) {
+  //         position = heightLeft - imgHeight;
+  //         doc.addPage();
+  //         doc.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+  //         heightLeft -= pageHeight;
+  //       }
 
-        doc.save(`${nombreAprendiz}_${fechaActual}.pdf`);
-      }
-    });
-  });
+  //       doc.save(`${nombreAprendiz}_${fechaActual}.pdf`);
+  //     }
+  //   });
+  // });
 </script>
 
 
