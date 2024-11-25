@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    *  5 lista todas las areas para una evaluacion
    * 6 lista todos los niveles
    * 7 resumen de evaluacion por header
-   * 
+   * 8 nombre de los evaluadores de una PreEvaluacion (idHeaderEvaluacion)
    * 
    
 
@@ -56,6 +56,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
   }elseif(($_GET['type']==7)){
     $datosArray = $_preEvaluacion->getResumenEva(@$_GET['idHeaderEvaluacion']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif(($_GET['type']==8)){
+    $datosArray = $_preEvaluacion->getEvaluadoresData(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);

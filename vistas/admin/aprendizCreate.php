@@ -55,6 +55,8 @@ $arrayRepresentanteByAprendiz  = API::JSON_TO_ARRAY($rs);
   $arrayRepresentanteByAprendizActivos  = API::JSON_TO_ARRAY($rs);
   $representanteByAprendizActivos='';
 
+  
+
   foreach ($arrayRepresentanteByAprendizActivos  as $representanteByAprendizActivosDato) {
     $representanteByAprendizActivos=$representanteByAprendizActivos.$representanteByAprendizActivosDato['idRepresentante'].',';
   }

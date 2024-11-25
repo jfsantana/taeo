@@ -123,6 +123,33 @@ class preEvaluacion extends conexion
   }
 
   
+  
+  public function getEvaluadoresData($idHeaderEvaluacion) //(01112024)
+  {
+    $where = " WHERE u.activoUsuario = 1 ";
+    if ($idHeaderEvaluacion != '') {
+      $where =  $where . " and eh.idHeaderEvaluacion = " . $idHeaderEvaluacion;
+    }
+    $query = "SELECT
+              u.*,
+              c.descripcionCargo
+              FROM
+              evaluacion_header as eh
+              JOIN
+              usuario as u
+              ON
+              FIND_IN_SET(u.idUsuario, eh.idEvaluadoPor) > 0
+
+              inner join cargo as c 
+              on u.cargousuario = c.idcargos
+              $where
+               order by u.apellidoUsuario, u.nombreUsuario";
+    //echo $query; die;
+    return parent::ObtenerDatos($query);
+  }
+
+  
+  
   public function getResumenEva($idDetalleEvaluacion) //(01112024)
   {
     $where = " WHERE idDetalleEvaluacion is not null ";
