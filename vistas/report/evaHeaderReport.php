@@ -22,8 +22,7 @@
                             </div>
                         </div>
                     </small>
-                    <button id="printButtonNoScript" class="btn btn-primary" onclick="window.print()">Imprimir</button>
-                    <button onclick="window.location.href='generatePdf.php'">Generar PDF</button>
+
                 </div>
             </div>
             <hr class="separator">
