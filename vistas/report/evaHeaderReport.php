@@ -1,7 +1,7 @@
 <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <img src="../../dist/img/Logo-TAEO-horizontal-cyan.png" width=40% alt="Logo Taeo" class="logo">
+                    <img src="http://taeo/dist/img/Logo-TAEO-horizontal-cyan.png" width=40% alt="Logo Taeo" class="logo">
                 </div>
                 <div class="col-sm-6 text-right">
                     <small>
@@ -22,7 +22,8 @@
                             </div>
                         </div>
                     </small>
-
+                    <!-- <button id="printButtonNoScript" class="btn btn-primary" onclick="window.print()">Imprimir</button> -->
+                    <!-- <button onclick="window.location.href='generatePdf.php'">Generar PDF</button> -->
                 </div>
             </div>
             <hr class="separator">
