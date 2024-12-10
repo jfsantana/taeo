@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
    * 6 lista todos los niveles
    * 7 resumen de evaluacion por header
    * 8 nombre de los evaluadores de una PreEvaluacion (idHeaderEvaluacion)
-   * 
+   * 9 lista la evaluacion previa a la evaluacion actual recibe indEvaluacionActual
    
 
    */
@@ -61,6 +61,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     http_response_code(200);
   }elseif(($_GET['type']==8)){
     $datosArray = $_preEvaluacion->getEvaluadoresData(@$_GET['idHeaderEvaluacion']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif(($_GET['type']==9)){
+    $datosArray = $_preEvaluacion->getEvaluacionPrevia(@$_GET['idHeaderEvaluacion']);
+    header('Content-Type: application/json;charset=utf-8');
+    echo json_encode($datosArray);
+    http_response_code(200);
+  }elseif(($_GET['type']=='imp')){
+    $datosArray = $_preEvaluacion->getGrafEvaAnt(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);

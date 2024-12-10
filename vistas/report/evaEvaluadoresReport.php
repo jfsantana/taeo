@@ -1,5 +1,5 @@
 <div class="col-sm-12">
-    <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-2" style="font-size: 1rem; background-color: #00B9F1;">EVALUADO POR</label>
+    <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #00B9F1;"><strong>EVALUADO POR</strong></label>
 </div>  
 <?php 
 foreach($arrayEvaluadores as $dataEvaluadores ){?>

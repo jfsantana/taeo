@@ -8,7 +8,7 @@ if (!isset($_SESSION['id_user'])) {
     header("Location:  " . $_SESSION['HTTP_ORIGIN']);
     exit();
 }
-
+ print_r($_GET);
 ob_start();
 ?>
 
@@ -20,7 +20,6 @@ ob_start();
     <title>Informe Evaluación Aprendiz</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
-          
         body {
             font-family: Arial, sans-serif;
             font-size: 12px;
@@ -45,16 +44,18 @@ ob_start();
             width: 100%;
         }
         .table {
-            font-size: 55%;
+            font-size: 100%;
         }
         #printableArea {
             font-size: 12px;
         }
+        .small-fontA {
+        font-size: 10px;
+        }
     </style>
 </head>
 <body>
-  <!-- Rest of your content -->
-  <div class="container">
+
       <button id="generatePDF" class="btn btn-primary">Generar PDF</button>
       <div id="printableArea">
         <!-- Content Header (Page header) -->
@@ -101,12 +102,12 @@ ob_start();
             <div class="row">
               <!-- HEADER-->
               <div class="col-sm-12">
-                <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-2" style="font-size: 1rem; background-color: #235382;">DATOS DE IDENTIFICACION</label>
+                <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #235382;">DATOS DE IDENTIFICACION</label>
               </div>
               <div class="col-lg-9 col-9">
                 <div class="card card-primary">
                   <div class="card-body">
-                    <div class="row">
+                    <div class="row ">
                       <?php include("evaAprendizReport.php"); ?>
                       <?php include("evaRepresentantesReport.php"); ?>
                       <?php include("evaEvaluadoresReport.php"); ?>
@@ -116,6 +117,10 @@ ob_start();
               </div>
               <div class="col-lg-3 col-3">
                 <?php include("evaFechasReport.php"); ?>
+              </div>
+              <div class="col-sm-12">
+                  <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #235382;"><strong> RESULTADOS COMPARATIVOS DE ACUERDO CON LA ESCALA DE ESTIMACIÓN EVOLUTIVA TAEO 8.0 (E.E.E)
+                  </strong></label>
               </div>
               <?php include("evaGraficosReport.php"); ?>
               <div class="col-sm-12">
@@ -134,9 +139,9 @@ ob_start();
 
       <div id="footerArea" class="content-footer">
         <?php include("footerReport.php"); ?>
-    </div>
+      </div>
           
-    </div>
+   
     
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
@@ -145,32 +150,10 @@ ob_start();
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
-<script>
-    document.getElementById('generatePDF').addEventListener('click', function () {
-        const element = document.getElementById('printableArea');
-        const footer = document.getElementById('footerArea');
-
-        if (!element || !footer) {
-            console.error('Elementos footerArea o printableArea no encontrados.');
-            return;
-        }
-
-        // Clonar el contenido del área imprimible y agregar el pie de página
-        const clone = element.cloneNode(true);
-        clone.appendChild(footer.cloneNode(true));
-
-        // Configuración de html2pdf
-        const opt = {
-            margin:       1,
-            filename:     'informe_evaluacion_aprendiz.pdf',
-            image:        { type: 'jpeg', quality: 0.98 },
-            html2canvas:  { scale: 2 },
-            jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
-        };
-
-        // Generar el PDF
-        html2pdf().from(clone).set(opt).save();
-    });
-</script>
+    <script>
+        document.getElementById('generatePDF').addEventListener('click', function () {
+            window.location.href = 'evaGeneratePdf.php';
+        });
+    </script>
 </body>
 </html>

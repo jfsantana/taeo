@@ -1,7 +1,14 @@
 
+<style>
+    .small-font {
+        font-size: 10px;
+    }
+    .logo {
+        width: 30%;
+    }
+</style>
 
-
-<div class="container-fluid">
+<div class="container-fluid small-font"  >
             <div class="row">
                 <div class="col-sm-6 text-left">
                   <small>

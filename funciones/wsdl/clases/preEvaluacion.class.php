@@ -123,6 +123,30 @@ class preEvaluacion extends conexion
   }
 
   
+  public function getEvaluacionPrevia($idHeaderEvaluacion) //(01112024)
+  {
+    $where = " WHERE activo = 1 ";
+    if ($idHeaderEvaluacion != '') {
+      $where =  $where . " and idHeaderEvaluacion = " . $idHeaderEvaluacion;
+    }
+    $query = "SELECT
+              idHeaderEvaluacionAnterior
+              FROM
+              evaluacion_header
+              $where
+               ";
+    $idEvaAnterior =  parent::ObtenerDatos($query);
+    
+    if($idEvaAnterior[0]['idHeaderEvaluacionAnterior']){
+      return $this->getResumenEva($idEvaAnterior[0]['idHeaderEvaluacionAnterior']);
+    }else{
+      return array();
+    }
+
+    
+    
+  }
+  
   
   public function getEvaluadoresData($idHeaderEvaluacion) //(01112024)
   {
@@ -270,7 +294,121 @@ class preEvaluacion extends conexion
     return parent::ObtenerDatos($query);
   }
 
+  
+  public function getGrafEvaAnt($idHeaderEvaluacion) //(01112024)
+  {
+    $responseCode= array();
 
+    $queryIdEvaAnt="SELECT eh.idHeaderEvaluacionAnterior
+                      FROM
+                          evaluacion_header AS eh
+                              INNER JOIN
+                          evaluacion_item AS ei ON eh.idHeaderEvaluacion = ei.idHeaderEvaluacion
+                      WHERE
+                          eh.idHeaderEvaluacion = $idHeaderEvaluacion
+                      ORDER BY ei.edadCronologica";
+
+    $idEvaAnt= parent::ObtenerDatos($queryIdEvaAnt);
+    
+    //AQUI UBICA LA EVALUACIUON ANTERIOR
+    if (count($idEvaAnt) === 1) {
+      // si existe una evaluacion anterior 
+      $idHeaderEvaluacionAnterior = $idEvaAnt[0]['idHeaderEvaluacionAnterior'];
+
+      $responseCode[] = array(
+        'EvaAnt' => array(
+            'idHeaderEvaluacionAnterior' => $idHeaderEvaluacionAnterior
+        )
+      );
+
+      $queryEdadCronologicasRegistradas="SELECT DISTINCT
+                                            ei.edadCronologica
+                                        FROM
+                                            evaluacion_header AS eh
+                                                INNER JOIN
+                                            evaluacion_item AS ei ON eh.idHeaderEvaluacion = ei.idHeaderEvaluacion
+                                        WHERE
+                                            eh.idHeaderEvaluacion = $idHeaderEvaluacionAnterior
+                                        ORDER BY ei.edadCronologica";
+      //busco las edades aplicadas para esa evaluacion anterior
+      $edadCronologicasRegistrada= parent::ObtenerDatos($queryEdadCronologicasRegistradas);
+
+
+        //por cada edad busco los niveles
+      foreach ($edadCronologicasRegistrada as $edad){
+        $edadCronologica=$edad['edadCronologica'];
+        
+
+        
+        $queryNivelesByEdad="SELECT DISTINCT
+                                ei.idAreaEvaluacion, ea.descripcionAreaEvaluacion
+                            FROM
+                                evaluacion_header AS eh
+                                    INNER JOIN
+                                evaluacion_item AS ei ON eh.idHeaderEvaluacion = ei.idHeaderEvaluacion
+                                    INNER JOIN
+                                evaluacion_area AS ea ON ei.idAreaEvaluacion = ea.idAreaEvaluacion
+                            WHERE
+                                eh.idHeaderEvaluacion = $idHeaderEvaluacionAnterior
+                                 and ei.edadCronologica = $edadCronologica
+                            ORDER BY ea.idAreaEvaluacion";
+
+        $arrayNivelesByEdad= parent::ObtenerDatos($queryNivelesByEdad);
+
+        //por cada nivel totalizo la cantidad de evaluaciones , la cantdad de SA y las que son AP,NA
+        foreach($arrayNivelesByEdad as $niveles){
+          
+           $nivelid=$niveles['idAreaEvaluacion'];
+           $niveldestalle=$niveles['descripcionAreaEvaluacion'];
+          // $edadCronologica
+          //   $niveles
+          //     $totales
+
+          $queryResultados="SELECT 
+                              ed.*
+                            FROM
+                                evaluacion_header AS eh
+                                    INNER JOIN
+                                evaluacion_item AS ei ON eh.idHeaderEvaluacion = ei.idHeaderEvaluacion
+                                    INNER JOIN
+                                evaluacion_area AS ea ON ei.idAreaEvaluacion = ea.idAreaEvaluacion
+                                INNER JOIN 
+                                evaluacion_detalle AS ed ON ei.idItemEvaluacion = ed.idItemEvaluacion
+                            WHERE
+                                eh.idHeaderEvaluacion = $idHeaderEvaluacionAnterior
+                                 and ei.edadCronologica = $edadCronologica
+                                and ei.idAreaEvaluacion = $nivelid"     ;
+echo $queryResultados; die;
+          $Resultados= parent::ObtenerDatos($queryNivelesByEdad);
+
+          $responseCode[] = array(
+            'EvaAnt' => array(
+                'idHeaderEvaluacionAnterior' => $idHeaderEvaluacionAnterior,
+                'resultados' => array(
+                    'edadCronologica' => $edadCronologica,
+                    'resultados' => $Resultados
+                )
+            )
+        );
+
+        }
+        
+      }
+      
+
+
+
+      echo json_encode($responseCode, JSON_PRETTY_PRINT); die;        
+      
+
+    } else {
+        throw new Exception('Se esperaba un único resultado, pero se encontraron ' . count($idEvaAnt));
+    }
+
+
+    
+    return parent::ObtenerDatos($idEvaAnt);
+  }
 
   public function getIemsByPadre($id_padre) //()
   {
@@ -446,7 +584,8 @@ class preEvaluacion extends conexion
     }
   }
 
-  private function insertItems($idHeader, $jerarquia, $id_padre, $descripcion,$activo,$versionObjetivo){
+  private function insertItems($idHeader, $jerarquia, $id_padre, $descripcion,$activo,$versionObjetivo)
+  {
           $query = "insert Into objetivo_item
           (
             idHeader,
@@ -484,7 +623,8 @@ class preEvaluacion extends conexion
   }
 
 
-  private function padreJerarquia($idHeader, $jerarquia, $versionObjetivo){
+  private function padreJerarquia($idHeader, $jerarquia, $versionObjetivo)
+  {
 
 
     $query = "SELECT * FROM objetivo_item WHERE idHeader = $idHeader and jerarquia='$jerarquia' and versionObjetivo='$versionObjetivo'";

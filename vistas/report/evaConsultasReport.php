@@ -22,7 +22,7 @@ $accion = "Actualizar";
 $disabled = 'disabled';
 
 //datos Representante
-$idHeaderEvaluacion = @$_POST["id"];
+$idHeaderEvaluacion = @$_POST["idEvaluacion"];
 
 //consulta de los header
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=$idHeaderEvaluacion";
@@ -87,6 +87,11 @@ $arrayEvaluacion  = API::JSON_TO_ARRAY($rs);
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=7&idHeaderEvaluacion=$idHeaderEvaluacion";
 $rs         = API::GET($URL, $token);
 $arrayResumen  = API::JSON_TO_ARRAY($rs);
+
+//buscar si la evaluacion $idHeaderEvaluacion tiene alguna evaluacion anterior
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=9&idHeaderEvaluacion=$idHeaderEvaluacion";
+$rs         = API::GET($URL, $token);
+$arrayResumenEvaAnterior  = API::JSON_TO_ARRAY($rs);
 
 //consulta de los items
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=2";

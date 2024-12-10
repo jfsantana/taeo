@@ -490,7 +490,7 @@ require_once("style.php")  ;
 document.getElementById('printButton').addEventListener('click', function() {
     var id = <?php echo json_encode($_POST['id']); ?>;
     var host = '<?php echo $_SESSION['HTTP_ORIGIN']; ?>/vistas/report/';
-    var url = 'informeEvaluacionAprendiz.php?id=' + id;
+    var url = 'informeEvaluacionAprendiz.php?idEvaluacion=' + id;
 
     url=host+url;
 
