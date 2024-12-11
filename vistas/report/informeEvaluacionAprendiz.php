@@ -8,7 +8,7 @@ if (!isset($_SESSION['id_user'])) {
     header("Location:  " . $_SESSION['HTTP_ORIGIN']);
     exit();
 }
- print_r($_GET);
+ //print_r($_GET);
 ob_start();
 ?>
 
@@ -20,9 +20,17 @@ ob_start();
     <title>Informe Evaluación Aprendiz</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            .table, .table th, .table td {
+                border: none !important;
+            }
+        }
         body {
             font-family: Arial, sans-serif;
-            font-size: 12px;
+            /* font-size: 12px; */
             color: #000;
         }
         .content-header, .content-footer {
@@ -47,7 +55,7 @@ ob_start();
             font-size: 100%;
         }
         #printableArea {
-            font-size: 12px;
+            /* font-size: 12px; */
         }
         .small-fontA {
         font-size: 10px;
@@ -56,7 +64,7 @@ ob_start();
 </head>
 <body>
 
-      <button id="generatePDF" class="btn btn-primary">Generar PDF</button>
+      <!-- <button id="printPage" class="btn btn-primary" onclick="window.print();">Imprimir</button> -->
       <div id="printableArea">
         <!-- Content Header (Page header) -->
         <div class="content-header">
@@ -99,26 +107,58 @@ ob_start();
           <input type="hidden" name="idHeaderEvaluacion" value="<?php echo @$idHeaderEvaluacion; ?>">
           <div class="container-fluid">
           
+          <div class="col-sm-12">
+                                <label for="conclucionesRecomendaciones" class="d-block text-center text-uppercase font-weight-bold py-1" style="font-size: 1.5rem; background-color: #ffffff; color: #235382;">REEVALUACIÓN PARA LA ACTUALIZACIÓN DEL ABORDAJE PSICOEDUCATIVO Y TERAPÉUTICO DESDE EL MODELO TAEO</label>
+              </div>
+
             <div class="row">
               <!-- HEADER-->
-              <div class="col-sm-12">
+              <div class="col-sm-12  ">
                 <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #235382;">DATOS DE IDENTIFICACION</label>
               </div>
-              <div class="col-lg-9 col-9">
+              <div class="col-sm-9">
                 <div class="card card-primary">
                   <div class="card-body">
-                    <div class="row ">
                       <?php include("evaAprendizReport.php"); ?>
-                      <?php include("evaRepresentantesReport.php"); ?>
-                      <?php include("evaEvaluadoresReport.php"); ?>
-                    </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-3 col-3">
-                <?php include("evaFechasReport.php"); ?>
+                  
+              <div class="col-sm-3 ">
+                    <?php include("evaFechasReport.php"); ?>
               </div>
-              <div class="col-sm-12">
+
+              <div class="col-12 ">
+                  <hr style="border: 0.5px solid lightgrey;">
+              </div>
+              <div  class="col-sm-12">
+                  <div class="col-lg-12 col-12">
+                    <div class="card card-primary">
+                      <div class="card-body">
+                        <div class="row ">
+                          <?php include("evaRepresentantesReport.php"); ?>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="col-12">
+                <hr style="border: 0.5px solid lightgrey;">
+            </div>
+            <div  class="col-sm-12">
+                  <div class="col-lg-12 col-12">
+                    <div class="card card-primary">
+                      <div class="card-body">
+                        <div class="row ">
+                          <?php include("evaEvaluadoresReport.php"); ?>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+ 
+              <div class="col-sm-12 page-break">
                   <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #235382;"><strong> RESULTADOS COMPARATIVOS DE ACUERDO CON LA ESCALA DE ESTIMACIÓN EVOLUTIVA TAEO 8.0 (E.E.E)
                   </strong></label>
               </div>
@@ -127,6 +167,7 @@ ob_start();
                   <label for="conclucionesRecomendaciones" class="d-block text-center text-white " style="font-size: 1rem; background-color: #235382;">CONCLUSIONES Y RECOMENDACIONES</label>
                   <p><?php print_r(@$conclucionesRecomendaciones); ?></p>
               </div>
+              
               <?php include("evaFirmasReport.php"); ?>
               <?php include("evaEvaluacionesReport.php"); ?>
             </div>

@@ -1,12 +1,16 @@
 <div id="graficoContainer" class="row">
   <div class="col-sm-12">
     <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-2" style="font-size: 1rem; background-color: #235382;">ESCALA DE ESTIMACIÓN EVOLUTIVA TAEO 8.0 (E.E.E)</label>
-  </div><?php 
+  </div>
+  <?php 
 
-  //ARREGLO PARA LOS CALCULOSD E LA EVALUACION ANTERIOR (datos de la evaluacion anterior : $arrayResumenEvaAnterior)
-  $arrayResumenGraficoAllAnterior = [];
-  $reumenByAreaAnterior = [];
-  $GraficoFinalReevaluacionAnterior=[];
+  
+
+
+    //ARREGLO PARA LOS CALCULOSD E LA EVALUACION ANTERIOR (datos de la evaluacion anterior : $arrayResumenEvaAnterior)
+    $arrayResumenGraficoAllAnterior = [];
+    $reumenByAreaAnterior = [];
+    $GraficoFinalReevaluacionAnterior=[];
 
 
 
@@ -87,7 +91,7 @@
                             $idGraficoResumen = $tituloGraficoResumenID . "_" . $edad;
                             $nivelGraficoResumen = $tituloGraficoResumenID;
 
-                            echo "<tr><td colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
+                            echo "<tr ><td colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
                             echo "<tr>";
                             $columnIndex = 1;
                             foreach ($areas as $area) {
@@ -178,7 +182,7 @@
 
                             ];
 
-                            
+                            // Necesito agregar el $arrayResumenGrafico al array principal $arrayResumenGraficoAll
                             $arrayResumenGraficoAll[] = $arrayResumenGrafico;
 
                             $grafico = "<div class='col-sm-12'>
@@ -313,9 +317,9 @@
         'porcentajeAusentes' => $porcentajeAusentes
     ];
 
-       echo '<pre>';
-       print_r($GraficoFinalReevaluacion);
-       echo '</pre>';
+      //  echo '<pre>';
+      //  print_r($GraficoFinalReevaluacion);
+      //  echo '</pre>';
 
 ?>
 

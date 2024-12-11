@@ -3,25 +3,25 @@
     <!-- Titulo EDAD PERIODO DE ABORDAJE-->
 
     <div class="col-sm-12" style="margin-bottom: 10px;">
-        <div class="d-flex justify-content-between" style="background-color: #00B9F1; ">
+        <div class="d-flex justify-content-between" style="background-color: #2570a1; ">
             <div>
-                <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #00B9F1;">
-                    <strong>Edad: 5</strong>
+                <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #2570a1;">
+                    <strong>Edad: <?php echo edadAprendiz($fechaNacimientoAprendiz); ?></strong> 
                 </label>
             </div>
             <div>
-                <label for="periodoAbordaje" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #00B9F1;">
-                    <strong>Periodo de Abordaje: 2021-2022</strong>
+                <label for="periodoAbordaje" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #2570a1;">
+                <strong>Periodo de Abordaje: <?php echo (date('Y', strtotime($fechaEvaluacion)) - 1) . '-' . date('Y', strtotime($fechaEvaluacion)); ?></strong>
                 </label>
-            </div>
+            </div> 
         </div>
     </div>
     
     <!-- GRAFICO RESUMEN EVALUACION ANTERIOR -->
     <div class="col-sm-5">
-        <label id="chartTitle1" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #00B9F1;"></label>
-        <canvas id="EvaluacionAnterior" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-        <div style="display: flex; justify-content: center;">
+        <label id="evaluacionAnteriorLabel" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
+        <canvas id="EvaluacionAnteriorGrafico" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+        <!-- <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
                     <td >PROMEDIO TOTAL DE DESARROLLO</td>
@@ -29,23 +29,23 @@
                 </tr>
                 <TR><td colspan="2">&nbsp;</td></TR>
             </table>
-        </div>
+        </div> -->
     </div>
     <!-- GRAFICO RESUMEN EVALUACION NUEVA-->
     <div class="col-sm-5">
-        <label id="chartTitle2" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #00B9F1;"></label>
+        <label id="chartTitle2" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
         <canvas id="resumenReevaluacion" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-        <div style="display: flex; justify-content: center;">
+        <!-- <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
                     <td >PROMEDIO TOTAL DE DESARROLLO</td>
                     <td >36%</td>
                 </tr>
             </table>
-        </div>
+        </div> -->
     </div>
     <div class="col-sm-2">
-        <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #00B9F1;"><strong>RESULTADOS</strong></label>
+        <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #2570a1;"><strong>RESULTADOS</strong></label>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr>
@@ -60,7 +60,12 @@
             </table>
         </div>
     </div>
-
+    <div class="col-12">
+        <hr style="border: 0.5px solid lightgrey;">
+    </div>
     <!-- Detallle de la evlaucion  anterior-->
-    <?php include("evaGraficosReportAnterior.php"); ?>
-    <?php include("evaGraficosReportNueva.php"); ?>
+    <div class="row">
+        <?php include("evaGraficosReportAnterior.php"); ?>
+    
+        <?php include("evaGraficosReportNueva.php"); ?>
+    </div>

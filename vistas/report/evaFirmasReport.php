@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container page-break">
     <div class="row justify-content-center">
         <div class="col-4 text-center">
             <img src="<?php echo $_SESSION['HTTP_ORIGIN'];?>/dist/img/firmas/gresmarPalenca.png" alt="Firma Gresmas Palenca" class="img-fluid">

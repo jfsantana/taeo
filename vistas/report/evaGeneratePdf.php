@@ -1,69 +1,178 @@
 <?php
-require '../../vendor/autoload.php'; 
+require '../../vendor/autoload.php';
+require_once '../../funciones/wsdl/clases/consumoApi.class.php';
 
-class MYPDF extends TCPDF {
-    // Load header content
-    public function Header() {
-        include('evaHeaderReport.php');
-    }
-
-    // Load footer content
-    public function Footer() {
-        include('footerReport.php');
-    }
+if (!isset($_SESSION)) {
+    session_start();
 }
 
-// create new PDF document
-$pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-
-// set document information
-$pdf->SetCreator(PDF_CREATOR);
-$pdf->SetAuthor('Your Name');
-$pdf->SetTitle('Eva Evaluaciones Report');
-$pdf->SetSubject('TCPDF Tutorial');
-$pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-
-// set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
-
-// set header and footer fonts
-$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-
-// set default monospaced font
-$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-
-// set margins
-$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-$pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-
-// set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-
-// set image scale factor
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-
-// add a page
-$pdf->AddPage();
-
-// Set some content to print
-$html = '<h1>Eva Evaluaciones Report</h1>';
-$html .= '<table border="1" cellpadding="4">';
-$html .= '<thead><tr><th>Header 1</th><th>Header 2</th></tr></thead>';
-$html .= '<tbody>';
-foreach ($arrayResumen as $datoResumen) {
-    $html .= '<tr>';
-    $html .= '<td>' . $datoResumen['nombreNivelEvaluacion'] . '</td>';
-    $html .= '<td>' . $datoResumen['edadCronologica'] . '</td>';
-    $html .= '</tr>';
+if (!isset($_SESSION['id_user'])) {
+    header("Location: " . $_SESSION['HTTP_ORIGIN']);
+    exit();
 }
-$html .= '</tbody>';
-$html .= '</table>';
 
-// Print text using writeHTMLCell()
-$pdf->writeHTML($html, true, false, true, false, '');
+$token = $_SESSION['token'];
+$_POST = $_GET;
 
-// Close and output PDF document
-$pdf->Output('eva_evaluaciones_report.pdf', 'I');
+function edadAprendiz($fechaNacimiento) {
+    $fecha_nacimiento = @$fechaNacimiento;
+    $fecha_actual = date("Y-m-d H:i:s");
+    if (!$fecha_nacimiento) {
+        return 0;
+    }
+    $timestamp_nacimiento = strtotime(@$fecha_nacimiento);
+    $timestamp_actual = strtotime(@$fecha_actual);
+    $diferencia = abs($timestamp_actual - $timestamp_nacimiento);
+    $anios = floor($diferencia / (365 * 60 * 60 * 24));
+    return $anios;
+}
+
+ob_start();
+include("evaHeaderReport.php");
+$header = ob_get_clean();
+
+ob_start();
+include("footerReport.php");
+$footer = ob_get_clean();
+
+ob_start();
+?>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Evaluación Aprendiz</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            color: #000;
+        }
+        .content-header, .content-footer {
+            width: 100%;
+            background: white;
+            z-index: 1000;
+        }
+        .content-header {
+            top: 0;
+        }
+        .content-footer {
+            bottom: 0;
+        }
+        .logo {
+            width: 50%;
+        }
+        .separator {
+            border: 1px solid grey;
+            width: 100%;
+        }
+        .table {
+            font-size: 100%;
+        }
+        #printableArea {
+            font-size: 12px;
+        }
+        .small-fontA {
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="printableArea">
+        <div class="content-header">
+            <?php echo $header; ?>
+        </div>
+        <?php
+        include("scriptReport.php");
+        include("evaConsultasReport.php");
+        require_once("style.php");
+        ?>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="./style.css">
+        <div class="container-fluid">
+            <div class="col-sm-12">
+                <label for="conclucionesRecomendaciones" class="d-block text-center text-uppercase font-weight-bold py-1" style="font-size: 1.5rem; background-color: #ffffff; color: #235382;">REEVALUACIÓN PARA LA ACTUALIZACIÓN DEL ABORDAJE PSICOEDUCATIVO Y TERAPÉUTICO DESDE EL MODELO TAEO</label>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #235382;">DATOS DE IDENTIFICACION</label>
+                </div>
+                <div class="col-sm-9">
+                    <div class="card card-primary">
+                        <div class="card-body">
+                            <?php include("evaAprendizReport.php"); ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <?php include("evaFechasReport.php"); ?>
+                </div>
+                <div class="col-12">
+                    <hr style="border: 0.5px solid lightgrey;">
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-lg-12 col-12">
+                        <div class="card card-primary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <?php include("evaRepresentantesReport.php"); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <hr style="border: 0.5px solid lightgrey;">
+                </div>
+                <div class="col-sm-12">
+                    <div class="col-lg-12 col-12">
+                        <div class="card card-primary">
+                            <div class="card-body">
+                                <div class="row">
+                                    <?php include("evaEvaluadoresReport.php"); ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #235382;"><strong>RESULTADOS COMPARATIVOS DE ACUERDO CON LA ESCALA DE ESTIMACIÓN EVOLUTIVA TAEO 8.0 (E.E.E)</strong></label>
+                </div>
+                <?php include("evaGraficosReport.php"); ?>
+                <div class="col-sm-12">
+                    <label for="conclucionesRecomendaciones" class="d-block text-center text-white" style="font-size: 1rem; background-color: #235382;">CONCLUSIONES Y RECOMENDACIONES</label>
+                    <p><?php print_r(@$conclucionesRecomendaciones); ?></p>
+                </div>
+                <?php include("evaFirmasReport.php"); ?>
+                <?php include("evaEvaluacionesReport.php"); ?>
+            </div>
+        </div>
+    </div>
+    <div id="footerArea" class="content-footer">
+        <?php echo $footer; ?>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        window.onload = function() {
+            html2canvas(document.querySelector("#printableArea")).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                pdf.addImage(imgData, 'PNG', 0, 0);
+                pdf.save("InformeEvaluacionAprendiz.pdf");
+            });
+        };
+    </script>
+</body>
+</html>
+<?php
+$html = ob_get_clean();
+
+$mpdf = new \Mpdf\Mpdf();
+$mpdf->SetHTMLHeader($header);
+$mpdf->SetHTMLFooter($footer);
+$mpdf->WriteHTML($html);
+$mpdf->Output('InformeEvaluacionAprendiz.pdf', 'D');
 ?>

@@ -93,6 +93,15 @@ $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=9&i
 $rs         = API::GET($URL, $token);
 $arrayResumenEvaAnterior  = API::JSON_TO_ARRAY($rs);
 
+//consulta las calificaciones de una evaluaicon
+if(@$arrayResumenEvaAnterior[0]['idHeaderEvaluacion']){
+    $idEvaAmnteriorAux=$arrayResumenEvaAnterior[0]['idHeaderEvaluacion'];
+    $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=1&idHeaderEvaluacion=$idEvaAmnteriorAux";
+    $rs         = API::GET($URL, $token);
+    $arrayHeaderAnterior  = API::JSON_TO_ARRAY($rs);
+}
+
+
 //consulta de los items
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=2";
 $rs         = API::GET($URL, $token);

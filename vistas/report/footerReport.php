@@ -6,7 +6,7 @@
     .logo {
         width: 30%;
     }
-</style>
+</style> 
 
 <div class="container-fluid small-font"  >
             <div class="row">

@@ -1,10 +1,10 @@
 <div class="col-sm-12">
-    <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #00B9F1;"><strong>DATOS DE LOS PADRES</strong></label>
+    <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #2570a1;"><strong>DATOS DE LOS PADRES</strong></label>
     
 </div>
 
 <?php 
-foreach($arrayPadres as $dataPadres ){?>
+foreach($arrayPadres as $dataPadres ){?> 
     <div class="col-sm-3">
     <label for="Aprendiz" > <strong> Nombre  <?php echo  $dataPadres['parentescoRepresentante'];?>: </label>  </br> </strong> <?php echo $dataPadres['apellidoRepresentante'].', '.$dataPadres['nombreRepresentante'];?>
     </div>

@@ -4,15 +4,8 @@
                   <i class="fas fa-user mr-1"></i>
                     Datos del Aprendiz 
                 </h3>
-                <!-- card tools -->
-                <div class="card-tools">
-
-                  <button type="button" class="btn btn-primary btn-sm" data-card-widget="collapse" title="Collapse" id='datosAprendiz'>
-                    <i class="fas fa-minus"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
+            </div>
+            <div class="card-body">
               <form>
               <div class="card-body">
               <div class="row">

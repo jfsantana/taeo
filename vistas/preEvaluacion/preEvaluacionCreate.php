@@ -11,7 +11,7 @@ include("scriptEva.php");
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 $token = $_SESSION['token'];
 
-print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+//print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
 
 function edadAprendiz($fechaNacimiento){
   $fecha_nacimiento = @$fechaNacimiento;

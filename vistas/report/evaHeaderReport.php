@@ -5,7 +5,7 @@
     .logo {
         width: 30%;
     }
-</style>
+</style> 
 <div class="container-fluid  small-font">
             <div class="row mb-2">
                 <div class="col-sm-6">
@@ -30,7 +30,7 @@
                             </div>
                         </div>
                     </small>
-                    <!-- <button id="printButtonNoScript" class="btn btn-primary" onclick="window.print()">Imprimir</button> -->
+                     <button id="printButtonNoScript" class="btn btn-primary" onclick="window.print()">Imprimir</button> 
                     <!-- <button onclick="window.location.href='generatePdf.php'">Generar PDF</button> -->
                 </div>
             </div>
