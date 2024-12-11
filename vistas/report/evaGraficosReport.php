@@ -1,3 +1,9 @@
+<head>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    google.charts.load('current', {'packages':['corechart']});
+</script>
+</head>
 <!-- aqui inicia los graficos por edad del aprendiz -->
 
     <!-- Titulo EDAD PERIODO DE ABORDAJE-->
@@ -19,8 +25,8 @@
     
     <!-- GRAFICO RESUMEN EVALUACION ANTERIOR -->
     <div class="col-sm-5">
-        <label id="evaluacionAnteriorLabel" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <canvas id="EvaluacionAnteriorGrafico" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+        <label id="evaluacionAnteriorLabel" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;">11111</label>
+        <div id="EvaluacionAnteriorGrafico" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></div>
         <!-- <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -33,16 +39,8 @@
     </div>
     <!-- GRAFICO RESUMEN EVALUACION NUEVA-->
     <div class="col-sm-5">
-        <label id="chartTitle2" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <canvas id="resumenReevaluacion" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-        <!-- <div style="display: flex; justify-content: center;">
-            <table style="width: 70%; text-align: center;">
-                <tr style="background-color: #235382; color: white;">
-                    <td >PROMEDIO TOTAL DE DESARROLLO</td>
-                    <td >36%</td>
-                </tr>
-            </table>
-        </div> -->
+        <label id="chartTitle2" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;">2222</label>
+        <div id="resumenReevaluacion" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></div>
     </div>
     <div class="col-sm-2">
         <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 0.8rem; background-color: #2570a1;"><strong>RESULTADOS</strong></label>
@@ -69,3 +67,5 @@
     
         <?php include("evaGraficosReportNueva.php"); ?>
     </div>
+
+    

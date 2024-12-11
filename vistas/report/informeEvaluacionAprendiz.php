@@ -63,7 +63,7 @@ ob_start();
     </style>
 </head>
 <body>
-
+  <form id="printForm" method="POST" action="<?php echo $_SESSION['HTTP_ORIGIN']; ?>/vistas/report/informeEvaluacionAprendizPRINT.php">
       <!-- <button id="printPage" class="btn btn-primary" onclick="window.print();">Imprimir</button> -->
       <div id="printableArea">
         <!-- Content Header (Page header) -->
@@ -105,6 +105,10 @@ ob_start();
         <form method="post" name="objetivo" id="objetivo"  enctype="multipart/form-data">
           <input type="hidden" name="mod" value="<?php echo @$_POST['mod'] ?>">
           <input type="hidden" name="idHeaderEvaluacion" value="<?php echo @$idHeaderEvaluacion; ?>">
+          
+          <!-- Contenedor para los inputs dinámicos -->
+          <div id="dynamicInputs"></div>
+          
           <div class="container-fluid">
           
           <div class="col-sm-12">
@@ -112,7 +116,7 @@ ob_start();
               </div>
 
             <div class="row">
-              <!-- HEADER-->
+              <!-- HEADER -->
               <div class="col-sm-12  ">
                 <label for="conclucionesRecomendaciones" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #235382;">DATOS DE IDENTIFICACION</label>
               </div>
@@ -196,5 +200,6 @@ ob_start();
             window.location.href = 'evaGeneratePdf.php';
         });
     </script>
+  </form>
 </body>
 </html>

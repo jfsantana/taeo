@@ -93,7 +93,29 @@ if (@$rs['result']['token']) {
 
   //print("<pre>".print_r(($_SESSION['nombreSede'] ),true)."</pre>");die;
   
-  $_SESSION['sedeId'] = $_POST['locacion'];  //sede con la que se logeo
+  $_SESSION['sedeId'] = @$_POST['locacion'];  //sede con la que se logeo
+
+  $_SESSION['graficoResumen']['graficoPrincipalEvaAnterior']='';
+  $_SESSION['graficoResumen']['graficoPrincipalEvaActual']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorLen']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorCog']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorSoc']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorPsi']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorAut']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorMor']='';
+  $_SESSION['graficoResumen']['graficoEvaAnteriorSex']='';
+  $_SESSION['graficoResumen']['graficoEvaActualLen']='';
+  $_SESSION['graficoResumen']['graficoEvaActualCog']='';
+  $_SESSION['graficoResumen']['graficoEvaActualSoc']='';
+  $_SESSION['graficoResumen']['graficoEvaActualPsi']='';
+  $_SESSION['graficoResumen']['graficoEvaActualAut']='';
+  $_SESSION['graficoResumen']['graficoEvaActualMor']='';
+  $_SESSION['graficoResumen']['graficoEvaActualSex']='';
+  $_SESSION['graficoDetalle']=[];
+  
+
+
+
 
 
 

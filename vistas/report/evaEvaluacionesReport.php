@@ -187,7 +187,7 @@
 
                             $grafico = "<div class='col-sm-12'>
                                           <label id='$tituloGraficoResumen' class='d-block text-center text-white py-1' style='font-size: 1rem; background-color: #00B9F1;'>$tituloGraficoResumen</label>
-                                          <canvas id='$idGraficoResumen' style='min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;'></canvas>
+                                          <div id='$idGraficoResumen' style='max-width: 100%;'></div>
                                         </div>";
 
                             echo "
@@ -231,7 +231,6 @@
               </div>
             </div>
         </div>
-
       </div>
   </div>
 </div>
@@ -307,7 +306,7 @@
     $porcentajeAusentes = ($totalAusentes / $totalActividades) * 100;
 
     $GraficoFinalReevaluacion = [
-        'tituloGraficoResumen' => 'FECHA DE REEVALUACIÓN: --',
+        'tituloGraficoResumen' => "FECHA DE REEVALUACIÓN: $fechaEvaluacion",
         'totalActividades' => $totalActividades,
         'totalLogradas' => $totalLogradas,
         'totalApoyoParcialMasAusentes' => $totalApoyoParcialMasAusentes,
@@ -317,279 +316,216 @@
         'porcentajeAusentes' => $porcentajeAusentes
     ];
 
-      //  echo '<pre>';
-      //  print_r($GraficoFinalReevaluacion);
-      //  echo '</pre>';
+        // echo '<pre>';
+        // print_r($GraficoFinalReevaluacion);
+        // echo '</pre>';
 
 ?>
 
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-      // Suponiendo que $arrayResumenGraficoAll se convierte a JSON y se pasa a JavaScript
-      var arrayResumenGraficoAll = <?php echo json_encode($arrayResumenGraficoAll); ?>;
-      //console.log('<?php echo json_encode($arrayResumenGraficoAll); ?>');
-      
-      // Asegúrate de que haya un contenedor específico para los gráficos
-      var graficoContainer = document.getElementById('graficoContainer');
-      if (!graficoContainer) {
-          graficoContainer = document.createElement('div');
-          graficoContainer.id = 'graficoContainer';
-          graficoContainer.className = 'row';
-          document.body.appendChild(graficoContainer);
-      }
 
-      arrayResumenGraficoAll.forEach(function(graficoData) {
 
-          var titulo = graficoData.tituloGraficoResumen;
-          var idGrafico = graficoData.idGraficoResumen;
-          var porAlcanzado = graficoData.porAlcanzado;
-          var porAusentes = graficoData.porAusentes;
 
-          // Crear el contenedor del gráfico
-          var graficoDiv = document.createElement('div');
-          graficoDiv.className = 'col-sm-6';
+  google.charts.load('current', {'packages':['corechart']});
+  google.charts.setOnLoadCallback(drawCharts);
 
-          graficoContainer.appendChild(graficoDiv);
-
-          // Configuración del gráfico
-          var ctx = document.getElementById(idGrafico).getContext('2d');
-          new Chart(ctx, {
-              type: 'doughnut',
-              data: {
-                  labels: ['Por Alcanzar', 'Alcanzado'],
-                  datasets: [{
-                      data: [porAusentes, porAlcanzado],
-                      backgroundColor: ['#FDCC45', '#235382']
-                  }]
-              },
-              options: {
-                  maintainAspectRatio: false,
-                  responsive: true,
-                  plugins: {
-                      datalabels: {
-                          color: '#fff',
-                          anchor: 'end',
-                          align: 'start',
-                          offset: -10,
-                          borderWidth: 2,
-                          borderColor: '#fff',
-                          borderRadius: 25,
-                          backgroundColor: (context) => {
-                              let backgroundColor = context.dataset.backgroundColor[context.dataIndex];
-                              if (backgroundColor.startsWith('#')) {
-                                  let hex = backgroundColor.replace('#', '');
-                                  let r = parseInt(hex.substring(0, 2), 16);
-                                  let g = parseInt(hex.substring(2, 4), 16);
-                                  let b = parseInt(hex.substring(4, 6), 16);
-                                  return `rgba(${r}, ${g}, ${b}, 0.5)`;
-                              }
-                              return backgroundColor;
-                          },
-                          font: {
-                              weight: 'bold',
-                              size: '16'
-                          },
-                          formatter: (value, ctx) => {
-                              let sum = 0;
-                              let dataArr = ctx.chart.data.datasets[0].data;
-                              dataArr.map(data => {
-                                  sum += data;
-                              });
-                              let percentage = (value * 100 / sum).toFixed(2) + "%";
-                              return percentage;
-                          }
-                      }
-                  }
-              },
-              plugins: [ChartDataLabels]
-          });
-      });
-  });
-</script>
-              
-
-<!-- ////// -->
-
-<script>
-  function normalizeString(str) {
-    // Eliminar espacios en blanco al inicio y al final
-    str = str.trim();
-
-    // Eliminar acentos y caracteres especiales
-    str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-
-    // Eliminar caracteres especiales y espacios en blanco
-    str = str.replace(/[^a-zA-Z0-9]/g, "");
-    
-    return str;
-}
-
-document.addEventListener('DOMContentLoaded', function() {
+  // Ejemplo de cómo asignar valores dinámicamente
+  function setInputValues(values, nombreVariable) {
+    const container = document.getElementById('dynamicInputs');
+    values.forEach((value, index) => {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.name = nombreVariable + '[]';
+        input.id = nombreVariable + (container.children.length + 1); // Asegura IDs únicos
+        input.value = value;
+        container.appendChild(input);
+    });
+  }
   
-    /////////////GRAFIGO RESUMEN GENERAL////////////
+  function drawCharts() {
     var GraficoFinalReevaluacion = <?php echo json_encode($GraficoFinalReevaluacion); ?>;
+
+        // Verificar que la variable tiene las propiedades necesarias
+        if (GraficoFinalReevaluacion && GraficoFinalReevaluacion.porcentajeAusentes !== undefined && GraficoFinalReevaluacion.porcentajeLogradas !== undefined) {
+            // Configuración del primer gráfico
+            var data = google.visualization.arrayToDataTable([
+                ['Estado', 'Porcentaje'],
+                ['P-A', GraficoFinalReevaluacion.porcentajeAusentes],
+                ['A', GraficoFinalReevaluacion.porcentajeLogradas]
+            ]);
+
+            var options = {
+              colors: ['#FDCC45', '#235382'], // Colores personalizados
+              backgroundColor: 'transparent', // Fondo transparente
+              legend: {
+                position: 'top', // Coloca la leyenda en la parte superior
+                maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
+                textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
+              },
+              chartArea: {
+                width: '80%', // Ajusta el área del gráfico dejando espacio para la leyenda
+                height: '70%'
+              }
+            };
+
+            document.getElementById('chartTitle2').innerText = GraficoFinalReevaluacion.tituloGraficoResumen;
+
+            var chart = new google.visualization.PieChart(document.getElementById('resumenReevaluacion'));
+            google.visualization.events.addListener(chart, 'ready', function () {
+                chart.innerHTML = chart.getImageURI() ;
+                console.log(chart.innerHTML);
+                setInputValues([chart.innerHTML],'graficoNew');
+            });
+
+            
+            chart.draw(data, options);
+        } else {
+            console.error('Grafico Actual no tiene las propiedades necesarias.');
+        }
+
+
+
+    // Suponiendo que $arrayResumenGraficoAll se convierte a JSON y se pasa a JavaScript
+    var arrayResumenGraficoAll = <?php echo json_encode($arrayResumenGraficoAll); ?>;
     
-    // NUEVA EVALUACION
-    // Verificar que la variable tiene las propiedades necesarias
-    if (GraficoFinalReevaluacion && GraficoFinalReevaluacion.porcentajeAusentes !== undefined && GraficoFinalReevaluacion.porcentajeLogradas !== undefined) {
-        // Configuración del primer gráfico
-        var ctxResumen = document.getElementById('resumenReevaluacion').getContext('2d');
-        var data2 = {
-            "Titulo": GraficoFinalReevaluacion.tituloGraficoResumen,
-            "Por Alcanzar": GraficoFinalReevaluacion.porcentajeAusentes,
-            "Alcanzado": GraficoFinalReevaluacion.porcentajeLogradas
+    arrayResumenGraficoAll.forEach(function(graficoData) {
+      var titulo = graficoData.tituloGraficoResumen;
+      var idGrafico = graficoData.idGraficoResumen;
+      var porAlcanzado = graficoData.porAlcanzado;
+      var porAusentes = graficoData.porAusentes;
+
+      var data = google.visualization.arrayToDataTable([
+        ['Estado', 'Porcentaje'],
+        ['P-A', porAusentes],
+        ['A', porAlcanzado]
+      ]);
+
+      var options = {
+          colors: ['#FDCC45', '#235382'], // Colores personalizados
+          backgroundColor: 'transparent', // Fondo transparente
+          legend: {
+            position: 'top', // Coloca la leyenda en la parte superior
+            maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
+            textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
+          },
+          chartArea: {
+            width: '80%', // Ajusta el área del gráfico dejando espacio para la leyenda
+            height: '70%'
+          }
         };
 
-        // Configuración del segundo gráfico
-        document.getElementById('chartTitle2').innerText = data2.Titulo;
-        new Chart(ctxResumen, {
-            type: 'doughnut',
+      var chart = new google.visualization.PieChart(document.getElementById(idGrafico));
+      google.visualization.events.addListener(chart, 'ready', function () {
+                chart.innerHTML = chart.getImageURI() ;
+                console.log(chart.innerHTML);
+                setInputValues([chart.innerHTML],idGrafico);
+            });
+      chart.draw(data, options);
+    });
+
+    // Resumen de EVALUACION ACTUAL
+    var resultadosPorArea = <?php echo json_encode($resultadosPorArea); ?>;
+
+    var areaToChartId = {
+      'Lenguaje': 'EvaluacionReeeriorLenguaje',
+      'Cognitivo': 'EvaReeCog',
+      'SocioAfectivo': 'EvaReeSoc',
+      'Psicomotor': 'EvaReePsi',
+      'Autonomiaautodeterminacion': 'EvaReeAut',
+      'Moral': 'EvaReeMor',
+      'Sexual': 'EvaReeSex'
+    };
+
+    var labelToChartId = {
+      'Lenguaje': 'chartTitleEvaLenRee',
+      'Cognitivo': 'chartTitleEvaReeCog',
+      'SocioAfectivo': 'chartTitleEvaReeSoc',
+      'Psicomotor': 'chartTitleEvaReePsi',
+      'Autonomiaautodeterminacion': 'chartTitleEvaReeAut',
+      'Moral': 'chartTitleEvaReeMor',
+      'Sexual': 'chartTitleEvaReeSex' 
+    };
+
+    Object.keys(resultadosPorArea).forEach(function(idArea) {
+      var resultado = resultadosPorArea[idArea];
+      var nombreArea = normalizeString(resultado.nombreArea);
+      var chartId = areaToChartId[nombreArea];
+      var LabelId = labelToChartId[nombreArea];
+
+      if (chartId) {
+        document.getElementById(LabelId).innerText = resultado.nombreArea;
+
+        var data = google.visualization.arrayToDataTable([
+          ['Estado', 'Porcentaje'],
+          ['P-A', resultado.porcentajeAusentes],
+          ['A', resultado.porcentajeLogradas]
+        ]);
+
+        var options = {
+          colors: ['#FDCC45', '#235382'], // Colores personalizados
+          backgroundColor: 'transparent', // Fondo transparente
+          legend: {
+            position: 'top', // Coloca la leyenda en la parte superior
+            maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
+            textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
+          },
+          chartArea: {
+            width: '80%', // Ajusta el área del gráfico dejando espacio para la leyenda
+            height: '70%'
+          }
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById(chartId));
+        google.visualization.events.addListener(chart, 'ready', function () {
+                    chart.innerHTML = chart.getImageURI();
+                    console.log(chart.innerHTML);
+                    setInputValues([chart.innerHTML], chartId);
+                });
+
+        chart.draw(data, options);
+      }
+    });
+  }
+
+  function normalizeString(str) {
+    str = str.trim();
+    str = str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    str = str.replace(/[^a-zA-Z0-9]/g, "");
+    return str;
+  }
+
+   // Suponiendo que GraficoFinalReevaluacion ya está definido y contiene los datos necesarios
+        var GraficoFinalReevaluacion = {
             data: {
-                labels: ['Por Alcanzar', 'Alcanzado'],
+                labels: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
                 datasets: [{
-                    data: [data2['Por Alcanzar'], data2['Alcanzado']],
-                    backgroundColor: ['#FDCC45', '#235382']
+                    label: 'Reevaluación',
+                    data: [12, 19, 3, 5, 2],
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
                 }]
             },
             options: {
-                maintainAspectRatio: false,
-                responsive: true,
-                plugins: {
-                    datalabels: {
-                        color: '#fff',
-                        anchor: 'end',
-                        align: 'start',
-                        offset: -10,
-                        borderWidth: 2,
-                        borderColor: '#fff',
-                        borderRadius: 25,
-                        backgroundColor: (context) => {
-                            let backgroundColor = context.dataset.backgroundColor[context.dataIndex];
-                            if (backgroundColor.startsWith('#')) {
-                                // Convert hex to rgba
-                                let hex = backgroundColor.replace('#', '');
-                                let r = parseInt(hex.substring(0, 2), 16);
-                                let g = parseInt(hex.substring(2, 4), 16);
-                                let b = parseInt(hex.substring(4, 6), 16);
-                                return `rgba(${r}, ${g}, ${b}, 0.5)`; // 0.5 is the alpha value for 50% transparency
-                            }
-                            return backgroundColor;
-                        },
-                        font: {
-                            weight: 'bold',
-                            size: '16'
-                        },
-                        formatter: (value, ctx) => {
-                            let sum = 0;
-                            let dataArr = ctx.chart.data.datasets[0].data;
-                            dataArr.map(data => {
-                                sum += data;
-                            });
-                            let percentage = (value * 100 / sum).toFixed(2) + "%";
-                            return percentage;
-                        }
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
                 }
-            },
-            plugins: [ChartDataLabels]
-        });
-    } else {
-        console.error('GraficoFinalReevaluacion no tiene las propiedades necesarias.');
-    }
+            }
+        };
 
-
-    ////////////////////////////////////////////////////////////
-    // Resumen de EVALUACION ACTUAL***********
-    var resultadosPorArea = <?php echo json_encode($resultadosPorArea); ?>;
-
-    // Mapeo de nombres de áreas a IDs de gráficos
-    var areaToChartId = {
-        'Lenguaje': 'EvaluacionReeeriorLenguaje',
-        'Cognitivo': 'EvaReeCog',
-        'SocioAfectivo': 'EvaReeSoc',
-        'Psicomotor': 'EvaReePsi',
-        'Autonomiaautodeterminacion': 'EvaReeAut',
-        'Moral': 'EvaReeMor',
-        'Sexual': 'EvaReeSex'
-    };
-    // Mapeo de nombres de áreas a IDs de gráficos con sus Titulos
-        var labelToChartId = {
-        'Lenguaje': 'chartTitleEvaLenRee',
-        'Cognitivo': 'chartTitleEvaReeCog',
-        'SocioAfectivo': 'chartTitleEvaReeSoc',
-        'Psicomotor': 'chartTitleEvaReePsi',
-        'Autonomiaautodeterminacion': 'chartTitleEvaReeAut',
-        'Moral': 'chartTitleEvaReeMor',
-        'Sexual': 'chartTitleEvaReeSex'
-    };
-
-    // Iterar sobre los resultados y configurar los gráficos
-    Object.keys(resultadosPorArea).forEach(function(idArea) {
-        var resultado = resultadosPorArea[idArea];
-        var nombreArea = resultado.nombreArea;
-        var nombreArea = normalizeString(resultado.nombreArea);
-        var chartId = areaToChartId[nombreArea];
-        var LabelId = labelToChartId[nombreArea];
-        //alert(LabelId);
-
-        if (chartId) {
-            document.getElementById(LabelId).innerText = resultado.nombreArea;
-            var ctx = document.getElementById(chartId).getContext('2d');
+        // Función para renderizar el gráfico
+        function renderGraficoFinalReevaluacion() {
+            var ctx = document.getElementById('resumenReevaluacion').getContext('2d');
             new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Por Alcanzar', 'Alcanzado'],
-                    datasets: [{
-                        data: [resultado.porcentajeAusentes, resultado.porcentajeLogradas],
-                        backgroundColor: ['#FDCC45', '#235382']
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: false,
-                    responsive: true,
-                    plugins: {
-                        datalabels: {
-                            color: '#fff',
-                            anchor: 'end',
-                            align: 'start',
-                            offset: -10,
-                            borderWidth: 2,
-                            borderColor: '#fff',
-                            borderRadius: 25,
-                            backgroundColor: (context) => {
-                                let backgroundColor = context.dataset.backgroundColor[context.dataIndex];
-                                if (backgroundColor.startsWith('#')) {
-                                    // Convert hex to rgba
-                                    let hex = backgroundColor.replace('#', '');
-                                    let r = parseInt(hex.substring(0, 2), 16);
-                                    let g = parseInt(hex.substring(2, 4), 16);
-                                    let b = parseInt(hex.substring(4, 6), 16);
-                                    return `rgba(${r}, ${g}, ${b}, 0.5)`; // 0.5 is the alpha value for 50% transparency
-                                }
-                                return backgroundColor;
-                            },
-                            font: {
-                                weight: 'bold',
-                                size: '16'
-                            },
-                            formatter: (value, ctx) => {
-                                let sum = 0;
-                                let dataArr = ctx.chart.data.datasets[0].data;
-                                dataArr.map(data => {
-                                    sum += data;
-                                });
-                                let percentage = (value * 100 / sum).toFixed(2) + "%";
-                                return percentage;
-                            }
-                        }
-                    }
-                },
-                plugins: [ChartDataLabels]
+                type: 'bar', // Tipo de gráfico, ajusta según sea necesario
+                data: GraficoFinalReevaluacion.data,
+                options: GraficoFinalReevaluacion.options
             });
         }
-    });
-});
 
-
-
+        // Llamar a la función para renderizar el gráfico
+        renderGraficoFinalReevaluacion();
 </script>
