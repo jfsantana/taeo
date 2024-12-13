@@ -164,7 +164,7 @@
         const container = document.getElementById('dynamicInputs');
         values.forEach((value, index) => {
             const input = document.createElement('input');
-            input.type = 'text';
+            input.type = 'hidden';
             input.name = nombreVariable + '[]';
             input.id = nombreVariable + (container.children.length + 1); // Asegura IDs únicos
             input.value = value;
