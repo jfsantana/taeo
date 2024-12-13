@@ -9,7 +9,8 @@
 <div class="container-fluid  small-font">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <img src=<?php echo $_SESSION['HTTP_ORIGIN'] ;?>"/dist/img/Logo-TAEO-horizontal-cyan.png" alt="Logo Taeo" class="logo">
+
+                    <img src=<?php echo $_SESSION['HTTP_ORIGIN'].'/dist/img/Logo-TAEO-horizontal-cyan.png';?> alt="Logo Taeo" class="logo">
                 </div>
                 <div class="col-sm-6 text-right">
                     <small>
