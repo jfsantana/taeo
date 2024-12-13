@@ -187,7 +187,7 @@
 
                             $grafico = "<div class='col-sm-12'>
                                           <label id='$tituloGraficoResumen' class='d-block text-center text-white py-1' style='font-size: 1rem; background-color: #00B9F1;'>$tituloGraficoResumen</label>
-                                          <div id='$idGraficoResumen' style='max-width: 100%;'></div>
+                                          <div id='$idGraficoResumen' style='max-width: 100%; '></div>
                                         </div>";
 
                             echo "
@@ -351,8 +351,8 @@
             // Configuración del primer gráfico
             var data = google.visualization.arrayToDataTable([
                 ['Estado', 'Porcentaje'],
-                ['P-A', GraficoFinalReevaluacion.porcentajeAusentes],
-                ['A', GraficoFinalReevaluacion.porcentajeLogradas]
+                ['Por-Alcanzar', GraficoFinalReevaluacion.porcentajeAusentes],
+                ['Alcanzado', GraficoFinalReevaluacion.porcentajeLogradas]
             ]);
 
             var options = {
@@ -402,18 +402,32 @@
       ]);
 
       var options = {
-          colors: ['#FDCC45', '#235382'], // Colores personalizados
-          backgroundColor: 'transparent', // Fondo transparente
-          legend: {
-            position: 'top', // Coloca la leyenda en la parte superior
-            maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
-            textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
-          },
-          chartArea: {
-            width: '80%', // Ajusta el área del gráfico dejando espacio para la leyenda
-            height: '70%'
-          }
-        };
+                    colors: ['#FDCC45', '#235382'], // Colores personalizados
+                    backgroundColor: 'transparent', // Fondo transparente
+                    legend: {
+                        position: 'top', // Coloca la leyenda en la parte superior
+                        maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
+                        textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
+                    },
+                    chartArea: {
+                        width: '100%', // Ajusta el área del gráfico dejando espacio para la leyenda
+                        
+                    },
+                    annotations: {
+                        alwaysOutside: true, // Asegura que las anotaciones (montos) siempre se muestren
+                        textStyle: {
+                            fontSize: 12,
+                            auraColor: 'none',
+                            color: '#555'
+                        }
+                    },
+                    enableInteractivity: true, // Asegura que la leyenda siempre se muestre
+                    pieSliceText: 'value', // Muestra los valores en las porciones del gráfico
+                    pieSliceTextStyle: {
+                        fontSize: 12,
+                        color: '#000'
+                    }
+                };
 
       var chart = new google.visualization.PieChart(document.getElementById(idGrafico));
       google.visualization.events.addListener(chart, 'ready', function () {
@@ -463,18 +477,32 @@
         ]);
 
         var options = {
-          colors: ['#FDCC45', '#235382'], // Colores personalizados
-          backgroundColor: 'transparent', // Fondo transparente
-          legend: {
-            position: 'top', // Coloca la leyenda en la parte superior
-            maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
-            textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
-          },
-          chartArea: {
-            width: '80%', // Ajusta el área del gráfico dejando espacio para la leyenda
-            height: '70%'
-          }
-        };
+                    colors: ['#FDCC45', '#235382'], // Colores personalizados
+                    backgroundColor: 'transparent', // Fondo transparente
+                    legend: {
+                        position: 'top', // Coloca la leyenda en la parte superior
+                        maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
+                        textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
+                    },
+                    chartArea: {
+                        width: '100%', // Ajusta el área del gráfico dejando espacio para la leyenda
+                        //height: '20%' // Reduce el área del gráfico
+                    },
+                    annotations: {
+                        alwaysOutside: true, // Asegura que las anotaciones (montos) siempre se muestren
+                        textStyle: {
+                            fontSize: 12,
+                            auraColor: 'none',
+                            color: '#555'
+                        }
+                    },
+                    enableInteractivity: true, // Asegura que la leyenda siempre se muestre
+                    pieSliceText: 'value', // Muestra los valores en las porciones del gráfico
+                    pieSliceTextStyle: {
+                        fontSize: 12,
+                        color: '#000'
+                    }
+                };
 
         var chart = new google.visualization.PieChart(document.getElementById(chartId));
         google.visualization.events.addListener(chart, 'ready', function () {

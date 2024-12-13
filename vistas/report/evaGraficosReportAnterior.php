@@ -89,46 +89,46 @@
     <!-- LENGUAJE ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaLenAnt" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntleng"  style='max-width: 100%;'></div>
+        <div id="EvaAntleng"  style='max-width: 100%; height: 130px'></div>
     </div>
 
     <!-- COGNITIVO ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaAntCog" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntCog"  style='max-width: 100%;'></div>
+        <div id="EvaAntCog"  style='max-width: 100%; height: 130px'></div>
 
     </div>
     <!-- SOCIOAFECTIVO ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaAntSoc" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntSoc"  style='max-width: 100%;'></div>
+        <div id="EvaAntSoc"  style='max-width: 100%; height: 130px'></div>
 
     </div>
     <!-- PSICOMOTOR ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaAntPsi" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntPsi"  style='max-width: 100%;'></div>
+        <div id="EvaAntPsi"  style='max-width: 100%; height: 130px'></div>
 
     </div>
 
     <!-- AUTONOMIA ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaAntAut" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntAut"  style='max-width: 100%;'></div>
+        <div id="EvaAntAut"  style='max-width: 100%; height: 130px'></div>
 
     </div>
 
     <!-- MORAL ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaAntMor" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntMor"  style='max-width: 100%;'></div>
+        <div id="EvaAntMor"  style='max-width: 100%; height: 130px'></div>
 
     </div>
 
     <!-- SEXUAL ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaAntSex" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaAntSex"  style='max-width: 100%;'></div>
+        <div id="EvaAntSex"  style='max-width: 100%;  height: 130px'></div>
         
     </div>
 
@@ -174,16 +174,17 @@
 
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawCharts);
-
+    
+    //GRAFICO RESUMEN EVALUACION ANTERIOR
     function drawCharts() {
         var GraficoFinalReevaluacionAnterior = <?php echo json_encode($GraficoFinalReevaluacionAnterior); ?>;
         var graficoText='';   
-        // Verificar que la variable tiene las propiedades necesarias
+        
         if (GraficoFinalReevaluacionAnterior && GraficoFinalReevaluacionAnterior.porcentajeAusentes !== undefined && GraficoFinalReevaluacionAnterior.porcentajeLogradas !== undefined) {
             var data = google.visualization.arrayToDataTable([
                 ['Estado', 'Porcentaje'],
-                ['P-A', GraficoFinalReevaluacionAnterior.porcentajeAusentes], //pOR aLCANZAR
-                ['A', GraficoFinalReevaluacionAnterior.porcentajeLogradas]  //ALCANZADO
+                ['Por-Alcanzar', GraficoFinalReevaluacionAnterior.porcentajeAusentes], //pOR aLCANZAR
+                ['Alcanzado', GraficoFinalReevaluacionAnterior.porcentajeLogradas]  //ALCANZADO
             ]);
 
             var options = {
@@ -234,6 +235,7 @@
             'Sexual': 'chartTitleEvaAntSex'
         };
 
+        //GRAFICOS EVALUACION ANTERIOR RESUMEN POR AREA 
         var GraficoFinalReevaluacionAnteriorDetalle = <?php echo json_encode($resultadosPorAreaAnterior); ?>;
         Object.keys(GraficoFinalReevaluacionAnteriorDetalle).forEach(function(idArea) {
             var resultado = GraficoFinalReevaluacionAnteriorDetalle[idArea];
@@ -252,15 +254,28 @@
                     colors: ['#FDCC45', '#235382'], // Colores personalizados
                     backgroundColor: 'transparent', // Fondo transparente
                     legend: {
-                        position: 'top', // Coloca la leyenda en la parte superior
-                        maxLines: 2, // Asegura que los elementos de la leyenda se apilen verticalmente
-                        textStyle: { fontSize: 10 } // Ajusta el tamaño del texto de la leyenda
+                        position: 'top' // Coloca la leyenda en la parte superior
+                       
                     },
                     chartArea: {
-                        width: '80%', // Ajusta el área del gráfico dejando espacio para la leyenda
-                        height: '70%'
+                        width: '100%', // Ajusta el área del gráfico dejando espacio para la leyenda
+                        
+                    },
+                    annotations: {
+                        alwaysOutside: true, // Asegura que las anotaciones (montos) siempre se muestren
+                        textStyle: {
+                            fontSize: 12,
+                            auraColor: 'none',
+                            color: '#555'
+                        }
+                    },
+                    enableInteractivity: true, // Asegura que la leyenda siempre se muestre
+                    pieSliceText: 'value', // Muestra los valores en las porciones del gráfico
+                    pieSliceTextStyle: {
+                        fontSize: 12,
+                        color: '#000'
                     }
-                    };
+                };
 
                 var chart = new google.visualization.PieChart(document.getElementById(chartId));
                 google.visualization.events.addListener(chart, 'ready', function () {

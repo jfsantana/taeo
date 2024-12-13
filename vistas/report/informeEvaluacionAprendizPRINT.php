@@ -7,10 +7,15 @@ if (!isset($_SESSION['id_user'])) {
   exit();
 }
 
-//print("<pre>".print_r(json_encode($_POST),true)."</pre>");//die;
+//print("<pre>".print_r(json_encode($_POST),true)."</pre>");die;
+//echo $_POST['idHeaderEvaluacion']; die;
+$_GET['idEvaluacion'] = $_POST['idHeaderEvaluacion'];
+@$_POST["idEvaluacion"]= $_POST['idHeaderEvaluacion'];
 
 require '../../vendor/autoload.php';
 require_once '../../funciones/wsdl/clases/consumoApi.class.php';
+
+//require('../../plugins/html2pdf/html2pdf.php'); // Asegúrate de que la ruta sea correcta
 
 $token ="2900097efc7e0508fdd6784d363ae6dd";
 
@@ -295,16 +300,16 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
         }  
 
         $liniaSeparacion= 10;
-        //        $pdf->ln( $liniaSeparacion);
+       
         // Salto de página
         $pdf->AddPage(); 
 
         //TituloSeccion1($title, $ln, $ancho)
       $pdf->TituloSeccion1("DATOS DE IDENTIFICACION",6,0,0);
-      //$pdf->ln(1);
-      //$pdf->Cell(0, 10, 'EDAD', 0, 1);
+      
       //TituloSeccion2($title, $ln, $ancho, $margen)
       $pdf->TituloSeccion2Left("Edad:".edadAprendiz($fechaNacimientoAprendiz),5,0,10);
+      
       //TituloSeccion2MISMALinea($texto, $X, $Y, $ANCHO)
       $pdf->TituloSeccion2MISMALinea("Periodo de Abordaje:".(date('Y', strtotime($fechaEvaluacion)) - 1) . '-' . date('Y', strtotime($fechaEvaluacion)), 150,  34, 205);
 
@@ -317,13 +322,10 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
 
 
       //generar grafico Eva Anterior
-
-      
         $variable=$_POST['graficoAnt'][0];
         $img=explode(',',$variable,2)[1];
         $pic = 'data://text/plain;base64,' . $img;
         $pdf->Image($pic, 1, 50, 80, 40, 'png');
-
 
         $variable=$_POST['graficoNew'][0];
         $img=explode(',',$variable,2)[1];
@@ -345,7 +347,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
 
         // Adicionar fila con 12 columnas
         $columnWidth = 30; // Ancho de cada columna
-        $height = 30; // Altura de las celdas
+        $height = 25; // Altura de las celdas
 
 
         $pdf->Cell(45, $height, impresion('Evaluación Anterior'), 0, 0, 'C');
@@ -357,7 +359,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntleng'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 60, 74, $columnWidth, $height, 'png');
+          $pdf->Image($pic, 60, 90, $columnWidth, $height, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -367,7 +369,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntCog'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 90, 74, 0, 0, 'png');
+          $pdf->Image($pic, 90, 90, 0, 0, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -377,7 +379,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntSoc'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 120, 74, 0, 0, 'png');
+          $pdf->Image($pic, 120, 90, 0, 0, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -387,7 +389,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntSoc'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 150, 74, 0, 0, 'png');
+          $pdf->Image($pic, 150, 90, 0, 0, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -397,7 +399,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntAut'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 180, 74, 0, 0, 'png');
+          $pdf->Image($pic, 180, 90, 0, 0, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -407,7 +409,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntMor'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 210, 74, 0, 0, 'png');
+          $pdf->Image($pic, 210, 90, 0, 0, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -417,7 +419,7 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $variable=$_POST['EvaAntSex'][0]; 
           $img=explode(',',$variable,2)[1];
           $pic = 'data://text/plain;base64,' . $img;
-          $pdf->Image($pic, 240, 74, 0, 0, 'png');
+          $pdf->Image($pic, 240, 90, 0, 0, 'png');
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C');
         }else{
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
@@ -436,18 +438,18 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
             'Sexual'
         ];
 
-        $pdf->Cell(45, 10, '', 0, 0, 'C'); // Espacio vacío antes de los títulos
+        $pdf->Cell(45, 1, '', 0, 0, 'C'); // Espacio vacío antes de los títulos
         foreach ($titles as $title) {
-            $pdf->Cell($columnWidth, 10, impresion($title), 1, 0, 'C'); // Título del gráfico
+            $pdf->Cell($columnWidth, 8, impresion($title), 1, 0, 'C'); // Título del gráfico
         }
 
           
       //EVALUACIONES RESUMEN ACUTAL
-      $pdf->Ln(1);
+      $pdf->Ln(5);
 
       // Adicionar fila con 12 columnas
       $columnWidth = 30; // Ancho de cada columna
-      $height = 30; // Altura de las celdas
+      $height = 25; // Altura de las celdas
       $pdf->Cell(45, $height, impresion('Evaluación Actual'), 0, 0, 'C');
       
       // GRAFICO RESUMEN ACTUALES
@@ -521,15 +523,268 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
           $pdf->Cell($columnWidth, $height, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
       }
       
+      // Salto de página
+      $pdf->AddPage(); 
 
+      $pdf->TituloSeccion2("CONCLUSIONES Y RECOMENDACIONES".edadAprendiz($fechaNacimientoAprendiz),5,0,10);
 
+      //$pdf->Cell(280, 0, impresion($conclucionesRecomendaciones), 0, 0, 'J');
+      $pdf->WriteHTML(impresion($conclucionesRecomendaciones));
 
+      // Salto de página
+      $pdf->AddPage(); 
 
-$pdf->Ln(100);
+      $pdf->Image('../../dist/img/firmas/gresmarPalenca.png',10,50,0,0);
+      $pdf->Image('../../dist/img/firmas/laylucMartinez.png',80,80,0,0);
+      $pdf->Image('../../dist/img/firmas/gabruielaFernandez.png',210,50,0,0);
+      
+      // Salto de página
+      $pdf->AddPage(); 
+      
+      $currentNivel = '';
+      $currentEdad = '';
+      $areas = [];
+      $dataByNivelAndEdad = [];
+      
+      //en array resumen esta todo lo que necesito para armar las graficas y dentro de este foreach recorre la informacion para armar la tabla
+      foreach ($arrayResumen as $datoResumen) {
+        $nivel = $datoResumen['nombreNivelEvaluacion'];
+        $edad = $datoResumen['edadCronologica'];
+        $area = $datoResumen['nombreAreaEvaluacion'];
 
-      for ($i = 1; $i <= 40; $i++) {
-          $pdf->Cell(0, 10, 'RESULTADOS COMPARATIVOS DE ACUERDO CON LA ESCALA DE ESTIMACIÓN EVOLUTIVA TAEO 8.0 (E.E.E)' . $i, 0, 1);
+        if (!isset($dataByNivelAndEdad[$nivel])) {
+          $dataByNivelAndEdad[$nivel] = [];
+        }
+        if (!isset($dataByNivelAndEdad[$nivel][$edad])) {
+          $dataByNivelAndEdad[$nivel][$edad] = [];
+        }
+        if (!isset($dataByNivelAndEdad[$nivel][$edad][$area])) {
+          $dataByNivelAndEdad[$nivel][$edad][$area] = [];
+        }
+
+        $dataByNivelAndEdad[$nivel][$edad][$area][] = $datoResumen;
+
+        if (!in_array($area, $areas)) {
+          $areas[] = $area;
+        }
       }
+      $numAreas = count($areas)*2;
+
+      $modalsData = []; 
+      
+      foreach ($dataByNivelAndEdad as $nivel => $edades) {
+        
+
+        $pdf->SetFont('Arial','B', 12); 
+        $tituloGrafico='';
+        $tituloGrafico= strtoupper($nivel);
+        $pdf->Ln(2);
+        $pdf->Cell(0, 0, impresion(strtoupper($nivel)), 0, 5, 'C');
+        $pdf->Ln(2);
+
+        //echo "<tr ><td colspan='$numAreas'><strong>Nivel: " . strtoupper($nivel) . "</strong></td></tr>";
+        ksort($edades); // Sort edades by key (edad) in ascending order
+
+        
+
+
+        //aqui recorre EDAD CRONOLOGICA
+        //////////////
+        foreach ($edades as $edad => $areasData) {
+            $tituloGraficoResumen = '';
+            $totalAreaLogrado = 0;
+            $totalAreaApoyoParcial = 0;
+            $totalAreaApoyoTotal = 0;
+            $totalAusentes = 0;
+            $totalActividades = 0;
+            $tituloGraficoResumen = $tituloGrafico . "(Edad: $edad)";
+
+            // Necesito crear un id único para cada gráfico (eliminando los espacios en blanco y los caracteres especiales en el título)
+            $tituloGraficoResumenID = str_replace(' ', '', strtoupper($nivel));
+            $idGraficoResumen = $tituloGraficoResumenID . "_" . $edad;
+            $nivelGraficoResumen = $tituloGraficoResumenID;
+            $pdf->SetXY(10, 28);
+            $pdf->SetFont('Arial','', 12); 
+            $pdf->Cell(0, 0, 'Edad Cronologica: '.$edad , 0, 0, 'L');
+            $pdf->Ln(5);
+            //echo "<tr ><td colspan='$numAreas'><strong>Edad Cronologica: " . $edad . "</strong></td></tr>";
+
+            //echo "<tr>";
+            $columnIndex = 1;
+            //echo "<tr>";
+            $columnIndex = 1;
+            $x = 10; // Coordenada X inicial
+            $y = 30; // Coordenada Y inicial
+            $pdf->SetFont('Arial','', 8); // Cambia 'Arial' por la fuente deseada, 'B' para negrita, y 12 por el tamaño de la letra
+            foreach ($areas as $area) {
+              $ancho=strlen($area)+65;
+              $titleSmart = strtok($area, ' ');
+              $pdf->SetXY($x, $y);
+              $pdf->Cell($ancho, 10, strtoupper(impresion($titleSmart)) . '   (Eva.)', 0, 0, 'L'); // Ajusta el ancho y alto de las celdas según sea necesario
+              $x += 40; // Incrementa la coordenada X para la siguiente celda
+
+              $columnIndex = ($columnIndex % 8) + 1; // Cycle through 1 to 8
+            }
+            //echo "</tr>";
+            $pdf->SetFont('Arial', '', 8); // Cambia 'Arial' por la fuente deseada, 'B' para negrita, y 12 por el tamaño de la letra
+            
+            //aqui recorre las areas
+
+            $x = 10; // Coordenada X inicial
+            $y = 30; // Coordenada Y inicial
+            $maxRows = max(array_map('count', $areasData));
+            $cellWidth = 40; // Ancho de cada celda
+            $cellHeight = 10; // Altura de cada celda
+
+            for ($i = 0; $i < $maxRows; $i++) {
+                $columnIndex = 1;
+                $y += $cellHeight; // Incrementa la coordenada Y para la siguiente fila
+                $x = 10; // Reinicia la coordenada X para la nueva fila
+
+                foreach ($areas as $area) {
+                    $class = "gradient-blue-$columnIndex";
+                    if (isset($areasData[$area][$i])) {
+                        $detalle = $areasData[$area][$i]['detalleEvalaacion'];
+                        $evaluacion = $areasData[$area][$i]['evaluacion_detalle'];
+                        $id = isset($areasData[$area][$i]['idDetalleEvaluacion']) ? $areasData[$area][$i]['idDetalleEvaluacion'] : ''; // Verificar si 'idDetalleEvaluacion' existe
+
+                        switch ($evaluacion) {
+                            case 'AT':
+                                $icon = 'X';
+                                $class = 'Atotal';
+                                $totalAreaApoyoTotal = $totalAreaApoyoTotal + 1;
+                                $totalAusentes = $totalAusentes + 1;
+                                $pdf->SetFillColor(253,204,69); 
+                                break;
+                            case 'AP':
+                                $icon = 'P';
+                                $class = 'AParcial';
+                                $totalAreaApoyoParcial = $totalAreaApoyoParcial + 1;
+                                $totalAusentes = $totalAusentes + 1;
+                                $pdf->SetFillColor(109,189,75); 
+                                break;
+                                
+                            case 'SA':
+                                $icon = 'SA';
+                                $totalAreaLogrado = $totalAreaLogrado + 1;
+                                $pdf->SetFillColor(255,255,255); 
+                                break;
+                        }
+
+                        // Generar un ID único para el modal
+                        $modalId = "editModal_$id";
+
+                        $pdf->SetXY($x, $y);
+                        $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('> '.$detalle . '           (' . $evaluacion . ')'), 0, 'L', true);
+                        $pdf->SetFillColor(255,255,255); // Azul (RGB: 0, 0, 255)
+                        
+
+                        
+                        $x += $cellWidth; // Incrementa la coordenada X para la siguiente celda
+
+                        // Almacenar los datos del modal en el array
+                        $modalsData[] = [
+                            'modalId' => $modalId,
+                            'id' => $id,
+                            'nivel' => $nivel,
+                            'idNivelEvaluacion' => $areasData[$area][$i]['idNivelEvaluacion'],
+                            'edad' => $edad,
+                            'edadCronologica' => $areasData[$area][$i]['edadCronologica'],
+                            'area' => $area,
+                            'idAreaEvaluacion' => $areasData[$area][$i]['idAreaEvaluacion'],
+                            'descripcion' => $detalle,
+                            'evaluacion' => $evaluacion,
+                            'idHeaderEvaluacion' => $idHeaderEvaluacion
+                        ];
+                    } else {
+                        $pdf->SetXY($x, $y);
+                        $pdf->Cell($cellWidth, $cellHeight, '', 0, 0, 'C');
+                        $x += $cellWidth; // Incrementa la coordenada X para la siguiente celda
+                    }
+                    $columnIndex = ($columnIndex % 8) + 1; // Cycle through 1 to 8
+                }
+            }
+
+            $totalActividades = $totalAreaLogrado + $totalAusentes;
+            $porAlcanzado = round(($totalAreaLogrado / $totalActividades) * 100, 2);$porAusentes = round(($totalAusentes / $totalActividades) * 100, 2);
+
+            // Crear un array para consolidar los datos de los gráficos con todos los datos
+            $arrayResumenGrafico = [
+                'tituloGraficoResumen' => $tituloGraficoResumen,
+                'idGraficoResumen' => $idGraficoResumen,
+                'totalActividades' => $totalActividades,
+                'totalAreaLogrado' => $totalAreaLogrado,
+                'totalAreaApoyoParcial' => $totalAreaApoyoParcial,
+                'totalAreaApoyoTotal' => $totalAreaApoyoTotal,
+                'totalAusentes' => $totalAusentes,
+                'porAlcanzado' => $porAlcanzado,
+                'porAusentes' => $porAusentes,
+                'nivelGraficoResumen' => $nivelGraficoResumen
+
+            ];
+
+            // Necesito agregar el $arrayResumenGrafico al array principal $arrayResumenGraficoAll
+            $arrayResumenGraficoAll[] = $arrayResumenGrafico;
+
+            //$pdf->SetXY($x, $y);
+            $pageWidth = $pdf->GetPageWidth();
+            $usableWidth = $pageWidth * 0.7; // 70% del ancho de la página
+            $margin = ($pageWidth - $usableWidth) / 2; // Margen para centrar las columnas
+
+            $cellWidth = $usableWidth / 3; // Ancho de cada columna
+            $cellHeight = 10; // Altura de cada celda
+
+            $x = $margin; // Coordenada X inicial
+            $y = 80; // Coordenada Y inicial
+            $pdf->SetFont('Arial','', 12); 
+            // Columna 1
+            $pdf->SetXY($x, $y);
+            $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('H. Esperadas:'.$totalActividades), 0, 'L', true);
+            $y += $cellHeight / 2; // Incrementa la coordenada Y para la siguiente fila
+            $pdf->SetXY($x, $y);
+            $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('H. Alcanzadas:'.$totalAreaLogrado), 0, 'L', true);
+            $y += $cellHeight / 2; // Incrementa la coordenada Y para la siguiente fila
+            $pdf->SetXY($x, $y);
+            $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('H. Ausentes:'.$totalAusentes), 0, 'L', true);
+
+            // Columna 2
+            $x += $cellWidth; // Mover a la siguiente columna
+            $y -= $cellHeight; // Reinicia la coordenada Y para la nueva columna
+            $pdf->SetXY($x, $y);
+            $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('PROMEDIO'), 0, 'L', true);
+            $y += $cellHeight / 2; // Incrementa la coordenada Y para la siguiente fila
+            $pdf->SetXY($x, $y);
+            $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('Alcanzado:'.$totalAusentes), 0, 'L', true);
+            $y += $cellHeight / 2; // Incrementa la coordenada Y para la siguiente fila
+            $pdf->SetXY($x, $y);
+            $pdf->MultiCell($cellWidth, $cellHeight / 2, impresion('Por Alcanzar:'.$totalAusentes), 0, 'L', true);
+
+            // Columna 3
+            $x += $cellWidth; // Mover a la siguiente columna
+            $y -= $cellHeight; // Reinicia la coordenada Y para la nueva columna
+            $pdf->SetXY($x, $y);
+
+            if (isset($_POST[$idGraficoResumen][0])) {
+                $variable = $_POST[$idGraficoResumen][0]; 
+                $img = explode(',', $variable, 2)[1];
+                $pic = 'data://text/plain;base64,' . $img;
+                $pdf->Image($pic, $x, $y, $cellWidth, 0, 'png');
+            } else {
+                $pdf->Cell($cellWidth, $cellHeight, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
+            }
+
+      $pdf->AddPage(); 
+        }
+        /////////////
+      }
+
+
+
+
+
+
+
+
       $pdf->Output();
     
     ?>

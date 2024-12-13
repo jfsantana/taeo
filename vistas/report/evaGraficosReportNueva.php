@@ -22,7 +22,7 @@
     <!-- LENGUAJE ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaLenRee" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaluacionReeeriorLenguaje" ></div>
+        <div id="EvaluacionReeeriorLenguaje" style="height: 130px" ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -37,7 +37,7 @@
     <!-- COGNITIVO ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaReeCog" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaReeCog" ></div>
+        <div id="EvaReeCog" style="height: 130px"  ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -50,7 +50,7 @@
     <!-- SOCIOAFECTIVO ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaReeSoc" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaReeSoc" ></div>
+        <div id="EvaReeSoc" style="height: 130px"  ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -63,7 +63,7 @@
     <!-- PSICOMOTOR ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaReePsi" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaReePsi" ></div>
+        <div id="EvaReePsi" style="height: 130px"  ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -77,7 +77,7 @@
     <!-- AUTONOMIA ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaReeAut" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaReeAut" ></div>
+        <div id="EvaReeAut"  style="height: 130px" ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -91,7 +91,7 @@
     <!-- MORAL ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaReeMor" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaReeMor" ></div>
+        <div id="EvaReeMor"  style="height: 130px" ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">
@@ -105,7 +105,7 @@
     <!-- SEXUAL ANTERIOR -->
     <div class="col-sm-1"  style="margin-bottom: 10px;">
         <label id="chartTitleEvaReeSex" class="d-block text-center text-white py-1" style="font-size: 1rem; background-color: #2570a1;"></label>
-        <div id="EvaReeSex" ></div>
+        <div id="EvaReeSex"  style="height: 130px" ></div>
         <div style="display: flex; justify-content: center;">
             <table style="width: 70%; text-align: center;">
                 <tr style="background-color: #235382; color: white;">

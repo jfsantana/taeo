@@ -41,7 +41,7 @@ function edadByEvaluacion($fechaNacimiento, $fechaEvaluacion){
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/aprendiz?type=4";
-echo $URL;
+
 $rs         = API::GET($URL, $token);
 $arrayPreEvaluacion  = API::JSON_TO_ARRAY($rs);
 
