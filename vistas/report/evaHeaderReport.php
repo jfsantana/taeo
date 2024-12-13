@@ -32,7 +32,7 @@
                         </div>
                     </small>
                      <button id="printButtonNoScript" class="btn btn-primary" onclick="window.print()">Imprimir</button> 
-                     <button type="submit" id="printButtonNoScript" class="btn btn-primary">Imprimir2</button>
+                     <button type="submit" id="printButtonNoScript" class="btn btn-primary">Imprimir(PDF)</button>
                     <!-- <button onclick="window.location.href='generatePdf.php'">Generar PDF</button> -->
                 </div>
             </div>
