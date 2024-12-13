@@ -322,15 +322,27 @@ function edadByEvaluacionAux($fechaNacimiento, $fechaEvaluacion){
 
 
       //generar grafico Eva Anterior
+      if(isset($_POST['graficoAnt'])){
         $variable=$_POST['graficoAnt'][0];
         $img=explode(',',$variable,2)[1];
         $pic = 'data://text/plain;base64,' . $img;
         $pdf->Image($pic, 1, 50, 80, 40, 'png');
+      }else{
+        $pdf->Cell(1, 50, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
+      }
 
+      if(isset($_POST['graficoNew'])){
         $variable=$_POST['graficoNew'][0];
         $img=explode(',',$variable,2)[1];
         $pic = 'data://text/plain;base64,' . $img;
         $pdf->Image($pic, 110, 50, 80, 40, 'png');
+      }else{
+        $pdf->Cell(110, 50, '', 0, 0, 'C'); // Mantener el mismo espacio en blanco
+      }
+
+       
+
+        
 
         // Adicionar tabla de 1 columna y 4 filas
         $pdf->SetXY(206, 50); // Ajusta la posición de la tabla
