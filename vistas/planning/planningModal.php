@@ -3,7 +3,7 @@ $token = $_SESSION['token'];
 $URL = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/nivelArea?type=2&idAreaObjetivo=" . @$idArea;
 $rs = API::GET($URL, $token);
 $arrayNiveles = API::JSON_TO_ARRAY($rs);
-?> 
+?>
 <form action="../funciones/funcionesGenerales/XM_planningItem.model.php" name="formPlanningModal" id="formPlanningModal" method="post">
 
   <input type="hidden" name="mod" value="1">
@@ -32,7 +32,7 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
               </select>
             </div>
             <div class="col-sm-12">
-              <label for="nivelObjetivo">Nivel Padre</label>
+              <label for="nivelObjetivo">Area Macro</label>
               <select class="form-control" disabled name="nivelPadre" id="nivelPadre" onchange="fetchSelectPadre('<?php echo $idArea; ?>', document.getElementById('nivelObjetivo').value, 2, this.value, '#nivel1')">
                 <option>Seleccione</option>
                 <?php foreach ($arrayNiveles as $nivel) { ?>
@@ -41,7 +41,7 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
               </select>
             </div>
             <div class="col-sm-3">
-              <label for="nivelObjetivo">Nivel hijo 1</label>
+              <label for="nivelObjetivo">Habilidad</label>
               <select class="form-control" disabled name="nivel1" id="nivel1" onchange="fetchSelectPadre('<?php echo $idArea; ?>', document.getElementById('nivelObjetivo').value, 3, this.value, '#nivel2')">
                 <option>Seleccione</option>
                 <?php foreach ($arrayNiveles as $nivel) { ?>
@@ -50,7 +50,7 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
               </select>
             </div>
             <div class="col-sm-3">
-              <label for="nivelObjetivo">Nivel hijo 2</label>
+              <label for="nivelObjetivo">Tarea Macro</label>
               <select class="form-control" disabled name="nivel2" id="nivel2" onchange="fetchSelectPadre('<?php echo $idArea; ?>', document.getElementById('nivelObjetivo').value, 4, this.value, '#nivel3')">
                 <option>Seleccione</option>
                 <?php foreach ($arrayNiveles as $nivel) { ?>
@@ -59,7 +59,7 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
               </select>
             </div>
             <div class="col-sm-3">
-              <label for="nivelObjetivo">Nivel hijo 3</label>
+              <label for="nivelObjetivo">Tarea</label>
               <select class="form-control" disabled name="nivel3" id="nivel3" onchange="fetchSelectPadre('<?php echo $idArea; ?>', document.getElementById('nivelObjetivo').value, 5, this.value, '#nivel4')">
                 <option>Seleccione</option>
                 <?php foreach ($arrayNiveles as $nivel) { ?>
@@ -68,7 +68,7 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
               </select>
             </div>
             <div class="col-sm-3">
-              <label for="nivelObjetivo">Nivel hijo 4</label>
+              <label for="nivelObjetivo">Sub Tarea</label>
               <select class="form-control" disabled name="nivel4" id="nivel4" onchange="fetchSelectPadre('<?php echo $idArea; ?>', document.getElementById('nivelObjetivo').value, 6, this.value, '#nivel5')">
                 <option>Seleccione</option>
                 <?php foreach ($arrayNiveles as $nivel) { ?>
@@ -79,7 +79,7 @@ $arrayNiveles = API::JSON_TO_ARRAY($rs);
             <div class="col-sm-12">
               <div class="card">
                 <div class="card-header">
-                  <h3 class="card-title">Actividades Objetivos Principal</h3>
+                  <h3 class="card-title">Actividades</h3>
                 </div>
                 <div class="card-header">
                 </div>
@@ -127,10 +127,10 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       var actionUrl = this.getAttribute('action');
       var formData = $(this).serialize();
-      
-      console.log("formData: ", formData);    
+
+      console.log("formData: ", formData);
       console.log("actionUrl: ", actionUrl);
-      
+
       $.ajax({
         type: "POST",
         url: actionUrl,

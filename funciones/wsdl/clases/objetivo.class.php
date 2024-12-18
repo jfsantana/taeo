@@ -79,12 +79,39 @@ class objetivo extends conexion
     if ($idRepresentante != '') {
       $where =  $where . " and t1.id_padre = " . $idRepresentante;
     }
-    $query = "SELECT t1.jerarquia,CONCAT(REPEAT(' ', LENGTH(t1.jerarquia) - LENGTH(REPLACE(t1.jerarquia, '.', ''))), t1.descripcion) as descripcion, t1.id_padre, t1.id
-    FROM objetivo_item AS t1
+    //13336768 SE MODIFICO LA CONSULKTA PARA QUE SOLO TRAIGA EL REGUISTRO DE LA ULTIMA VERSION.
+    //PERO NO ESTOY SEGURO QUE ESTE SEA EL SERVICIO SI NO ES ESTE ES:
+    /*getIemsByPadre*/
 
-    $where
 
-    ORDER BY t1.jerarquia, t1.id_padre ";
+    // $query = "SELECT t1.jerarquia,CONCAT(REPEAT(' ', LENGTH(t1.jerarquia) - LENGTH(REPLACE(t1.jerarquia, '.', ''))), t1.descripcion) as descripcion, t1.id_padre, t1.id
+    // FROM objetivo_item AS t1    $where  ORDER BY t1.jerarquia, t1.id_padre ";
+
+    $query="WITH MaxVersion AS (
+              SELECT
+                  id_padre,
+                  MAX(versionObjetivo) AS maxVersion
+              FROM
+                  objetivo_item
+              GROUP BY
+                  id_padre
+          )
+          SELECT
+              t1.jerarquia,
+              CONCAT(REPEAT(' ',
+                          LENGTH(t1.jerarquia) - LENGTH(REPLACE(t1.jerarquia, '.', ''))),
+                      t1.descripcion) AS descripcion,
+              t1.id_padre,
+              t1.id
+          FROM
+              objetivo_item AS t1
+          INNER JOIN
+              MaxVersion AS mv
+          ON
+              t1.id_padre = mv.id_padre
+              AND t1.versionObjetivo = mv.maxVersion
+          $where  ORDER BY t1.jerarquia, t1.id_padre
+          ";
    // echo $query; die;
     return parent::ObtenerDatos($query);
   }

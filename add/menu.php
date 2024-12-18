@@ -1,6 +1,6 @@
 <nav class="mt-2">
   <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-  
+
     <!-- ****************************** -->
     <?php if ($_SESSION['ponderacion'] < 40) { ///***CONFIGURACION :**** Solo Administradores y parcialmente coordinadores      ?>
       <li class="nav-item menu-close">
@@ -50,7 +50,7 @@
               <p>Representantes</p>
             </a>
           </li>
-          
+
           <?php if ($_SESSION['ponderacion'] < 20) { //Solo Administradores    ?>
             <li class="nav-item">
               <a href="#" onclick="enviarParametros('admin/areaDesarrolloList.php')" class="nav-link ">
@@ -155,7 +155,7 @@
             </a>
           </li>
         </ul>
-      </li> 
+      </li>
     <?php }    ?>
 
     <!-- ****************************** -->
@@ -203,7 +203,7 @@
     <?php }    ?>
 
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 30) { ///***REPORTES:**** TODOS      ?>
+    <?php if ($_SESSION['ponderacion'] < 50) { ///***REPORTES:**** TODOS      ?>
       <li class="nav-item">
         <a href="#" class="nav-link">
           <i class="nav-icon fas fa-copy  text-info"></i>
@@ -215,7 +215,7 @@
         </a>
 
 
-        
+
 
         <ul class="nav nav-treeview">
           <li class="nav-item">
@@ -240,7 +240,7 @@
         </ul>
       </li>
     <?php } ?>
-    
+
     <li class="nav-item">
       <a href="#" class="nav-link ">
         <i class="nav-icon far fa-circle text-danger"></i>
@@ -254,7 +254,7 @@
       </a>
     </li>
 
-    
+
     <li class="nav-item">
       <a href="../funciones/funcionesGenerales/XM_validarusu.php" class="nav-link">
         <i class="nav-icon far fa-close"></i>
