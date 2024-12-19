@@ -29,7 +29,6 @@ $token = $_SESSION['token'];
         document.body.appendChild(form);
         form.submit();
       }
-  alert('No se ha recibido el parámetro "mod"');  
    // Ejecutar la función para redirigir automáticamente
    enviarParametrosVacio('objetivo/objetivoListar.php');
  </script>
