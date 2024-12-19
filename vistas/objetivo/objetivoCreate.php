@@ -8,9 +8,35 @@ if (!isset($_SESSION['id_user'])) {
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
+
 $token = $_SESSION['token'];
 
  //print("<pre>".print_r(($_POST) ,true)."</pre>"); //die;
+
+ if (!isset($_POST['mod']) || empty($_POST['mod'])) {
+  ?>
+ <script>
+    function enviarParametrosVacio(page) {
+        var form = document.createElement('form');
+        form.method = 'POST';
+        form.action = 'home.php';
+
+        var parametro1 = document.createElement('input');
+        parametro1.type = 'hidden';
+        parametro1.name = 'page';
+        parametro1.value = page;
+        form.appendChild(parametro1);
+        document.body.appendChild(form);
+        form.submit();
+      }
+  alert('No se ha recibido el parámetro "mod"');  
+   // Ejecutar la función para redirigir automáticamente
+   enviarParametrosVacio('objetivo/objetivoListar.php');
+ </script>
+ <?php
+ //exit(); // Asegúrate de que el script PHP no continúe ejecutándose
+}
+
  function  nivel($nodoPadre,$level,$token,$idObjetivoHeader){
 
   $arrayhijosNexLevel  = hijos($nodoPadre['id'], $token);
@@ -106,14 +132,14 @@ function  hijos ($padre, $token){
 *!MOR = 2 UPDATE
 *!MOD = 3 DELETE ITEMS Y CARGA*/
 
-if ($_POST['mod'] == 1) {
+if (@$_POST['mod'] == 1) {
   $accion = "Crear";
   if(isset($_POST['id'])){
     $idObjetivoHeader = @$_POST["id"];  //signifia que la creacion esta asociada a un aprendiz
   }
   $creadoPor = $_SESSION['usuario'];
   $fechaCreacion = date('Y-m-d');
-} elseif($_POST['mod'] == 2) {
+} elseif(@$_POST['mod'] == 2) {
   $flag=true;
   $accion = "Editar";
 
@@ -144,7 +170,7 @@ if ($_POST['mod'] == 1) {
     $rs         = API::GET($URL, $token);
     $arrayItemByHeader  = API::JSON_TO_ARRAY($rs);
 
-}elseif(($_POST['mod'] == 3)||($_POST['mod'] == 4)){
+}elseif((@$_POST['mod'] == 3)||(@$_POST['mod'] == 4)){
   $flag=false;
   $token = $_SESSION['token'];
   $accion = "Carga de Contenido";
@@ -167,13 +193,15 @@ if ($_POST['mod'] == 1) {
 
 }
 
-if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
+if (@$_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
   $token = $_SESSION['token'];
-  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=4&idHeader=$idObjetivoHeader";
+  $valorIdObjetivoHeader=@$idObjetivoHeader;
+  $URL        = @$_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=4&idHeader=$valorIdObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayVersiones  = API::JSON_TO_ARRAY($rs);
 
-  $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=5&idHeader=$idObjetivoHeader";
+  $valorIdObjetivoHeader=@$idObjetivoHeader;
+  $URL        = @$_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=5&idHeader=$valorIdObjetivoHeader";
   $rs         = API::GET($URL, $token);
   $arrayMaxVersion  = API::JSON_TO_ARRAY($rs);
   // hacer la validacion si el valor del select no viene
@@ -181,12 +209,12 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
    // echo 'entr';
     $maxVersion=$_POST['select'];
   }else{
-    $maxVersion=$arrayMaxVersion[0]['maximo'];
+    $maxVersion=@$arrayMaxVersion[0]['maximo'];
   }
 
 
 }
-  if($_POST['mod'] ==4){
+  if(@$_POST['mod'] ==4){
     $maxVersion=$maxVersion+1;
   }
 
@@ -231,7 +259,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
         <!-- general form elements -->
         <div class="card card-primary">
           <div class="card-header">
-            <h3 class="card-title"><?php echo $accion; ?> Objetivos</h3>
+            <h3 class="card-title"><?php echo @$accion; ?> Objetivos</h3>
           </div>
           <!-- /.card-header -->
           <!-- form start -->
@@ -300,7 +328,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                     </br>
                     <div class="card-header align-items-center">
                       <h3 class="card-title col-sm-2" >Contenido del Objetivo</h3>
-                      <?php if($_POST['mod']==2){?>
+                      <?php if(@$_POST['mod']==2){?>
                           <select class="form-control ml-1 col-sm-2" name="versionActual"
                                 onchange="enviar4ParametrosGet('objetivo/objetivoCreate.php',2,'<?php echo $idObjetivoHeader; ?>',this.value)">
                           <?php
@@ -311,7 +339,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
                           <?php  } ?>
 
                         </select>
-                      <?php }elseif($_POST['mod']==4){?>
+                      <?php }elseif(@$_POST['mod']==4){?>
 
                         <h3 class="card-title col-sm-2" >   Nueva Versión-<?php echo $maxVersion; ?></h3>
 
@@ -330,7 +358,7 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
 
                   <?php
-                  if ($_POST['mod'] == 2){
+                  if (@$_POST['mod'] == 2){
                       include_once("objetivoView.php");
                   } else
                   {
@@ -344,13 +372,13 @@ if ($_POST['mod'] != 1) {// busca las versiones disponibles del objetivo
 
             <div class="card-footer">
                     <?php
-                      if(($_POST['mod']<>1)&&($flag)){ ?>
+                      if((@$_POST['mod']<>1)&&(@$flag)){ ?>
                       <button type="button" class="btn btn-warning" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',3,'<?php echo $idObjetivoHeader ; ?>')">Volver a cargar contenido de la ULTIMA versi&oacute;n</button>
                       <button type="button" class="btn btn-danger"  onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',4,'<?php echo $idObjetivoHeader ; ?>')">Crear NUEVA VERSIÓN al objetivo</button>
 
                     <?php  }?>
 
-              <button type="submit" class="btn btn-success" ><?php echo $accion; ?> Encabezado del Objetivo </button>
+              <button type="submit" class="btn btn-success" ><?php echo @$accion; ?> Encabezado del Objetivo </button>
 
               <button type="button" class="btn btn-primary" onclick="enviarParametros('objetivo/objetivoListar.php')">Volver al Listado de Objetivos</button>
             </div>

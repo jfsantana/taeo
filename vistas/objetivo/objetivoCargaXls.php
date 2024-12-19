@@ -5,7 +5,7 @@
       <input  accept=".xlsx" type="file" id="archivo" required name="archivo">
     </div>
 
-    <?php if ($_POST['mod']==3){?>
+    <?php if (@$_POST['mod']==3){?>
       <div class="col-sm-12 text-danger">
         </br>
         <ul>

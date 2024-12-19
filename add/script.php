@@ -284,7 +284,6 @@
   });
 
   function enviarParametros(page) {
-
     var form = document.createElement('form');
     form.method = 'POST';
     form.action = 'home.php';
