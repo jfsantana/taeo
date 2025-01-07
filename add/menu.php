@@ -55,7 +55,8 @@
             <li class="nav-item">
               <a href="#" onclick="enviarParametros('admin/areaDesarrolloList.php')" class="nav-link ">
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="nav-icon fas fa-cog text-danger"></i>
-                <p>&Aacute;rea de Desarrollo</p>
+                <!-- <p>&Aacute;rea de Desarrollo</p> -->
+                <p>Prog. Psicoeducativos</p>
               </a>
             </li>
           <?php }?>

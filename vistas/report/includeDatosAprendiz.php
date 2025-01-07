@@ -19,7 +19,7 @@
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="cedulaAprendiz">Cédula</label>
+                  <label for="cedulaAprendiz">Cédula/Rut</label>
                   <input   readonly type="text" class="form-control" name="cedulaAprendiz" id="cedulaAprendiz" placeholder="Cedula del Aprendiz" value="<?php echo @$cedulaAprendiz; ?>">
                 </div>
 

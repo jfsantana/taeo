@@ -17,7 +17,7 @@
                                   <tr>
 
                                     <th>Nombre Represenatnte</th>
-                                    <th>Cédula</th>
+                                    <th>Cédula/Rut</th>
                                     <th>Parentesco</th>
                                     <th>Teléfono</th>
                                     <th>Puede Retirar</th>

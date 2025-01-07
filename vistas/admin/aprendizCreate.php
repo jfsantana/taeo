@@ -237,7 +237,7 @@ $arrayRepresentanteByAprendiz  = API::JSON_TO_ARRAY($rs);
 
                                     <th with=5%>Activo</th>
                                     <th>Nombre Represenatnte</th>
-                                    <th>Cédula</th>
+                                    <th>Cédula/Rut</th>
                                     <th>Parentesco</th>
                                     <th>Teléfono</th>
                                     <th>Puede Retirar</th>
@@ -271,7 +271,7 @@ $arrayRepresentanteByAprendiz  = API::JSON_TO_ARRAY($rs);
                                   <tr>
                                   <th>Activo</th>
                                     <th>Nombre Represenatnte</th>
-                                    <th>Cédula</th>
+                                    <th>Cédula/Rut</th>
                                     <th>Parentesco</th>
                                     <th>Teléfono</th>
                                     <th>Puede Retirar</th>

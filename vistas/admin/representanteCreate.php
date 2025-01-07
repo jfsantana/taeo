@@ -97,8 +97,8 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="cedulaRepresentante">Cédula</label>
-                  <input type="text" class="form-control" name="cedulaRepresentante" id="cedulaRepresentante" placeholder="Cédula" value="<?php echo @$cedulaRepresentante; ?>">
+                  <label for="cedulaRepresentante">Cédula/Rut</label>
+                  <input type="text" class="form-control" name="cedulaRepresentante" id="cedulaRepresentante" placeholder="Cédula/Rut" value="<?php echo @$cedulaRepresentante; ?>">
                 </div>
 
                 <div class="col-sm-3">
@@ -124,7 +124,7 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="profesionRepresentante">Profesión Representante</label>
+                  <label for="profesionRepresentante">Profesión/Ocupación</label>
                   <input type="text" class="form-control" name="profesionRepresentante" id="profesionRepresentante" placeholder="profesion Representante" value="<?php echo @$profesionRepresentante; ?>">
                 </div>
 
@@ -152,7 +152,7 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-2">
-                  <label>Puede Retirar a su Representante</label>
+                  <label>Autorizado a retirar</label>
                   <select class="form-control " name="retirarAprendiz" style="width: 100%;">
                       <option value='1' <?php if (@$retirarAprendiz == 1) { echo 'selected';} ?>>Si</option>
                       <option value='0' <?php if (@$retirarAprendiz == 0) { echo 'selected';} ?>>No</option>

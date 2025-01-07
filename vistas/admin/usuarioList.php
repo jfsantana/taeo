@@ -92,7 +92,7 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                   <th>Activo</th>
                   <th>Teléfono</th>
                   <th>Teléfono Emergencia</th>
-                  <th>Cédula</th>
+                  <th>Cédula/Rut</th>
                   <th>Email</th>
                   <th>Fecha Nacimiento</th>
                   <th>Cargo</th>
@@ -123,7 +123,7 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                   <th>Activo</th>
                   <th>Teléfono</th>
                   <th>Teléfono Emergencia</th>
-                  <th>Cédula</th>
+                  <th>Cédula/Rut</th>
                   <th>Email</th>
                   <th>Fecha Nacimiento</th>
                   <th>Cargo</th>

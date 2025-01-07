@@ -75,7 +75,7 @@ $arrayRepresentante  = API::JSON_TO_ARRAY($rs);
             <thead>
               <tr>
                 <th>Nombre Represenatnte</th>
-                <th>Cédula</th>
+                <th>Cédula/Rut</th>
                 <th>Profesión</th>
                 <th>Teléfono</th>
                 <th>Correo</th>
@@ -101,7 +101,7 @@ $arrayRepresentante  = API::JSON_TO_ARRAY($rs);
             <tfoot>
               <tr>
                 <th>Nombre Represenatnte</th>
-                <th>Cédula</th>
+                <th>Cédula/Rut</th>
                 <th>Profesión</th>
                 <th>Teléfono</th>
                 <th>Correo</th>

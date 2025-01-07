@@ -21,7 +21,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
   <div class="container-fluid">
     <div class="row mb-2">
       <div class="col-sm-6">
-        <h1 class="m-0">Objetivos</h1>
+        <h1 class="m-0">Programas Psicoeducativos TAEO</h1>
       </div><!-- /.col -->
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
@@ -34,7 +34,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
         <div class="small-box bg-warning">
           <div class="inner">
             <h3><?php echo count($arrayObjetivo); ?></h3>
-            <p>Num Objetivos</p>
+            <p>Num Programas Psicoeducativos TAEO</p>
           </div>
           <div class="icon">
             <i class="ion "><ion-icon name="happy-outline"></ion-icon></i>
@@ -58,7 +58,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
             <thead>
               <tr>
                 <th>Area</th>
-                <th>Nombre Objetivo</th>
+                <th>Nombre Prog. Psicoeducativos</th>
                 <th>Nivel</th>
                 <th>Observación</th>
                 <th>Creado por</th>
@@ -81,7 +81,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
             <tfoot>
               <tr>
                 <th>Area</th>
-                <th>Nombre Objetivo</th>
+                <th>Nombre Prog. Psicoeducativos</th>
                 <th>Nivel</th>
                 <th>Observación</th>
                 <th>Creado por</th>

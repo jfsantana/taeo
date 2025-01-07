@@ -123,7 +123,7 @@ if ($_POST['mod'] == 1) {
                 </div>
 
                 <div class="col-sm-3">
-                  <label for="nombreCliente">Cédula</label>
+                  <label for="nombreCliente">Cédula/Rut</label>
                   <input type="text" class="form-control" name="cedulaUsuario" id="cedulaUsuario" placeholder="Cedula del Personal" value="<?php echo @$cedulaUsuario; ?>">
                 </div>
 
