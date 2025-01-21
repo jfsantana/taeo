@@ -8,6 +8,8 @@ if (!isset($_SESSION['id_user'])) {
 }
 require_once '../funciones/wsdl/clases/consumoApi.class.php';
 
+//print("<pre>".print_r(($_SESSION),true)."</pre>");
+
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
 
@@ -22,8 +24,10 @@ $sedesPermisoIds = explode(',', @$sedesPermiso);
 //Listado de planificaicones
 if ($_SESSION['id_rol']==1){
   $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1";
-}else{
+}elseif($_SESSION['id_rol']==2){
   $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1&sede=".$sedesPermiso;
+}else{
+  $UrlAcceso        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/planning?type=1&idFacilitador=".$_SESSION['id_user'];
 }
 //print("<pre>".print_r(($UrlAcceso),true)."</pre>");
 $URL        = $UrlAcceso;

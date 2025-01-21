@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
    */
   if ($_GET['type']==1){
-    $datosArray = $_planning->getPlanningHeadere(@$_GET['idPlanificacion'],@$_GET['sede']);
+    $datosArray = $_planning->getPlanningHeadere(@$_GET['idPlanificacion'],@$_GET['sede'],@$_GET['idFacilitador']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);
