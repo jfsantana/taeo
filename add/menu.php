@@ -116,7 +116,7 @@
   <?php }    ?>
 
     <!-- ****************************** -->
-    <?php if ($_SESSION['ponderacion'] < 40) { //***PLANIFICAICON:**** Solo Administradores  y coordinadores  ?>
+    <?php if ($_SESSION['ponderacion'] < 60) { //***PLANIFICAICON:**** Solo Administradores  y coordinadores  ?>
       <li class="nav-item menu-close">
         <a href="#" class="nav-link ">
           <i class="nav-icon fas fa-book  text-info"></i>
