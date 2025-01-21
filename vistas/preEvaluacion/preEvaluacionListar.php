@@ -35,13 +35,21 @@ $meses = $diferencia->m;
 // Imprimir la edad en años y meses
 return  $anios . " años, " . $meses . " meses"; 
 }
+//print("<pre>".print_r(($_SESSION),true)."</pre>");
+
+// buscar las sede que forman parte del usuario logueado
+//ejemplo $_SESSION['idusuario_sede'] => 193*194*195  puede tener una o varias sedes
+$idSedesString = $_SESSION['idusuario_sede'];
+//reemplazar el  * por una ,
+$idSedesString = str_replace("*",",",$idSedesString);
+
 
 
 
 //Listado Clientes
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=1";
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/preEvaluacion?type=1&idSedesString=$idSedesString";
 //echo $URL ;
 $rs         = API::GET($URL, $token);
 $arrayPreEvaluacion  = API::JSON_TO_ARRAY($rs);
@@ -80,7 +88,7 @@ $arrayPreEvaluacion  = API::JSON_TO_ARRAY($rs);
       <section class="col-lg-12 connectedSortable">
         <div class="card">
           <div class="card-header">
-            <h3 class="card-title">Listado de Evaluaciones Creadas</h3>
+            <h3 class="card-title">Listado de Evaluaciones Creadas2</h3>
           </div>
           <div class="card-body">
             <table id="example1" class="table table-bordered table-striped">

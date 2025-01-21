@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 
    */
   if ($_GET['type']==1){
-    $datosArray = $_preEvaluacion->getHeader(@$_GET['idHeaderEvaluacion']);
+    $datosArray = $_preEvaluacion->getHeader(@$_GET['idHeaderEvaluacion'], @$_GET['idSedesString']);
     header('Content-Type: application/json;charset=utf-8');
     echo json_encode($datosArray);
     http_response_code(200);

@@ -92,13 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   echo json_encode($datosArray);
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE') { // DELETE
-  if (isset($_SERVER['HTTP_USER_AGENT']) && strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
+  if (isset($_SERVER['HTTP_USER_AGENT']) || strpos($_SERVER['HTTP_USER_AGENT'], 'Postman') !== false) {
     $postBody = file_get_contents('php://input');
   } else {
-      $postBody = json_encode($_DELETE);
+      $postBody = json_encode($_POST);
+      //$postBody = file_get_contents('php://input');
   }
-
-  //$datosArray = $_objetivo->del($postBody);
+  $datosArray = $_objetivo->del($postBody);
 
     header('Content-Type: application/json;charset=utf-8');
   if (isset($datosArray['result']['error_id'])) {

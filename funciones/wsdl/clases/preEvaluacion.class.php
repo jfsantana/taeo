@@ -52,11 +52,27 @@ class preEvaluacion extends conexion
   private $evaluacion_detalle='';
 
 
-  public function getHeader($idHeaderEvaluacion) //( 01112024 )
+  public function getHeader($idHeaderEvaluacion,$idSedesString) //( 01112024 )
   {
-    $where = " WHERE eh.idHeaderEvaluacion <> '' ";
+
+    $where = " WHERE eh.idHeaderEvaluacion <> ''  ";
+
+    //valida que el idHeaderEvaluacion no este vacio para la lista principal de las evaliaciones
+    if($idSedesString){
+      $idSedes='';
+      $queryidSede="SELECT * FROM taeho_v2.usuario_sede where idusuario_sede in ($idSedesString)";
+      $idSedesArray = parent::ObtenerDatos($queryidSede);
+      foreach($idSedesArray as $sede){
+        $idSedes = $idSedes.$sede['idSede'].',';
+      }
+      $idSedes = substr($idSedes, 0, -1);
+    }
+
+    //verifica que no esta buscando una evaluacion especifica
     if ($idHeaderEvaluacion != '') {
       $where =  $where . " and eh.idHeaderEvaluacion = " . $idHeaderEvaluacion;
+    }else{
+      $where =  $where . " and eh.idSede in ($idSedes) ";
     }
     $query = "SELECT 
                   idHeaderEvaluacion,
@@ -95,7 +111,7 @@ class preEvaluacion extends conexion
                   sede AS s ON s.idSede = eh.idSede
               $where    
               ORDER BY 1 DESC";
-    //echo   $query; die;
+    
     return parent::ObtenerDatos($query);
   }
   

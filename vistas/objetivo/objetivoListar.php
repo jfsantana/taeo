@@ -63,6 +63,9 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
                 <th>Observación</th>
                 <th>Creado por</th>
                 <th>Activo</th>
+                <?php if ($_SESSION['id_rol']==1); {?>
+                  <th>Acciones</th>
+                <?php }?>
               </tr>
             </thead>
             <tbody>
@@ -74,6 +77,14 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
                   <td><?php echo substr($objetivo['observacionObjetivo'], 0, 1000); ?></td>
                   <td><?php echo $objetivo['creadoPor']; ?></td>
                   <td><?php echo $objetivo['estado']; ?></td>
+
+                  <?php if ($_SESSION['id_rol']==1); {?>
+                    <td>
+                      <a href="#" onclick="eliminarObjetivos('<?php echo $objetivo['idObjetivoHeader']; ?>')">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  <?php }?>
                 </tr>
               <?php } ?>
 
@@ -86,6 +97,9 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
                 <th>Observación</th>
                 <th>Creado por</th>
                 <th>Activo</th>
+                <?php if ($_SESSION['id_rol']==1); {?>
+                  <th>Acciones</th>
+                <?php }?>
               </tr>
             </tfoot>
           </table>
@@ -97,3 +111,34 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
 </div>
 </div>
 </section>
+<script>
+  async function eliminarObjetivos(idObjetivoHeader) {
+    if (!idObjetivoHeader) {
+        console.error('idObjetivoHeader no está definido o está vacío');
+        return;
+    }
+    if (confirm('¿Está seguro de que desea eliminar esta planificación?')) {
+      try {
+        const protocol = window.location.protocol;
+        const url = `${protocol}//${window.location.host}/funciones/wsdl/objetivo`;
+        const response = await fetch(url, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ idObjetivoHeader: idObjetivoHeader })
+        });
+       
+        if (response.ok) {
+          alert('Objetivo eliminada con éxito.');
+          location.reload(); // Actualiza la página
+        } else {
+          const errorData = await response.json();
+          alert('11Error al eliminar la Objetivo: ' + errorData.message);
+        }
+      } catch (error) {
+        alert('Error al eliminar la Objetivo: ' + error.message);
+      }
+    }
+  }
+</script>

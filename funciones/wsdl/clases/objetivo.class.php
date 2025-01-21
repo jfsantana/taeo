@@ -157,6 +157,27 @@ class objetivo extends conexion
     return parent::ObtenerDatos($query);
   }
 
+
+  public function del($json)  //()
+  {
+   
+    $_respuestas = new respuestas();
+    $datos = json_decode($json, true);
+    
+    $idObjetivoHeader=$datos['idObjetivoHeader'];
+    
+    //Borrado de Items
+    $queryDelItemObjetivo = "DELETE FROM objetivo_item WHERE idHeader = $idObjetivoHeader";
+   
+    parent::nonQuery($queryDelItemObjetivo);
+
+    $queryDelHeaderObjetivo = "DELETE FROM objetivo_header WHERE idObjetivoHeader = $idObjetivoHeader";
+    parent::nonQuery($queryDelHeaderObjetivo);
+
+      return 1;
+
+  }
+
   public function post($json)  //()
   {
 
