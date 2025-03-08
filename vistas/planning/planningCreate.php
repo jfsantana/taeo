@@ -118,7 +118,7 @@ if ($_POST['mod'] == 1) {
                   <select class="form-control" name="idArea" id="idArea" <?php if($_POST['mod']==2){echo 'disabled';}?>>
                     <option>Seleccione:</option>
                     <?php foreach($arrayAreaObjetivo as $areaObjetivo ){?>
-                      <option <?php if ($areaObjetivo['idArea'] == @$idArea) {echo 'selected';} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
+                      <option <?php if ($areaObjetivo['idArea'] == @$idArea) {echo 'selected'; @$nombreAuxArea=$areaObjetivo['nombreArea'];} ?> value=<?php echo $areaObjetivo['idArea']; ?>><?php echo strtoupper($areaObjetivo['nombreArea']); ?></option>
                     <?php }?>
                   </select>
                 </div>
@@ -136,16 +136,16 @@ if ($_POST['mod'] == 1) {
                   <select class="form-control" name="idFacilitador" id="idFacilitador" <?php if ($_POST['mod']==1){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayFacilitadores as $facilitador ){?>
-                      <option <?php if ($facilitador['idUsuario'] == @$idFacilitador) {echo 'selected';} ?> value=<?php echo $facilitador['idUsuario']; ?>><?php echo $facilitador['apellidoUsuario'].', '.$facilitador['nombreUsuario']; ?></option>
+                      <option <?php if ($facilitador['idUsuario'] == @$idFacilitador) {echo 'selected'; @$nombreAuxMediador=$facilitador['apellidoUsuario'].', '.$facilitador['nombreUsuario'];;} ?> value=<?php echo $facilitador['idUsuario']; ?>><?php echo $facilitador['apellidoUsuario'].', '.$facilitador['nombreUsuario']; ?></option>
                     <?php }?>
                   </select>
                 </div>
                 <div class="col-sm-8">
-                  <label for="aprendiz">Aprendiz:</label>
+                  <label for="aprendiz">Aprendiz: </label>
                   <select class="form-control select2"  style="width: 100%;" data-select2-id="1" tabindex="-1" aria-hidden="true" name="idAprendiz" id="idAprendiz" <?php if($_POST['mod']==2){echo 'disabled';}?>>
                     <option>Seleccione</option>
                     <?php foreach($arrayAprendices as $aprendiz ){?>
-                      <option <?php if ($aprendiz['idAprendiz'] == @$idAprendiz) {echo 'selected';} ?> value=<?php echo $aprendiz['idAprendiz']; ?>><?php echo $aprendiz['nombreAprendiz']; ?></option>
+                      <option <?php if ($aprendiz['idAprendiz'] == @$idAprendiz) {echo 'selected'; @$nombreAuxAprendiz=@$aprendiz['nombreAprendiz'];} ?> value=<?php echo $aprendiz['idAprendiz']; ?>><?php echo $aprendiz['nombreAprendiz']; ?></option>
                     <?php }?>
                   </select>
                 </div>
@@ -190,6 +190,26 @@ if ($_POST['mod'] == 1) {
                   </div>
                 <?php }?>
 
+                <script>
+                    function printPage() {
+                      //planningView.php
+                        var printContents = document.getElementById('printableArea').innerHTML;
+                        var originalContents = document.body.innerHTML;
+                        document.body.innerHTML = printContents;
+                        window.print();
+                        document.body.innerHTML = originalContents;
+                    }
+                </script>
+
+            <style>
+                    /* Ocultar el contenido incluido */
+                    .hidden {
+                        display: none;
+                    }
+                </style>
+                <div id="printableArea" class="hidden">
+                  <?php include 'planningViewPrint.php'; ?>
+              </div>
 
                 <div class="col-sm-12">
                   <div class="card card-primary">
@@ -197,12 +217,17 @@ if ($_POST['mod'] == 1) {
                     <?php
                       if(($_POST['mod']<>1)&&($flag)){ ?>
                         <div class="card-header align-items-center">
-                          <h3 class="card-title col-sm-2" >Contenido del Plan</h3>
+                          <h3 class="card-title col-sm-2" >Contenido del Plan </h3>     <button class='button' onclick="printPage()" class="btn btn-primary">Evaluacion Manual (Imprimir)</button>
+
                         </div>
                     <?php  }?>
                 </div>
+                
+
                 <?php
-                     if($_POST['mod']==2){include_once("planningView.php");}?>
+                     if($_POST['mod']==2){
+                      include_once("planningView.php");
+                      }?>
               </div>
             </div>
             <div class="card-footer">

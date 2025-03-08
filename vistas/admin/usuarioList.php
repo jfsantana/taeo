@@ -14,9 +14,10 @@ $token = $_SESSION['token'];
 $URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/empleados?type=1";
 $rs         = API::GET($URL, $token);
 $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
+//  echo $URL ;
+//  print("<pre>".print_r(($rs) ,true)."</pre>"); //die;
 
-
-//print("<pre>".print_r(($URL) ,true)."</pre>"); //die;
+ //print("<pre>".print_r(($arrayUsuarios) ,true)."</pre>"); //die;
 
 ?>
 <!-- Content Header (Page header) -->
@@ -99,7 +100,8 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($arrayUsuarios as $usuario) {?>
+              <?php if (!is_null($arrayUsuarios)) { ?>
+                <?php foreach (@$arrayUsuarios as $usuario) {?>
                   <tr>
                     <td><a href="#" onclick="enviarParametrosGetsionUpdate('admin/usuarioCreate.php',2,'<?php echo $usuario['idUsuario']; ?>')" class="nav-link "><?php echo $usuario['apellidoUsuario'].', '.$usuario['nombreUsuario'];?></a></td>
                     <td><?php echo $usuario['descripcionRol'];?></td>
@@ -112,6 +114,7 @@ $arrayUsuarios  = API::JSON_TO_ARRAY($rs);
                     <td><?php echo $usuario['fechaNacimiento'];?></td>
                     <td><?php echo $usuario['descripcionCargo'];?></td>
                   </tr>
+                <?php } ?>
                 <?php } ?>
 
               </tbody>

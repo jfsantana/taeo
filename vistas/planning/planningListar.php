@@ -100,30 +100,28 @@ $arrayPlanificacionesbySede  = API::JSON_TO_ARRAY($rs);
               </tr>
             </thead>
             <tbody>
-              <?php foreach ($arrayPlanificaciones as $planificaciones) { ?>
-                <tr>
-                  <td><a href="#" onclick="enviarParametrosGetsionUpdate('planning/planningCreate.php',2,'<?php echo $planificaciones['idPlanificacion']; ?>')" class="nav-link "><?php echo $planificaciones['idPlanificacion']; ?></a></td>
-                  <td><?php echo strtoupper($planificaciones['aprendiz']); ?></td>
-                  <td><?php echo $planificaciones['nombreSede']; ?></td>
-                  <td>
-                    
-                      <?php echo $planificaciones['nombreArea']; ?>
-                    
-                  </td>
-                  <td><?php echo substr($planificaciones['observacion'], 0, 1000); ?></td>
-                  <td><?php echo $planificaciones['creadoPor']; ?></td>
-                  <td><?php echo $planificaciones['estado']; ?></td>
-                  <td>
-
-                  
+            <?php if (!is_null($arrayPlanificaciones)) { ?>
+            <?php foreach ($arrayPlanificaciones as $planificaciones) { ?>
+              <tr>
+                <td><a href="#" onclick="enviarParametrosGetsionUpdate('planning/planningCreate.php',2,'<?php echo $planificaciones['idPlanificacion']; ?>')" class="nav-link "><?php echo $planificaciones['idPlanificacion']; ?></a></td>
+                <td><?php echo strtoupper($planificaciones['aprendiz']); ?></td>
+                <td><?php echo $planificaciones['nombreSede']; ?></td>
+                <td>
+                  <?php echo $planificaciones['nombreArea']; ?>
+                </td>
+                <td><?php echo substr($planificaciones['observacion'], 0, 1000); ?></td>
+                <td><?php echo $planificaciones['creadoPor']; ?></td>
+                <td><?php echo $planificaciones['estado']; ?></td>
+                <td>
                   <?php if ($planificaciones['evaluacion'] == 0) { ?>
                     <a href="#" onclick="eliminarPlanificacion('<?php echo $planificaciones['idPlanificacion']; ?>')">
                       <i class="fa fa-trash"></i>
                     </a>
                   <?php } ?>
-                  </td>
-                </tr>
-              <?php } ?>
+                </td>
+              </tr>
+            <?php } ?>
+          <?php } ?>
 
             </tbody>
             <tfoot>

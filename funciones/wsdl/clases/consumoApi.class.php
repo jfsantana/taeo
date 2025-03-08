@@ -201,9 +201,14 @@ class API
      */
     public static function JSON_TO_ARRAY($jsone)
     {
-        // echo($jsone);
-        return json_decode("$jsone", true);
+        $array = json_decode($jsone, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            echo 'Error decoding JSON: ' . json_last_error_msg();
+        }
+        return $array;
     }
+
+    
 
     // public static function notifica($equipment, $short_text, $reportedby, $notif_date, $notiftime, $long_text)
     // {
