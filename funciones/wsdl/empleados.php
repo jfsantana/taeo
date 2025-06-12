@@ -21,38 +21,45 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
     $token = $_GET['token'];
     $datosEmpleado = $_empleados->obtenerEmpleadoToken($token);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==1){
     $datosEmpleado = $_empleados->getEmpleado(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==2){
     $datosEmpleado = $_empleados->getCargos(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==3){
     $datosEmpleado = $_empleados->getFacilitadorByCargos(@$_GET['rolUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==4){
     $datosEmpleado = $_empleados->getFacilitadorBySede(@$_GET['idSede']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==5){
     $datosEmpleado = $_empleados->getEvaluadorBySede(@$_GET['idSede']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==6){
     $datosEmpleado = $_empleados->getSedeByEvaluador(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }else {
     http_response_code(404);
   }

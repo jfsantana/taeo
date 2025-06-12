@@ -27,53 +27,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_preEvaluacion->getHeader(@$_GET['idHeaderEvaluacion'], @$_GET['idSedesString']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==2)){
     $datosArray = $_preEvaluacion->getItemsByHeader(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==3)){
     $datosArray = $_preEvaluacion->getDetalleByIems(@$_GET['idItemEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==4)){
     $datosArray = $_preEvaluacion->getPreEvaluacioensByAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==5)){
     $datosArray = $_preEvaluacion->getItemsAll();
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==6)){
     $datosArray = $_preEvaluacion->getNivelesAll();
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==7)){
     $datosArray = $_preEvaluacion->getResumenEva(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==8)){
     $datosArray = $_preEvaluacion->getEvaluadoresData(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==9)){
     $datosArray = $_preEvaluacion->getEvaluacionPrevia(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']=='imp')){
     $datosArray = $_preEvaluacion->getGrafEvaAnt(@$_GET['idHeaderEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }else {
     http_response_code(404);
   }

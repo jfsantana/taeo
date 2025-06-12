@@ -16,13 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_objetivoItems->getDetailItemsObjetyivo(@$_GET['idPlanificacionHeader']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif($_GET['type']==2){
     $datosArray = $_objetivoItems->getExistePadre(@$_GET['idPlanificacion'], @$_GET['nivelPadre'] , @$_GET['idNivel']   );
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE

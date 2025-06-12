@@ -20,13 +20,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_planning->getPlanningHeadere(@$_GET['idPlanificacion'],@$_GET['sede'],@$_GET['idFacilitador']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif ($_GET['type']==2){
     $datosArray = $_planning->getPlanningbySede(@$_GET['idPlanificacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif ( $_GET['type']==3
             && isset($_GET['idArea'])
             && isset($_GET['nivelObjetivo'])
@@ -35,8 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             ){
     $datosArray = $_planning->getNodosHijos(@$_GET['idArea'],@$_GET['nivelObjetivo'],@$_GET['nivel_nodo'],@$_GET['valor_padre']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif ( $_GET['type']==4
             && isset($_GET['jerarquia'])
             && isset($_GET['nivelObjetivo'])
@@ -44,28 +47,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
             ){
     $datosArray = $_planning->getUltimoPadre(@$_GET['jerarquia'],$_GET['nivelObjetivo'],$_GET['idAreaObjetivo']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif ( $_GET['type']==5
             && isset($_GET['idPlanificacionHeader'])
             ){
       $datosArray = $_planning->getNumPadres(@$_GET['idPlanificacionHeader']);
       header('Content-Type: application/json;charset=utf-8');
-      echo json_encode($datosArray);
       http_response_code(200);
+      echo json_encode($datosArray);
+      
   }elseif ( $_GET['type']==6){
       $datosArray = $_planning->getIemsByHeader(@$_GET['idPlanificacionHeader'],@$_GET['jerarquia']);
 
       header('Content-Type: application/json;charset=utf-8');
-      echo json_encode($datosArray);
       http_response_code(200);
+      echo json_encode($datosArray);
+      
       }
   elseif ( $_GET['type']==7){
         $datosArray = $_planning->getPlanningHeadereActivo(@$_GET['idPlanificacion'],@$_GET['sede']);
   
         header('Content-Type: application/json;charset=utf-8');
-        echo json_encode($datosArray);
         http_response_code(200);
+        echo json_encode($datosArray);
+        
         }
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE
 

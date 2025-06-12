@@ -11,11 +11,13 @@ require_once '../funciones/wsdl/clases/consumoApi.class.php';
 //Listado Clientes
 $id = @$_POST["id"];
 $token = $_SESSION['token'];
-$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=1";
-//echo $URL ;
+$URL        = $_SESSION['HTTP_ORIGIN'] . "/funciones/wsdl/objetivo?type=8";
+
 $rs         = API::GET($URL, $token);
+
 $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
 
+//print_r($arrayObjetivo) ; die;
 ?>
 <div class="content-header">
   <div class="container-fluid">
@@ -33,7 +35,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
       <div class="col-lg-12 col-12">
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3><?php echo count($arrayObjetivo); ?></h3>
+            <h3><?php echo count(@$arrayObjetivo); ?></h3>
             <p>Num Programas Psicoeducativos TAEO</p>
           </div>
           <div class="icon">
@@ -74,7 +76,7 @@ $arrayObjetivo  = API::JSON_TO_ARRAY($rs);
                   <td><?php echo strtoupper($objetivo['nombreArea']); ?></td>
                   <td><a href="#" onclick="enviarParametrosGetsionUpdate('objetivo/objetivoCreate.php',2,'<?php echo $objetivo['idObjetivoHeader']; ?>')" class="nav-link "><?php echo $objetivo['nombreObjetivo']; ?></a></td>
                   <td><?php echo $objetivo['nombreNivelAreaObjetivo']; ?></td>
-                  <td><?php echo substr($objetivo['observacionObjetivo'], 0, 1000); ?></td>
+                  <td><?php echo mb_substr(strip_tags($objetivo['observacionObjetivo']), 0, 200) . '...'; ?></td>
                   <td><?php echo $objetivo['creadoPor']; ?></td>
                   <td><?php echo $objetivo['estado']; ?></td>
 

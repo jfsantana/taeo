@@ -201,6 +201,10 @@ class API
      */
     public static function JSON_TO_ARRAY($jsone)
     {
+         // Intenta limpiar caracteres invisibles o no UTF-8
+        $jsone = mb_convert_encoding($jsone, 'UTF-8', 'UTF-8');
+        $jsone = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $jsone);
+        //echo $jsone; die;
         $array = json_decode($jsone, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
             echo 'Error decoding JSON: ' . json_last_error_msg();

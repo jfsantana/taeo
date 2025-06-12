@@ -24,43 +24,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_evaluacion->getPlanningHeadere(@$_GET['idPlanificacion'], @$_GET['idsede'], @$_GET['facilitador']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif($_GET['type']==2){
     $datosEmpleado = $_evaluacion->getActividadById(@$_GET['idItems']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==3){
     $datosEmpleado = $_evaluacion->getValueEval();
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==4){
     $datosEmpleado = $_evaluacion->getEvaInicialByItems(@$_GET['idItem']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==5){
     $datosEmpleado = $_evaluacion->getEvalByItems(@$_GET['idItem']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==6){
     $datosEmpleado = $_evaluacion->getEvalById(@$_GET['idEvaluacion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==7){
     $datosEmpleado = $_evaluacion->getPlanningHeadereActivo(@$_GET['idPlanificacion'], @$_GET['idsede'], @$_GET['facilitador']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }elseif($_GET['type']==8){
     $datosEmpleado = $_evaluacion->getPlanningHeadereActivoByidAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }
 
   else {

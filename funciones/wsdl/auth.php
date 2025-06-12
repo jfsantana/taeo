@@ -10,8 +10,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   if (isset($_GET['updateToken'])) {
     $listaclientes = $_auth->updateToken();
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($listaclientes);
     http_response_code(200);
+    echo json_encode($listaclientes);
+    
   } else {
     http_response_code(200);
   }

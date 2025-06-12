@@ -16,8 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosEmpleado = $_empleados->getSedesEmpleados(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosEmpleado);
     http_response_code(200);
+    echo json_encode($datosEmpleado);
+    
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE

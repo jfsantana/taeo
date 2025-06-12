@@ -59,6 +59,30 @@ class objetivo extends conexion
     //echo   $query; die;
     return parent::ObtenerDatos($query);
   }
+   public function getObjetivosHeaderePreView($idObjetivoHeader) //()
+  {
+    $where = " WHERE objetivo_header.idObjetivoHeader <> '' ";
+    if ($idObjetivoHeader != '') {
+      $where =  $where . " and objetivo_header.idObjetivoHeader = " . $idObjetivoHeader;
+    }
+    $query = "select
+              objetivo_header.idObjetivoHeader,
+              objetivo_header.nombreObjetivo,
+              objetivo_header.observacionObjetivo,
+              objetivo_header.fechaCreacion,
+              objetivo_header.creadoPor,
+              objetivo_header.activo,
+              objetivo_header.nivelObjetivo,
+              objetivo_header.idAreaObjetivo,
+              case when objetivo_header.activo = 1 Then 'Activo' else 'Desactivado' end estado,
+              areasobjetivos.nombreArea ,
+              nivelareaobjetivo.nombreNivelAreaObjetivo
+            from objetivo_header
+            inner join areasobjetivos on areasobjetivos.idArea =objetivo_header.idAreaObjetivo
+            inner join nivelareaobjetivo on nivelareaobjetivo.idNivelAreaObjetivo =objetivo_header.nivelObjetivo  $where ";
+    //echo   $query; die;
+    return parent::ObtenerDatos($query);
+  }
 
 
 

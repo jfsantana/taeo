@@ -16,13 +16,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_nivelArea->getNivelArea(@$_GET['idNivelAreaObjetivo']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif($_GET['type']==2){
     $datosArray = $_nivelArea->getNivelByArea(@$_GET['idAreaObjetivo']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE

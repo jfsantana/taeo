@@ -20,38 +20,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_objetivo->getObjetivosHeadere(@$_GET['idObjetivoHeader']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==2)&&(isset($_GET['idHeader']))){
     $datosArray = $_objetivo->getidPadreByHeader(@$_GET['idHeader'],@$_GET['maxVersion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==3)&&(isset($_GET['id_padre']))){
     $datosArray = $_objetivo->getIemsByHeader(@$_GET['id_padre']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==4)&&(isset($_GET['idHeader']))){
     $datosArray = $_objetivo->getVersionByHeader(@$_GET['idHeader']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==5)&&(isset($_GET['idHeader']))){
     $datosArray = $_objetivo->getLastVersionByHeader(@$_GET['idHeader']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==6)&&(isset($_GET['idArea']))&&(isset($_GET['idNivel']))){
     $datosArray = $_objetivo->getIdObjetivo(@$_GET['idArea'],@$_GET['idNivel'] );
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==7)){
     $_objetivo->updateId_padre(@$_GET['idHeader'],@$_GET['versionObjetivo'] );
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode("success update padres");
     http_response_code(200);
+    echo json_encode("success update padres");
+    
+  }elseif(($_GET['type']==8)){
+     $datosArray = $_objetivo->getObjetivosHeaderePreView(@$_GET['idObjetivoHeader']);
+    header('Content-Type: application/json;charset=utf-8');
+    http_response_code(200);
+    echo json_encode($datosArray);
+    
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE

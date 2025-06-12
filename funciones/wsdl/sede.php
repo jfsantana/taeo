@@ -18,28 +18,32 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   if ($_GET['type']==1) {
     $getSede = $_sede->getSede(@$_GET['idSede']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getSede);
     http_response_code(200);
+    echo json_encode($getSede);
+    
 
   } elseif ($_GET['type']==2) {
 
     $getEmpleados = $_sede->getEmpleadoPorSede(@$_GET['idSede']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getEmpleados);
     http_response_code(200);
+    echo json_encode($getEmpleados);
+    
   }
   elseif ($_GET['type']==3) {
 
     $getEmpleados = $_sede->getSedeByEmpleado(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getEmpleados);
     http_response_code(200);
+    echo json_encode($getEmpleados);
+    
   }elseif ($_GET['type']==4) {
 
     $getEmpleados = $_sede->getSedeByEmpleadString(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getEmpleados);
     http_response_code(200);
+    echo json_encode($getEmpleados);
+    
   }
 
 

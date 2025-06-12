@@ -19,28 +19,33 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
   if ($_GET['type']==1){
     $datosArray = $_aprendiz->getAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==2)||(isset($_GET['idAprendiz']))){
     $datosArray = $_aprendiz->getRepresentanteByAprendizActivos(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==3)||(isset($_GET['idAprendiz']))){
     $datosArray = $_aprendiz->getRepresentanteByAprendiz(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==4)){
     $datosArray = $_aprendiz->getAprendizActivos(@$_GET['idAprendiz']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }elseif(($_GET['type']==5)){
     $datosArray = $_aprendiz->getAprendizByCountryByUser(@$_GET['idUsuario']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($datosArray);
     http_response_code(200);
+    echo json_encode($datosArray);
+    
   }
 
 } elseif ($_SERVER['REQUEST_METHOD'] == 'POST') { // POST CREATE

@@ -17,15 +17,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   if ($_GET['type']==1) {
     $getSede = $_rol->getRol(@$_GET['idRol']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getSede);
     http_response_code(200);
+    echo json_encode($getSede);
+    
 
   } elseif ($_GET['type']==2) {
 
     $getEmpleados = $_rol->getEmpleadoPorRol(@$_GET['idRol']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getEmpleados);
     http_response_code(200);
+    echo json_encode($getEmpleados);
+    
   }
 
 

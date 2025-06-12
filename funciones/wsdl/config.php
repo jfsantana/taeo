@@ -17,17 +17,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') { // Get READ
   if ($_GET['type']==1) {
     $getSede = $_config->getFieldConfig(@$_GET['idConfiguracion']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getSede);
     http_response_code(200);
+    echo json_encode($getSede);
+    
   } elseif ($_GET['type']==2) {
     $getSede = $_config->getFieldConfigType(@$_GET['tipo']);
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode($getSede);
     http_response_code(200);
+    echo json_encode($getSede);
+    
   } else {
     header('Content-Type: application/json;charset=utf-8');
-    echo json_encode(['error' => 'Parámetro type inválido']);
     http_response_code(400);
+    echo json_encode(['error' => 'Parámetro type inválido']);
+    
   }
 
 
